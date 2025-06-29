@@ -1,66 +1,185 @@
-<header>
-  <h2 class="header__title">
-    {{ shop.name | link_to: routes.root_url }}
-  </h2>
+<!-- Font Awesome CDN for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-  <div class="header__menu">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
+<!-- Marquee for offers -->
+<div class="announcement-bar">
+  <div class="announcement-marquee">
+    <span class="announcement-text">
+      <i class="fas fa-shipping-fast"></i>
+      FREE SHIPPING ON ORDERS OVER $50!
+      <i class="fas fa-gift"></i>
+    </span>
+    <span class="announcement-text">
+      <i class="fas fa-shipping-fast"></i>
+      FREE SHIPPING ON ORDERS OVER $50!
+      <i class="fas fa-gift"></i>
+    </span>
+    <span class="announcement-text">
+      <i class="fas fa-shipping-fast"></i>
+      FREE SHIPPING ON ORDERS OVER $50!
+      <i class="fas fa-gift"></i>
+    </span>
+    <span class="announcement-text">
+      <i class="fas fa-shipping-fast"></i>
+      FREE SHIPPING ON ORDERS OVER $50!
+      <i class="fas fa-gift"></i>
+    </span>
+  </div>
+</div>
+
+<header class="header">
+  <div class="header__branding">
+    <a href="{{ routes.root_url }}" class="header__logo-link" aria-label="Aura Wear homepage">
+      <img src="{{ 'logo.png' | asset_url }}" alt="Aura Wear logo" class="header__logo" />
+    </a>
+    <span class="header__brand-name">Aura Wear</span>
   </div>
 
-  <div class="header__icons">
+  <nav class="header__nav" aria-label="Main navigation">
+    <a href="/" class="header__nav-link">Home</a>
+    <div class="header__nav-item header__nav-item--dropdown">
+      <a href="/collections/all" class="header__nav-link" aria-haspopup="true" aria-expanded="false">Shop</a>
+      <div class="header__dropdown" role="menu">
+        <a href="/collections/all" class="header__dropdown-link" role="menuitem">All Products</a>
+        <a href="/collections/men" class="header__dropdown-link" role="menuitem">Men</a>
+        <a href="/collections/women" class="header__dropdown-link" role="menuitem">Women</a>
+        <a href="/collections/accessories" class="header__dropdown-link" role="menuitem">Accessories</a>
+        <a href="/collections/sale" class="header__dropdown-link" role="menuitem">Sale</a>
+      </div>
+    </div>
+    <div class="header__nav-item header__nav-item--dropdown">
+      <a href="/collections/new-arrivals" class="header__nav-link" aria-haspopup="true" aria-expanded="false">New Arrivals</a>
+      <div class="header__dropdown" role="menu">
+        <a href="/collections/new-arrivals-this-week" class="header__dropdown-link" role="menuitem">This Week</a>
+        <a href="/collections/new-arrivals-trending" class="header__dropdown-link" role="menuitem">Trending Now</a>
+        <div class="header__dropdown-item header__dropdown-item--submenu">
+          <a href="/collections/new-arrivals-back-in-stock" class="header__dropdown-link" aria-haspopup="true" aria-expanded="false">Back in Stock</a>
+          <div class="header__dropdown header__dropdown--submenu" role="menu">
+            <a href="/collections/new-arrivals-limited-edition" class="header__dropdown-link" role="menuitem">Limited Edition</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a href="/pages/about" class="header__nav-link">About</a>
+    <a href="/pages/contact" class="header__nav-link">Contact</a>
+  </nav>
+
+  <div class="header__actions">
+    <button class="header__icon-btn header__search-btn" aria-label="Search" tabindex="0" type="button">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+    <form class="header__search-form" action="{{ routes.search_url }}" method="get" role="search">
+      <input type="search" name="q" placeholder="Search..." class="header__search-input" />
+      <button type="submit" class="header__search-submit" aria-label="Submit search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </form>
     {% if shop.customer_accounts_enabled %}
-      {{ 'icon-account.svg' | inline_asset_content | link_to: routes.account_url }}
+      <a href="{{ routes.account_login_url }}" class="header__icon-btn header__login-btn" aria-label="Login">
+        Login
+      </a>
     {% endif %}
-
-    <a href="{{ routes.cart_url }}">
+    <a href="{{ routes.cart_url }}" class="header__icon-btn header__cart-btn" aria-label="Cart">
       {% if cart.item_count > 0 %}
-        <sup>{{ cart.item_count }}</sup>
+        <span class="header__cart-count">{{ cart.item_count }}</span>
       {% endif %}
-
       {{ 'icon-cart.svg' | inline_asset_content }}
     </a>
+    <button class="header__icon-btn header__hamburger-btn" aria-label="Open menu" tabindex="0" type="button">
+      <i class="fa-solid fa-bars"></i>
+    </button>
   </div>
 </header>
 
-{% stylesheet %}
-  header {
-    height: 5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+<link rel="stylesheet" href="{{ 'header.css' | asset_url }}">
+
+<style>
+/* Marquee styles */
+.announcement-bar {
+  background: #1D1D1F;
+  color: white;
+  padding: 10px 0;
+  overflow: hidden;
+  position: relative;
+  z-index: 101;
+  box-shadow: 0 2px 8px rgba(29, 29, 31, 0.2);
+}
+
+.announcement-marquee {
+  display: flex;
+  animation: marquee 25s linear infinite;
+  white-space: nowrap;
+}
+
+.announcement-text {
+  padding: 0 30px;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.announcement-text i {
+  color: #CDAA7D;
+  font-size: 16px;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
   }
-  header a {
-    position: relative;
-    text-decoration: none;
-    color: var(--color-foreground);
+  100% {
+    transform: translateX(-100%);
   }
-  header a sup {
-    position: absolute;
-    left: 100%;
-    overflow: hidden;
-    max-width: var(--page-margin);
-  }
-  header svg {
-    width: 2rem;
-  }
-  header .header__menu,
-  header .header__icons {
-    display: flex;
-    gap: 1rem;
-  }
-{% endstylesheet %}
+}
+
+/* Ensure header is below marquee */
+.header {
+  top: 0 !important;
+}
+</style>
+
+<script>
+// Hamburger menu toggle for mobile
+const hamburgerBtn = document.querySelector('.header__hamburger-btn');
+const nav = document.querySelector('.header__nav');
+if (hamburgerBtn && nav) {
+  hamburgerBtn.addEventListener('click', () => {
+    nav.classList.toggle('header__nav--open');
+  });
+}
+// Search field toggle and close on outside click
+const searchBtn = document.querySelector('.header__search-btn');
+const searchForm = document.querySelector('.header__search-form');
+function closeSearch() {
+  searchForm.classList.remove('active');
+  searchBtn.classList.remove('hide-search');
+}
+if (searchBtn && searchForm) {
+  searchBtn.addEventListener('click', () => {
+    searchForm.classList.toggle('active');
+    searchBtn.classList.toggle('hide-search');
+    if (searchForm.classList.contains('active')) {
+      searchForm.querySelector('input')?.focus();
+    }
+  });
+  document.addEventListener('mousedown', (e) => {
+    if (
+      searchForm.classList.contains('active') &&
+      !searchForm.contains(e.target) &&
+      !searchBtn.contains(e.target)
+    ) {
+      closeSearch();
+    }
+  });
+}
+</script>
 
 {% schema %}
 {
-  "name": "t:general.header",
-  "settings": [
-    {
-      "type": "link_list",
-      "id": "menu",
-      "label": "t:labels.menu"
-    }
-  ]
+  "name": "Header (Aura Wear)",
+  "settings": []
 }
 {% endschema %}

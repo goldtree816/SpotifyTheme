@@ -1,57 +1,422 @@
-<footer>
-  <div class="footer__copyright">
-    &copy;
-    {{ 'now' | date: '%Y' }}
-    {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
+<!-- Font Awesome CDN for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<footer class="footer">
+  <div class="footer__content">
+    <!-- Company Info Section -->
+    <div class="footer__section">
+      <div class="footer__branding">
+        <img src="{{ 'logo.png' | asset_url }}" alt="Aura Wear logo" class="footer__logo" />
+        <h3 class="footer__brand-name">Aura Wear</h3>
+      </div>
+      <p class="footer__tagline">Let Your Aura Flow Freely</p>
+      <p class="footer__description">Designed for movement, made with intention. Aura Wear brings harmony between comfort and confidence.</p>
+      
+      <!-- Social Media Links -->
+      <div class="footer__social">
+        <a href="#" class="footer__social-link" aria-label="Follow us on Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="#" class="footer__social-link" aria-label="Follow us on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+        <a href="#" class="footer__social-link" aria-label="Follow us on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="#" class="footer__social-link" aria-label="Follow us on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+        <a href="#" class="footer__social-link" aria-label="Follow us on TikTok">
+          <i class="fab fa-tiktok"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Links Section -->
+    <div class="footer__section">
+      <h4 class="footer__section-title">Shop</h4>
+      <ul class="footer__links">
+        <li><a href="/collections/all" class="footer__link">All Products</a></li>
+        <li><a href="/collections/men" class="footer__link">Men's Collection</a></li>
+        <li><a href="/collections/women" class="footer__link">Women's Collection</a></li>
+        <li><a href="/collections/accessories" class="footer__link">Accessories</a></li>
+        <li><a href="/collections/new-arrivals" class="footer__link">New Arrivals</a></li>
+        <li><a href="/collections/sale" class="footer__link">Sale</a></li>
+      </ul>
+    </div>
+
+    <!-- Customer Service Section -->
+    <div class="footer__section">
+      <h4 class="footer__section-title">Customer Service</h4>
+      <ul class="footer__links">
+        <li><a href="/pages/contact" class="footer__link">Contact Us</a></li>
+        <li><a href="/pages/shipping" class="footer__link">Shipping Info</a></li>
+        <li><a href="/pages/returns" class="footer__link">Returns & Exchanges</a></li>
+        <li><a href="/pages/size-guide" class="footer__link">Size Guide</a></li>
+        <li><a href="/pages/care-instructions" class="footer__link">Care Instructions</a></li>
+        <li><a href="/pages/faq" class="footer__link">FAQ</a></li>
+      </ul>
+    </div>
+
+    <!-- Company Section -->
+    <div class="footer__section">
+      <h4 class="footer__section-title">Company</h4>
+      <ul class="footer__links">
+        <li><a href="/pages/about" class="footer__link">About Us</a></li>
+        <li><a href="/pages/our-story" class="footer__link">Our Story</a></li>
+        <li><a href="/pages/sustainability" class="footer__link">Sustainability</a></li>
+        <li><a href="/pages/careers" class="footer__link">Careers</a></li>
+        <li><a href="/pages/press" class="footer__link">Press</a></li>
+        <li><a href="/pages/wholesale" class="footer__link">Wholesale</a></li>
+      </ul>
+    </div>
+
+    <!-- Newsletter Section -->
+    <div class="footer__section footer__section--newsletter">
+      <h4 class="footer__section-title">Stay Connected</h4>
+      <p class="footer__newsletter-text">Subscribe to get updates on new arrivals, exclusive offers, and styling tips.</p>
+      
+      <form class="footer__newsletter-form" action="/contact#contact_form" method="post">
+        <div class="footer__newsletter-input-group">
+          <input 
+            type="email" 
+            name="contact[email]" 
+            placeholder="Enter your email" 
+            class="footer__newsletter-input" 
+            required
+          />
+          <button type="submit" class="footer__newsletter-btn">
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </form>
+      
+      <div class="footer__newsletter-note">
+        <i class="fas fa-shield-alt"></i>
+        <span>We respect your privacy. Unsubscribe at any time.</span>
+      </div>
+    </div>
   </div>
 
-  <div class="footer__links">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
-  </div>
-
-  <div class="footer__payment">
-    {% if section.settings.show_payment_icons %}
-      {% for type in shop.enabled_payment_types %}
-        {{ type | payment_type_svg_tag }}
-      {% endfor %}
-    {% endif %}
+  <!-- Bottom Footer -->
+  <div class="footer__bottom">
+    <div class="footer__bottom-content">
+      <div class="footer__legal">
+        <p class="footer__copyright">&copy; {{ 'now' | date: '%Y' }} Aura Wear. All rights reserved.</p>
+        <div class="footer__legal-links">
+          <a href="/pages/privacy-policy" class="footer__legal-link">Privacy Policy</a>
+          <a href="/pages/terms-of-service" class="footer__legal-link">Terms of Service</a>
+          <a href="/pages/cookie-policy" class="footer__legal-link">Cookie Policy</a>
+        </div>
+      </div>
+      
+      <div class="footer__payment-methods">
+        <span class="footer__payment-label">We Accept:</span>
+        <div class="footer__payment-icons">
+          <i class="fab fa-cc-visa"></i>
+          <i class="fab fa-cc-mastercard"></i>
+          <i class="fab fa-cc-amex"></i>
+          <i class="fab fa-cc-paypal"></i>
+          <i class="fab fa-apple-pay"></i>
+        </div>
+      </div>
+    </div>
   </div>
 </footer>
 
-{% stylesheet %}
-  footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
+<style>
+/* Footer Styles */
+.footer {
+  background: #1D1D1F;
+  color: white;
+  padding: 0;
+  margin-top: 4rem;
+}
+
+.footer__content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+  gap: 2rem;
+}
+
+.footer__section {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer__branding {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.footer__logo {
+  height: 6rem;
+  width: auto;
+  filter: brightness(0) invert(1);
+}
+
+.footer__brand-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+}
+
+.footer__tagline {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #CDAA7D;
+  margin: 0 0 1rem 0;
+}
+
+.footer__description {
+  color: #AAAAAA;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.footer__social {
+  display: flex;
+  gap: 1rem;
+}
+
+.footer__social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(205, 170, 125, 0.1);
+  color: #CDAA7D;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 1.2rem;
+}
+
+.footer__social-link:hover {
+  background: #CDAA7D;
+  color: #1D1D1F;
+  transform: translateY(-2px);
+}
+
+.footer__section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: white;
+  margin: 0 0 1.5rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.footer__links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer__links li {
+  margin-bottom: 0.75rem;
+}
+
+.footer__link {
+  color: #AAAAAA;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.footer__link:hover {
+  color: #CDAA7D;
+}
+
+.footer__section--newsletter {
+  grid-column: span 1;
+}
+
+.footer__newsletter-text {
+  color: #AAAAAA;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.footer__newsletter-form {
+  margin-bottom: 1rem;
+}
+
+.footer__newsletter-input-group {
+  display: flex;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(205, 170, 125, 0.2);
+}
+
+.footer__newsletter-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 0.95rem;
+}
+
+.footer__newsletter-input::placeholder {
+  color: #AAAAAA;
+}
+
+.footer__newsletter-input:focus {
+  outline: none;
+}
+
+.footer__newsletter-btn {
+  padding: 0.75rem 1rem;
+  background: #CDAA7D;
+  color: #1D1D1F;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.footer__newsletter-btn:hover {
+  background: #DB2955;
+  color: white;
+}
+
+.footer__newsletter-note {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #AAAAAA;
+  font-size: 0.85rem;
+}
+
+.footer__newsletter-note i {
+  color: #CDAA7D;
+}
+
+.footer__bottom {
+  border-top: 1px solid rgba(205, 170, 125, 0.2);
+  padding: 1.5rem 2rem;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.footer__bottom-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer__legal {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer__copyright {
+  color: #AAAAAA;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.footer__legal-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer__legal-link {
+  color: #AAAAAA;
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: color 0.3s ease;
+}
+
+.footer__legal-link:hover {
+  color: #CDAA7D;
+}
+
+.footer__payment-methods {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer__payment-label {
+  color: #AAAAAA;
+  font-size: 0.9rem;
+}
+
+.footer__payment-icons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.footer__payment-icons i {
+  font-size: 1.5rem;
+  color: #CDAA7D;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1024px) {
+  .footer__content {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
   }
-  footer a {
-    text-decoration: none;
-    color: var(--color-foreground);
+  
+  .footer__section--newsletter {
+    grid-column: span 2;
   }
-  footer .footer__links,
-  footer .footer__payment {
-    display: flex;
+}
+
+@media screen and (max-width: 768px) {
+  .footer__content {
+    grid-template-columns: 1fr;
+    padding: 2rem 1rem;
+  }
+  
+  .footer__section--newsletter {
+    grid-column: span 1;
+  }
+  
+  .footer__bottom-content {
+    flex-direction: column;
     gap: 1rem;
+    text-align: center;
   }
-{% endstylesheet %}
+  
+  .footer__legal-links {
+    justify-content: center;
+  }
+  
+  .footer__payment-methods {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .footer__content {
+    padding: 1.5rem 1rem;
+  }
+  
+  .footer__legal-links {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+</style>
 
 {% schema %}
 {
-  "name": "t:general.footer",
-  "settings": [
-    {
-      "type": "link_list",
-      "id": "menu",
-      "label": "t:labels.menu"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_payment_icons",
-      "label": "t:labels.show_payment_icons",
-      "default": true
-    }
-  ]
+  "name": "Footer",
+  "settings": []
 }
-{% endschema %}
+{% endschema %} 

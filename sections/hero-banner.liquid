@@ -1,0 +1,273 @@
+{% stylesheet %}
+.hero-banner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 80vh;
+  background: white;
+  color: var(--hero-text, #333);
+  overflow: hidden;
+  padding: 2rem;
+}
+.hero-banner__content {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  max-width: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  padding: 3rem;
+  margin: 2rem;
+  box-shadow: 0 20px 40px rgba(29, 29, 31, 0.1);
+  border: 1px solid rgba(205, 170, 125, 0.2);
+}
+.hero-banner__media-container {
+  position: relative;
+  flex: 1;
+  height: 100%;
+  min-height: 80vh;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 2rem;
+  box-shadow: 0 20px 40px rgba(29, 29, 31, 0.15);
+}
+.hero-banner__media,
+.hero-banner__fallback-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0.8;
+  transition: all 0.4s ease;
+}
+.hero-banner__fallback-img {
+  opacity: 1;
+  pointer-events: none;
+}
+.hero-banner__media {
+  opacity: 0;
+  pointer-events: none;
+}
+.hero-banner--playing .hero-banner__media {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+.hero-banner--playing .hero-banner__fallback-img {
+  opacity: 0;
+}
+.hero-banner__title {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #1D1D1F 0%, #DB2955 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+}
+.hero-banner__subtitle {
+  font-size: 1.4rem;
+  margin-bottom: 2.5rem;
+  color: #333333;
+  line-height: 1.6;
+  font-weight: 400;
+}
+.hero-banner__cta {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #CDAA7D 0%, #DB2955 100%);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(205, 170, 125, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+.hero-banner__cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+.hero-banner__cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(205, 170, 125, 0.4);
+}
+.hero-banner__cta:hover::before {
+  left: 100%;
+}
+@media screen and (max-width: 768px) {
+  .hero-banner {
+    flex-direction: column;
+    padding: 1rem;
+    min-height: auto;
+  }
+  .hero-banner__content {
+    max-width: 100%;
+    text-align: center;
+    order: 2;
+    margin: 1rem 0;
+    padding: 2rem;
+  }
+  .hero-banner__media-container {
+    order: 1;
+    min-height: 50vh;
+    margin: 1rem 0;
+  }
+  .hero-banner__title { 
+    font-size: 2rem; 
+  }
+  .hero-banner__subtitle { 
+    font-size: 1.1rem; 
+  }
+  .hero-banner__cta {
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+  }
+}
+{% endstylesheet %}
+
+<section class="hero-banner" style="--hero-bg: {{ section.settings.bg_color }}; --hero-text: {{ section.settings.text_color }}; --hero-cta-bg: {{ section.settings.cta_bg }}; --hero-cta-text: {{ section.settings.cta_text }}; --hero-cta-bg-hover: {{ section.settings.cta_bg_hover }};">
+  <div class="hero-banner__content">
+    {% if section.settings.title != blank %}
+      <h1 class="hero-banner__title">{{ section.settings.title }}</h1>
+    {% else %}
+      <h1 class="hero-banner__title">Let Your Aura Flow Freely</h1>
+    {% endif %}
+    {% if section.settings.subtitle != blank %}
+      <p class="hero-banner__subtitle">{{ section.settings.subtitle }}</p>
+    {% else %}
+      <p class="hero-banner__subtitle">Designed for movement, made with intention. Aura Wear brings harmony between comfort and confidence, so you don't just wear style — you live it.</p>
+    {% endif %}
+    {% if section.settings.cta_label != blank and section.settings.cta_link != blank %}
+      <a href="{{ section.settings.cta_link }}" class="hero-banner__cta">{{ section.settings.cta_label }}</a>
+    {% else %}
+      <a href="/collections/all" class="hero-banner__cta">Shop Collection</a>
+    {% endif %}
+  </div>
+  
+  <div class="hero-banner__media-container">
+    <img class="hero-banner__fallback-img" src="{{ 'image.png' | asset_url }}" alt="AuraWear fallback image" loading="lazy" />
+    {% if section.settings.video != blank %}
+      <video class="hero-banner__media" preload="metadata" poster="{{ section.settings.image | image_url: width: 1200 }}">
+        <source src="{{ section.settings.video }}" type="video/mp4">
+      </video>
+    {% elsif section.settings.image != blank %}
+      <img class="hero-banner__media" src="{{ section.settings.image | image_url: width: 1600 }}" alt="" loading="lazy" />
+    {% else %}
+      <video class="hero-banner__media" preload="metadata">
+        <source src="{{ 'hero.mp4' | asset_url }}" type="video/mp4">
+      </video>
+    {% endif %}
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const heroBanner = document.querySelector('.hero-banner');
+  const video = heroBanner?.querySelector('.hero-banner__media');
+  const fallbackImg = heroBanner?.querySelector('.hero-banner__fallback-img');
+  if (video && video.tagName === 'VIDEO') {
+    video.pause();
+    video.currentTime = 0;
+    heroBanner.addEventListener('mouseenter', () => {
+      heroBanner.classList.add('hero-banner--playing');
+      video.play();
+    });
+    heroBanner.addEventListener('mouseleave', () => {
+      heroBanner.classList.remove('hero-banner--playing');
+      video.pause();
+      video.currentTime = 0;
+    });
+  }
+});
+</script>
+
+{% schema %}
+{
+  "name": "Hero banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image"
+    },
+    {
+      "type": "url",
+      "id": "video",
+      "label": "Background video (mp4 URL)",
+      "info": "Overrides image if set."
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Let Your Aura Flow Freely"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subheading",
+      "default": "Designed for movement, made with intention. Aura Wear brings harmony between comfort and confidence, so you don't just wear style — you live it."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Shop Collection"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "cta_bg",
+      "label": "Button background",
+      "default": "#CDAA7D"
+    },
+    {
+      "type": "color",
+      "id": "cta_bg_hover",
+      "label": "Button background (hover)",
+      "default": "#DB2955"
+    },
+    {
+      "type": "color",
+      "id": "cta_text",
+      "label": "Button text color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero banner"
+    }
+  ]
+}
+{% endschema %}

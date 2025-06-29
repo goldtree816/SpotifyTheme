@@ -1,0 +1,108 @@
+{% stylesheet %}
+.offer-section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  min-height: 300px;
+  background: #f9f9f9;
+  border-radius: 24px;
+  overflow: hidden;
+  margin: 2rem 0;
+}
+.offer-section__banner {
+  flex: 1 1 50%;
+  min-height: 300px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+}
+.offer-section__banner-img {
+  width: 60%;
+  max-width: 320px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+.offer-section__content {
+  flex: 1 1 50%;
+  background: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 2rem;
+  position: relative;
+}
+.offer-section__button {
+  margin-top: auto;
+  align-self: center;
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background: linear-gradient(135deg, #1D1D1F 0%, #DB2955 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(29, 29, 31, 0.2);
+}
+.offer-section__button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(29, 29, 31, 0.3);
+}
+@media (max-width: 900px) {
+  .offer-section {
+    flex-direction: column;
+  }
+  .offer-section__banner, .offer-section__content {
+    flex: 1 1 100%;
+    min-height: 180px;
+    padding: 2rem 1rem;
+  }
+  .offer-section__banner-img {
+    width: 80%;
+    max-width: 220px;
+  }
+  .offer-section__button {
+    align-self: stretch;
+    text-align: center;
+    margin-top: 2rem;
+  }
+}
+{% endstylesheet %}
+
+<section class="offer-section">
+  <div class="offer-section__banner">
+    <img src="{{ 'offer.png' | asset_url }}" alt="Sale Banner" class="offer-section__banner-img" loading="lazy" />
+  </div>
+  <div class="offer-section__content">
+    <a href="{{ section.settings.button_link | default: '#' }}" class="offer-section__button">
+      {{ section.settings.button_text | default: 'View Offer' }}
+    </a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Offer Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "View Offer"
+    },
+    {
+      "type": "text",
+      "id": "button_link",
+      "label": "Button Link",
+      "default": "/collections/sale"
+    }
+  ]
+}
+{% endschema %}
