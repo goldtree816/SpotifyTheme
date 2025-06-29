@@ -1,0 +1,168 @@
+<div class="hero-posters">
+  <!-- Poster 1 -->
+  <div class="hero-poster" id="poster-1">
+    {% if section.settings.poster1_image != blank %}
+      <img src="{{ section.settings.poster1_image | image_url: width: 600 }}" alt="Poster 1">
+    {% else %}
+      <img src="{{ 'jordan.jpg' | asset_url }}" alt="Poster 1">
+    {% endif %}
+    <div class="hero-poster-content">
+      <h2>{% if section.settings.poster1_heading != blank %}{{ section.settings.poster1_heading }}{% else %}JORDAN{% endif %}</h2>
+      <p>{% if section.settings.poster1_subheading != blank %}{{ section.settings.poster1_subheading }}{% else %}Dream big and leave red bright steps with this jordan.{% endif %}</p>
+      <a href="#" class="hero-poster-btn">SHOP NOW</a>
+    </div>
+  </div>
+  <!-- Poster 2 -->
+  <div class="hero-poster" id="poster-2">
+    {% if section.settings.poster2_image != blank %}
+      <img src="{{ section.settings.poster2_image | image_url: width: 600 }}" alt="Poster 2">
+    {% else %}
+      <img src="{{ 'nb550.webp' | asset_url }}" alt="Poster 2">
+    {% endif %}
+    <div class="hero-poster-content">
+      <h2>{% if section.settings.poster2_heading != blank %}{{ section.settings.poster2_heading }}{% else %}NB 550{% endif %}</h2>
+      <p>{% if section.settings.poster2_subheading != blank %}{{ section.settings.poster2_subheading }}{% else %}Classic style, modern comfort. Step up your sneaker game.{% endif %}</p>
+      <a href="#" class="hero-poster-btn">SHOP NOW</a>
+    </div>
+  </div>
+  <!-- Poster 3 -->
+  <div class="hero-poster" id="poster-3">
+    {% if section.settings.poster3_image != blank %}
+      <img src="{{ section.settings.poster3_image | image_url: width: 600 }}" alt="Poster 3">
+    {% else %}
+      <img src="{{ 'adidas-samba-sneakers-amy4.jpg' | asset_url }}" alt="Poster 3">
+    {% endif %}
+    <div class="hero-poster-content">
+      <h2>{% if section.settings.poster3_heading != blank %}{{ section.settings.poster3_heading }}{% else %}SAMBA{% endif %}</h2>
+      <p>{% if section.settings.poster3_subheading != blank %}{{ section.settings.poster3_subheading }}{% else %}Perfection is samba.{% endif %}</p>
+      <a href="#" class="hero-poster-btn">SHOP NOW</a>
+    </div>
+  </div>
+</div>
+
+<style>
+.hero-posters {
+  display: flex;
+  gap: 16px;
+  margin: 0 auto;
+  max-width: 1600px;
+  padding: 32px 0;
+}
+.hero-poster {
+  flex: 1 1 0;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  min-width: 0;
+  background: #eee;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.hero-poster img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  display: block;
+}
+.hero-poster-content {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  color: #fff;
+  padding: 24px;
+}
+.hero-poster-content h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0 0 8px 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.hero-poster-content p {
+  margin: 0 0 16px 0;
+  font-size: 1.1rem;
+}
+.hero-poster-btn {
+  display: inline-block;
+  background: #fff;
+  color: #111;
+  font-weight: bold;
+  padding: 10px 24px;
+  border-radius: 2px;
+  text-decoration: none;
+  margin-top: 8px;
+  transition: background 0.2s, color 0.2s;
+}
+.hero-poster-btn:hover {
+  background: #111;
+  color: #fff;
+}
+@media (max-width: 900px) {
+  .hero-posters {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .hero-poster img {
+    height: 220px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Hero Posters",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "poster1_image",
+      "label": "Poster 1 Image"
+    },
+    {
+      "type": "text",
+      "id": "poster1_heading",
+      "label": "Poster 1 Heading"
+    },
+    {
+      "type": "text",
+      "id": "poster1_subheading",
+      "label": "Poster 1 Subheading"
+    },
+    {
+      "type": "image_picker",
+      "id": "poster2_image",
+      "label": "Poster 2 Image"
+    },
+    {
+      "type": "text",
+      "id": "poster2_heading",
+      "label": "Poster 2 Heading"
+    },
+    {
+      "type": "text",
+      "id": "poster2_subheading",
+      "label": "Poster 2 Subheading"
+    },
+    {
+      "type": "image_picker",
+      "id": "poster3_image",
+      "label": "Poster 3 Image"
+    },
+    {
+      "type": "text",
+      "id": "poster3_heading",
+      "label": "Poster 3 Heading"
+    },
+    {
+      "type": "text",
+      "id": "poster3_subheading",
+      "label": "Poster 3 Subheading"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Posters"
+    }
+  ]
+}
+{% endschema %} 

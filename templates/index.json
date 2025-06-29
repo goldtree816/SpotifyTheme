@@ -1,20 +1,26 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
-  "sections": {
-    "main": {
-      "type": "hello-world",
-      "settings": {}
-    }
-  },
-  "order": [
-    "main"
-  ]
-}
+    "sections": {
+      "hero_posters": {
+        "type": "hero-posters",
+        "settings": {}
+      },
+      "top_picks": {
+        "type": "top-picks",
+        "settings": {}
+      },
+      "sneaker_description": {
+        "type": "sneaker-description",
+        "settings": {}
+      },
+      "main": {
+        "type": "hello-world",
+        "settings": {}
+      }
+    },
+    "order": [
+      "hero_posters",
+      "top_picks",
+      "sneaker_description",
+      "main"
+    ]
+  }
