@@ -1,0 +1,72 @@
+<div class="ad-banner-wrapper">
+  <div class="ad-banner-content">
+    <p class="ad-banner-text">{{ section.settings.text | default: "JOIN GOLDTREE & GET 15% OFF" }}</p>
+    <a href="{{ section.settings.button_link | default: '#' }}" class="ad-banner-button">
+      {{- section.settings.button_text | default: "SIGN UP FOR FREE" -}}
+      <span class="arrow">&rarr;</span>
+    </a>
+  </div>
+</div>
+
+<style>
+  .ad-banner-wrapper {
+    background-color: #0276d9;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .ad-banner-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+  }
+  .ad-banner-text {
+    color: white;
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin: 0;
+    letter-spacing: .1rem;
+  }
+  .ad-banner-button {
+    background-color: white;
+    color: black;
+    padding: 15px 25px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  .ad-banner-button .arrow {
+    margin-left: 10px;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Ad Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "JOIN OUR ADICLUB & GET 15% OFF"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "SIGN UP FOR FREE"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ad Banner"
+    }
+  ]
+}
+{% endschema %} 

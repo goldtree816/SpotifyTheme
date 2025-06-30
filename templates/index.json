@@ -12,8 +12,12 @@
         "type": "sneaker-description",
         "settings": {}
       },
-      "main": {
-        "type": "hello-world",
+      "ad_banner": {
+        "type": "ad-banner",
+        "settings": {}
+      },
+      "footer": {
+        "type": "footer",
         "settings": {}
       }
     },
@@ -21,6 +25,7 @@
       "hero_posters",
       "top_picks",
       "sneaker_description",
-      "main"
+      "ad_banner",
+      "footer"
     ]
   }
