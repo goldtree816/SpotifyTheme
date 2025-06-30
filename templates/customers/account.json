@@ -8,15 +8,16 @@
  * ------------------------------------------------------------
  */
 {
-  "type": "header",
-  "name": "t:general.header",
   "sections": {
-    "header": {
-      "type": "header",
-      "settings": {}
+    "main": {
+      "type": "main-account",
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
-    "header"
-  ],
+    "main"
+  ]
 }

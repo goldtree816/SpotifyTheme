@@ -8,18 +8,16 @@
  * ------------------------------------------------------------
  */
 {
-  "type": "footer",
-  "name": "t:general.footer",
   "sections": {
-    "footer": {
-      "type": "footer",
+    "main": {
+      "type": "main-register",
       "settings": {
-        "menu": "",
-        "show_payment_icons": true
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     }
   },
   "order": [
-    "footer"
+    "main"
   ]
 }
