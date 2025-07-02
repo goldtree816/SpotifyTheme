@@ -1,0 +1,117 @@
+<section>
+  <div class="three-images-wrapper">
+    {%- if section.settings.hero_image_1 != blank -%}
+      <div class="first-user">
+        <h1></h1>
+      </div>
+    {%- else -%}
+      <div class="first">
+        <h1></h1>
+      </div>
+    {% endif %}
+    {%- if section.settings.hero_image_2 != blank -%}
+      <div class="second-user">
+        <h1></h1>
+      </div>
+    {%- else -%}
+      <div class="second">
+        <h1></h1>
+      </div>
+    {% endif %}
+    {%- if section.settings.hero_image_3 != blank -%}
+      <div class="third-user">
+        <h1></h1>
+      </div>
+    {%- else -%}
+      <div class="third">
+        <h1></h1>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .three-images-wrapper {
+    display: flex;
+    width: 100%;
+  }
+
+  .first {
+    background-image: url("{{'first.jpg' | asset_url}}");
+    background-size: cover;
+    width: 33.3333%;
+    height: 500px;
+    background-position: center;
+  }
+
+  .first-user {
+    background-image: url('{{ section.settings.hero_image_1 | image_url }}');
+    background-size: cover;
+    width: 33.3333%;
+    height: 500px;
+    background-position: center;
+  }
+
+  .second {
+    background-image: url("{{'second.jpg' | asset_url}}");
+    background-size: cover;
+    width: 33.3333%;
+    height: 500px;
+    background-position: center;
+  }
+
+  .second-user {
+    background-image: url('{{ section.settings.hero_image_2 | image_url }}');
+    background-size: cover;
+    width: 33.3333%;
+    height: 500px;
+    background-position: center;
+  }
+
+  .third {
+    background-image: url("{{'third.jpg' | asset_url}}");
+    background-size: cover;
+    width: 33.3333%;
+    height: 500px;
+    background-position: center;
+  }
+
+  .third-user {
+    background-image: url('{{ section.settings.hero_image_3 | image_url }}');
+    background-size: cover;
+    width: 33.3333%;
+    height: 500px;
+    background-position: center;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "three-images",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image_1",
+      "label": "Hero Image 1",
+      "info": "400 x 120px .png or .jpg recommended"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image_2",
+      "label": "Hero Image 2",
+      "info": "400 x 120px .png or .jpg recommended"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image_3",
+      "label": "Hero Image 3",
+      "info": "400 x 120px .png or .jpg recommended"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Three Images"
+    }
+  ]
+}
+{% endschema %}

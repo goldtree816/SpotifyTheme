@@ -1,0 +1,92 @@
+<header class="main-header">
+  <div class="header-logo">
+    <a href="{{ routes.root_url }}">
+      <img src="{{ 'logo.png' | asset_url }}" height="80" width="130" loading="lazy" alt="logo">
+    </a>
+  </div>
+  <div class="main-navigation">
+    {% for link in linklists['main-menu'].links %}
+      <li class="nav-item">
+        <a href="{{ link.url }}" class="nav-link">{{ link.title }}</a>
+      </li>
+    {% endfor %}
+  </div>
+  <div class="right-navigation">
+    <li>
+      <a href="{{ routes.account_url }}">
+        <img class="icon-account" src="{{ 'icon-account.svg' | asset_url }}" width="24" height="24" alt="Account icon">
+      </a>
+    </li>
+    <li>
+      <a href="{{ routes.cart_url }}">
+        <img class="icon-cart" src="{{ 'shopping-bag.png' | asset_url }}" width="24" height="24" alt="Cart icon">
+      </a>
+    </li>
+  </div>
+</header>
+
+<style>
+  .main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 50px;
+    background-color: #f8f9fa;
+  }
+
+  .main-navigation {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    gap: 20px;
+  }
+
+  .nav-item .nav-link {
+    position: relative;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 17px;
+    color: #000;
+    padding: 5px 0;
+  }
+
+  /* Hover Underline Animation (Center to Left & Right) */
+  .nav-item .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: #000;
+    transition: width 0.3s ease, left 0.3s ease;
+  }
+
+  .nav-item .nav-link:hover::after {
+    width: 100%;
+    left: 0;
+  }
+
+  .right-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .right-navigation li {
+    text-decoration: none;
+    list-style-type: none;
+  }
+
+  /* Add hover effect to icons */
+  .icon-account,
+  .icon-cart {
+    transition: transform 0.2s ease;
+  }
+
+  .icon-account:hover,
+  .icon-cart:hover {
+    transform: scale(1.1);
+  }
+</style>

@@ -1,0 +1,63 @@
+{% if section.settings.show_announcement_bar %}
+  <section>
+    <div class="announcement-bar">
+      {% comment %} <p class="announcement-bar__text"> Get 15% off on your first order</p> {% endcomment %}
+      {% if section.settings.announcement_bar_image != blank %}
+        <img
+          src="{{ section.settings.announcement_bar_image | asset_url }}"
+          alt="image"
+          height="50"
+          width="50"
+          class="announcement-bar__image"
+          loading="lazy"
+        >
+      {% else %}
+        <p class="announcement-bar__text">Get 15% off on your first order</p>
+      {% endif %}
+    </div>
+  </section>
+{% endif %}
+
+<style>
+  .announcement-bar {
+      background-color: {{ section.settings.announcement_bar_background_color }};
+      color: {{ section.settings.announcement_bar_text }};
+    }
+</style>
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_announcement_bar",
+      "label": "Show Announcement Bar",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "announcement_bar_image",
+      "label": "Announcement Bar Image",
+      "info": "png recommended"
+    },
+    {
+      "type": "color",
+      "id": "announcement_bar_background_color",
+      "label": "Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "announcement_bar_text",
+      "label": "Announcement Text",
+      "default": "#f8f8f8"
+    }
+  ],
+  "presets": [
+    {
+      "name": "announcement-bar"
+    }
+  ]
+}
+{% endschema %}

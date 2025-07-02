@@ -1,0 +1,72 @@
+<section>
+  <div class="banner-wrapper">
+    <div class="slide-text" id="text1"><p>Members: Free Shipping!</p></div>
+    <div class="slide-text" id="text2">Save Upt to 40%</div>
+    <div class="slide-text" id="text3">Get Your Gear Faster</div>
+  </div>
+</section>
+
+<style>
+    .banner-wrapper {
+      background-color: {{ section.settings.announcement_bar_background_color }};
+      color: {{ section.settings.announcement_bar_text }};
+    }
+
+    .slide-text {
+      position: absolute;
+      top: 155px;
+      left: -150%;
+      transform: translateX(0, -50%);
+      color: black;
+      font-size: 20px;
+      padding: 10px;
+      transition: left 0.5s ease-in-out;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const text1 = document.getElementById('text1');
+    const text2 = document.getElementById('text2');
+    const text3 = document.getElementById('text3');
+
+    const texts = [text1, text2, text3];
+    let currentIndex = 0;
+
+    function showNextText() {
+      texts[currentIndex].style.left = '-150%'; // Move current text out of view
+      currentIndex = (currentIndex + 1) % texts.length; // Move to next text
+      texts[currentIndex].style.left = '0'; // Bring next text into view
+    }
+
+    setInterval(showNextText, 3000);
+    
+
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Banner Section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "announcement_bar_background_color",
+      "label": "Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "announcement_bar_text",
+      "label": "Announcement Text",
+      "default": "#f8f8f8"
+    }
+  ],
+  "presets": [
+    {
+      "name": "banner"
+    }
+  ]
+}
+{% endschema %}
