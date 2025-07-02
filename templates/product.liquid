@@ -1,0 +1,194 @@
+{% comment %}
+  Product template for individual product pages.
+  Uses the main layout, header, and footer for consistency.
+  Professional, systematic structure.
+{% endcomment %}
+
+{% section 'header' %}
+<main class="product-main">
+  <div class="product-container">
+    <div class="product-gallery">
+      {% if product.images.size > 1 %}
+        <div class="product-gallery-thumbnails">
+          {% for image in product.images %}
+            <img src="{{ image | img_url: '120x120' }}" alt="{{ product.title | escape }} thumbnail" class="product-thumbnail" onclick="document.getElementById('main-product-image').src='{{ image | img_url: '800x800' }}'" />
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% assign main_image = product.featured_image | default: product.images.first %}
+      <img id="main-product-image" src="{{ main_image | img_url: '800x800' }}" alt="{{ product.title | escape }}" class="product-image" />
+    </div>
+    <div class="product-details">
+      <h1 class="product-title">{{ product.title }}</h1>
+      <div class="product-category">Category: {{ product.type }}</div>
+      <div class="product-price">{{ product.price | money }}</div>
+      <div class="product-description">{{ product.description }}</div>
+      <form action="/cart/add" method="post" enctype="multipart/form-data" class="product-form">
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        {% for option in product.options_with_values %}
+          <div class="product-option">
+            <label for="option-{{ forloop.index }}">{{ option.name }}</label>
+            <select id="option-{{ forloop.index }}" name="options[{{ option.name }}]">
+              {% for value in option.values %}
+                <option value="{{ value }}">{{ value }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        {% endfor %}
+        <button type="submit" class="product-add-to-cart">Add to Cart</button>
+      </form>
+    </div>
+  </div>
+  {% if product.collections.size > 0 %}
+    <div class="similar-products">
+      <h2>Similar Products</h2>
+      <div class="similar-products-grid">
+        {% assign similar_collection = product.collections.first %}
+        {% for similar_product in similar_collection.products %}
+          {% if similar_product.id != product.id %}
+            <div class="similar-product-card">
+              <a href="{{ similar_product.url }}">
+                {% if similar_product.featured_image %}
+                  <img src="{{ similar_product.featured_image | img_url: '300x300' }}" alt="{{ similar_product.title | escape }}" class="similar-product-image" />
+                {% endif %}
+                <div class="similar-product-title">{{ similar_product.title }}</div>
+                <div class="similar-product-price">{{ similar_product.price | money }}</div>
+              </a>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</main>
+{% section 'footer' %}
+
+<style>
+.product-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+}
+.product-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 16px rgba(29,29,31,0.08);
+}
+.product-gallery {
+  flex: 1 1 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 350px;
+}
+.product-gallery-thumbnails {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.product-thumbnail {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  border: 2px solid #eee;
+  transition: border 0.2s;
+}
+.product-thumbnail:hover {
+  border: 2px solid #CDAA7D;
+}
+.product-image {
+  max-width: 100%;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 8px rgba(29,29,31,0.10);
+}
+.product-details {
+  flex: 1 1 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  justify-content: center;
+}
+.product-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+.product-category {
+  font-size: 1rem;
+  color: #888;
+  margin-bottom: 0.5rem;
+}
+.product-price {
+  font-size: 1.5rem;
+  color: #CDAA7D;
+  font-weight: 600;
+}
+.product-description {
+  color: #444;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+.product-form {
+  margin-top: 2rem;
+}
+.product-option {
+  margin-bottom: 1rem;
+}
+.product-add-to-cart {
+  background: #CDAA7D;
+  color: #fff;
+  border: none;
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.product-add-to-cart:hover {
+  background: #b89a6b;
+}
+.similar-products {
+  margin-top: 4rem;
+}
+.similar-products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+.similar-product-card {
+  background: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 16px rgba(29,29,31,0.08);
+  padding: 1rem;
+  text-align: center;
+  transition: box-shadow 0.2s;
+}
+.similar-product-card:hover {
+  box-shadow: 0 4px 24px rgba(29,29,31,0.15);
+}
+.similar-product-image {
+  width: 100%;
+  height: 150px;
+  object-fit: contain;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.similar-product-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1D1D1F;
+  margin-bottom: 0.25rem;
+}
+.similar-product-price {
+  font-size: 1.1rem;
+  color: #CDAA7D;
+  font-weight: 600;
+}
+</style> 

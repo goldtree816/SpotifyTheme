@@ -1,21 +1,15 @@
 <!doctype html>
 <html lang="{{ request.locale.iso_code }}">
   <head>
-    
+  
     {{ content_for_header }}
   </head>
 
   <body>
   
-    {% section 'header' %}
     <main>
-        {% section 'hero-banner' %}
-      {% section 'featured-collections' %}
-       {% section 'collection' %}
-         {% section 'offer' %}
       {{content_for_layout}}
     </main>
-    {% section 'footer' %}
   </body>
 </html>
 

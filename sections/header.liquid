@@ -83,7 +83,10 @@
       {% if cart.item_count > 0 %}
         <span class="header__cart-count">{{ cart.item_count }}</span>
       {% endif %}
-      {{ 'icon-cart.svg' | inline_asset_content }}
+      <i class="fa-solid fa-cart-shopping"></i>
+    </a>
+    <a href="/pages/wishlist" class="header__icon-btn header__wishlist-btn" aria-label="Wishlist">
+      <i class="fa-regular fa-heart"></i>
     </a>
     <button class="header__icon-btn header__hamburger-btn" aria-label="Open menu" tabindex="0" type="button">
       <i class="fa-solid fa-bars"></i>
@@ -180,6 +183,98 @@ if (searchBtn && searchForm) {
 {% schema %}
 {
   "name": "Header (Aura Wear)",
-  "settings": []
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo Image"
+    },
+    {
+      "type": "text",
+      "id": "brand_name",
+      "label": "Brand Name",
+      "default": "Aura Wear"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Show Announcement Bar",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "announcement_text",
+      "label": "Announcement Text (scrolling)",
+      "default": "🚚 FREE SHIPPING ON ORDERS OVER $50! 🎁"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu_link",
+      "name": "Navigation Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Link Label",
+          "default": "Shop"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link URL",
+          "default": "/collections/all"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Aura Wear Header",
+      "category": "Header",
+      "settings": {
+        "brand_name": "Aura Wear",
+        "announcement_text": "🚚 FREE SHIPPING ON ORDERS OVER $50! 🎁"
+      },
+      "blocks": [
+        {
+          "type": "menu_link",
+          "settings": {
+            "label": "Home",
+            "url": "/"
+          }
+        },
+        {
+          "type": "menu_link",
+          "settings": {
+            "label": "Shop",
+            "url": "/collections/all"
+          }
+        },
+        {
+          "type": "menu_link",
+          "settings": {
+            "label": "New Arrivals",
+            "url": "/collections/new-arrivals"
+          }
+        },
+        {
+          "type": "menu_link",
+          "settings": {
+            "label": "About",
+            "url": "/pages/about"
+          }
+        },
+        {
+          "type": "menu_link",
+          "settings": {
+            "label": "Contact",
+            "url": "/pages/contact"
+          }
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}

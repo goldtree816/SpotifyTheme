@@ -1,0 +1,45 @@
+{% comment %}Cart page template: lists all cart items, allows quantity updates, and shows total{% endcomment %}
+
+<h1>Cart</h1>
+
+{% if cart.item_count == 0 %}
+  <p>Your cart is empty.</p>
+{% else %}
+  <form action="/cart" method="post">
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in cart.items %}
+          <tr>
+            <td>
+              <a href="{{ item.url }}">
+                {% if item.image %}
+                  <img src="{{ item.image | img_url: '100x' }}" alt="{{ item.title }}" style="width:50px;height:auto;" />
+                {% endif %}
+                {{ item.product.title }}
+                {% if item.variant.title != 'Default Title' %}<br>{{ item.variant.title }}{% endif %}
+              </a>
+            </td>
+            <td>{{ item.price | money }}</td>
+            <td>
+              <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" />
+            </td>
+            <td>{{ item.line_price | money }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <p><strong>Subtotal:</strong> {{ cart.total_price | money }}</p>
+    <button type="submit">Update Cart</button>
+  </form>
+  <form action="/checkout" method="post">
+    <button type="submit">Proceed to Checkout</button>
+  </form>
+{% endif %} 

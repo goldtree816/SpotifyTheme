@@ -30,10 +30,69 @@
 
 .featured-collections__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.featured-collections__scroll-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
+  position: relative;
+}
+
+.featured-collections__scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 2rem;
+  scroll-behavior: smooth;
+  max-width: 1200px;
+  padding: 0 1rem;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.featured-collections__scroll::-webkit-scrollbar {
+  display: none; /* WebKit */
+}
+
+.featured-collections__scroll .featured-collection {
+  flex: 0 0 280px;
+  min-width: 280px;
+}
+
+.scroll-arrow {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  z-index: 10;
+}
+
+.scroll-arrow:hover {
+  background: #f5f5f5;
+  transform: scale(1.1);
+}
+
+.scroll-arrow.left {
+  margin-right: 1rem;
+}
+
+.scroll-arrow.right {
+  margin-left: 1rem;
 }
 
 .featured-collection {
@@ -43,6 +102,8 @@
   box-shadow: 0 8px 24px rgba(29, 29, 31, 0.08);
   transition: all 0.3s ease;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .featured-collection:hover {
@@ -50,103 +111,40 @@
   box-shadow: 0 16px 40px rgba(29, 29, 31, 0.15);
 }
 
-.featured-collection__header {
-  padding: 1.5rem 1.5rem 1rem;
-  border-bottom: 1px solid #f0f0f0;
-}
-
-.featured-collection__title {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #1D1D1F;
-  margin-bottom: 0.5rem;
-  text-decoration: none;
-  display: block;
-  transition: color 0.3s ease;
-}
-
-.featured-collection__title:hover {
-  color: #DB2955;
-}
-
-.featured-collection__description {
-  color: #AAAAAA;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  margin-bottom: 1rem;
-}
-
-.featured-collection__meta {
+.featured-collection__content {
+  padding: 1.5rem;
+  flex-grow: 1;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.featured-collection__product-count {
-  color: #333333;
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-.featured-collection__badge {
-  background: #CDAA7D;
-  color: #1D1D1F;
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.featured-collection__products {
-  padding: 1rem 1.5rem;
-}
-
-.featured-collection__products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.featured-product {
-  text-align: center;
-  transition: transform 0.3s ease;
-}
-
-.featured-product:hover {
-  transform: translateY(-4px);
+  flex-direction: column;
 }
 
 .featured-product__image-container {
-  position: relative;
-  height: 120px;
-  border-radius: 8px;
+  width: 100%;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
   overflow: hidden;
-  margin-bottom: 0.5rem;
 }
 
 .featured-product__image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   transition: transform 0.3s ease;
 }
 
-.featured-product:hover .featured-product__image {
+.featured-collection:hover .featured-product__image {
   transform: scale(1.05);
 }
 
 .featured-product__title {
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 1.1rem;
+  font-weight: 700;
   color: #1D1D1F;
-  text-decoration: none;
-  display: block;
-  margin-bottom: 0.25rem;
-  line-height: 1.3;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s ease;
 }
 
 .featured-product__title:hover {
@@ -154,14 +152,15 @@
 }
 
 .featured-product__price {
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: #DB2955;
   font-weight: 600;
+  margin-bottom: 1rem;
+  flex-grow: 1;
 }
 
 .featured-collection__cta {
   display: inline-block;
-  width: 100%;
   padding: 0.75rem 1rem;
   background: linear-gradient(135deg, #CDAA7D 0%, #DB2955 100%);
   color: white;
@@ -172,6 +171,7 @@
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  margin-top: auto;
 }
 
 .featured-collection__cta::before {
@@ -190,27 +190,8 @@
   box-shadow: 0 8px 20px rgba(205, 170, 125, 0.3);
 }
 
-.featured-collections__view-all {
-  text-align: center;
-  margin-top: 3rem;
-}
-
-.featured-collections__view-all-btn {
-  display: inline-block;
-  padding: 1rem 2.5rem;
-  background: linear-gradient(135deg, #1D1D1F 0%, #DB2955 100%);
-  color: white;
-  text-decoration: none;
-  border-radius: 50px;
-  font-weight: 700;
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(29, 29, 31, 0.2);
-}
-
-.featured-collections__view-all-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgba(29, 29, 31, 0.3);
+.featured-collection__cta:hover::before {
+  left: 100%;
 }
 
 @media screen and (max-width: 768px) {
@@ -227,16 +208,23 @@
   }
   
   .featured-collections__grid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
   
-  .featured-collection__products-grid {
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  .featured-collections__scroll .featured-collection {
+    flex: 0 0 250px;
+    min-width: 250px;
   }
   
   .featured-product__image-container {
-    height: 100px;
+    height: 180px;
+  }
+  
+  .scroll-arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
   }
 }
 
@@ -245,125 +233,72 @@
     grid-template-columns: 1fr;
   }
   
-  .featured-collection__header,
-  .featured-collection__products {
+  .featured-collections__scroll .featured-collection {
+    flex: 0 0 220px;
+    min-width: 220px;
+  }
+  
+  .featured-collection__content {
     padding: 1rem;
   }
   
-  .featured-collection__products-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .featured-product__image-container {
+    height: 160px;
   }
 }
 {% endstylesheet %}
 
 <section class="featured-collections">
   <div class="featured-collections__header">
-    {% if section.settings.title != blank %}
-      <h2 class="featured-collections__title">{{ section.settings.title }}</h2>
-    {% else %}
-      <h2 class="featured-collections__title">Featured Collections</h2>
-    {% endif %}
-    
-    {% if section.settings.subtitle != blank %}
-      <p class="featured-collections__subtitle">{{ section.settings.subtitle }}</p>
-    {% else %}
-      <p class="featured-collections__subtitle">Discover our carefully curated collections designed for movement and intention.</p>
-    {% endif %}
+    <h2 class="featured-collections__title">{{ section.settings.heading | default: 'Featured Products' }}</h2>
+    <p class="featured-collections__subtitle">{{ section.settings.subheading | default: 'Discover our handpicked favorites.' }}</p>
   </div>
-
   <div class="featured-collections__grid">
-    {% for block in section.blocks %}
-      {% if block.type == 'collection' %}
-        {% assign collection = collections[block.settings.collection] %}
-        {% if collection != blank %}
-          <div class="featured-collection" {{ block.shopify_attributes }}>
-            <div class="featured-collection__header">
-              <a href="{{ collection.url }}" class="featured-collection__title">
-                {{ collection.title }}
-              </a>
-              
-              {% if collection.description != blank %}
-                <p class="featured-collection__description">
-                  {{ collection.description | strip_html | truncate: 100 }}
-                </p>
-              {% else %}
-                <p class="featured-collection__description">
-                  Discover our latest {{ collection.title | downcase }} designed for comfort and style.
-                </p>
-              {% endif %}
-              
-              <div class="featured-collection__meta">
-                <span class="featured-collection__product-count">
-                  {{ collection.products_count }} products
-                </span>
-                {% if block.settings.show_badge %}
-                  <span class="featured-collection__badge">
-                    {{ block.settings.badge_text | default: 'New' }}
-                  </span>
-                {% endif %}
-              </div>
-            </div>
-            
-            <div class="featured-collection__products">
-              <div class="featured-collection__products-grid">
-                {% for product in collection.products limit: block.settings.products_to_show %}
-                  <div class="featured-product">
-                    <div class="featured-product__image-container">
-                      {% if product.featured_image %}
-                        <img 
-                          src="{{ product.featured_image | image_url: width: 200 }}" 
-                          alt="{{ product.title }}" 
-                          class="featured-product__image"
-                          loading="lazy"
-                        />
-                      {% else %}
-                        <img 
-                          src="{{ 'image.png' | asset_url }}" 
-                          alt="{{ product.title }}" 
-                          class="featured-product__image"
-                          loading="lazy"
-                        />
-                      {% endif %}
-                    </div>
-                    
-                    <a href="{{ product.url }}" class="featured-product__title">
-                      {{ product.title | truncate: 20 }}
-                    </a>
-                    
-                    <div class="featured-product__price">
-                      {% if product.price_varies %}
-                        From {{ product.price_min | money }}
-                      {% else %}
-                        {{ product.price | money }}
-                      {% endif %}
-                    </div>
-                  </div>
-                {% endfor %}
-              </div>
-              
-              <a href="{{ collection.url }}" class="featured-collection__cta">
-                Shop Now
-              </a>
-            </div>
-          </div>
-        {% endif %}
-      {% endif %}
-    {% endfor %}
-  </div>
-
-
-
-
-
-
-
-  {% if section.settings.show_view_all %}
-    <div class="featured-collections__view-all">
-      <a href="/collections/all" class="featured-collections__view-all-btn">
-        {{ section.settings.view_all_text | default: 'View All Collections' }}
-      </a>
+    <!-- Product 1: Mock Neck Top Regular Colors -->
+    <div class="featured-collection">
+      <div class="featured-product__image-container">
+        <img src="{{ section.settings.mock_neck_regular_image | asset_url }}" alt="{{ section.settings.mock_neck_regular_name }}" class="featured-product__image" loading="lazy" />
+      </div>
+      <div class="featured-collection__content">
+        <div class="featured-product__title">{{ section.settings.mock_neck_regular_name }}</div>
+        <div class="featured-product__price">{{ section.settings.mock_neck_regular_price }}</div>
+        <a href="#" class="featured-collection__cta">Shop Now</a>
+      </div>
     </div>
-  {% endif %}
+    <!-- Product 2: Mock Neck Top Black Collection -->
+    <div class="featured-collection">
+      <div class="featured-product__image-container">
+        <img src="{{ section.settings.mock_neck_black_image | asset_url }}" alt="{{ section.settings.mock_neck_black_name }}" class="featured-product__image" loading="lazy" />
+      </div>
+      <div class="featured-collection__content">
+        <div class="featured-product__title">{{ section.settings.mock_neck_black_name }}</div>
+        <div class="featured-product__price">{{ section.settings.mock_neck_black_price }}</div>
+        <a href="#" class="featured-collection__cta">Shop Now</a>
+      </div>
+    </div>
+    <!-- Product 3: Sleeves Crop Top Light Colors -->
+    <div class="featured-collection">
+      <div class="featured-product__image-container">
+        <img src="{{ section.settings.sleeves_crop_light_image | asset_url }}" alt="{{ section.settings.sleeves_crop_light_name }}" class="featured-product__image" loading="lazy" />
+      </div>
+      <div class="featured-collection__content">
+        <div class="featured-product__title">{{ section.settings.sleeves_crop_light_name }}</div>
+        <div class="featured-product__price">{{ section.settings.sleeves_crop_light_price }}</div>
+        <a href="#" class="featured-collection__cta">Shop Now</a>
+      </div>
+    </div>
+    <!-- Product 4: Sleeves Crop Top Dark Colors -->
+    <div class="featured-collection">
+      <div class="featured-product__image-container">
+        <img src="{{ section.settings.sleeves_crop_dark_image | asset_url }}" alt="{{ section.settings.sleeves_crop_dark_name }}" class="featured-product__image" loading="lazy" />
+      </div>
+      <div class="featured-collection__content">
+        <div class="featured-product__title">{{ section.settings.sleeves_crop_dark_name }}</div>
+        <div class="featured-product__price">{{ section.settings.sleeves_crop_dark_price }}</div>
+        <a href="#" class="featured-collection__cta">Shop Now</a>
+      </div>
+    </div>
+  </div>
 </section>
 
 {% schema %}
@@ -372,77 +307,290 @@
   "settings": [
     {
       "type": "text",
-      "id": "title",
-      "label": "Heading",
-      "default": "Featured Collections"
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Featured Products"
     },
     {
       "type": "text",
-      "id": "subtitle",
-      "label": "Subheading",
-      "default": "Discover our carefully curated collections designed for movement and intention."
+      "id": "subheading",
+      "label": "Section Subheading",
+      "default": "Discover our handpicked favorites."
+    },
+    {
+      "type": "header",
+      "content": "Mock Neck Tops - Regular Colors"
+    },
+    {
+      "type": "select",
+      "id": "mock_neck_regular_image",
+      "label": "Mock Neck Top - Regular Colors",
+      "options": [
+        { "value": "mock neck top (5).jpg", "label": "Mock Neck Top 5" },
+        { "value": "mock neck top (6).jpg", "label": "Mock Neck Top 6" },
+        { "value": "mock neck top (7).jpg", "label": "Mock Neck Top 7" }
+      ],
+      "default": "mock neck top (5).jpg"
+    },
+    {
+      "type": "text",
+      "id": "mock_neck_regular_name",
+      "label": "Mock Neck Top Name",
+      "default": "Premium Mock Neck Top"
+    },
+    {
+      "type": "text",
+      "id": "mock_neck_regular_price",
+      "label": "Mock Neck Top Price",
+      "default": "$29.99"
+    },
+    {
+      "type": "header",
+      "content": "Mock Neck Tops - Black Collection"
+    },
+    {
+      "type": "select",
+      "id": "mock_neck_black_image",
+      "label": "Mock Neck Top - Black Colors",
+      "options": [
+        { "value": "mock neck top black 3.jpg", "label": "Mock Neck Top Black 3" },
+        { "value": "mock neck top black 4.jpg", "label": "Mock Neck Top Black 4" },
+        { "value": "mock neck top black.jpg", "label": "Mock Neck Top Black" },
+        { "value": "mock neck top blacks.jpg", "label": "Mock Neck Top Blacks" }
+      ],
+      "default": "mock neck top black 3.jpg"
+    },
+    {
+      "type": "text",
+      "id": "mock_neck_black_name",
+      "label": "Mock Neck Top Black Name",
+      "default": "Black Mock Neck Top"
+    },
+    {
+      "type": "text",
+      "id": "mock_neck_black_price",
+      "label": "Mock Neck Top Black Price",
+      "default": "$29.99"
+    },
+    {
+      "type": "header",
+      "content": "Sleeves Crop Tops - Light Colors"
+    },
+    {
+      "type": "select",
+      "id": "sleeves_crop_light_image",
+      "label": "Sleeves Crop Top - Light Colors",
+      "options": [
+        { "value": "sleeves crop top 1.jpg", "label": "Sleeves Crop Top 1 (Light)" },
+        { "value": "sleeves crop top 2.jpg", "label": "Sleeves Crop Top 2 (Light)" },
+        { "value": "sleeves crop top.jpg", "label": "Sleeves Crop Top (Light)" }
+      ],
+      "default": "sleeves crop top 1.jpg"
+    },
+    {
+      "type": "text",
+      "id": "sleeves_crop_light_name",
+      "label": "Light Sleeves Crop Top Name",
+      "default": "Light Sleeves Crop Top"
+    },
+    {
+      "type": "text",
+      "id": "sleeves_crop_light_price",
+      "label": "Light Sleeves Crop Top Price",
+      "default": "$24.99"
+    },
+    {
+      "type": "header",
+      "content": "Sleeves Crop Tops - Dark Colors"
+    },
+    {
+      "type": "select",
+      "id": "sleeves_crop_dark_image",
+      "label": "Sleeves Crop Top - Dark Colors",
+      "options": [
+        { "value": "sleeves crop top 4.jpg", "label": "Sleeves Crop Top 4 (Dark)" },
+        { "value": "sleeves crop top.avif", "label": "Sleeves Crop Top AVIF (Dark)" }
+      ],
+      "default": "sleeves crop top 4.jpg"
+    },
+    {
+      "type": "text",
+      "id": "sleeves_crop_dark_name",
+      "label": "Dark Sleeves Crop Top Name",
+      "default": "Dark Sleeves Crop Top"
+    },
+    {
+      "type": "text",
+      "id": "sleeves_crop_dark_price",
+      "label": "Dark Sleeves Crop Top Price",
+      "default": "$24.99"
+    },
+    {
+      "type": "header",
+      "content": "Striped T-Shirts - White Base"
+    },
+    {
+      "type": "select",
+      "id": "striped_white_image",
+      "label": "Striped T-Shirt - White Base",
+      "options": [
+        { "value": "Striped T-Shirt 1.jpg", "label": "White Striped T-Shirt 1" },
+        { "value": "Striped T-Shirt 2.jpg", "label": "White Striped T-Shirt 2" },
+        { "value": "Striped T-Shirt.jpg", "label": "White Striped T-Shirt" }
+      ],
+      "default": "Striped T-Shirt 1.jpg"
+    },
+    {
+      "type": "text",
+      "id": "striped_white_name",
+      "label": "White Striped T-Shirt Name",
+      "default": "White Striped T-Shirt"
+    },
+    {
+      "type": "text",
+      "id": "striped_white_price",
+      "label": "White Striped T-Shirt Price",
+      "default": "$19.99"
+    },
+    {
+      "type": "header",
+      "content": "Striped T-Shirts - Dark Base"
+    },
+    {
+      "type": "select",
+      "id": "striped_dark_image",
+      "label": "Striped T-Shirt - Dark Base",
+      "options": [
+        { "value": "Striped T-Shirt 3.jpg", "label": "Dark Striped T-Shirt 3" },
+        { "value": "Striped T-Shirt 4.jpg", "label": "Dark Striped T-Shirt 4" }
+      ],
+      "default": "Striped T-Shirt 3.jpg"
+    },
+    {
+      "type": "text",
+      "id": "striped_dark_name",
+      "label": "Dark Striped T-Shirt Name",
+      "default": "Dark Striped T-Shirt"
+    },
+    {
+      "type": "text",
+      "id": "striped_dark_price",
+      "label": "Dark Striped T-Shirt Price",
+      "default": "$19.99"
+    },
+    {
+      "type": "header",
+      "content": "Brand Assets"
+    },
+    {
+      "type": "select",
+      "id": "brand_image",
+      "label": "Brand/Featured Image",
+      "options": [
+        { "value": "slideshow-1.jpg", "label": "Slideshow Featured" },
+        { "value": "image.png", "label": "Brand Image" },
+        { "value": "logo.gif", "label": "Logo GIF" },
+        { "value": "logo.png", "label": "Logo PNG" },
+        { "value": "offer.png", "label": "Special Offer" }
+      ],
+      "default": "slideshow-1.jpg"
+    },
+    {
+      "type": "text",
+      "id": "brand_item_name",
+      "label": "Brand Item Name",
+      "default": "Featured Collection"
+    },
+    {
+      "type": "text",
+      "id": "brand_item_price",
+      "label": "Brand Item Price",
+      "default": "$34.99"
+    },
+    {
+      "type": "header",
+      "content": "Color Scheme Settings"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Section Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color",
+      "id": "white_product_bg",
+      "label": "White Products Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "black_product_bg",
+      "label": "Black Products Background",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4,
+      "label": "Products per row"
     },
     {
       "type": "checkbox",
-      "id": "show_view_all",
-      "label": "Show view all button",
+      "id": "show_vendor",
+      "label": "Show vendor",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_description",
+      "label": "Show product description",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_quick_add",
+      "label": "Enable quick add to cart",
       "default": true
     },
     {
-      "type": "text",
-      "id": "view_all_text",
-      "label": "View all button text",
-      "default": "View All Collections"
-    }
-  ],
-  "blocks": [
+      "type": "header",
+      "content": "Display Options"
+    },
     {
-      "type": "collection",
-      "name": "Collection",
-      "settings": [
-        {
-          "type": "collection",
-          "id": "collection",
-          "label": "Collection"
-        },
-        {
-          "type": "range",
-          "id": "products_to_show",
-          "min": 2,
-          "max": 8,
-          "step": 1,
-          "default": 4,
-          "label": "Products to show"
-        },
-        {
-          "type": "checkbox",
-          "id": "show_badge",
-          "label": "Show badge",
-          "default": false
-        },
-        {
-          "type": "text",
-          "id": "badge_text",
-          "label": "Badge text",
-          "default": "New"
-        }
-      ]
+      "type": "checkbox",
+      "id": "show_white_products",
+      "label": "Show White/Light Products",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_black_products",
+      "label": "Show Black/Dark Products",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "color_filter_style",
+      "label": "Color Filter Display",
+      "options": [
+        { "value": "separate_sections", "label": "Separate Sections" },
+        { "value": "mixed_grid", "label": "Mixed in Grid" },
+        { "value": "color_tabs", "label": "Color Tabs" }
+      ],
+      "default": "separate_sections"
     }
   ],
   "presets": [
     {
-      "name": "Featured Collections",
-      "blocks": [
-        {
-          "type": "collection"
-        },
-        {
-          "type": "collection"
-        },
-        {
-          "type": "collection"
-        }
-      ]
+      "name": "Featured Collections"
     }
   ]
 }
