@@ -1,31 +1,121 @@
 <section class="hero">
-  <div class="hero__container" style="text-align: center; padding: 4rem 2rem;">
-    <h1>{{ section.settings.heading }}</h1>
-    <p>{{ section.settings.description }}</p>
+  <div class="hero__container">
+    <div class="hero__content">
+      <p class="hero__subtitle">Save more on PCs with our limited-time coupons!</p>
+      <h1 class="hero__title">4th of July <span class="hero__title--sale">Sale</span></h1>
+      <p class="hero__desc">Celebrate Independence with incredible deals up to 58% on select laptops. Plus, pay with HP Financing.</p>
+      <p class="hero__desc">Save $30 on select printers when you buy any PC.</p>
+      <a href="#" class="hero__btn">Shop</a>
+    </div>
+    <div class="hero__image-wrap">
+      <img src="{{ '24_06_22_Hero_July4th-A.avif' | asset_url }}" alt="Laptop Sale" class="hero__image" />
+    </div>
   </div>
+
+  {% stylesheet %}
+  .hero {
+    background: #fff;
+    padding: 3rem 0 2rem 0;
+  }
+  .hero__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .hero__content {
+    flex: 1 1 420px;
+    min-width: 320px;
+    max-width: 600px;
+  }
+  .hero__subtitle {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    color: #222;
+    font-weight: 400;
+  }
+  .hero__title {
+    font-size: 4rem;
+    font-weight: 700;
+    margin: 0 0 1.5rem 0;
+    line-height: 1.1;
+    color: #222;
+  }
+  .hero__title--sale {
+    color: #ff4d4d;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  .hero__desc {
+    font-size: 1.25rem;
+    color: #222;
+    margin-bottom: 1.25rem;
+    font-weight: 400;
+    max-width: 90%;
+  }
+  .hero__btn {
+    display: inline-block;
+    background: #222;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 0.75rem 2rem;
+    border-radius: 2px;
+    text-decoration: none;
+    margin-top: 1.5rem;
+    transition: background 0.2s;
+  }
+  .hero__btn:hover {
+    background: #ff4d4d;
+    color: #fff;
+  }
+  .hero__image-wrap {
+    flex: 1 1 500px;
+    min-width: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero__image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+  }
+  @media screen and (max-width: 900px) {
+    .hero__container {
+      flex-direction: column;
+      gap: 2rem;
+      padding: 0 1rem;
+    }
+    .hero__content, .hero__image-wrap {
+      max-width: 100%;
+      min-width: 0;
+      text-align: center;
+    }
+    .hero__title {
+      font-size: 2.5rem;
+    }
+    .hero__desc, .hero__subtitle {
+      font-size: 1.1rem;
+    }
+    .hero__btn {
+      width: 100%;
+      padding: 0.75rem 0;
+    }
+  }
+  {% endstylesheet %}
+
 </section>
 
 {% schema %}
 {
   "name": "Hero Section",
-  "settings": [
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "Welcome to Aura Wear"
-    },
-    {
-      "type": "textarea",
-      "id": "description",
-      "label": "Description",
-      "default": "Discover fashion that feels as good as it looks."
-    }
-  ],
-  "presets": [
-    {
-      "name": "Hero Section"
-    }
-  ]
+  "settings": []
 }
-{% endschema %}
+{% endschema %} 

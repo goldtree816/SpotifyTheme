@@ -1,0 +1,265 @@
+<section class="deal">
+  <h2 class="deal__title">DEAL OF THE WEEK</h2>
+  <div class="deal__slider">
+    <button class="deal__arrow deal__arrow--left" aria-label="Previous">&#8592;</button>
+    <div class="deal__slides">
+      <div class="deal__slide">
+        <div class="deal__badge">-₹ 24,000 Off</div>
+        <img src="{{ 'images.jpeg' | asset_url }}" alt="Apple MacBook Air M4" class="deal__img" />
+        <div class="deal__info">
+          <div class="deal__expired">Ends in Expired</div>
+          <div class="deal__name">Apple MacBook Air M4 2025 13.6" | 16GB | 256GB SSD</div>
+          <div class="deal__rating">★★★★★</div>
+          <div class="deal__prices"><span class="deal__old">₹ 1,89,000</span> <span class="deal__new">₹ 1,65,000</span></div>
+          <button class="deal__cart">Add to Cart</button>
+        </div>
+      </div>
+      <div class="deal__slide">
+        <div class="deal__badge">-₹ 27,000 Off</div>
+        <img src="{{ 'images (1).jpeg' | asset_url }}" alt="HP OMEN 16 2024" class="deal__img" />
+        <div class="deal__info">
+          <div class="deal__expired">Ends in Expired</div>
+          <div class="deal__name">HP OMEN 16 2024 Gaming | i7 14700HX | RTX 4070 | 16GB | 512GB SSD</div>
+          <div class="deal__rating">★★★★★</div>
+          <div class="deal__prices"><span class="deal__old">₹ 2,60,000</span> <span class="deal__new">₹ 2,33,000</span></div>
+          <button class="deal__cart">Add to Cart</button>
+        </div>
+      </div>
+      <div class="deal__slide">
+        <div class="deal__badge deal__badge--blue">New Arrival / -₹ 23,000 Off</div>
+        <img src="{{ 'notebook-inspiron-7441-t-fpr-ice-blue-gallery-1.avif' | asset_url }}" alt="Lenovo ThinkPad L13 Yoga" class="deal__img" />
+        <div class="deal__info">
+          <div class="deal__expired">Ends in Expired</div>
+          <div class="deal__name">Lenovo ThinkPad L13 Yoga Gen 5 | i5 135U | 16GB | 512GB SSD</div>
+          <div class="deal__rating">★★★★★</div>
+          <div class="deal__prices"><span class="deal__old">₹ 2,07,000</span> <span class="deal__new">₹ 1,84,000</span></div>
+          <button class="deal__cart">Add to Cart</button>
+        </div>
+      </div>
+      <div class="deal__slide">
+        <div class="deal__badge deal__badge--blue">New Arrival / -₹ 5,000 Off</div>
+        <img src="{{ 'BEST-LAPTOPS-PHOTO-VIDEO-EDITING-2048px-6.jpg' | asset_url }}" alt="Acer Predator Helios Neo 16S" class="deal__img" />
+        <div class="deal__info">
+          <div class="deal__expired">Ends in Expired</div>
+          <div class="deal__name">Acer Predator Helios Neo 16S | i9 275HX | RTX 5070 TI | 32GB | 1TB</div>
+          <div class="deal__rating">★★★★★</div>
+          <div class="deal__prices"><span class="deal__old">₹ 3,30,000</span> <span class="deal__new">₹ 3,25,000</span></div>
+          <button class="deal__cart">Add to Cart</button>
+        </div>
+      </div>
+      <div class="deal__slide">
+        <div class="deal__badge">-₹ 5,000 Off</div>
+        <img src="{{ 'download.jpeg' | asset_url }}" alt="Acer Nitro V 15 2025" class="deal__img" />
+        <div class="deal__info">
+          <div class="deal__expired">Ends in Expired</div>
+          <div class="deal__name">Acer Nitro V 15 2025 15th Gen | i5 210H | RTX 4050 | 16GB | 512GB SSD</div>
+          <div class="deal__rating">★★★★★</div>
+          <div class="deal__prices"><span class="deal__old">₹ 1,38,000</span> <span class="deal__new">₹ 1,33,000</span></div>
+          <button class="deal__cart">Add to Cart</button>
+        </div>
+      </div>
+      <div class="deal__slide">
+        <div class="deal__badge">-₹ 20,000 Off</div>
+        <img src="{{ 'xlab.jpeg' | asset_url }}" alt="xLab x-Book Series XL-156P" class="deal__img" />
+        <div class="deal__info">
+          <div class="deal__expired">Ends in Expired</div>
+          <div class="deal__name">xLab x-Book Series XL-156P | i3 | 8GB | 256GB SSD | 15"</div>
+          <div class="deal__rating">★★★★★</div>
+          <div class="deal__prices"><span class="deal__old">₹ 85,000</span> <span class="deal__new">₹ 65,000</span></div>
+          <button class="deal__cart">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+    <button class="deal__arrow deal__arrow--right" aria-label="Next">&#8594;</button>
+  </div>
+
+  {% stylesheet %}
+  .deal {
+    background: #fff;
+    padding: 2.5rem 0 2rem 0;
+    margin-top: 2rem;
+  }
+  .deal__title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    letter-spacing: 1px;
+  }
+  .deal__slider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+  .deal__arrow {
+    background: #222;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 2rem;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .deal__arrow:hover {
+    background: #b32d27;
+  }
+  .deal__slides {
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 1rem 0;
+    width: 100%;
+    max-width: 1700px;
+  }
+  .deal__slide {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    min-width: 300px;
+    max-width: 320px;
+    flex: 0 0 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 1rem 1.5rem 1rem;
+    position: relative;
+    transition: box-shadow 0.2s;
+  }
+  .deal__slide:hover {
+    box-shadow: 0 4px 32px rgba(179,45,39,0.15);
+  }
+  .deal__badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: #ff4d4d;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 6px;
+    padding: 0.25rem 1rem;
+    z-index: 2;
+  }
+  .deal__badge--blue {
+    background: #3498db;
+  }
+  .deal__img {
+    width: 180px;
+    height: 120px;
+    object-fit: contain;
+    margin: 2.5rem 0 1.5rem 0;
+    display: block;
+  }
+  .deal__info {
+    width: 100%;
+    text-align: left;
+    margin-top: 0.5rem;
+  }
+  .deal__expired {
+    color: #ff4d4d;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  .deal__name {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    min-height: 48px;
+  }
+  .deal__rating {
+    color: #ccc;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  .deal__prices {
+    margin-bottom: 1rem;
+  }
+  .deal__old {
+    text-decoration: line-through;
+    color: #888;
+    font-size: 1rem;
+    margin-right: 0.5rem;
+  }
+  .deal__new {
+    color: #b32d27;
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+  .deal__cart {
+    width: 100%;
+    background: #b32d27;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 0.75rem 0;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .deal__cart:hover {
+    background: #222;
+  }
+  @media screen and (max-width: 1200px) {
+    .deal__slides {
+      gap: 1rem;
+    }
+    .deal__slide {
+      min-width: 260px;
+      max-width: 280px;
+      flex: 0 0 280px;
+    }
+    .deal__img {
+      width: 140px;
+      height: 90px;
+    }
+  }
+  @media screen and (max-width: 900px) {
+    .deal__slider {
+      gap: 0.5rem;
+    }
+    .deal__slides {
+      gap: 0.5rem;
+      padding: 0.5rem 0;
+    }
+    .deal__slide {
+      min-width: 200px;
+      max-width: 220px;
+      flex: 0 0 220px;
+      padding: 1rem 0.5rem 1rem 0.5rem;
+    }
+    .deal__img {
+      width: 90px;
+      height: 60px;
+    }
+    .deal__title {
+      font-size: 1.5rem;
+    }
+  }
+  {% endstylesheet %}
+
+  {% javascript %}
+  const left = document.querySelector('.deal__arrow--left');
+  const right = document.querySelector('.deal__arrow--right');
+  const slides = document.querySelector('.deal__slides');
+  left?.addEventListener('click', () => { slides.scrollBy({ left: -340, behavior: 'smooth' }); });
+  right?.addEventListener('click', () => { slides.scrollBy({ left: 340, behavior: 'smooth' }); });
+  {% endjavascript %}
+
+</section>
+
+{% schema %}
+{
+  "name": "Deal of the Week",
+  "settings": []
+}
+{% endschema %} 

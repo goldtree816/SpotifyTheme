@@ -1,0 +1,201 @@
+<nav class="navbar">
+  <div class="navbar__container">
+    <a href="/" class="navbar__logo">
+      <span class="navbar__logo-circle">
+        <img src="{{ 'Screenshot 2025-07-01 192401.png' | asset_url }}" alt="Logo" class="navbar__logo-img" />
+      </span>
+    </a>
+    <ul class="navbar__links">
+      <li><a href="/collection">Laptops</a></li>
+      <li><a href="/collections/apple">Apple</a></li>
+      <li><a href="/collections/monitors">Monitors</a></li>
+      <li><a href="/collections/desktop-pcs">Desktop & PCs</a></li>
+      <li class="navbar__search-wrap">
+        <form class="navbar__search" action="/search" method="get">
+          <input type="text" name="q" class="navbar__search-input" placeholder="Search..." />
+          <button type="submit" class="navbar__search-btn" aria-label="Search">
+            <span class="navbar__search-icon">
+              <svg width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="8" stroke="#888" stroke-width="2"/><path d="M20 20l-5-5" stroke="#888" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+          </button>
+        </form>
+      </li>
+    </ul>
+    <div class="navbar__actions">
+      <a href="/account/login" class="navbar__action-link" aria-label="Login">
+        <svg width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="7" r="4" stroke="#fff" stroke-width="2"/><path d="M3 19c0-3.314 3.134-6 7-6s7 2.686 7 6" stroke="#fff" stroke-width="2"/></svg>
+        <span class="navbar__action-text">Login</span>
+      </a>
+      <a href="/cart" class="navbar__action-link" aria-label="Cart">
+        <svg width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="7" width="14" height="10" rx="2" stroke="#fff" stroke-width="2"/><circle cx="8" cy="18" r="1.5" fill="#fff"/><circle cx="16" cy="18" r="1.5" fill="#fff"/></svg>
+        <span class="navbar__action-text">Cart</span>
+      </a>
+    </div>
+  </div>
+
+  {% stylesheet %}
+  .navbar {
+    background: #5c6e87;
+    padding: 0;
+    width: 100%;
+  }
+  .navbar__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0.5rem 2rem;
+  }
+  .navbar__logo-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    margin-right: 1rem;
+  }
+  .navbar__logo-img {
+    height: 60px;
+    width: 60px;
+    object-fit: contain;
+    border-radius: 50%;
+    display: block;
+  }
+  .navbar__links {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+  }
+  .navbar__links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 2px;
+    transition: background 0.2s;
+  }
+  .navbar__links a:hover,
+  .navbar__link--sale {
+    background: #1abc9c;
+    color: #fff;
+  }
+  .navbar__link--sale {
+    background: #1abc9c;
+    color: #fff;
+    font-weight: bold;
+  }
+  .navbar__actions {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-left: 1.5rem;
+  }
+  .navbar__action-link {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    gap: 0.5rem;
+    opacity: 0.9;
+    transition: opacity 0.2s;
+  }
+  .navbar__action-link:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+  .navbar__action-link svg {
+    display: block;
+  }
+  .navbar__action-text {
+    display: none;
+  }
+  @media screen and (min-width: 700px) {
+    .navbar__action-text {
+      display: inline;
+    }
+  }
+  @media screen and (max-width: 900px) {
+    .navbar__container {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
+    }
+    .navbar__links {
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    .navbar__logo-circle {
+      margin: 0 auto 1rem auto;
+    }
+    .navbar__search-wrap {
+      margin-left: 0;
+      width: 100%;
+      justify-content: center;
+    }
+    .navbar__search {
+      max-width: 100%;
+    }
+  }
+  .navbar__search {
+    display: flex;
+    align-items: center;
+    max-width: 160px;
+    min-width: 0;
+    width: 100%;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    padding: 0 0.25rem;
+    position: relative;
+  }
+  .navbar__search-input {
+    flex: 1;
+    padding: 0.25rem 0.5rem;
+    border: none;
+    font-size: 0.95rem;
+    background: transparent;
+    outline: none;
+    min-width: 0;
+  }
+  .navbar__search-btn {
+    background: #f5f5f5;
+    border: none;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    margin-left: 0.25rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    padding: 0;
+  }
+  .navbar__search-btn:hover {
+    background: #e0e0e0;
+  }
+  .navbar__search-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  {% endstylesheet %}
+
+</nav>
+
+{% schema %}
+{
+  "name": "Navbar",
+  "settings": []
+}
+{% endschema %} 

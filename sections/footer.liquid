@@ -1,0 +1,155 @@
+<footer class="footer">
+  <div class="footer__main">
+    <div class="footer__col footer__about">
+      <h4 class="footer__heading">LAPZONE</h4>
+      <p class="footer__desc">Discover the perfect laptop for work, study, gaming, or everyday use. At Lapzone, we offer a wide selection of the latest laptops from top brands, with detailed specs, honest reviews, and unbeatable prices.</p>
+    </div>
+    <div class="footer__col footer__products">
+      <h4 class="footer__heading">PRODUCTS</h4>
+      <ul class="footer__list">
+        <li><a href="#">Laptops</a></li>
+        <li><a href="#">Desktop</a></li>
+        <li><a href="#">PCs</a></li>
+      </ul>
+    </div>
+    <div class="footer__col footer__contact">
+      <h4 class="footer__heading">CONTACT</h4>
+      <ul class="footer__contact-list">
+        <li><span class="footer__icon">🏠</span> Dulhari, Morang, Nepal</li>
+        <li><span class="footer__icon">✉️</span> lapzone@gmail.com</li>
+        <li><span class="footer__icon">📞</span> +977 9815045184</li>
+      </ul>
+    </div>
+    <div class="footer__col footer__social">
+      <h4 class="footer__heading">FOLLOW US</h4>
+      <div class="footer__social-icons">
+        <a href="#" class="footer__social-icon footer__social-icon--fb" aria-label="Facebook"> <svg width="32" height="32"><circle cx="16" cy="16" r="15" fill="#3b5998"/><text x="16" y="22" text-anchor="middle" font-size="18" fill="#fff">f</text></svg></a>
+        <a href="#" class="footer__social-icon footer__social-icon--tw" aria-label="Twitter"> <svg width="32" height="32"><circle cx="16" cy="16" r="15" fill="#55acee"/><text x="16" y="22" text-anchor="middle" font-size="18" fill="#fff">t</text></svg></a>
+        <a href="#" class="footer__social-icon footer__social-icon--ig" aria-label="Instagram"> <svg width="32" height="32"><circle cx="16" cy="16" r="15" fill="#e4405f"/><text x="16" y="22" text-anchor="middle" font-size="18" fill="#fff">i</text></svg></a>
+        <a href="#" class="footer__social-icon footer__social-icon--gh" aria-label="GitHub"> <svg width="32" height="32"><circle cx="16" cy="16" r="15" fill="#333"/><text x="16" y="22" text-anchor="middle" font-size="18" fill="#fff">gh</text></svg></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer__copyright">
+    <p>&copy; {{ 'now' | date: '%Y' }} Copyright: MDBootstrap.com</p>
+  </div>
+
+  {% stylesheet %}
+  .footer {
+    background: #5c6e87;
+    color: #fff;
+    font-size: 1rem;
+    margin-top: 2rem;
+  }
+  .footer__main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 1.5rem 1.5rem;
+    gap: 2rem;
+  }
+  .footer__col {
+    flex: 1 1 200px;
+    min-width: 180px;
+    max-width: 260px;
+  }
+  .footer__heading {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    letter-spacing: 0.5px;
+  }
+  .footer__desc {
+    font-size: 0.97rem;
+    opacity: 0.85;
+    margin-bottom: 0;
+  }
+  .footer__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .footer__list a {
+    color: #fff;
+    text-decoration: none;
+    opacity: 0.9;
+    transition: opacity 0.2s;
+  }
+  .footer__list a:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+  .footer__contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.97rem;
+  }
+  .footer__icon {
+    margin-right: 0.5rem;
+    font-size: 1.1em;
+    vertical-align: middle;
+  }
+  .footer__social-icons {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .footer__social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    background: transparent;
+    transition: transform 0.15s;
+  }
+  .footer__social-icon:hover {
+    transform: scale(1.08);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  }
+  .footer__copyright {
+    background: #4a5a6a;
+    text-align: center;
+    padding: 1rem 0;
+    font-size: 0.98rem;
+    opacity: 0.95;
+    letter-spacing: 0.2px;
+  }
+  @media screen and (max-width: 900px) {
+    .footer__main {
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      padding: 2rem 1rem 1rem 1rem;
+    }
+    .footer__col {
+      max-width: 100%;
+      width: 100%;
+      text-align: center;
+    }
+    .footer__social-icons {
+      justify-content: center;
+    }
+  }
+  {% endstylesheet %}
+
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": []
+}
+{% endschema %} 
