@@ -1,0 +1,460 @@
+<section class="product-showcase">
+  <div class="product-showcase__header">
+    <div class="header-content">
+      <h1 class="header-title">{{ section.settings.text_1 | default: 'New Arrivals' }}</h1>
+      <p class="header-description">
+        {{
+          section.settings.text_2
+          | default: "Be the first to wear this season's latest looks. Handpicked and freshly styled"
+        }}
+      </p>
+    </div>
+    <button class="cta-button">
+      {{ section.settings.button_text | default: "SEE WHAT'S NEW" }}
+    </button>
+  </div>
+
+  <div class="product-grid">
+    {% for i in (1..3) %}
+      {% assign image_key = 'image_' | append: i %}
+      {% assign heading_key = 'image_heading_' | append: i %}
+      {% assign gender_key = 'gender_' | append: i %}
+      {% assign min_price_key = 'price_' | append: i | append: '_1' %}
+      {% assign max_price_key = 'price_' | append: i | append: '_2' %}
+      {% assign default_image = 'image_' | append: i | append: '.jpg' %}
+
+      <div class="product-card">
+        <div class="product-image-container">
+          {% if section.settings[image_key] != blank %}
+            {% assign image_alt = section.settings[heading_key] | default: 'Product ' | append: i %}
+            <img
+              src="{{ section.settings[image_key] | image_url: width: 600 }}"
+              alt="{{ image_alt | escape }}"
+              class="product-image"
+              loading="lazy"
+              width="600"
+              height="{{ 600 | divided_by: section.settings[image_key].aspect_ratio | round }}"
+            >
+          {% else %}
+            {% comment %} {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }} {% endcomment %}
+            <img
+              src="{{ default_image | asset_url }}"
+              alt="{{ section.settings[heading_key] | default: 'Product ' | append: i | escape }}"
+              class="product-image"
+              loading="lazy"
+              width="600"
+              height="600"
+              onerror="this.style.display='none'; this.parentElement.innerHTML='{{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}'"
+            >
+          {% endif %}
+        </div>
+
+        <div class="product-details">
+          <div class="product-info">
+            <h3 class="product-title">
+              {{ section.settings[heading_key] | default: 'Featured Product ' | append: i }}
+            </h3>
+            <span class="product-gender">{{ section.settings[gender_key] | default: 'Unisex' }}</span>
+            <span class="product-price">
+              {{ section.settings[min_price_key] | default: '$120' }} -
+              {{ section.settings[max_price_key] | default: '$200' }}
+            </span>
+            <div class="product-sizes">
+              {% for j in (1..3) %}
+                {% assign size_key = 'size_' | append: j %}
+                <span class="size-pill">{{ section.settings[size_key] | default: 'M' }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<style>
+  .product-showcase {
+    padding: 60px 5%;
+    background-color: {{ section.settings.background_color }};
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+
+  /* Header Section */
+  .product-showcase__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+
+  .header-content {
+    flex: 1;
+    min-width: 300px;
+  }
+
+  .header-title {
+    font-weight: 700;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    line-height: 1.2;
+    color: {{ section.settings.text_color }};
+    margin: 0 0 15px 0;
+    letter-spacing: -0.5px;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .header-description {
+    font-weight: 400;
+    font-size: clamp(1rem, 2vw, 1.1rem);
+    line-height: 1.6;
+    color: {{ section.settings.text_color }};
+    opacity: 0.9;
+    margin: 0;
+    max-width: 500px;
+  }
+
+  /* CTA Button */
+  .cta-button {
+    background-color: {{ section.settings.button_background_color }};
+    color: {{ section.settings.button_text_color }};
+    padding: 16px 36px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .cta-button:hover {
+    background-color: {{ section.settings.button_hover_background_color }};
+    color: {{ section.settings.button_hover_text_color }};
+    transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Product Grid */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    margin-top: 20px;
+  }
+
+  .product-card {
+    position: relative;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  .product-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .product-image-container {
+    position: relative;
+    padding-top: 100%;
+    overflow: hidden;
+    background: #f8f8f8;
+      }
+
+  .product-image,
+  .placeholder-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .placeholder-svg {
+    background-color: #f1f1f1;
+    fill: #ccc;
+  }
+
+  .product-card:hover .product-image {
+    transform: scale(1.03);
+  }
+
+  .product-details {
+    padding: 20px;
+    background: #fff;
+    border-radius: 0 0 12px 12px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .product-title {
+    font-size: 1.3rem;
+    margin: 0;
+    font-weight: 600;
+    color: #212529;
+  }
+
+  .product-gender {
+    font-size: 0.9rem;
+    color: #6c757d;
+  }
+
+  .product-price {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin: 5px 0;
+    color: #212529;
+  }
+
+  .product-sizes {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+
+  .size-pill {
+    background: #f8f9fa;
+    padding: 4px 10px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    color: #495057;
+    border: 2px solid #e9ecef;
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .product-showcase__header {
+      flex-direction: column;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header-content {
+      margin-bottom: 20px;
+    }
+
+    .header-description {
+      max-width: 100%;
+    }
+
+    .product-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .product-showcase {
+      padding: 40px 20px;
+    }
+
+    .cta-button {
+      padding: 14px 28px;
+      width: 100%;
+    }
+
+    .product-details {
+      padding: 15px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Product Showcase",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f8f9fa"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#212529"
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Button Background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background_color",
+      "label": "Button Hover Background",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Button Hover Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "text_1",
+      "label": "Heading Text",
+      "default": "New Arrivals"
+    },
+    {
+      "type": "text",
+      "id": "text_2",
+      "label": "Description Text",
+      "default": "Be the first to wear this season's latest looks. Handpicked and freshly styled"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "SEE WHAT'S NEW"
+    },
+    /* Image 1 Settings */
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Product Image 1",
+      "info": "Upload image or leave empty for placeholder"
+    },
+    {
+      "type": "text",
+      "id": "image_heading_1",
+      "label": "Product 1 Title",
+      "default": "Flowline Dress"
+    },
+    {
+      "type": "text",
+      "id": "gender_1",
+      "label": "Product 1 Gender",
+      "default": "Women's"
+    },
+    {
+      "type": "text",
+      "id": "price_1_1",
+      "label": "Product 1 Min Price",
+      "default": "$120"
+    },
+    {
+      "type": "text",
+      "id": "price_1_2",
+      "label": "Product 1 Max Price",
+      "default": "$200"
+    },
+    /* Image 2 Settings */
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Product Image 2",
+      "info": "Upload image or leave empty for placeholder"
+    },
+    {
+      "type": "text",
+      "id": "image_heading_2",
+      "label": "Product 2 Title",
+      "default": "Classic Tee"
+    },
+    {
+      "type": "text",
+      "id": "gender_2",
+      "label": "Product 2 Gender",
+      "default": "Girl's"
+    },
+    {
+      "type": "text",
+      "id": "price_2_1",
+      "label": "Product 2 Min Price",
+      "default": "$80"
+    },
+    {
+      "type": "text",
+      "id": "price_2_2",
+      "label": "Product 2 Max Price",
+      "default": "$120"
+    },
+    /* Image 3 Settings */
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Product Image 3",
+      "info": "Upload image or leave empty for placeholder"
+    },
+    {
+      "type": "text",
+      "id": "image_heading_3",
+      "label": "Product 3 Title",
+      "default": "Essential Plaid Shirt"
+    },
+    {
+      "type": "text",
+      "id": "gender_3",
+      "label": "Product 3 Gender",
+      "default": "Boy's"
+    },
+    {
+      "type": "text",
+      "id": "price_3_1",
+      "label": "Product 3 Min Price",
+      "default": "$90"
+    },
+    {
+      "type": "text",
+      "id": "price_3_2",
+      "label": "Product 3 Max Price",
+      "default": "$150"
+    },
+    /* Size Options (Shared across products) */
+    {
+      "type": "text",
+      "id": "size_1",
+      "label": "Size Option 1",
+      "default": "S"
+    },
+    {
+      "type": "text",
+      "id": "size_2",
+      "label": "Size Option 2",
+      "default": "M"
+    },
+    {
+      "type": "text",
+      "id": "size_3",
+      "label": "Size Option 3",
+      "default": "L"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Showcase",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}
