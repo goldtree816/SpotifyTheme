@@ -1,0 +1,174 @@
+{% comment %}
+  Wishlist page template: Displays products saved in localStorage wishlist.
+{% endcomment %}
+{% section 'header' %}
+<main class="wishlist-main">
+  <h1 class="wishlist-title">My Wishlist</h1>
+  <div id="wishlist-products" class="wishlist-products">
+    <div class="wishlist-empty">Your wishlist is empty.</div>
+  </div>
+</main>
+{% section 'footer' %}
+<script>
+// Helper: Get wishlist from localStorage
+function getWishlist() {
+  try {
+    return JSON.parse(localStorage.getItem('wishlist')) || [];
+  } catch {
+    return [];
+  }
+}
+// Helper: Save wishlist to localStorage
+function setWishlist(ids) {
+  localStorage.setItem('wishlist', JSON.stringify(ids));
+}
+// Render wishlist products
+function renderWishlist() {
+  const container = document.getElementById('wishlist-products');
+  const ids = getWishlist();
+  if (!ids.length) {
+    container.innerHTML = '<div class="wishlist-empty">Your wishlist is empty.</div>';
+    return;
+  }
+  // Fetch product details for each ID
+  Promise.all(ids.map(id => fetch(`/products/${id}.js`).then(r => r.json()))).then(products => {
+    container.innerHTML = products.map(product => `
+      <div class="wishlist-product-card">
+        <a href="${product.url}" class="wishlist-product-image-link">
+          <img src="${product.featured_image}" alt="${product.title}" class="wishlist-product-image" />
+        </a>
+        <div class="wishlist-product-info">
+          <a href="${product.url}" class="wishlist-product-title">${product.title}</a>
+          <div class="wishlist-product-price">${(product.price / 100).toLocaleString('en-US', { style: 'currency', currency: product.currency })}</div>
+          <button class="wishlist-remove-btn" data-id="${product.handle}">Remove</button>
+          <form action="/cart/add" method="post" class="wishlist-add-to-cart-form">
+            <input type="hidden" name="id" value="${product.variants[0].id}">
+            <button type="submit" class="wishlist-add-to-cart">Add to Cart</button>
+          </form>
+        </div>
+      </div>
+    `).join('');
+    // Remove button logic
+    container.querySelectorAll('.wishlist-remove-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const id = btn.getAttribute('data-id');
+        const newIds = getWishlist().filter(pid => pid !== id);
+        setWishlist(newIds);
+        renderWishlist();
+      });
+    });
+    // Add to cart AJAX
+    container.querySelectorAll('.wishlist-add-to-cart-form').forEach(form => {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(form);
+        fetch('/cart/add.js', {
+          method: 'POST',
+          body: formData
+        }).then(() => {
+          alert('Added to cart!');
+        });
+      });
+    });
+  });
+}
+document.addEventListener('DOMContentLoaded', renderWishlist);
+</script>
+
+<style>
+.wishlist-main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2.5rem 1rem 4rem 1rem;
+  font-family: 'Roboto Condensed', Arial, sans-serif;
+  color: #1D1D1F;
+}
+.wishlist-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #CDAA7D;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+.wishlist-products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+.wishlist-empty {
+  text-align: center;
+  color: #888;
+  font-size: 1.2rem;
+  margin: 3rem 0;
+}
+.wishlist-product-card {
+  background: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 16px rgba(29,29,31,0.08);
+  padding: 1.2rem 1rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.2s;
+}
+.wishlist-product-image-link {
+  display: block;
+  width: 100%;
+  margin-bottom: 1.2rem;
+}
+.wishlist-product-image {
+  width: 100%;
+  height: 180px;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 8px rgba(29,29,31,0.10);
+}
+.wishlist-product-info {
+  width: 100%;
+  text-align: center;
+}
+.wishlist-product-title {
+  font-size: 1rem;
+  font-weight: 550;
+  color: #1D1D1F;
+  text-decoration: none;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.wishlist-product-price {
+  font-size: 1.1rem;
+  color: #CDAA7D;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+.wishlist-remove-btn {
+  background: #eee;
+  color: #CDAA7D;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+  transition: background 0.2s;
+}
+.wishlist-remove-btn:hover {
+  background: #CDAA7D;
+  color: #fff;
+}
+.wishlist-add-to-cart {
+  background: #CDAA7D;
+  color: #fff;
+  border: none;
+  padding: 0.7rem 2rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.wishlist-add-to-cart:hover {
+  background: #b89a6b;
+}
+</style> 

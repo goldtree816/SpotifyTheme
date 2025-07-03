@@ -41,10 +41,9 @@
       <a href="/collections/all" class="header__nav-link" aria-haspopup="true" aria-expanded="false">Shop</a>
       <div class="header__dropdown" role="menu">
         <a href="/collections/all" class="header__dropdown-link" role="menuitem">All Products</a>
-        <a href="/collections/men" class="header__dropdown-link" role="menuitem">Men</a>
-        <a href="/collections/women" class="header__dropdown-link" role="menuitem">Women</a>
-        <a href="/collections/accessories" class="header__dropdown-link" role="menuitem">Accessories</a>
-        <a href="/collections/sale" class="header__dropdown-link" role="menuitem">Sale</a>
+        <a href="/collections/male" class="header__dropdown-link" role="menuitem">Men</a>
+        <a href="/collections/female" class="header__dropdown-link" role="menuitem">Women</a>
+        <a href="/collections/kids" class="header__dropdown-link" role="menuitem">Kids</a>
       </div>
     </div>
     <div class="header__nav-item header__nav-item--dropdown">
@@ -79,12 +78,12 @@
         Login
       </a>
     {% endif %}
-    <a href="{{ routes.cart_url }}" class="header__icon-btn header__cart-btn" aria-label="Cart">
+    <button class="header__icon-btn header__cart-btn" id="cart-drawer-open" aria-label="Cart" type="button">
       {% if cart.item_count > 0 %}
         <span class="header__cart-count">{{ cart.item_count }}</span>
       {% endif %}
       <i class="fa-solid fa-cart-shopping"></i>
-    </a>
+    </button>
     <a href="/pages/wishlist" class="header__icon-btn header__wishlist-btn" aria-label="Wishlist">
       <i class="fa-regular fa-heart"></i>
     </a>

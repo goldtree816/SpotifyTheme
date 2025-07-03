@@ -8,35 +8,43 @@
 <main class="product-main">
   <div class="product-container">
     <div class="product-gallery">
+      {% assign main_image = product.featured_image | default: product.images.first %}
+      <img id="main-product-image" src="{{ main_image | img_url: '400x400' }}" alt="{{ product.title | escape }}" class="product-image" />
       {% if product.images.size > 1 %}
-        <div class="product-gallery-thumbnails">
+        <div class="product-gallery-thumbnails thumbnails-below">
           {% for image in product.images %}
-            <img src="{{ image | img_url: '120x120' }}" alt="{{ product.title | escape }} thumbnail" class="product-thumbnail" onclick="document.getElementById('main-product-image').src='{{ image | img_url: '800x800' }}'" />
+            <img src="{{ image | img_url: '60x60' }}" alt="{{ product.title | escape }} thumbnail" class="product-thumbnail" onclick="document.getElementById('main-product-image').src='{{ image | img_url: '400x400' }}'" />
           {% endfor %}
         </div>
       {% endif %}
-      {% assign main_image = product.featured_image | default: product.images.first %}
-      <img id="main-product-image" src="{{ main_image | img_url: '800x800' }}" alt="{{ product.title | escape }}" class="product-image" />
     </div>
     <div class="product-details">
-      <h1 class="product-title">{{ product.title }}</h1>
+      <div class="product-title-row">
+        <h1 class="product-title" style="font-weight:500;">{{ product.title }}</h1>
+        <button class="wishlist-heart-btn" data-handle="{{ product.handle }}" aria-label="Add to Wishlist" title="Add to Wishlist">
+          <span class="wishlist-heart-icon">&#9825;</span>
+        </button>
+      </div>
       <div class="product-category">Category: {{ product.type }}</div>
       <div class="product-price">{{ product.price | money }}</div>
-      <div class="product-description">{{ product.description }}</div>
       <form action="/cart/add" method="post" enctype="multipart/form-data" class="product-form">
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
         {% for option in product.options_with_values %}
           <div class="product-option">
-            <label for="option-{{ forloop.index }}">{{ option.name }}</label>
-            <select id="option-{{ forloop.index }}" name="options[{{ option.name }}]">
+            <div class="option-label">{{ option.name }}</div>
+            <div class="option-buttons">
               {% for value in option.values %}
-                <option value="{{ value }}">{{ value }}</option>
+                <label class="option-btn-label">
+                  <input type="radio" name="options[{{ option.name }}]" value="{{ value }}" {% if forloop.first %}checked{% endif %} class="option-btn-input" />
+                  <span class="option-btn">{{ value }}</span>
+                </label>
               {% endfor %}
-            </select>
+            </div>
           </div>
         {% endfor %}
         <button type="submit" class="product-add-to-cart">Add to Cart</button>
       </form>
+      <div class="product-description">{{ product.description }}</div>
     </div>
   </div>
   {% if product.collections.size > 0 %}
@@ -85,25 +93,16 @@
   justify-content: center;
   min-width: 350px;
 }
-.product-gallery-thumbnails {
+.product-gallery-thumbnails.thumbnails-below {
   display: flex;
   gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-.product-thumbnail {
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  border: 2px solid #eee;
-  transition: border 0.2s;
-}
-.product-thumbnail:hover {
-  border: 2px solid #CDAA7D;
+  margin-top: 1rem;
+  margin-bottom: 0;
 }
 .product-image {
-  max-width: 100%;
+  width: 250px;
+  height: 250px;
+  object-fit: contain;
   border-radius: 0.75rem;
   box-shadow: 0 1px 8px rgba(29,29,31,0.10);
 }
@@ -115,8 +114,8 @@
   justify-content: center;
 }
 .product-title {
-  font-size: 2.5rem;
-  font-weight: 700;
+  font-size: 2.2rem;
+  font-weight: 500;
   margin: 0;
 }
 .product-category {
@@ -128,11 +127,6 @@
   font-size: 1.5rem;
   color: #CDAA7D;
   font-weight: 600;
-}
-.product-description {
-  color: #444;
-  font-size: 1.1rem;
-  line-height: 1.7;
 }
 .product-form {
   margin-top: 2rem;
@@ -177,18 +171,80 @@
   width: 100%;
   height: 150px;
   object-fit: contain;
+  background: #fff;
   border-radius: 0.5rem;
   margin-bottom: 0.5rem;
 }
 .similar-product-title {
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   color: #1D1D1F;
   margin-bottom: 0.25rem;
+  text-decoration: none;
 }
 .similar-product-price {
   font-size: 1.1rem;
   color: #CDAA7D;
   font-weight: 600;
+}
+.option-label {
+  font-size: 1rem;
+  color: #888;
+  margin-bottom: 0.25rem;
+}
+.option-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.option-btn-label {
+  display: flex;
+  align-items: center;
+}
+.option-btn-input {
+  display: none;
+}
+.option-btn {
+  display: inline-block;
+  padding: 0.3rem 0.9rem;
+  font-size: 0.95rem;
+  border-radius: 0.5rem;
+  border: 1px solid #CDAA7D;
+  background: #fff;
+  color: #CDAA7D;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.option-btn-label input:checked + .option-btn {
+  background: #CDAA7D;
+  color: #fff;
+}
+.product-description {
+  color: #444;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-top: 2rem;
+}
+.product-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.wishlist-heart-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.7rem;
+  color: #CDAA7D;
+  transition: color 0.2s;
+}
+.wishlist-heart-btn.active .wishlist-heart-icon {
+  color: #DB2955;
+  content: '\2665';
+}
+.wishlist-heart-icon {
+  pointer-events: none;
+  font-size: 1.7rem;
+  transition: color 0.2s;
 }
 </style> 

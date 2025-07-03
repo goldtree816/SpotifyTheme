@@ -3,6 +3,12 @@
   <head>
   
     {{ content_for_header }}
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,500,600,700&display=swap" rel="stylesheet">
+    <style>
+      html, body {
+        font-family: 'Roboto Condensed', Arial, sans-serif !important;
+      }
+    </style>
   </head>
 
   <body>
@@ -10,6 +16,10 @@
     <main>
       {{content_for_layout}}
     </main>
+
+    {% render 'cart-drawer' %}
+
+    <script src="{{ 'header.js' | asset_url }}" defer></script>
   </body>
 </html>
 

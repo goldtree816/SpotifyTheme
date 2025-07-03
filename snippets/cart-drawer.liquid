@@ -1,0 +1,153 @@
+<div id="cart-drawer" class="cart-drawer" aria-hidden="true">
+  <div class="cart-drawer__overlay" id="cart-drawer-overlay"></div>
+  <div class="cart-drawer__panel">
+    <button class="cart-drawer__close" id="cart-drawer-close" aria-label="Close cart">&times;</button>
+    <h2 class="cart-drawer__title">Your Cart</h2>
+    <div id="cart-drawer-content">
+      <!-- Cart content will be loaded here via JS -->
+      <div class="cart-drawer__empty">Your cart is empty.</div>
+    </div>
+  </div>
+</div>
+
+<style>
+.cart-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  pointer-events: none;
+}
+.cart-drawer[aria-hidden="false"] {
+  pointer-events: auto;
+}
+.cart-drawer__overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.35);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.cart-drawer[aria-hidden="false"] .cart-drawer__overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+.cart-drawer__panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 370px;
+  max-width: 100vw;
+  height: 100vh;
+  background: #fff;
+  box-shadow: -2px 0 16px rgba(29,29,31,0.12);
+  transform: translateX(100%);
+  transition: transform 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+.cart-drawer[aria-hidden="false"] .cart-drawer__panel {
+  transform: translateX(0);
+}
+.cart-drawer__close {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #888;
+  align-self: flex-end;
+  margin: 1rem 1rem 0 0;
+  cursor: pointer;
+}
+.cart-drawer__title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 1rem 1.5rem 1rem 1.5rem;
+}
+.cart-drawer__empty {
+  text-align: center;
+  color: #888;
+  margin: 2rem 0;
+}
+.cart-drawer__items {
+  max-height: 55vh;
+  overflow-y: auto;
+  margin: 1rem 0;
+}
+.cart-drawer__item {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+.cart-drawer__item-image {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  border-radius: 0.5rem;
+  background: #fafafa;
+}
+.cart-drawer__item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.cart-drawer__item-title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #1D1D1F;
+}
+.cart-drawer__item-variant {
+  font-size: 0.95rem;
+  color: #888;
+}
+.cart-drawer__item-qty input {
+  width: 48px;
+  padding: 0.2rem 0.4rem;
+  border: 1px solid #ddd;
+  border-radius: 0.3rem;
+  font-size: 1rem;
+  margin-left: 0.5rem;
+}
+.cart-drawer__item-price {
+  font-size: 1rem;
+  color: #CDAA7D;
+  font-weight: 600;
+}
+.cart-drawer__subtotal {
+  font-size: 1.1rem;
+  color: #1D1D1F;
+  margin: 1.5rem 1.5rem 1rem 1.5rem;
+  text-align: right;
+}
+.cart-drawer__update, .cart-drawer__checkout {
+  display: block;
+  width: 90%;
+  margin: 0.5rem auto;
+  padding: 0.7rem 0;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.cart-drawer__update {
+  background: #eee;
+  color: #1D1D1F;
+}
+.cart-drawer__update:hover {
+  background: #e0e0e0;
+}
+.cart-drawer__checkout {
+  background: #CDAA7D;
+  color: #fff;
+}
+.cart-drawer__checkout:hover {
+  background: #b89a6b;
+}
+</style> 

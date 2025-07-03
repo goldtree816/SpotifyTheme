@@ -1,0 +1,481 @@
+{% comment %}
+  About Section: Editable About page content for theme customizer.
+{% endcomment %}
+
+<!-- Font Awesome CDN for icons (Shopify may strip this, so fallback to emoji if needed) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous">
+
+<section class="about-main">
+  <!-- Hero Section -->
+  <section class="about-hero">
+    <div class="about-hero-content">
+      <h1 class="about-title">{{ section.settings.hero_title }}</h1>
+      <p class="about-tagline">{{ section.settings.hero_tagline }}</p>
+    </div>
+    {% if section.settings.hero_image != blank %}
+      <img src="{{ section.settings.hero_image | image_url: width: 900 }}" alt="Brand Hero" class="about-hero-image" />
+    {% endif %}
+  </section>
+
+  <!-- Our Story -->
+  <section class="about-story">
+    <h2>{{ section.settings.story_title }}</h2>
+    <p>{{ section.settings.story_text }}</p>
+    <ul class="about-milestones">
+      {% for block in section.blocks %}
+        {% if block.type == 'milestone' %}
+          <li><strong>{{ block.settings.year }}:</strong> {{ block.settings.text }}</li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </section>
+
+  <!-- What Makes Us Unique -->
+  <section class="about-unique">
+    <h2>{{ section.settings.unique_title }}</h2>
+    <div class="about-unique-grid">
+      {% assign unique_count = 0 %}
+      {% for block in section.blocks %}
+        {% if block.type == 'unique_point' %}
+          {% assign unique_count = unique_count | plus: 1 %}
+          <div class="about-unique-item">
+            <span class="about-unique-icon">
+              {% if block.settings.icon contains 'fa-' %}
+                <i class="fa {{ block.settings.icon }}"></i>
+              {% else %}
+                {{ block.settings.icon }}
+              {% endif %}
+            </span>
+            <h3>{{ block.settings.title }}</h3>
+            <p>{{ block.settings.text }}</p>
+          </div>
+        {% endif %}
+      {% endfor %}
+      {% if unique_count == 0 %}
+        <!-- Example unique points if none are set -->
+        <div class="about-unique-item">
+          <span class="about-unique-icon">🌱</span>
+          <h3>Eco-Friendly Materials</h3>
+          <p>We use sustainable fabrics and packaging to reduce our environmental impact.</p>
+        </div>
+        <div class="about-unique-item">
+          <span class="about-unique-icon">📦</span>
+          <h3>Eco-friendly & Plastic-Free Packaging</h3>
+          <p>All our packaging is 100% plastic-free and fully recyclable, supporting a cleaner planet.</p>
+        </div>
+        <div class="about-unique-item">
+          <span class="about-unique-icon">🚚</span>
+          <h3>Fast, Free Shipping</h3>
+          <p>Enjoy free shipping on all orders with quick delivery times.</p>
+        </div>
+        <div class="about-unique-item">
+          <span class="about-unique-icon">🎨</span>
+          <h3>Unique Designs</h3>
+          <p>Our collections are designed in-house for a look you won't find anywhere else.</p>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- Meet the Team -->
+  <section class="about-team">
+    <h2>{{ section.settings.team_title }}</h2>
+    <div class="about-team-grid">
+      {% for block in section.blocks %}
+        {% if block.type == 'team_member' %}
+          <div class="about-team-member">
+            {% if block.settings.photo != blank %}
+              <img src="{{ block.settings.photo | image_url: width: 160 }}" alt="{{ block.settings.name }} Photo" class="about-team-photo" />
+            {% endif %}
+            <h4>{{ block.settings.name }}</h4>
+            <p>{{ block.settings.role }}</p>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Sustainability / Social Impact -->
+  <section class="about-sustainability">
+    <h2>{{ section.settings.sustainability_title }}</h2>
+    <div class="about-sustainability-highlight">
+      <span class="about-sustainability-icon">
+        <i class="fa fa-tree"></i> <!-- Fallback to emoji if icon font not available -->
+        <span class="about-sustainability-emoji">🌳</span>
+      </span>
+      <span class="about-sustainability-zero">Zero Carbon Footprint</span>
+    </div>
+    <p>{{ section.settings.sustainability_text }}</p>
+    <ul class="about-impact-list">
+      {% for block in section.blocks %}
+        {% if block.type == 'impact' %}
+          <li>{{ block.settings.text }}</li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="about-testimonials">
+    <h2>{{ section.settings.testimonials_title }}</h2>
+    <div class="about-testimonials-grid">
+      {% for block in section.blocks %}
+        {% if block.type == 'testimonial' %}
+          <div class="about-testimonial-item">
+            {% if block.settings.photo != blank %}
+              <img src="{{ block.settings.photo | image_url: width: 80 }}" alt="{{ block.settings.name }} Photo" class="about-testimonial-photo" />
+            {% endif %}
+            <blockquote>"{{ block.settings.quote }}"</blockquote>
+            <p class="about-testimonial-name">- {{ block.settings.name }}</p>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+</section>
+
+{% schema %}
+{
+  "name": "About Section",
+  "settings": [
+    { "type": "text", "id": "hero_title", "label": "Hero Title", "default": "Aura Wear" },
+    { "type": "text", "id": "hero_tagline", "label": "Hero Tagline", "default": "Elevate Your Everyday Style" },
+    { "type": "image_picker", "id": "hero_image", "label": "Hero Image" },
+    { "type": "text", "id": "story_title", "label": "Story Title", "default": "Our Story" },
+    { "type": "textarea", "id": "story_text", "label": "Story Text", "default": "Founded in 2023, Aura Wear was born from a passion for fashion and a desire to make high-quality, trend-driven clothing accessible to everyone. Our journey began in a small studio, and today, we're proud to serve a vibrant community of style enthusiasts." },
+    { "type": "text", "id": "unique_title", "label": "Unique Section Title", "default": "What Makes Us Unique" },
+    { "type": "text", "id": "team_title", "label": "Team Section Title", "default": "Meet the Team" },
+    { "type": "text", "id": "sustainability_title", "label": "Sustainability Title", "default": "Sustainability & Social Impact" },
+    { "type": "textarea", "id": "sustainability_text", "label": "Sustainability Text", "default": "We're committed to reducing our environmental footprint. From eco-friendly packaging to supporting local charities, Aura Wear believes in giving back and making a positive impact." },
+    { "type": "text", "id": "testimonials_title", "label": "Testimonials Title", "default": "What Our Customers Say" }
+  ],
+  "blocks": [
+    { "type": "milestone", "name": "Milestone", "settings": [
+      { "type": "text", "id": "year", "label": "Year" },
+      { "type": "text", "id": "text", "label": "Milestone Description" }
+    ]},
+    { "type": "unique_point", "name": "Unique Point", "settings": [
+      { "type": "text", "id": "icon", "label": "Icon (emoji or SVG or FontAwesome class)" },
+      { "type": "text", "id": "title", "label": "Title" },
+      { "type": "textarea", "id": "text", "label": "Description" }
+    ]},
+    { "type": "team_member", "name": "Team Member", "settings": [
+      { "type": "image_picker", "id": "photo", "label": "Photo" },
+      { "type": "text", "id": "name", "label": "Name" },
+      { "type": "text", "id": "role", "label": "Role" }
+    ]},
+    { "type": "impact", "name": "Impact Point", "settings": [
+      { "type": "text", "id": "text", "label": "Impact Description" }
+    ]},
+    { "type": "testimonial", "name": "Testimonial", "settings": [
+      { "type": "image_picker", "id": "photo", "label": "Photo (optional)" },
+      { "type": "text", "id": "name", "label": "Customer Name" },
+      { "type": "textarea", "id": "quote", "label": "Testimonial Quote" }
+    ]}
+  ],
+  "max_blocks": 24,
+  "presets": [
+    { "name": "About Section" }
+  ]
+}
+{% endschema %}
+
+<style>
+.about-main {
+  font-family: 'Roboto Condensed', Arial, sans-serif;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 16px;
+  color: #333333;
+  background: #F9F9F9;
+  border-radius: 1.25rem;
+}
+
+.about-hero {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 48px;
+  background: #fff;
+  border-radius: 1.25rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  padding: 32px 18px 18px 18px;
+}
+.about-hero-content {
+  text-align: center;
+}
+.about-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+  color: #CDAA7D;
+}
+.about-tagline {
+  font-size: 1.25rem;
+  color: #AAAAAA;
+  margin-bottom: 0;
+}
+.about-hero-image {
+  max-width: 420px;
+  width: 100%;
+  border-radius: 1.5rem;
+  object-fit: cover;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+}
+
+.about-story {
+  margin-bottom: 48px;
+  background: #fff;
+  border-radius: 1.25rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  padding: 28px 18px 18px 18px;
+}
+.about-story h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #CDAA7D;
+}
+.about-story p {
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+}
+.about-milestones {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.about-milestones li {
+  background: rgb(238, 247, 237);
+  border-radius: 1rem;
+  padding: 12px 20px;
+  font-size: 1rem;
+  min-width: 140px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  color: #CDAA7D;
+}
+
+.about-unique {
+  margin-bottom: 48px;
+  background: #fff;
+  border-radius: 1.25rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  padding: 28px 18px 18px 18px;
+}
+.about-unique h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 18px;
+  color: #CDAA7D;
+}
+.about-unique-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+}
+.about-unique-item {
+  background: rgb(238, 247, 237);
+  border-radius: 1.25rem;
+  padding: 24px 18px 18px 18px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #CDAA7D;
+}
+.about-unique-icon {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  color: #CDAA7D;
+}
+.about-unique-item h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #333333;
+}
+.about-unique-item p {
+  font-size: 1rem;
+  color: #AAAAAA;
+}
+
+.about-team {
+  margin-bottom: 48px;
+  background: #fff;
+  border-radius: 1.25rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  padding: 28px 18px 18px 18px;
+}
+.about-team h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 18px;
+  color: #CDAA7D;
+}
+.about-team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 24px;
+}
+.about-team-member {
+  background: rgb(238, 247, 237);
+  border-radius: 1.25rem;
+  padding: 18px 12px 12px 12px;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  color: #CDAA7D;
+}
+.about-team-photo {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  color: #CDAA7D;
+}
+.about-team-member h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #333333;
+}
+.about-team-member p {
+  font-size: 0.98rem;
+  color: #AAAAAA;
+}
+
+.about-sustainability {
+  margin-bottom: 48px;
+  background: #fff;
+  border-radius: 1.25rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  padding: 28px 18px 18px 18px;
+}
+.about-sustainability h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: rgb(41, 219, 103);
+}
+.about-sustainability-highlight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  background: rgb(233, 251, 234);
+  border-radius: 2rem;
+  padding: 8px 18px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: rgb(41, 219, 103);
+  width: fit-content;
+}
+.about-sustainability-icon {
+  font-size: 1.5em;
+  display: inline-block;
+  color: rgb(41, 219, 103);
+}
+.about-sustainability-emoji {
+  display: none;
+}
+.about-sustainability-zero {
+  font-size: 1.1em;
+  font-weight: 700;
+}
+.about-sustainability p {
+  font-size: 1.08rem;
+  margin-bottom: 10px;
+}
+.about-impact-list {
+  list-style: disc inside;
+  padding-left: 0;
+  margin: 0;
+  color: #AAAAAA;
+}
+.about-impact-list li {
+  margin-bottom: 6px;
+  font-size: 1rem;
+  background: rgb(233, 251, 234);
+  color: rgb(41, 219, 103);
+  border-radius: 1rem;
+  padding: 6px 14px;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.about-testimonials {
+  margin-bottom: 24px;
+  background: #fff;
+  border-radius: 1.25rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  padding: 28px 18px 18px 18px;
+}
+.about-testimonials h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 18px;
+  text-align: center;
+  color: #CDAA7D;
+}
+.about-testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+.about-testimonial-item {
+  background: rgb(238, 247, 237);
+  border-radius: 1.25rem;
+  padding: 22px 18px 16px 18px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #CDAA7D;
+}
+.about-testimonial-photo {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  color: #CDAA7D;
+}
+.about-testimonial-item blockquote {
+  font-size: 1.08rem;
+  color: #333333;
+  font-style: italic;
+  margin: 0 0 10px 0;
+  line-height: 1.5;
+}
+.about-testimonial-name {
+  font-size: 1rem;
+  color: #333333;
+  font-weight: 500;
+}
+
+@media (min-width: 700px) {
+  .about-hero {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+  .about-hero-content {
+    flex: 1 1 0;
+    text-align: left;
+    padding-right: 32px;
+  }
+  .about-hero-image {
+    flex: 1 1 0;
+    max-width: 420px;
+  }
+}
+</style> 

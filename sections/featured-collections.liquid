@@ -254,50 +254,25 @@
     <p class="featured-collections__subtitle">{{ section.settings.subheading | default: 'Discover our handpicked favorites.' }}</p>
   </div>
   <div class="featured-collections__grid">
-    <!-- Product 1: Mock Neck Top Regular Colors -->
-    <div class="featured-collection">
-      <div class="featured-product__image-container">
-        <img src="{{ section.settings.mock_neck_regular_image | asset_url }}" alt="{{ section.settings.mock_neck_regular_name }}" class="featured-product__image" loading="lazy" />
-      </div>
-      <div class="featured-collection__content">
-        <div class="featured-product__title">{{ section.settings.mock_neck_regular_name }}</div>
-        <div class="featured-product__price">{{ section.settings.mock_neck_regular_price }}</div>
-        <a href="#" class="featured-collection__cta">Shop Now</a>
-      </div>
-    </div>
-    <!-- Product 2: Mock Neck Top Black Collection -->
-    <div class="featured-collection">
-      <div class="featured-product__image-container">
-        <img src="{{ section.settings.mock_neck_black_image | asset_url }}" alt="{{ section.settings.mock_neck_black_name }}" class="featured-product__image" loading="lazy" />
-      </div>
-      <div class="featured-collection__content">
-        <div class="featured-product__title">{{ section.settings.mock_neck_black_name }}</div>
-        <div class="featured-product__price">{{ section.settings.mock_neck_black_price }}</div>
-        <a href="#" class="featured-collection__cta">Shop Now</a>
-      </div>
-    </div>
-    <!-- Product 3: Sleeves Crop Top Light Colors -->
-    <div class="featured-collection">
-      <div class="featured-product__image-container">
-        <img src="{{ section.settings.sleeves_crop_light_image | asset_url }}" alt="{{ section.settings.sleeves_crop_light_name }}" class="featured-product__image" loading="lazy" />
-      </div>
-      <div class="featured-collection__content">
-        <div class="featured-product__title">{{ section.settings.sleeves_crop_light_name }}</div>
-        <div class="featured-product__price">{{ section.settings.sleeves_crop_light_price }}</div>
-        <a href="#" class="featured-collection__cta">Shop Now</a>
-      </div>
-    </div>
-    <!-- Product 4: Sleeves Crop Top Dark Colors -->
-    <div class="featured-collection">
-      <div class="featured-product__image-container">
-        <img src="{{ section.settings.sleeves_crop_dark_image | asset_url }}" alt="{{ section.settings.sleeves_crop_dark_name }}" class="featured-product__image" loading="lazy" />
-      </div>
-      <div class="featured-collection__content">
-        <div class="featured-product__title">{{ section.settings.sleeves_crop_dark_name }}</div>
-        <div class="featured-product__price">{{ section.settings.sleeves_crop_dark_price }}</div>
-        <a href="#" class="featured-collection__cta">Shop Now</a>
-      </div>
-    </div>
+    {% assign featured_collection = collections[section.settings.collection] %}
+    {% if featured_collection and featured_collection.products.size > 0 %}
+      {% for product in featured_collection.products limit: 4 %}
+        <div class="featured-collection">
+          <div class="featured-product__image-container">
+            {% if product.featured_image %}
+              <img src="{{ product.featured_image | img_url: '400x400' }}" alt="{{ product.title | escape }}" class="featured-product__image" loading="lazy" />
+            {% endif %}
+          </div>
+          <div class="featured-collection__content">
+            <div class="featured-product__title">{{ product.title }}</div>
+            <div class="featured-product__price">{{ product.price | money }}</div>
+            <a href="{{ product.url }}" class="featured-collection__cta">Shop Now</a>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div>No featured products found. Please select a collection in the section settings.</div>
+    {% endif %}
   </div>
 </section>
 
@@ -318,274 +293,9 @@
       "default": "Discover our handpicked favorites."
     },
     {
-      "type": "header",
-      "content": "Mock Neck Tops - Regular Colors"
-    },
-    {
-      "type": "select",
-      "id": "mock_neck_regular_image",
-      "label": "Mock Neck Top - Regular Colors",
-      "options": [
-        { "value": "mock neck top (5).jpg", "label": "Mock Neck Top 5" },
-        { "value": "mock neck top (6).jpg", "label": "Mock Neck Top 6" },
-        { "value": "mock neck top (7).jpg", "label": "Mock Neck Top 7" }
-      ],
-      "default": "mock neck top (5).jpg"
-    },
-    {
-      "type": "text",
-      "id": "mock_neck_regular_name",
-      "label": "Mock Neck Top Name",
-      "default": "Premium Mock Neck Top"
-    },
-    {
-      "type": "text",
-      "id": "mock_neck_regular_price",
-      "label": "Mock Neck Top Price",
-      "default": "$29.99"
-    },
-    {
-      "type": "header",
-      "content": "Mock Neck Tops - Black Collection"
-    },
-    {
-      "type": "select",
-      "id": "mock_neck_black_image",
-      "label": "Mock Neck Top - Black Colors",
-      "options": [
-        { "value": "mock neck top black 3.jpg", "label": "Mock Neck Top Black 3" },
-        { "value": "mock neck top black 4.jpg", "label": "Mock Neck Top Black 4" },
-        { "value": "mock neck top black.jpg", "label": "Mock Neck Top Black" },
-        { "value": "mock neck top blacks.jpg", "label": "Mock Neck Top Blacks" }
-      ],
-      "default": "mock neck top black 3.jpg"
-    },
-    {
-      "type": "text",
-      "id": "mock_neck_black_name",
-      "label": "Mock Neck Top Black Name",
-      "default": "Black Mock Neck Top"
-    },
-    {
-      "type": "text",
-      "id": "mock_neck_black_price",
-      "label": "Mock Neck Top Black Price",
-      "default": "$29.99"
-    },
-    {
-      "type": "header",
-      "content": "Sleeves Crop Tops - Light Colors"
-    },
-    {
-      "type": "select",
-      "id": "sleeves_crop_light_image",
-      "label": "Sleeves Crop Top - Light Colors",
-      "options": [
-        { "value": "sleeves crop top 1.jpg", "label": "Sleeves Crop Top 1 (Light)" },
-        { "value": "sleeves crop top 2.jpg", "label": "Sleeves Crop Top 2 (Light)" },
-        { "value": "sleeves crop top.jpg", "label": "Sleeves Crop Top (Light)" }
-      ],
-      "default": "sleeves crop top 1.jpg"
-    },
-    {
-      "type": "text",
-      "id": "sleeves_crop_light_name",
-      "label": "Light Sleeves Crop Top Name",
-      "default": "Light Sleeves Crop Top"
-    },
-    {
-      "type": "text",
-      "id": "sleeves_crop_light_price",
-      "label": "Light Sleeves Crop Top Price",
-      "default": "$24.99"
-    },
-    {
-      "type": "header",
-      "content": "Sleeves Crop Tops - Dark Colors"
-    },
-    {
-      "type": "select",
-      "id": "sleeves_crop_dark_image",
-      "label": "Sleeves Crop Top - Dark Colors",
-      "options": [
-        { "value": "sleeves crop top 4.jpg", "label": "Sleeves Crop Top 4 (Dark)" },
-        { "value": "sleeves crop top.avif", "label": "Sleeves Crop Top AVIF (Dark)" }
-      ],
-      "default": "sleeves crop top 4.jpg"
-    },
-    {
-      "type": "text",
-      "id": "sleeves_crop_dark_name",
-      "label": "Dark Sleeves Crop Top Name",
-      "default": "Dark Sleeves Crop Top"
-    },
-    {
-      "type": "text",
-      "id": "sleeves_crop_dark_price",
-      "label": "Dark Sleeves Crop Top Price",
-      "default": "$24.99"
-    },
-    {
-      "type": "header",
-      "content": "Striped T-Shirts - White Base"
-    },
-    {
-      "type": "select",
-      "id": "striped_white_image",
-      "label": "Striped T-Shirt - White Base",
-      "options": [
-        { "value": "Striped T-Shirt 1.jpg", "label": "White Striped T-Shirt 1" },
-        { "value": "Striped T-Shirt 2.jpg", "label": "White Striped T-Shirt 2" },
-        { "value": "Striped T-Shirt.jpg", "label": "White Striped T-Shirt" }
-      ],
-      "default": "Striped T-Shirt 1.jpg"
-    },
-    {
-      "type": "text",
-      "id": "striped_white_name",
-      "label": "White Striped T-Shirt Name",
-      "default": "White Striped T-Shirt"
-    },
-    {
-      "type": "text",
-      "id": "striped_white_price",
-      "label": "White Striped T-Shirt Price",
-      "default": "$19.99"
-    },
-    {
-      "type": "header",
-      "content": "Striped T-Shirts - Dark Base"
-    },
-    {
-      "type": "select",
-      "id": "striped_dark_image",
-      "label": "Striped T-Shirt - Dark Base",
-      "options": [
-        { "value": "Striped T-Shirt 3.jpg", "label": "Dark Striped T-Shirt 3" },
-        { "value": "Striped T-Shirt 4.jpg", "label": "Dark Striped T-Shirt 4" }
-      ],
-      "default": "Striped T-Shirt 3.jpg"
-    },
-    {
-      "type": "text",
-      "id": "striped_dark_name",
-      "label": "Dark Striped T-Shirt Name",
-      "default": "Dark Striped T-Shirt"
-    },
-    {
-      "type": "text",
-      "id": "striped_dark_price",
-      "label": "Dark Striped T-Shirt Price",
-      "default": "$19.99"
-    },
-    {
-      "type": "header",
-      "content": "Brand Assets"
-    },
-    {
-      "type": "select",
-      "id": "brand_image",
-      "label": "Brand/Featured Image",
-      "options": [
-        { "value": "slideshow-1.jpg", "label": "Slideshow Featured" },
-        { "value": "image.png", "label": "Brand Image" },
-        { "value": "logo.gif", "label": "Logo GIF" },
-        { "value": "logo.png", "label": "Logo PNG" },
-        { "value": "offer.png", "label": "Special Offer" }
-      ],
-      "default": "slideshow-1.jpg"
-    },
-    {
-      "type": "text",
-      "id": "brand_item_name",
-      "label": "Brand Item Name",
-      "default": "Featured Collection"
-    },
-    {
-      "type": "text",
-      "id": "brand_item_price",
-      "label": "Brand Item Price",
-      "default": "$34.99"
-    },
-    {
-      "type": "header",
-      "content": "Color Scheme Settings"
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "Section Color Scheme",
-      "default": "scheme-1"
-    },
-    {
-      "type": "color",
-      "id": "white_product_bg",
-      "label": "White Products Background",
-      "default": "#ffffff"
-    },
-    {
-      "type": "color",
-      "id": "black_product_bg",
-      "label": "Black Products Background",
-      "default": "#f5f5f5"
-    },
-    {
-      "type": "header",
-      "content": "Layout Settings"
-    },
-    {
-      "type": "range",
-      "id": "products_per_row",
-      "min": 2,
-      "max": 6,
-      "step": 1,
-      "default": 4,
-      "label": "Products per row"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_vendor",
-      "label": "Show vendor",
-      "default": false
-    },
-    {
-      "type": "checkbox",
-      "id": "show_product_description",
-      "label": "Show product description",
-      "default": false
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_quick_add",
-      "label": "Enable quick add to cart",
-      "default": true
-    },
-    {
-      "type": "header",
-      "content": "Display Options"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_white_products",
-      "label": "Show White/Light Products",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_black_products",
-      "label": "Show Black/Dark Products",
-      "default": true
-    },
-    {
-      "type": "select",
-      "id": "color_filter_style",
-      "label": "Color Filter Display",
-      "options": [
-        { "value": "separate_sections", "label": "Separate Sections" },
-        { "value": "mixed_grid", "label": "Mixed in Grid" },
-        { "value": "color_tabs", "label": "Color Tabs" }
-      ],
-      "default": "separate_sections"
+      "type": "collection",
+      "id": "collection",
+      "label": "Featured Collection"
     }
   ],
   "presets": [
