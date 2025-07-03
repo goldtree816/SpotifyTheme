@@ -5,14 +5,18 @@
 <div class="navbar">
   <div class="navbar-left">
     {% if section.settings.logo != blank %}
-      <img src="{{ section.settings.logo | image_url: width: 120 }}" alt="Logo" class="header-logo">
+      <a href="/">
+        <img src="{{ section.settings.logo | image_url: width: 120 }}" alt="Logo" class="header-logo">
+      </a>
     {% else %}
-      <img src="{{ 'logo.png' | asset_url }}" alt="Logo" class="header-logo">
+      <a href="/">
+        <img src="{{ 'logo.png' | asset_url }}" alt="Logo" class="header-logo">
+      </a>
     {% endif %}
   </div>
   <div class="navbar-center">
     <nav>
-      <a href="#">MEN</a>
+      <a href="/pages/shoes">MEN</a>
       <a href="#">WOMEN</a>
       <a href="#">KIDS</a>
       <a href="#">SALE</a>

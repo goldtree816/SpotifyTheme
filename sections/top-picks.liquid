@@ -1,231 +1,126 @@
-<div class="top-picks-section">
-  <h2 class="top-picks-heading">{{ section.settings.heading | default: 'TOP PICKS FOR YOU' }}</h2>
-  <div class="top-picks-groups">
-    {% assign groups = 'men,women,kids' | split: ',' %}
-    {% for group in groups %}
-      {% assign group_title_key = group | append: '_title' %}
-      <div class="top-picks-group" id="top-picks-{{ group }}">
-        <h3 class="top-picks-group-title">{{ section.settings[group_title_key] | default: group | capitalize }}</h3>
-        <div class="top-picks-carousel" data-group="{{ group }}">
-          <button class="carousel-arrow left" onclick="slideTopPicks('{{ group }}', -1)">&#8592;</button>
-          <div class="top-picks-items-wrapper">
-            <div class="top-picks-items" id="top-picks-items-{{ group }}">
-              {% for i in (1..6) %}
-                {% assign img_setting = group | append: '_img' | append: i %}
-                {% assign name_setting = group | append: '_name' | append: i %}
-                {% assign price_setting = group | append: '_price' | append: i %}
-                <div class="top-pick-item">
-                  {% if section.settings[img_setting] != blank %}
-                    <img src="{{ section.settings[img_setting] | image_url: width: 400 }}" alt="{{ section.settings[name_setting] | default: 'Product' }}">
-                  {% else %}
-                    {% case i %}
-                      {% when 1 %}<img src="{{ 'menshoeGEL1130.jpg' | asset_url }}" alt="{{ section.settings[name_setting] | default: 'Product' }}">{% when 2 %}<img src="{{ 'menshoeVEJA.webp' | asset_url }}" alt="{{ section.settings[name_setting] | default: 'Product' }}">{% when 3 %}<img src="{{ 'menshoeZOOMVOMERO.webp' | asset_url }}" alt="{{ section.settings[name_setting] | default: 'Product' }}">{% when 4 %}<img src="{{ 'menshoeNB9060.webp' | asset_url }}" alt="{{ section.settings[name_setting] | default: 'Product' }}">{% when 5 %}<img src="{{ 'menshoeSAMBA.avif' | asset_url }}" alt="{{ section.settings[name_setting] | default: 'Product' }}">{% when 6 %}<img src="{{ 'menshoeOZWEEGO.avif' | asset_url }}" alt="{{ section.settings[name_setting] | default: 'Product' }}">{% endcase %}
-                  {% endif %}
-                  <div class="top-pick-info">
-                    <div class="top-pick-price">${{ section.settings[price_setting] | default: '100' }}</div>
-                    <div class="top-pick-name">{{ section.settings[name_setting] | default: 'Sneaker' }}</div>
-                    <a href="#" class="top-pick-btn">SHOP NOW</a>
-                  </div>
-                </div>
-              {% endfor %}
+<div class="top-picks">
+  <h2 class="top-picks-heading">TOP PICKS FOR YOU</h2>
+  <div class="top-picks-row">
+    <div class="top-picks-label">Men</div>
+    <div class="top-picks-shoes-wrapper">
+      <div class="top-picks-shoes top-picks-slider" id="men-slider">
+        {% assign men_section = sections['featured-men-shoes'] %}
+        {% assign default_titles = "Shoe 1,Shoe 2,Shoe 3,Shoe 4,Shoe 5,Shoe 6" | split: "," %}
+        {% assign default_prices = "100,120,110,130,140,150" | split: "," %}
+        {% assign default_images = "menshoeGEL1130.jpg,menshoeNB9060.webp,menshoeOZWEEGO.avif,menshoeSAMBA.avif,menshoeVEJA.webp,menshoeZOOMVOMERO.webp" | split: "," %}
+        {% if men_section and men_section.blocks.size > 0 %}
+          {% for i in (0..5) %}
+            {% assign block = men_section.blocks[i] %}
+            <div class="top-pick-card big">
+              {% if block %}
+                {% if block.settings.image != blank %}
+                  <img src="{{ block.settings.image | image_url }}" alt="{{ block.settings.title }}" class="top-pick-img">
+                {% else %}
+                  <img src="{{ default_images[i] | asset_url }}" alt="{{ block.settings.title | default: default_titles[i] }}" class="top-pick-img">
+                {% endif %}
+                <div class="top-pick-title">{{ block.settings.title | default: default_titles[i] }}</div>
+                <div class="top-pick-price">${{ block.settings.price | default: default_prices[i] }}</div>
+                {% if block.settings.link != blank %}
+                  <a href="{{ block.settings.link }}" class="top-pick-btn">Shop Now</a>
+                {% endif %}
+              {% else %}
+                <img src="{{ default_images[i] | asset_url }}" alt="{{ default_titles[i] }}" class="top-pick-img">
+                <div class="top-pick-title">{{ default_titles[i] }}</div>
+                <div class="top-pick-price">${{ default_prices[i] }}</div>
+                <a href="#" class="top-pick-btn">Shop Now</a>
+              {% endif %}
             </div>
-          </div>
-          <button class="carousel-arrow right" onclick="slideTopPicks('{{ group }}', 1)">&#8594;</button>
-        </div>
+          {% endfor %}
+        {% else %}
+          {% for i in (0..5) %}
+            <div class="top-pick-card big">
+              <img src="{{ default_images[i] | asset_url }}" alt="{{ default_titles[i] }}" class="top-pick-img">
+              <div class="top-pick-title">{{ default_titles[i] }}</div>
+              <div class="top-pick-price">${{ default_prices[i] }}</div>
+              <a href="#" class="top-pick-btn">Shop Now</a>
+            </div>
+          {% endfor %}
+        {% endif %}
       </div>
-    {% endfor %}
+      <button class="slider-arrow left" onclick="slideTopPicks('men-slider', -1)">&#8592;</button>
+      <button class="slider-arrow right" onclick="slideTopPicks('men-slider', 1)">&#8594;</button>
+    </div>
+  </div>
+  <div class="top-picks-row">
+    <div class="top-picks-label">Women</div>
+    <div class="top-picks-shoes">
+      {% assign women_section = sections['featured-women-shoes'] %}
+      {% if women_section %}
+        {% for block in women_section.blocks %}
+          <div class="top-pick-card">
+            {% if block.settings.image != blank %}
+              <img src="{{ block.settings.image | image_url }}" alt="{{ block.settings.title }}" class="top-pick-img">
+            {% endif %}
+            <div class="top-pick-title">${{ block.settings.title }}</div>
+            {% if block.settings.link != blank %}
+              <a href="{{ block.settings.link }}" class="top-pick-btn">SHOP NOW</a>
+            {% endif %}
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+  <div class="top-picks-row">
+    <div class="top-picks-label">Kids</div>
+    <div class="top-picks-shoes">
+      {% assign kid_section = sections['featured-kid-shoes'] %}
+      {% if kid_section %}
+        {% for block in kid_section.blocks %}
+          <div class="top-pick-card">
+            {% if block.settings.image != blank %}
+              <img src="{{ block.settings.image | image_url }}" alt="{{ block.settings.title }}" class="top-pick-img">
+            {% endif %}
+            <div class="top-pick-title">${{ block.settings.title }}</div>
+            {% if block.settings.link != blank %}
+              <a href="{{ block.settings.link }}" class="top-pick-btn">SHOP NOW</a>
+            {% endif %}
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
   </div>
 </div>
 
 <style>
-.top-picks-section {
-  padding: 48px 0 32px 0;
-  background: #fff;
-  overflow-x: hidden;
-  max-width: 100%;
-}
-.top-picks-heading {
-  font-size: 2.2rem;
-  font-weight: bold;
-  letter-spacing: 2px;
-  margin-bottom: 32px;
-  text-align: left;
-  padding-left: 32px;
-}
-.top-picks-groups {
-  max-width: 1600px;
-  margin: 0 auto;
-}
-.top-picks-group {
-  margin-bottom: 48px;
-}
-.top-picks-group-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 16px;
-  text-align: left;
-  padding-left: 32px;
-}
-.top-picks-carousel {
-  display: flex;
-  align-items: center;
-}
-.carousel-arrow {
-  background: none;
-  border: none;
-  font-size: 2rem;
-  cursor: pointer;
-  color: #111;
-  padding: 0 16px;
-}
-.top-picks-items-wrapper {
-  overflow: hidden;
-  width: 100%;
-}
-.top-picks-items {
-  display: flex;
-  transition: transform 0.3s;
-}
-.top-pick-item {
-  min-width: 320px;
-  max-width: 320px;
-  margin: 0 8px;
-  background: #f7f7f7;
-  border-radius: 8px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-}
-.top-pick-item img {
-  width: 100%;
-  height: 220px;
-  object-fit: contain;
-  background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.top-pick-info {
-  padding: 16px;
-  text-align: left;
-  width: 100%;
-}
-.top-pick-price {
-  font-weight: bold;
-  font-size: 1.1rem;
-  margin-bottom: 4px;
-}
-.top-pick-name {
-  font-size: 1rem;
-  margin-bottom: 8px;
-}
-.top-pick-btn {
-  display: inline-block;
-  background: #111;
-  color: #fff;
-  font-weight: bold;
-  padding: 8px 20px;
-  border-radius: 2px;
-  text-decoration: none;
-  margin-top: 8px;
-  transition: background 0.2s, color 0.2s;
-}
-.top-pick-btn:hover {
-  background: #0071e3;
-  color: #fff;
-}
-@media (max-width: 1200px) {
-  .top-pick-item {
-    min-width: 220px;
-    max-width: 220px;
-  }
-  .top-pick-item img {
-    height: 160px;
-  }
-}
+.top-picks { padding: 32px 0; }
+.top-picks-heading { text-align: center; margin-bottom: 32px; font-size: 2rem; font-weight: bold; }
+.top-picks-row { display: flex; align-items: flex-start; margin-bottom: 32px; position: relative; }
+.top-picks-label { width: 120px; font-weight: bold; margin-right: 0; display: flex; align-items: flex-start; justify-content: flex-start; font-size: 1.2rem; margin-left: 40px; }
+.top-picks-shoes-wrapper { position: relative; width: 1120px; overflow: hidden; display: flex; align-items: center; }
+.top-picks-shoes { display: flex; gap: 40px; transition: transform 0.3s; min-width: 1640px; }
+.top-pick-card.big { width: 250px; min-width: 250px; background: #f7f7f7; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.top-pick-img { width: 100%; height: 180px; object-fit: contain; background: #fff; }
+.top-pick-title, .top-pick-price { text-align: center; width: 100%; margin: 0 auto; }
+.top-pick-title { font-size: 1.1rem; margin: 12px 0 4px 0; font-weight: bold; }
+.top-pick-price { font-size: 1.1rem; font-weight: bold; margin-bottom: 8px; }
+.top-pick-btn { color: #fff; background: #111; border: none; border-radius: 4px; padding: 8px 16px; text-decoration: none; font-size: 1rem; margin-bottom: 12px; display: inline-block; text-align: center; transition: background 0.2s, color 0.2s; }
+.top-pick-btn:hover { background: #0071e3; color: #fff; }
+.slider-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: #fff; border: 1px solid #ccc; border-radius: 50%; width: 36px; height: 36px; font-size: 1.5rem; cursor: pointer; z-index: 2; }
+.slider-arrow.left { left: 0; }
+.slider-arrow.right { right: 0; }
 </style>
-
 <script>
-function slideTopPicks(group, dir) {
-  var items = document.getElementById('top-picks-items-' + group);
-  var current = parseInt(items.getAttribute('data-slide')) || 0;
-  var max = 2; // 6 items, 4 visible, so 2 slides
+function slideTopPicks(id, dir) {
+  var slider = document.getElementById(id);
+  if (!slider) return;
+  var current = parseInt(slider.getAttribute('data-slide')) || 0;
+  var max = 1; // 6 items, 4 visible, so 2 slides
   var next = current + dir;
   if (next < 0) next = 0;
   if (next > max) next = max;
-  items.style.transform = 'translateX(' + (-next * 100 / 4) + '%)';
-  items.setAttribute('data-slide', next);
+  slider.style.transform = 'translateX(' + (-next * 580) + 'px)';
+  slider.setAttribute('data-slide', next);
 }
 </script>
 
 {% schema %}
 {
   "name": "Top Picks",
-  "settings": [
-    { "type": "text", "id": "heading", "label": "Section Heading", "default": "TOP PICKS FOR YOU" },
-    { "type": "text", "id": "men_title", "label": "Men Group Title", "default": "Men" },
-    { "type": "text", "id": "women_title", "label": "Women Group Title", "default": "Women" },
-    { "type": "text", "id": "kids_title", "label": "Kids Group Title", "default": "Kids" },
-
-    { "type": "image_picker", "id": "men_img1", "label": "Men Image 1" },
-    { "type": "text", "id": "men_name1", "label": "Men Name 1" },
-    { "type": "text", "id": "men_price1", "label": "Men Price 1" },
-    { "type": "image_picker", "id": "men_img2", "label": "Men Image 2" },
-    { "type": "text", "id": "men_name2", "label": "Men Name 2" },
-    { "type": "text", "id": "men_price2", "label": "Men Price 2" },
-    { "type": "image_picker", "id": "men_img3", "label": "Men Image 3" },
-    { "type": "text", "id": "men_name3", "label": "Men Name 3" },
-    { "type": "text", "id": "men_price3", "label": "Men Price 3" },
-    { "type": "image_picker", "id": "men_img4", "label": "Men Image 4" },
-    { "type": "text", "id": "men_name4", "label": "Men Name 4" },
-    { "type": "text", "id": "men_price4", "label": "Men Price 4" },
-    { "type": "image_picker", "id": "men_img5", "label": "Men Image 5" },
-    { "type": "text", "id": "men_name5", "label": "Men Name 5" },
-    { "type": "text", "id": "men_price5", "label": "Men Price 5" },
-    { "type": "image_picker", "id": "men_img6", "label": "Men Image 6" },
-    { "type": "text", "id": "men_name6", "label": "Men Name 6" },
-    { "type": "text", "id": "men_price6", "label": "Men Price 6" },
-
-    { "type": "image_picker", "id": "women_img1", "label": "Women Image 1" },
-    { "type": "text", "id": "women_name1", "label": "Women Name 1" },
-    { "type": "text", "id": "women_price1", "label": "Women Price 1" },
-    { "type": "image_picker", "id": "women_img2", "label": "Women Image 2" },
-    { "type": "text", "id": "women_name2", "label": "Women Name 2" },
-    { "type": "text", "id": "women_price2", "label": "Women Price 2" },
-    { "type": "image_picker", "id": "women_img3", "label": "Women Image 3" },
-    { "type": "text", "id": "women_name3", "label": "Women Name 3" },
-    { "type": "text", "id": "women_price3", "label": "Women Price 3" },
-    { "type": "image_picker", "id": "women_img4", "label": "Women Image 4" },
-    { "type": "text", "id": "women_name4", "label": "Women Name 4" },
-    { "type": "text", "id": "women_price4", "label": "Women Price 4" },
-    { "type": "image_picker", "id": "women_img5", "label": "Women Image 5" },
-    { "type": "text", "id": "women_name5", "label": "Women Name 5" },
-    { "type": "text", "id": "women_price5", "label": "Women Price 5" },
-    { "type": "image_picker", "id": "women_img6", "label": "Women Image 6" },
-    { "type": "text", "id": "women_name6", "label": "Women Name 6" },
-    { "type": "text", "id": "women_price6", "label": "Women Price 6" },
-
-    { "type": "image_picker", "id": "kids_img1", "label": "Kids Image 1" },
-    { "type": "text", "id": "kids_name1", "label": "Kids Name 1" },
-    { "type": "text", "id": "kids_price1", "label": "Kids Price 1" },
-    { "type": "image_picker", "id": "kids_img2", "label": "Kids Image 2" },
-    { "type": "text", "id": "kids_name2", "label": "Kids Name 2" },
-    { "type": "text", "id": "kids_price2", "label": "Kids Price 2" },
-    { "type": "image_picker", "id": "kids_img3", "label": "Kids Image 3" },
-    { "type": "text", "id": "kids_name3", "label": "Kids Name 3" },
-    { "type": "text", "id": "kids_price3", "label": "Kids Price 3" },
-    { "type": "image_picker", "id": "kids_img4", "label": "Kids Image 4" },
-    { "type": "text", "id": "kids_name4", "label": "Kids Name 4" },
-    { "type": "text", "id": "kids_price4", "label": "Kids Price 4" },
-    { "type": "image_picker", "id": "kids_img5", "label": "Kids Image 5" },
-    { "type": "text", "id": "kids_name5", "label": "Kids Name 5" },
-    { "type": "text", "id": "kids_price5", "label": "Kids Price 5" },
-    { "type": "image_picker", "id": "kids_img6", "label": "Kids Image 6" },
-    { "type": "text", "id": "kids_name6", "label": "Kids Name 6" },
-    { "type": "text", "id": "kids_price6", "label": "Kids Price 6" }
-  ],
   "presets": [
     { "name": "Top Picks" }
   ]
