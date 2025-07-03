@@ -1,28 +1,31 @@
 {% assign default_titles = "Shoe 1,Shoe 2,Shoe 3,Shoe 4,Shoe 5,Shoe 6" | split: "," %}
 {% assign default_prices = "100,120,110,130,140,150" | split: "," %}
-{% comment %} {% assign default_images = "menshoeGEL1130.jpg,menshoeNB9060.webp,menshoeOZWEEGO.avif,menshoeSAMBA.avif,menshoeVEJA.webp,menshoeZOOMVOMERO.webp" | split: "," %} {% endcomment %}
 
 <div class="featured-men-shoes">
   <h2>{{ section.settings.heading }}</h2>
   <div class="featured-men-shoes-wrapper">
     <div class="featured-shoes-grid featured-men-slider" id="featured-men-slider">
       {% for i in (0..5) %}
-        {% assign default_images = "menshoeGEL1130.jpg,menshoeNB9060.webp,menshoeOZWEEGO.avif,menshoeSAMBA.avif,menshoeVEJA.webp,menshoeZOOMVOMERO.webp" | split: "," %}
-        {% if section.blocks.size > 0 %}
-          {% assign block = section.blocks[i] %}
-        {% else %}
-          {% assign block = nil %}
-        {% endif %}
-        {% assign default_images  %}
         {% assign block = section.blocks[i] %}
         <div class="featured-shoe big">
           {% if block or request.design_mode %}
-            <img src="{{ block.settings.image | image_url | default: default_images[i] | asset_url }}" alt="{{ block.settings.title | default: default_titles[i] }}" class="featured-shoe-img">
+            {% if block.settings.image %}
+              <img 
+                src="{{ block.settings.image | image_url: width: 600 }}" 
+                alt="{{ block.settings.title | default: default_titles[i] | escape }}" 
+                class="featured-shoe-img"
+                loading="lazy"
+                width="600"
+                height="{{ 600 | divided_by: block.settings.image.aspect_ratio | round }}"
+              >
+            {% else %}
+              <div class="placeholder-image">{{ 'product-' | append: forloop.index | placeholder_svg_tag: 'featured-shoe-img' }}</div>
+            {% endif %}
             <div class="featured-shoe-title center">{{ block.settings.title | default: default_titles[i] }}</div>
             <div class="featured-shoe-price center">${{ block.settings.price | default: default_prices[i] }}</div>
             <a href="{{ block.settings.link | default: '#' }}" class="featured-shoe-link">Shop Now</a>
           {% else %}
-            <img src="{{ default_images[i] | asset_url }}" alt="{{ default_titles[i] }}" class="featured-shoe-img">
+            <div class="placeholder-image">{{ 'product-' | append: forloop.index | placeholder_svg_tag: 'featured-shoe-img' }}</div>
             <div class="featured-shoe-title center">{{ default_titles[i] }}</div>
             <div class="featured-shoe-price center">${{ default_prices[i] }}</div>
             <a href="#" class="featured-shoe-link">Shop Now</a>
@@ -36,34 +39,140 @@
 </div>
 
 <style>
-.featured-men-shoes { padding: 32px 0; background: #fff; }
-.featured-men-shoes-wrapper { position: relative; width: 1120px; overflow: hidden; display: flex; align-items: center; margin: 0 auto; }
-.featured-shoes-grid { display: flex; gap: 40px; transition: transform 0.3s; min-width: 1640px; }
-.featured-shoe.big { width: 250px; min-width: 250px; background: #f7f7f7; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-.featured-shoe-img { width: 100%; height: 180px; object-fit: contain; background: #fff; }
-.featured-shoe-title.center, .featured-shoe-price.center { text-align: center; width: 100%; margin: 0 auto; }
-.featured-shoe-title { font-size: 1.1rem; margin: 12px 0 4px 0; font-weight: bold; }
-.featured-shoe-price { font-size: 1.1rem; font-weight: bold; margin-bottom: 8px; }
-.featured-shoe-link { color: #fff; background: #111; border: none; border-radius: 4px; padding: 8px 16px; text-decoration: none; font-size: 1rem; margin-bottom: 12px; display: inline-block; text-align: center; transition: background 0.2s, color 0.2s; }
-.featured-shoe-link:hover { background: #0071e3; color: #fff; }
-.slider-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: #fff; border: 1px solid #ccc; border-radius: 50%; width: 36px; height: 36px; font-size: 1.5rem; cursor: pointer; z-index: 2; }
-.slider-arrow.left { left: 0; }
-.slider-arrow.right { right: 0; }
+.featured-men-shoes { 
+  padding: 32px 0; 
+  background: #fff; 
+}
+.featured-men-shoes-wrapper { 
+  position: relative; 
+  max-width: 1120px; 
+  margin: 0 auto; 
+  overflow: hidden; 
+}
+.featured-shoes-grid { 
+  display: flex; 
+  gap: 40px; 
+  transition: transform 0.3s; 
+  padding: 0 20px;
+}
+.featured-shoe.big { 
+  width: 250px; 
+  min-width: 250px; 
+  background: #f7f7f7; 
+  border-radius: 12px; 
+  overflow: hidden; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04); 
+}
+.featured-shoe-img { 
+  width: 100%; 
+  height: 180px; 
+  object-fit: contain; 
+  background: #fff; 
+}
+.placeholder-image {
+  width: 100%;
+  height: 180px;
+  background: #f7f7f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.featured-shoe-title.center, 
+.featured-shoe-price.center { 
+  text-align: center; 
+  width: 100%; 
+  margin: 0 auto; 
+  padding: 0 10px;
+}
+.featured-shoe-title { 
+  font-size: 1.1rem; 
+  margin: 12px 0 4px 0; 
+  font-weight: bold; 
+}
+.featured-shoe-price { 
+  font-size: 1.1rem; 
+  font-weight: bold; 
+  margin-bottom: 8px; 
+}
+.featured-shoe-link { 
+  color: #fff; 
+  background: #111; 
+  border: none; 
+  border-radius: 4px; 
+  padding: 8px 16px; 
+  text-decoration: none; 
+  font-size: 1rem; 
+  margin-bottom: 12px; 
+  display: inline-block; 
+  text-align: center; 
+  transition: background 0.2s, color 0.2s; 
+}
+.featured-shoe-link:hover { 
+  background: #0071e3; 
+  color: #fff; 
+}
+.slider-arrow { 
+  position: absolute; 
+  top: 50%; 
+  transform: translateY(-50%); 
+  background: #fff; 
+  border: 1px solid #ccc; 
+  border-radius: 50%; 
+  width: 36px; 
+  height: 36px; 
+  font-size: 1.5rem; 
+  cursor: pointer; 
+  z-index: 2; 
+}
+.slider-arrow.left { left: 10px; }
+.slider-arrow.right { right: 10px; }
+.featured-men-shoes > h2 { 
+  text-align: center; 
+  margin-bottom: 32px; 
+  font-size: 2rem; 
+  font-weight: bold; 
+}
 
-/* Center the section heading */
-.featured-men-shoes > h2 { text-align: center; margin-bottom: 32px; font-size: 2rem; font-weight: bold; }
+@media (max-width: 1200px) {
+  .featured-men-shoes-wrapper {
+    max-width: 900px;
+  }
+}
+@media (max-width: 768px) {
+  .featured-men-shoes-wrapper {
+    max-width: 100%;
+    padding: 0 40px;
+  }
+  .featured-shoes-grid {
+    gap: 20px;
+    padding: 0;
+  }
+  .featured-shoe.big {
+    width: 200px;
+    min-width: 200px;
+  }
+}
 </style>
+
 <script>
 function slideTopPicks(id, dir) {
-  var slider = document.getElementById(id);
+  const slider = document.getElementById(id);
   if (!slider) return;
-  var current = parseInt(slider.getAttribute('data-slide')) || 0;
-  var max = 1; // 6 items, 4 visible, so 2 slides
-  var next = current + dir;
-  if (next < 0) next = 0;
-  if (next > max) next = max;
-  slider.style.transform = 'translateX(' + (-next * 580) + 'px)';
-  slider.setAttribute('data-slide', next);
+  
+  const itemWidth = 250 + 40; // width + gap
+  const visibleItems = Math.floor(slider.parentElement.offsetWidth / itemWidth);
+  const totalItems = slider.children.length;
+  const maxSlides = Math.max(0, totalItems - visibleItems);
+  
+  let current = parseInt(slider.dataset.slide) || 0;
+  let next = current + dir;
+  
+  next = Math.max(0, Math.min(next, maxSlides));
+  slider.style.transform = `translateX(${-next * itemWidth}px)`;
+  slider.dataset.slide = next;
 }
 </script>
 
@@ -91,12 +200,14 @@ function slideTopPicks(id, dir) {
         {
           "type": "text",
           "id": "title",
-          "label": "Shoe Title"
+          "label": "Shoe Title",
+          "default": "Shoe Name"
         },
         {
           "type": "text",
           "id": "price",
-          "label": "Price"
+          "label": "Price",
+          "default": "100"
         },
         {
           "type": "url",
@@ -109,8 +220,28 @@ function slideTopPicks(id, dir) {
   "max_blocks": 6,
   "presets": [
     {
-      "name": "Featured Men Shoes"
+      "name": "Featured Men Shoes",
+      "blocks": [
+        {
+          "type": "shoe"
+        },
+        {
+          "type": "shoe"
+        },
+        {
+          "type": "shoe"
+        },
+        {
+          "type": "shoe"
+        },
+        {
+          "type": "shoe"
+        },
+        {
+          "type": "shoe"
+        }
+      ]
     }
   ]
 }
-{% endschema %} 
+{% endschema %}
