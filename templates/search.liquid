@@ -1,0 +1,18 @@
+
+<h1>Search Results for "{{ search.terms }}"</h1>
+{% if search.results_count > 0 %}
+  <ul class="search-results">
+    {% for item in search.results %}
+      <li class="search-result-item">
+        <a href="{{ item.url }}">
+          {% if item.featured_image %}
+            <img src="{{ item.featured_image | img_url: '100x100' }}" alt="{{ item.title }}" />
+          {% endif %}
+          <span>{{ item.title }}</span>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No results found.</p>
+{% endif %}

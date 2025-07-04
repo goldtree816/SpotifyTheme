@@ -11,7 +11,7 @@
           <div class="deal__name">Apple MacBook Air M4 2025 13.6" | 16GB | 256GB SSD</div>
           <div class="deal__rating">★★★★★</div>
           <div class="deal__prices"><span class="deal__old">₹ 1,89,000</span> <span class="deal__new">₹ 1,65,000</span></div>
-          <button class="deal__cart">Add to Cart</button>
+          <button class="deal__cart" data-variant-id="1234567890">Add to Cart</button>
         </div>
       </div>
       <div class="deal__slide">
@@ -22,7 +22,7 @@
           <div class="deal__name">HP OMEN 16 2024 Gaming | i7 14700HX | RTX 4070 | 16GB | 512GB SSD</div>
           <div class="deal__rating">★★★★★</div>
           <div class="deal__prices"><span class="deal__old">₹ 2,60,000</span> <span class="deal__new">₹ 2,33,000</span></div>
-          <button class="deal__cart">Add to Cart</button>
+          <button class="deal__cart" data-variant-id="2234567890">Add to Cart</button>
         </div>
       </div>
       <div class="deal__slide">
@@ -33,7 +33,7 @@
           <div class="deal__name">Lenovo ThinkPad L13 Yoga Gen 5 | i5 135U | 16GB | 512GB SSD</div>
           <div class="deal__rating">★★★★★</div>
           <div class="deal__prices"><span class="deal__old">₹ 2,07,000</span> <span class="deal__new">₹ 1,84,000</span></div>
-          <button class="deal__cart">Add to Cart</button>
+          <button class="deal__cart" data-variant-id="3234567890">Add to Cart</button>
         </div>
       </div>
       <div class="deal__slide">
@@ -44,7 +44,7 @@
           <div class="deal__name">Acer Predator Helios Neo 16S | i9 275HX | RTX 5070 TI | 32GB | 1TB</div>
           <div class="deal__rating">★★★★★</div>
           <div class="deal__prices"><span class="deal__old">₹ 3,30,000</span> <span class="deal__new">₹ 3,25,000</span></div>
-          <button class="deal__cart">Add to Cart</button>
+          <button class="deal__cart" data-variant-id="4234567890">Add to Cart</button>
         </div>
       </div>
       <div class="deal__slide">
@@ -55,7 +55,7 @@
           <div class="deal__name">Acer Nitro V 15 2025 15th Gen | i5 210H | RTX 4050 | 16GB | 512GB SSD</div>
           <div class="deal__rating">★★★★★</div>
           <div class="deal__prices"><span class="deal__old">₹ 1,38,000</span> <span class="deal__new">₹ 1,33,000</span></div>
-          <button class="deal__cart">Add to Cart</button>
+          <button class="deal__cart" data-variant-id="5234567890">Add to Cart</button>
         </div>
       </div>
       <div class="deal__slide">
@@ -66,7 +66,7 @@
           <div class="deal__name">xLab x-Book Series XL-156P | i3 | 8GB | 256GB SSD | 15"</div>
           <div class="deal__rating">★★★★★</div>
           <div class="deal__prices"><span class="deal__old">₹ 85,000</span> <span class="deal__new">₹ 65,000</span></div>
-          <button class="deal__cart">Add to Cart</button>
+          <button class="deal__cart" data-variant-id="6234567890">Add to Cart</button>
         </div>
       </div>
     </div>
@@ -253,6 +253,31 @@
   const slides = document.querySelector('.deal__slides');
   left?.addEventListener('click', () => { slides.scrollBy({ left: -340, behavior: 'smooth' }); });
   right?.addEventListener('click', () => { slides.scrollBy({ left: 340, behavior: 'smooth' }); });
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.deal__cart').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const variantId = this.getAttribute('data-variant-id');
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: variantId, quantity: 1 })
+        })
+        .then(res => res.json())
+        .then(() => {
+          // Open and update the cart drawer if available
+          if (window.fetchCart) {
+            document.getElementById('cart-drawer').classList.add('open');
+            document.getElementById('cart-drawer').setAttribute('aria-hidden', 'false');
+            window.fetchCart();
+          } else {
+            // fallback: reload page
+            location.reload();
+          }
+        });
+      });
+    });
+  });
   {% endjavascript %}
 
 </section>
