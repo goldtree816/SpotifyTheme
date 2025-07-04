@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "featured_women_shoes": {
+      "type": "featured-women-shoes",
+      "settings": {}
+    },
+    "footer": {
+      "type": "footer",
+      "settings": {}
+    }
+  },
+  "order": [
+    "featured_women_shoes",
+    "footer"
+  ]
+} 

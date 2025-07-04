@@ -4,43 +4,30 @@
     <div class="top-picks-label">Men</div>
     <div class="top-picks-shoes-wrapper">
       <div class="top-picks-shoes top-picks-slider" id="men-slider">
-        {% assign men_section = sections['featured-men-shoes'] %}
         {% assign default_titles = "Shoe 1,Shoe 2,Shoe 3,Shoe 4,Shoe 5,Shoe 6" | split: "," %}
         {% assign default_prices = "100,120,110,130,140,150" | split: "," %}
         {% assign default_images = "menshoeGEL1130.jpg,menshoeNB9060.webp,menshoeOZWEEGO.avif,menshoeSAMBA.avif,menshoeVEJA.webp,menshoeZOOMVOMERO.webp" | split: "," %}
-        {% if men_section and men_section.blocks.size > 0 %}
-          {% for i in (0..5) %}
-            {% assign block = men_section.blocks[i] %}
-            <div class="top-pick-card big">
-              {% if block %}
-                {% if block.settings.image != blank %}
-                  <img src="{{ block.settings.image | image_url }}" alt="{{ block.settings.title }}" class="top-pick-img">
-                {% else %}
-                  <img src="{{ default_images[i] | asset_url }}" alt="{{ block.settings.title | default: default_titles[i] }}" class="top-pick-img">
-                {% endif %}
-                <div class="top-pick-title">{{ block.settings.title | default: default_titles[i] }}</div>
-                <div class="top-pick-price">${{ block.settings.price | default: default_prices[i] }}</div>
-                {% if block.settings.link != blank %}
-                  <a href="{{ block.settings.link }}" class="top-pick-btn">Shop Now</a>
-                {% endif %}
+        {% assign men_blocks = section.blocks %}
+        {% for i in (0..5) %}
+          {% assign block = men_blocks[i] %}
+          <div class="top-pick-card big">
+            {% if block or request.design_mode %}
+              {% if block.settings.image %}
+                <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.title | default: default_titles[i] | escape }}" class="top-pick-img" loading="lazy" width="600" height="180">
               {% else %}
-                <img src="{{ default_images[i] | asset_url }}" alt="{{ default_titles[i] }}" class="top-pick-img">
-                <div class="top-pick-title">{{ default_titles[i] }}</div>
-                <div class="top-pick-price">${{ default_prices[i] }}</div>
-                <a href="#" class="top-pick-btn">Shop Now</a>
+                <img src="{{ default_images[i] | asset_url }}" alt="{{ block.settings.title | default: default_titles[i] }}" class="top-pick-img" loading="lazy" width="600" height="180">
               {% endif %}
-            </div>
-          {% endfor %}
-        {% else %}
-          {% for i in (0..5) %}
-            <div class="top-pick-card big">
-              <img src="{{ default_images[i] | asset_url }}" alt="{{ default_titles[i] }}" class="top-pick-img">
+              <div class="top-pick-title">{{ block.settings.title | default: default_titles[i] }}</div>
+              <div class="top-pick-price">${{ block.settings.price | default: default_prices[i] }}</div>
+              <a href="{{ block.settings.link | default: '#' }}" class="top-pick-btn">Shop Now</a>
+            {% else %}
+              <img src="{{ default_images[i] | asset_url }}" alt="{{ default_titles[i] }}" class="top-pick-img" loading="lazy" width="600" height="180">
               <div class="top-pick-title">{{ default_titles[i] }}</div>
               <div class="top-pick-price">${{ default_prices[i] }}</div>
               <a href="#" class="top-pick-btn">Shop Now</a>
-            </div>
-          {% endfor %}
-        {% endif %}
+            {% endif %}
+          </div>
+        {% endfor %}
       </div>
       <button class="slider-arrow left" onclick="slideTopPicks('men-slider', -1)">&#8592;</button>
       <button class="slider-arrow right" onclick="slideTopPicks('men-slider', 1)">&#8594;</button>

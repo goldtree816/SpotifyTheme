@@ -1,0 +1,17 @@
+{
+    "sections": {
+      "featured_kid_shoes": {
+        "type": "featured-kid-shoes",
+        "settings": {}
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {}
+      }
+    },
+    "order": [
+      "featured_kid_shoes",
+      "footer"
+    ]
+  }
+  
