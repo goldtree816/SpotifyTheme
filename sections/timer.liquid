@@ -1,0 +1,187 @@
+<section class="timer-section" style="background-image: url('{{ section.settings.background_asset | asset_url }}');">
+  <div class="timer-content">
+    <h1 class="timer-title">{{ section.settings.title | default: 'Hurry Up! Get Up to 50% Off' }}</h1>
+    <p class="timer-subtitle">{{ section.settings.subtitle | default: 'Step into summer with sun-ready styles at can’t-miss prices.' }}</p>
+    <div class="timer-boxes" id="countdown"></div>
+    <a href="{{ section.settings.button_link | default: '/collections/all' }}" class="timer-button">SHOP THE SUMMER SALE</a>
+  </div>
+</section>
+
+<style>
+  .timer-section {
+    position: relative;
+    width: 100%;
+    min-height: 500px; /* Adjusted height to fit content, can be customized */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .timer-content {
+    z-index: 1;
+    padding: 20px;
+  }
+
+  .timer-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .timer-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  }
+
+  .timer-boxes {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+  }
+
+  .timer-box {
+    background: #fff;
+    color: #000;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    min-width: 60px;
+    text-align: center;
+  }
+
+  .timer-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  .timer-button {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #dc3545;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 5px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+  }
+
+  .timer-button:hover {
+    background-color: #c82333;
+  }
+
+  @media (max-width: 768px) {
+    .timer-title {
+      font-size: 2rem;
+    }
+
+    .timer-subtitle {
+      font-size: 1rem;
+    }
+
+    .timer-box {
+      padding: 8px 10px;
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .timer-title {
+      font-size: 1.5rem;
+    }
+
+    .timer-subtitle {
+      font-size: 0.9rem;
+    }
+
+    .timer-button {
+      padding: 10px 20px;
+    }
+  }
+</style>
+
+<script>
+  // Countdown timer logic
+  function startCountdown(endDate) {
+    const countdown = document.getElementById('countdown');
+    if (!countdown) return;
+
+    const updateTimer = () => {
+      const now = new Date().getTime();
+      const distance = endDate - now;
+
+      if (distance < 0) {
+        countdown.innerHTML = "EXPIRED";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdown.innerHTML = `
+        <div class="timer-box">${String(days).padStart(2, '0')} <span class="timer-label">DAY</span></div>
+        <div class="timer-box">${String(hours).padStart(2, '0')} <span class="timer-label">HOUR</span></div>
+        <div class="timer-box">${String(minutes).padStart(2, '0')} <span class="timer-label">MINS</span></div>
+        <div class="timer-box">${String(seconds).padStart(2, '0')} <span class="timer-label">SEC</span></div>
+      `;
+    };
+
+    updateTimer();
+    setInterval(updateTimer, 1000);
+  }
+
+  // Set end date (example: 7 days from now, adjust as needed)
+  const endDate = new Date();
+  endDate.setDate(endDate.getDate() + 7); // 7 days from July 06, 2025, 05:33 PM +0545
+  startCountdown(endDate.getTime());
+</script>
+
+{% schema %}
+{
+  "name": "Timer Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "background_asset",
+      "label": "Background Asset Filename",
+      "info": "Enter the filename of the image in the assets folder (e.g., 'timer-background.jpg'). Another user can update this image in the theme files.",
+      "default": "timer-background.jpg"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Hurry Up! Get Up to 50% Off"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Step into summer with sun-ready styles at can’t-miss prices."
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "default": "/collections/all"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Timer Section"
+    }
+  ]
+}
+{% endschema %}

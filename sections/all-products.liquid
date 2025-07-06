@@ -1,0 +1,318 @@
+<section class="all-products-section">
+  <div class="products-header">
+    <h1 class="products-main-title">All Products</h1>
+    <p class="products-main-description">Discover our full range of premium products, curated for every taste and style.</p>
+  </div>
+
+  <div class="products-grid">
+    {% unless collections.all-products %}
+  <div class="collection-error">
+    <p>Error: 'all-products' collection not found. Please create this collection in Shopify admin.</p>
+  </div>
+{% else %}
+  {% paginate collections.all-products.products by 12 %}
+      {% for product in collections.all-products.products %}
+        <div class="product-card">
+          <a href="{{ product.url }}" class="product-link">
+            <div class="product-media">
+              {% if product.featured_image %}
+                <img
+                  src="{{ product.featured_image | image_url: width: 600 }}"
+                  width="600"
+                  height="400"
+                  alt="{{ product.title | escape }}"
+                  loading="lazy"
+                  class="product-image"
+                >
+              {% else %}
+                <img
+                  src="https://placehold.co/600x400"
+                  width="600"
+                  height="400"
+                  alt="Placeholder Product Image"
+                  loading="lazy"
+                  class="product-image"
+                >
+              {% endif %}
+            </div>
+            <div class="product-content">
+              <h2 class="product-title">{{ product.title | truncate: 50 }}</h2>
+              <p class="product-price">
+                {% if product.compare_at_price > product.price %}
+                  <span class="price-discounted">{{ product.price | money }}</span>
+                  <span class="price-original">{{ product.compare_at_price | money }}</span>
+                {% else %}
+                  <span class="price-regular">{{ product.price | money }}</span>
+                {% endif %}
+              </p>
+              <span
+                class="product-cta"
+                style="background-color: {{ section.settings.button_background_color }}; color: {{ section.settings.button_text_color }};"
+              >
+                View Product
+              </span>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+      {% if paginate.pages > 1 %}
+        <div class="pagination">
+          {% if paginate.previous.is_link %}
+            <a href="{{ paginate.previous.url }}" class="pagination-link">Previous</a>
+          {% endif %}
+          <span class="pagination-info">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+          {% if paginate.next.is_link %}
+            <a href="{{ paginate.next.url }}" class="pagination-link">Next</a>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endpaginate %}
+    {% endunless %}
+  </div>
+</section>
+
+<style>
+  .all-products-section {
+    padding: 60px 5%;
+    max-width: 1600px;
+    margin: 0 auto;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: {{ section.settings.background_color }};
+    color: {{ section.settings.text_color }};
+  }
+
+  .products-header {
+    text-align: center;
+    margin-bottom: 40px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .products-main-title {
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .products-main-description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    opacity: 0.9;
+    margin: 0 auto;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+  }
+
+  .product-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .product-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    height: 100%;
+  }
+
+  .product-media {
+    position: relative;
+    padding-top: 66.66%; /* 3:2 aspect ratio */
+    overflow: hidden;
+    background: #f8f8f8;
+  }
+
+  .product-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .product-card:hover .product-image {
+    transform: scale(1.03);
+  }
+
+  .product-content {
+    padding: 20px;
+  }
+
+  .product-title {
+    font-size: 1.3rem;
+    margin: 0 0 8px 0;
+    font-weight: 600;
+    color: {{ section.settings.text_color }};
+  }
+
+  .product-price {
+    font-size: 1rem;
+    margin: 0 0 16px 0;
+    line-height: 1.5;
+  }
+
+  .price-discounted {
+    color: #dc3545;
+    font-weight: 600;
+  }
+
+  .price-original {
+    text-decoration: line-through;
+    opacity: 0.6;
+    margin-left: 8px;
+  }
+
+  .price-regular {
+    font-weight: 600;
+  }
+
+  .product-cta {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+  }
+
+  .product-card:hover .product-cta {
+    background-color: {{ section.settings.button_hover_background_color }};
+    color: {{ section.settings.button_hover_text_color }};
+  }
+
+  .pagination {
+    text-align: center;
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .pagination-link {
+    text-decoration: none;
+    padding: 8px 16px;
+    border: 1px solid {{ section.settings.button_background_color }};
+    border-radius: 4px;
+    color: {{ section.settings.button_background_color }};
+    transition: all 0.3s ease;
+  }
+
+  .pagination-link:hover {
+    background-color: {{ section.settings.button_background_color }};
+    color: {{ section.settings.button_text_color }};
+  }
+
+  .pagination-info {
+    font-size: 0.95rem;
+    opacity: 0.8;
+  }
+
+  .collection-error {
+    text-align: center;
+    padding: 40px;
+    background: #ffeaea;
+    border: 1px solid #ffcccc;
+    border-radius: 8px;
+    margin: 20px 0;
+    color: #cc0000;
+  }
+
+  .collection-error p {
+    margin: 0;
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .products-main-title {
+      font-size: 2rem;
+    }
+
+    .products-main-description {
+      font-size: 1rem;
+    }
+
+    .products-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .all-products-section {
+      padding: 40px 20px;
+    }
+
+    .products-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "All Products",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f8f9fa"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#212529"
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Button Background Color",
+      "default": "#007bff"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background_color",
+      "label": "Button Hover Background Color",
+      "default": "#0056b3"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Button Hover Text Color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "All Products"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,309 @@
+<section
+  class="collections-section"
+>
+  <div class="collections-header">
+    <h1 class="collections-main-title">{{ section.settings.heading | default: 'Our Categories' }}</h1>
+    <p class="collections-main-description">
+      {{
+        section.settings.description
+        | default: 'Explore a wide range of styles, handpicked to suit every state and mind.'
+      }}
+    </p>
+  </div>
+
+  <div class="collections-grid">
+    {% for block in section.blocks %}
+      <div class="collection-card" {{ block.shopify_attributes }}>
+        <a
+          href="{% if block.settings.collection %}{{ block.settings.collection.url }}{% else %}#{% endif %}"
+          class="collection-link"
+        >
+          <div class="collection-media">
+            {% if block.settings.collection and block.settings.collection.image %}
+              <img
+                src="{{ block.settings.collection.image | image_url: width: 600 }}"
+                width="600"
+                height="400"
+                alt="{{ block.settings.collection.title | escape | default: 'Collection Image' }}"
+                loading="lazy"
+                class="collection-image"
+              >
+            {% else %}
+              <img
+                src="{{ block.settings.collection.title | default: 'Collection+' | append: forloop.index | url_encode }}"
+                width="600"
+                height="400"
+                alt="Fallback Collection Image"
+                loading="lazy"
+                class="collection-image"
+              >
+            {% endif %}
+          </div>
+          <div class="collection-content">
+            <h2 class="collection-title">
+              {{ block.settings.collection.title | default: 'Collection ' | append: forloop.index }}
+            </h2>
+            <p class="collection-description">
+              {{ block.settings.collection.description | default: 'Discover premium selections' }}
+            </p>
+            <span
+              class="collection-cta"
+              style="background-color: {{ section.settings.button_background_color }}; color: {{ section.settings.button_text_color }};"
+            >
+              {{ block.settings.button_text | default: 'Explore Collection' }}
+            </span>
+          </div>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<style>
+  .collections-section {
+    padding: 60px 5%;
+    max-width: 1600px;
+    margin: 0 auto;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: {{ section.settings.background_color | default: '#e6cfbd' }} !important;
+    }
+
+  .collections-header {
+    text-align: center;
+    margin-bottom: 40px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .collections-main-title {
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .collections-main-description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    opacity: 0.9;
+    margin: 0 auto;
+  }
+
+  .collections-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+  }
+
+  .collection-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .collection-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .collection-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    height: 100%;
+  }
+
+  .collection-media {
+    position: relative;
+    padding-top: 66.66%; /* 3:2 aspect ratio */
+    overflow: hidden;
+    background: #f8f8f8;
+  }
+
+  .collection-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .collection-card:hover .collection-image {
+    transform: scale(1.03);
+  }
+
+  .collection-content {
+    padding: 20px;
+  }
+
+  .collection-title {
+    font-size: 1.3rem;
+    margin: 0 0 8px 0;
+    font-weight: 600;
+    color: inherit;
+  }
+
+  .collection-description {
+    font-size: 0.95rem;
+    margin: 0 0 16px 0;
+    opacity: 0.8;
+    line-height: 1.5;
+  }
+
+  .collection-cta {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+  }
+
+  .collection-card:hover .collection-cta {
+    background-color: {{ section.settings.button_hover_background_color }} !important;
+    color: {{ section.settings.button_hover_text_color }} !important;
+  }
+
+  @media (max-width: 768px) {
+    .collections-main-title {
+      font-size: 2rem;
+    }
+
+    .collections-main-description {
+      font-size: 1rem;
+    }
+
+    .collections-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .collections-section {
+      padding: 40px 20px;
+    }
+
+    .collections-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Collections Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Our Categories"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "Explore a wide range of styles, handpicked to suit every state and mind."
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#e6cfbd"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#212529"
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Button Background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background_color",
+      "label": "Button Hover Background",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Button Hover Text Color",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_item",
+      "name": "Collection Item",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Shop Now"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collections Grid",
+      "settings": {
+        "heading": "Our Categories",
+        "description": "Explore a wide range of styles, handpicked to suit every state and mind."
+      },
+      "blocks": [
+        {
+          "type": "collection_item",
+          "settings": {
+            "button_text": "Shop Men"
+          }
+        },
+        {
+          "type": "collection_item",
+          "settings": {
+            "button_text": "Shop Women"
+          }
+        },
+        {
+          "type": "collection_item",
+          "settings": {
+            "button_text": "Shop Kids"
+          }
+        },
+        {
+          "type": "collection_item",
+          "settings": {
+            "button_text": "Shop Accessories"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

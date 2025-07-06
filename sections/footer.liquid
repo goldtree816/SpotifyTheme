@@ -1,0 +1,358 @@
+<footer class="footer-section">
+  <div class="footer-container">
+    <div class="footer-column logo-column">
+      <img src="{{ 'logo.png' | asset_url }}" alt="{{ section.settings.logo_alt }}" width="300" height="100" class="footer-logo" loading="lazy">
+
+      <p class="footer-description">Classic looks for Men, Women & Kids.</p>
+      <div class="social-icons">
+        <a href="{{ settings.social_instagram | default: '#' }}" aria-label="Instagram">
+          <img src="{{ 'instagram-icon.png' | asset_url }}" alt="{{ section.settings.instagram_alt | default: 'Instagram' }}" width="24" height="24" class="social-icon" loading="lazy">
+        </a>
+        <a href="{{ settings.social_facebook | default: '#' }}" aria-label="Facebook">
+          <img src="{{ 'facebook-icon.png' | asset_url }}" alt="{{ section.settings.facebook_alt | default: 'Facebook' }}" width="24" height="24" class="social-icon" loading="lazy">
+        </a>
+        <a href="{{ settings.social_linkedin | default: '#' }}" aria-label="LinkedIn">
+          <img src="{{ 'linkedin-icon.png' | asset_url }}" alt="{{ section.settings.linkedin_alt | default: 'LinkedIn' }}" width="24" height="24" class="social-icon" loading="lazy">
+        </a>
+        <a href="{{ settings.social_twitter | default: '#' }}" aria-label="Twitter">
+          <img src="{{ 'twitter-icon.png' | asset_url }}" alt="{{ section.settings.twitter_alt | default: 'Twitter' }}" width="24" height="24" class="social-icon" loading="lazy">
+        </a>
+      </div>
+    </div>
+    <div class="footer-column">
+      <h3 class="footer-heading">Quick Links</h3>
+      <ul class="footer-links">
+        <li><a href="{{ routes.root_url }}">Home</a></li>
+        <li><a href="{{ routes.all_products_collection_url }}">Shop</a></li>
+        <li><a href="/pages/about">About</a></li>
+        <li><a href="/pages/contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <h3 class="footer-heading">Shop</h3>
+      <ul class="footer-links">
+        <li><a href="#">Mens Wear</a></li>
+        <li><a href="#">Womens Wear</a></li>
+        <li><a href="#">Kids Wear</a></li>
+        <li><a href="#">Accessories</a></li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <h3 class="footer-heading">Help</h3>
+      <ul class="footer-links">
+        <li><a href="/pages/faq">FAQ's</a></li>
+        <li><a href="/pages/return-policy">Return Policy</a></li>
+        <li><a href="/pages/order-status">Order Status</a></li>
+        <li><a href="/pages/shipping-delivery">Shipping & Delivery</a></li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <h3 class="footer-heading">My Profile</h3>
+      <ul class="footer-links">
+        <li><a href="{{ routes.account_url }}">My Account</a></li>
+        <li><a href="/pages/track-order">Track Order</a></li>
+        <li><a href="{{ routes.cart_url }}">My Cart</a></li>
+        <li><a href="/pages/order-history">Order History</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="copyright">Copyright © {{ 'now' | date: '%Y' }} {{ shop.name }} All rights reserved</p>
+    <div class="payment-icons">
+      <img src="{{ 'esewa-icon.png' | asset_url }}" alt="{{ section.settings.esewa_alt | default: 'Esewa' }}" width="50" height="30" class="payment-icon" loading="lazy">
+      <img src="{{ 'khalti-icon.png' | asset_url }}" alt="{{ section.settings.khalti_alt | default: 'Khalti' }}" width="50" height="30" class="payment-icon" loading="lazy">
+      <img src="{{ 'visa-icon.png' | asset_url }}" alt="{{ section.settings.visa_alt | default: 'Visa' }}" width="50" height="30" class="payment-icon" loading="lazy">
+      <img src="{{ 'mastercard-icon.png' | asset_url }}" alt="{{ section.settings.mastercard_alt | default: 'MasterCard' }}" width="50" height="30" class="payment-icon" loading="lazy">
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer-section {
+    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+    color: #e0e0e0;
+    padding: 50px 20px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    border-top: 2px solid #ff4d4d;
+  }
+
+  .footer-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .footer-column {
+    padding: 15px;
+  }
+
+  .footer-logo {
+    max-width: 200px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+  }
+
+  .footer-logo:hover {
+    transform: scale(1.05);
+  }
+
+  .footer-description {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    opacity: 0.85;
+    line-height: 1.5;
+  }
+
+  .social-icons {
+    display: flex;
+    gap: 15px;
+  }
+
+  .social-icon {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .social-icon:hover {
+    transform: scale(1.1);
+    opacity: 0.9;
+  }
+
+  .footer-heading {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+  }
+
+  .footer-links {
+    list-style: none;
+    padding: 0;
+  }
+
+  .footer-links li {
+    margin-bottom: 12px;
+  }
+
+  .footer-links a {
+    color: #b3e5fc;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+  }
+
+  .footer-links a:hover {
+    color: #81d4fa;
+    text-decoration: underline;
+  }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #555;
+    padding-top: 25px;
+    margin-top: 25px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .copyright {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    color: #ccc;
+  }
+
+  .payment-icons {
+    display: flex;
+    gap: 15px;
+  }
+
+  .payment-icon {
+    max-width: 60px;
+    height: auto;
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+  }
+
+  .payment-icon:hover {
+    opacity: 1;
+  }
+
+  @media (max-width: 1024px) {
+    .footer-container {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .footer-container {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      text-align: center;
+      gap: 15px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .footer-container {
+      grid-template-columns: 1fr;
+    }
+
+    .footer-logo {
+      max-width: 150px;
+    }
+
+    .footer-heading {
+      font-size: 1.1rem;
+    }
+
+    .footer-links a {
+      font-size: 0.9rem;
+    }
+
+    .payment-icon {
+      max-width: 50px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Footer Section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "social_icon_color",
+      "label": "Social Icon Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "payment_icon_color",
+      "label": "Payment Icon Color",
+      "default": "#b3e5fc"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo",
+      "info": "Upload the logo image (e.g., 'logo.png'). Another user can update this image in the theme editor."
+    },
+    {
+      "type": "text",
+      "id": "logo_alt",
+      "label": "Logo Alt Text",
+      "default": "Store Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "instagram_icon",
+      "label": "Instagram Icon",
+      "info": "Upload the Instagram icon image (e.g., 'instagram-icon.png'). Another user can update this image in the theme editor."
+    },
+    {
+      "type": "text",
+      "id": "instagram_alt",
+      "label": "Instagram Alt Text",
+      "default": "Instagram"
+    },
+    {
+      "type": "image_picker",
+      "id": "facebook_icon",
+      "label": "Facebook Icon",
+      "info": "Upload the Facebook icon image (e.g., 'facebook-icon.png'). Another user can update this image in the theme editor."
+    },
+    {
+      "type": "text",
+      "id": "facebook_alt",
+      "label": "Facebook Alt Text",
+      "default": "Facebook"
+    },
+    {
+      "type": "image_picker",
+      "id": "linkedin_icon",
+      "label": "LinkedIn Icon",
+      "info": "Upload the LinkedIn icon image (e.g., 'linkedin-icon.png'). Another user can update this image in the theme editor."
+    },
+    {
+      "type": "text",
+      "id": "linkedin_alt",
+      "label": "LinkedIn Alt Text",
+      "default": "LinkedIn"
+    },
+    {
+      "type": "image_picker",
+      "id": "twitter_icon",
+      "label": "Twitter Icon",
+      "info": "Upload the Twitter icon image (e.g., 'twitter-icon.png'). Another user can update this image in the theme editor."
+    },
+    {
+      "type": "text",
+      "id": "twitter_alt",
+      "label": "Twitter Alt Text",
+      "default": "Twitter"
+    },
+    {
+      "type": "image_picker",
+      "id": "esewa_icon",
+      "label": "Esewa Icon",
+      "info": "Upload Esewa payment icon (e.g., 'esewa-icon.png')"
+    },
+    {
+      "type": "text",
+      "id": "esewa_alt",
+      "label": "Esewa Alt Text",
+      "default": "Esewa"
+    },
+    {
+      "type": "image_picker",
+      "id": "khalti_icon",
+      "label": "Khalti Icon",
+      "info": "Upload Khalti payment icon (e.g., 'khalti-icon.png')"
+    },
+    {
+      "type": "text",
+      "id": "khalti_alt",
+      "label": "Khalti Alt Text",
+      "default": "Khalti"
+    },
+    {
+      "type": "image_picker",
+      "id": "visa_icon",
+      "label": "Visa Icon",
+      "info": "Upload Visa payment icon (e.g., 'visa-icon.png')"
+    },
+    {
+      "type": "text",
+      "id": "visa_alt",
+      "label": "Visa Alt Text",
+      "default": "Visa"
+    },
+    {
+      "type": "image_picker",
+      "id": "mastercard_icon",
+      "label": "MasterCard Icon",
+      "info": "Upload MasterCard payment icon (e.g., 'mastercard-icon.png')"
+    },
+    {
+      "type": "text",
+      "id": "mastercard_alt",
+      "label": "MasterCard Alt Text",
+      "default": "MasterCard"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer Section"
+    }
+  ]
+}
+{% endschema %}
