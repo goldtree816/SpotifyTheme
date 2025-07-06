@@ -1,0 +1,107 @@
+:root {
+  --search-max-width: 900px;
+  --search-padding: 2rem;
+  --search-card-radius: 12px;
+  --search-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  --search-shadow-hover: 0 8px 30px rgba(0,0,0,0.12);
+  --search-primary: #5c6e87;
+  --search-accent: #1abc9c;
+  --search-text: #2c3e50;
+  --search-text-light: #888;
+  --search-bg: #fff;
+}
+
+body {
+  background: #f8f9fa;
+}
+
+h1 {
+  text-align: center;
+  color: var(--search-primary);
+  font-size: 2rem;
+  margin: 2rem 0 2.5rem 0;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.search-results {
+  max-width: var(--search-max-width);
+  margin: 0 auto;
+  padding: var(--search-padding);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  list-style: none;
+}
+
+.search-result-item {
+  background: var(--search-bg);
+  border-radius: var(--search-card-radius);
+  box-shadow: var(--search-shadow);
+  transition: box-shadow 0.2s, transform 0.2s;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+.search-result-item:hover {
+  box-shadow: var(--search-shadow-hover);
+  transform: translateY(-4px) scale(1.02);
+}
+
+.search-result-item a {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  text-decoration: none;
+  color: var(--search-text);
+  width: 100%;
+}
+
+.search-result-item img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #f3f3f3;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  flex-shrink: 0;
+}
+
+.search-result-item span {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--search-text);
+  transition: color 0.2s;
+}
+
+.search-result-item a:hover span {
+  color: var(--search-accent);
+}
+
+p {
+  text-align: center;
+  color: var(--search-text-light);
+  font-size: 1.2rem;
+  margin-top: 3rem;
+}
+
+@media (max-width: 600px) {
+  .search-results {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  .search-result-item {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  .search-result-item img {
+    width: 70px;
+    height: 70px;
+  }
+} 

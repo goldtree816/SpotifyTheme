@@ -1,0 +1,83 @@
+{% section 'navbar' %}
+
+<section class="collection">
+  <div class="collection__header">
+    <h1 class="collection__title">{{ collection.title }}</h1>
+    {% if collection.description != blank %}
+      <div class="collection__description">{{ collection.description }}</div>
+    {% endif %}
+  </div>
+
+  {% paginate collection.products by 12 %}
+    <div class="collection__grid">
+      {% for product in collection.products %}
+        <div class="collection__card">
+          <a href="{{ product.url }}" class="collection__link">
+            {% if product.featured_image %}
+              <img 
+                src="{{ product.featured_image | image_url: width: 400, height: 400, crop: 'center' }}" 
+                alt="{{ product.featured_image.alt | default: product.title }}" 
+                class="collection__img"
+                loading="lazy"
+              />
+            {% else %}
+              <div class="collection__placeholder">
+                {{ 'product-1' | placeholder_svg_tag: 'collection__placeholder-svg' }}
+              </div>
+            {% endif %}
+          </a>
+          
+          <div class="collection__info">
+            <h3 class="collection__name">
+              <a href="{{ product.url }}" class="collection__product-link">
+                {{ product.title }}
+              </a>
+            </h3>
+            
+            <div class="collection__prices">
+              {% if product.compare_at_price > product.price %}
+                <span class="collection__old">{{ product.compare_at_price | money }}</span>
+                <span class="collection__new">{{ product.price | money }}</span>
+              {% else %}
+                <span class="collection__price">{{ product.price | money }}</span>
+              {% endif %}
+            </div>
+            
+            {% unless product.available %}
+              <span class="collection__sold-out">{{ 'products.product.sold_out' | t }}</span>
+            {% else %}
+              <form action="/cart/add" method="post" enctype="multipart/form-data" class="collection__form">
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                <button 
+                  type="submit" 
+                  class="collection__cart"
+                  {% unless product.available %}disabled{% endunless %}
+                >
+                  {% if product.available %}
+                    {{ 'products.product.add_to_cart' | t }}
+                  {% else %}
+                    {{ 'products.product.sold_out' | t }}
+                  {% endif %}
+                </button>
+              </form>
+            {% endunless %}
+          </div>
+        </div>
+      {% else %}
+        <div class="collection__empty">
+          <p>{{ 'collections.general.no_matches' | t }}</p>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if paginate.pages > 1 %}
+      <div class="collection__pagination">
+        {{ paginate | default_pagination }}
+      </div>
+    {% endif %}
+  {% endpaginate %}
+</section>
+
+{% section 'footer' %}
+
+{{ 'collection.css' | asset_url | stylesheet_tag }} 

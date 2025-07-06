@@ -1,0 +1,203 @@
+{% section 'navbar' %}
+
+<section class="product">
+  <div class="product__container">
+    <!-- Product Images -->
+    <div class="product__gallery">
+      <div class="product__main-image">
+        {% if product.featured_image %}
+          <img 
+            src="{{ product.featured_image | image_url: width: 600, height: 600, crop: 'center' }}" 
+            alt="{{ product.featured_image.alt | default: product.title }}" 
+            class="product__image"
+            id="product-main-image"
+          />
+        {% else %}
+          <div class="product__placeholder">
+            {{ 'product-1' | placeholder_svg_tag: 'product__placeholder-svg' }}
+          </div>
+        {% endif %}
+      </div>
+      
+      {% if product.images.size > 1 %}
+        <div class="product__thumbnails">
+          {% for image in product.images %}
+            <button 
+              class="product__thumbnail {% if forloop.first %}product__thumbnail--active{% endif %}"
+              data-image="{{ image | image_url: width: 600, height: 600, crop: 'center' }}"
+              data-alt="{{ image.alt | default: product.title }}"
+            >
+              <img 
+                src="{{ image | image_url: width: 100, height: 100, crop: 'center' }}" 
+                alt="{{ image.alt | default: product.title }}" 
+                class="product__thumbnail-img"
+              />
+            </button>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Product Details -->
+    <div class="product__details">
+      <div class="product__header">
+        <h1 class="product__title">{{ product.title }}</h1>
+        
+        <div class="product__vendor">
+          {% if product.vendor %}
+            <span class="product__vendor-label">{{ 'products.product.brand' | t }}:</span>
+            <a href="{{ product.vendor | url_for_vendor }}" class="product__vendor-link">{{ product.vendor }}</a>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Product Price -->
+      <div class="product__price">
+        {% if product.compare_at_price > product.price %}
+          <span class="product__old-price">{{ product.compare_at_price | money }}</span>
+          <span class="product__current-price">{{ product.price | money }}</span>
+          <span class="product__discount">
+            {{ 'products.product.save' | t }} {{ product.compare_at_price | minus: product.price | money }}
+          </span>
+        {% else %}
+          <span class="product__current-price">{{ product.price | money }}</span>
+        {% endif %}
+      </div>
+
+      <!-- Product Form -->
+      <form action="/cart/add" method="post" enctype="multipart/form-data" class="product__form" id="product-form">
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="variant-id">
+        
+        <!-- Variant Selection -->
+        {% if product.has_only_default_variant == false %}
+          <div class="product__variants">
+            {% for option in product.options_with_values %}
+              <div class="product__option">
+                <label class="product__option-label">{{ option.name }}</label>
+                <div class="product__option-values">
+                  {% for value in option.values %}
+                    <button 
+                      type="button"
+                      class="product__option-value {% if option.selected_value == value %}product__option-value--selected{% endif %}"
+                      data-option="{{ option.name | handleize }}"
+                      data-value="{{ value | handleize }}"
+                    >
+                      {{ value }}
+                    </button>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <!-- Quantity -->
+        <div class="product__quantity">
+          <label class="product__quantity-label">{{ 'products.product.quantity' | t }}</label>
+          <div class="product__quantity-controls">
+            <button type="button" class="product__quantity-btn" data-action="decrease">-</button>
+            <input 
+              type="number" 
+              name="quantity" 
+              value="1" 
+              min="1" 
+              class="product__quantity-input"
+              id="quantity-input"
+            >
+            <button type="button" class="product__quantity-btn" data-action="increase">+</button>
+          </div>
+        </div>
+
+        <!-- Add to Cart -->
+        <div class="product__actions">
+          {% if product.available %}
+            <button type="submit" class="product__add-to-cart" id="add-to-cart-btn">
+              <span class="product__add-to-cart-text">{{ 'products.product.add_to_cart' | t }}</span>
+              <span class="product__add-to-cart-loading" style="display: none;">Adding...</span>
+            </button>
+          {% else %}
+            <button type="button" class="product__sold-out" disabled>
+              {{ 'products.product.sold_out' | t }}
+            </button>
+          {% endif %}
+        </div>
+      </form>
+
+      <!-- Product Description -->
+      {% if product.description != blank %}
+        <div class="product__description">
+          <h3 class="product__description-title">{{ 'products.product.description' | t }}</h3>
+          <div class="product__description-content">
+            {{ product.description }}
+          </div>
+        </div>
+      {% endif %}
+
+      <!-- Product Meta -->
+      {% if product.type %}
+        <div class="product__meta">
+          <div class="product__meta-item">
+            <span class="product__meta-label">{{ 'products.product.type' | t }}:</span>
+            <span class="product__meta-value">{{ product.type }}</span>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- Similar Products -->
+{% if product.collections.size > 0 %}
+  <section class="similar-products">
+    <div class="similar-products__container">
+      <h2 class="similar-products__title">You might also like</h2>
+      <div class="similar-products__grid">
+        {% assign current_product = product %}
+        {% for collection in product.collections limit: 1 %}
+          {% for product in collection.products limit: 4 %}
+            {% if product.id != current_product.id %}
+              <div class="similar-products__card">
+                <a href="{{ product.url }}" class="similar-products__link">
+                  {% if product.featured_image %}
+                    <img 
+                      src="{{ product.featured_image | image_url: width: 300, height: 300, crop: 'center' }}" 
+                      alt="{{ product.featured_image.alt | default: product.title }}" 
+                      class="similar-products__img"
+                      loading="lazy"
+                    />
+                  {% else %}
+                    <div class="similar-products__placeholder">
+                      {{ 'product-1' | placeholder_svg_tag: 'similar-products__placeholder-svg' }}
+                    </div>
+                  {% endif %}
+                </a>
+                
+                <div class="similar-products__info">
+                  <h3 class="similar-products__name">
+                    <a href="{{ product.url }}" class="similar-products__product-link">
+                      {{ product.title }}
+                    </a>
+                  </h3>
+                  
+                  <div class="similar-products__prices">
+                    {% if product.compare_at_price > product.price %}
+                      <span class="similar-products__old">{{ product.compare_at_price | money }}</span>
+                      <span class="similar-products__new">{{ product.price | money }}</span>
+                    {% else %}
+                      <span class="similar-products__price">{{ product.price | money }}</span>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+{% section 'footer' %}
+
+{{ 'product.css' | asset_url | stylesheet_tag }}
+{{ 'product.js' | asset_url | script_tag }} 

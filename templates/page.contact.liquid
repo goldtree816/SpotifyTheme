@@ -1,0 +1,161 @@
+{% section 'navbar' %}
+
+<section class="contact">
+  <div class="contact__container">
+    <!-- Contact Header -->
+    <div class="contact__header">
+      <h1 class="contact__title">{{ page.title }}</h1>
+      {% if page.content != blank %}
+        <div class="contact__description">{{ page.content }}</div>
+      {% endif %}
+    </div>
+
+    <div class="contact__content">
+      <!-- Contact Form -->
+      <div class="contact__form-section">
+        <h2 class="contact__form-title">Send us a message</h2>
+        <form class="contact__form" action="/contact" method="post" id="contact-form">
+          {% render 'form-errors', form: form %}
+          
+          <div class="contact__form-group">
+            <label for="contact_name" class="contact__label">Name *</label>
+            <input 
+              type="text" 
+              id="contact_name" 
+              name="contact[name]" 
+              class="contact__input"
+              required
+            >
+          </div>
+
+          <div class="contact__form-group">
+            <label for="contact_email" class="contact__label">Email *</label>
+            <input 
+              type="email" 
+              id="contact_email" 
+              name="contact[email]" 
+              class="contact__input"
+              required
+            >
+          </div>
+
+          <div class="contact__form-group">
+            <label for="contact_phone" class="contact__label">Phone</label>
+            <input 
+              type="tel" 
+              id="contact_phone" 
+              name="contact[phone]" 
+              class="contact__input"
+            >
+          </div>
+
+          <div class="contact__form-group">
+            <label for="contact_subject" class="contact__label">Subject *</label>
+            <input 
+              type="text" 
+              id="contact_subject" 
+              name="contact[subject]" 
+              class="contact__input"
+              required
+            >
+          </div>
+
+          <div class="contact__form-group">
+            <label for="contact_message" class="contact__label">Message *</label>
+            <textarea 
+              id="contact_message" 
+              name="contact[body]" 
+              class="contact__textarea"
+              rows="6"
+              required
+            ></textarea>
+          </div>
+
+          <div class="contact__form-group">
+            <button type="submit" class="contact__submit">
+              <span class="contact__submit-text">Send Message</span>
+              <span class="contact__submit-loading" style="display: none;">Sending...</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Contact Information -->
+      <div class="contact__info-section">
+        <h2 class="contact__info-title">Get in touch</h2>
+        
+        <div class="contact__info-items">
+          <div class="contact__info-item">
+            <div class="contact__info-icon">
+              <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2"/>
+                <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </div>
+            <div class="contact__info-content">
+              <h3 class="contact__info-label">Address</h3>
+              <p class="contact__info-text">
+                123 Tech Street<br>
+                Digital City, DC 12345<br>
+                United States
+              </p>
+            </div>
+          </div>
+
+          <div class="contact__info-item">
+            <div class="contact__info-icon">
+              <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </div>
+            <div class="contact__info-content">
+              <h3 class="contact__info-label">Phone</h3>
+              <p class="contact__info-text">
+                <a href="tel:+1234567890" class="contact__info-link">+1 (234) 567-890</a><br>
+                <a href="tel:+1234567891" class="contact__info-link">+1 (234) 567-891</a>
+              </p>
+            </div>
+          </div>
+
+          <div class="contact__info-item">
+            <div class="contact__info-icon">
+              <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="2"/>
+                <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </div>
+            <div class="contact__info-content">
+              <h3 class="contact__info-label">Email</h3>
+              <p class="contact__info-text">
+                <a href="mailto:info@spotifytech.com" class="contact__info-link">info@spotifytech.com</a><br>
+                <a href="mailto:support@spotifytech.com" class="contact__info-link">support@spotifytech.com</a>
+              </p>
+            </div>
+          </div>
+
+          <div class="contact__info-item">
+            <div class="contact__info-icon">
+              <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                <polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </div>
+            <div class="contact__info-content">
+              <h3 class="contact__info-label">Business Hours</h3>
+              <p class="contact__info-text">
+                Monday - Friday: 9:00 AM - 6:00 PM<br>
+                Saturday: 10:00 AM - 4:00 PM<br>
+                Sunday: Closed
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% section 'footer' %}
+
+{{ 'contact.css' | asset_url | stylesheet_tag }}
+{{ 'contact.js' | asset_url | script_tag }}
