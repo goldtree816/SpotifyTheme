@@ -4,6 +4,10 @@
       "type": "featured-women-shoes",
       "settings": {}
     },
+    "women_shoes_gallery": {
+      "type": "women-shoes-gallery",
+      "settings": {}
+    },
     "footer": {
       "type": "footer",
       "settings": {}
@@ -11,6 +15,7 @@
   },
   "order": [
     "featured_women_shoes",
+    "women_shoes_gallery",
     "footer"
   ]
 } 

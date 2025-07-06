@@ -4,6 +4,10 @@
         "type": "featured-kid-shoes",
         "settings": {}
       },
+      "kids_shoes_gallery": {
+        "type": "kids-shoes-gallery",
+        "settings": {}
+      },
       "footer": {
         "type": "footer",
         "settings": {}
@@ -11,6 +15,7 @@
     },
     "order": [
       "featured_kid_shoes",
+      "kids_shoes_gallery",
       "footer"
     ]
   }

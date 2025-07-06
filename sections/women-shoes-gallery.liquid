@@ -1,0 +1,155 @@
+<div class="women-shoes-gallery">
+  <h2 class="women-shoes-heading">{{ section.settings.heading }}</h2>
+  <div class="women-shoes-gallery-wrapper">
+    <div class="women-shoes-grid">
+      {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+          <div class="women-shoe-card" {{ block.shopify_attributes }}>
+            {% if block.settings.image != blank %}
+              <img src="{{ block.settings.image | image_url: width: 400 }}" alt="{{ block.settings.title }}" class="women-shoe-img" loading="lazy">
+            {% else %}
+              {% assign default_images = "adidas-samba-sneakers-amy4.jpg,jordan.jpg,nb550.jpg,menshoeGEL1130.jpg,menshoeVEJA.webp,menshoeZOOMVOMERO.webp,menshoeNB9060.webp,menshoeSAMBA.avif,menshoeOZWEEGO.avif,nb550.webp" | split: "," %}
+              <img src="{{ default_images[forloop.index0] | asset_url }}" alt="{{ block.settings.title | default: 'Shoe' }}" class="women-shoe-img" loading="lazy">
+            {% endif %}
+            <div class="women-shoe-info">
+              <div class="women-shoe-title">{{ block.settings.title | default: 'Shoe ' | append: forloop.index }}</div>
+              <div class="women-shoe-price">${{ block.settings.price | default: '120' }}</div>
+              <div class="women-shoe-desc">{{ block.settings.desc | default: 'Premium quality shoe' }}</div>
+              {% if block.settings.link != blank %}
+                <a href="{{ block.settings.link }}" class="women-shoe-link">Shop Now</a>
+              {% else %}
+                <a href="/pages/shoe-description?shoe={{ forloop.index0 }}" class="women-shoe-link">Shop Now</a>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        {% comment %} Default 10 containers when no blocks exist {% endcomment %}
+        {% assign default_titles = "Adidas Samba,Air Jordan,NB 550,GEL-1130,VEJA Sneakers,Zoom Vomero,NB 9060,Adidas Samba Pro,OZWEEGO,NB 550 Pro" | split: "," %}
+        {% assign default_prices = "120,180,140,160,150,170,145,155,135,165" | split: "," %}
+        {% assign default_descs = "Iconic street style,Legendary basketball,Heritage design,Premium running shoe,Ethical fashion choice,Performance running,Classic lifestyle sneaker,Professional grade,Comfortable daily wear,Advanced comfort" | split: "," %}
+        {% assign default_images = "adidas-samba-sneakers-amy4.jpg,jordan.jpg,nb550.jpg,menshoeGEL1130.jpg,menshoeVEJA.webp,menshoeZOOMVOMERO.webp,menshoeNB9060.webp,menshoeSAMBA.avif,menshoeOZWEEGO.avif,nb550.webp" | split: "," %}
+        {% for i in (0..9) %}
+          <div class="women-shoe-card">
+            <img src="{{ default_images[i] | asset_url }}" alt="{{ default_titles[i] }}" class="women-shoe-img" loading="lazy">
+            <div class="women-shoe-info">
+              <div class="women-shoe-title">{{ default_titles[i] }}</div>
+              <div class="women-shoe-price">${{ default_prices[i] }}</div>
+              <div class="women-shoe-desc">{{ default_descs[i] }}</div>
+              <a href="/pages/shoe-description?shoe={{ i }}" class="women-shoe-link">Shop Now</a>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+.women-shoes-gallery { padding: 48px 0 32px 0; background: #fff; max-width: 100%; }
+.women-shoes-heading { text-align: center; margin-bottom: 32px; font-size: 2rem; font-weight: bold; }
+.women-shoes-gallery-wrapper { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.women-shoes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 24px; justify-items: center; }
+.women-shoe-card { width: 100%; max-width: 280px; background: #f7f7f7; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: transform 0.2s, box-shadow 0.2s; }
+.women-shoe-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+.women-shoe-img { width: 100%; height: 200px; object-fit: contain; background: #fff; display: flex; align-items: center; justify-content: center; }
+.women-shoe-info { padding: 16px; text-align: center; }
+.women-shoe-title { font-size: 1.1rem; margin-bottom: 8px; font-weight: bold; color: #333; }
+.women-shoe-price { font-size: 1.2rem; font-weight: bold; color: #333; margin-bottom: 8px; }
+.women-shoe-desc { font-size: 0.9rem; color: #666; margin-bottom: 12px; line-height: 1.4; }
+.women-shoe-link { color: #fff; background: #111; border: none; border-radius: 6px; padding: 10px 20px; text-decoration: none; font-size: 0.9rem; display: inline-block; text-align: center; transition: background 0.2s; }
+.women-shoe-link:hover { background: #0071e3; }
+
+@media (max-width: 768px) {
+  .women-shoes-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+  .women-shoe-card { max-width: 240px; }
+  .women-shoe-img { height: 160px; }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Women Shoes Gallery",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Women's Shoes Collection"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "shoe",
+      "name": "Shoe",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Shoe Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Shoe Title",
+          "default": "Shoe Name"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price",
+          "default": "120"
+        },
+        {
+          "type": "textarea",
+          "id": "desc",
+          "label": "Description",
+          "default": "Premium quality shoe with excellent comfort and style."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Product Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Women Shoes Gallery",
+      "blocks": [
+        {
+          "type": "shoe"
+        },
+        {
+          "type": "shoe"
+        },
+        {
+          "type": "shoe"
+        },
+        {
+          "type": "shoe"
+        },
+        {
+          "type": "shoe"
+        },
+        {
+          "type": "shoe"
+        },
+        {
+          "type": "shoe"
+        },
+        {
+          "type": "shoe"
+        },
+        {
+          "type": "shoe"
+        },
+        {
+          "type": "shoe"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %} 

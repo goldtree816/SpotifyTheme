@@ -4,30 +4,33 @@
     <div class="top-picks-label">Men</div>
     <div class="top-picks-shoes-wrapper">
       <div class="top-picks-shoes top-picks-slider" id="men-slider">
+        {% assign men_section = sections['featured-men-shoes'] %}
         {% assign default_titles = "Shoe 1,Shoe 2,Shoe 3,Shoe 4,Shoe 5,Shoe 6" | split: "," %}
         {% assign default_prices = "100,120,110,130,140,150" | split: "," %}
         {% assign default_images = "menshoeGEL1130.jpg,menshoeNB9060.webp,menshoeOZWEEGO.avif,menshoeSAMBA.avif,menshoeVEJA.webp,menshoeZOOMVOMERO.webp" | split: "," %}
-        {% assign men_blocks = section.blocks %}
-        {% for i in (0..5) %}
-          {% assign block = men_blocks[i] %}
-          <div class="top-pick-card big">
-            {% if block or request.design_mode %}
-              {% if block.settings.image %}
-                <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.title | default: default_titles[i] | escape }}" class="top-pick-img" loading="lazy" width="600" height="180">
-              {% else %}
-                <img src="{{ default_images[i] | asset_url }}" alt="{{ block.settings.title | default: default_titles[i] }}" class="top-pick-img" loading="lazy" width="600" height="180">
+        {% if men_section and men_section.blocks.size > 0 %}
+          {% for block in men_section.blocks %}
+            <div class="top-pick-card big">
+              {% if block.settings.image != blank %}
+                <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.title }}" class="top-pick-img" loading="lazy" width="600" height="180">
               {% endif %}
-              <div class="top-pick-title">{{ block.settings.title | default: default_titles[i] }}</div>
-              <div class="top-pick-price">${{ block.settings.price | default: default_prices[i] }}</div>
-              <a href="{{ block.settings.link | default: '#' }}" class="top-pick-btn">Shop Now</a>
-            {% else %}
+              <div class="top-pick-title">{{ block.settings.title }}</div>
+              <div class="top-pick-price">${{ block.settings.price }}</div>
+              {% if block.settings.link != blank %}
+                <a href="{{ block.settings.link }}" class="top-pick-btn">Shop Now</a>
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% else %}
+          {% for i in (0..5) %}
+            <div class="top-pick-card big">
               <img src="{{ default_images[i] | asset_url }}" alt="{{ default_titles[i] }}" class="top-pick-img" loading="lazy" width="600" height="180">
               <div class="top-pick-title">{{ default_titles[i] }}</div>
               <div class="top-pick-price">${{ default_prices[i] }}</div>
               <a href="#" class="top-pick-btn">Shop Now</a>
-            {% endif %}
-          </div>
-        {% endfor %}
+            </div>
+          {% endfor %}
+        {% endif %}
       </div>
       <button class="slider-arrow left" onclick="slideTopPicks('men-slider', -1)">&#8592;</button>
       <button class="slider-arrow right" onclick="slideTopPicks('men-slider', 1)">&#8594;</button>
@@ -35,40 +38,74 @@
   </div>
   <div class="top-picks-row">
     <div class="top-picks-label">Women</div>
-    <div class="top-picks-shoes">
-      {% assign women_section = sections['featured-women-shoes'] %}
-      {% if women_section %}
-        {% for block in women_section.blocks %}
-          <div class="top-pick-card">
-            {% if block.settings.image != blank %}
-              <img src="{{ block.settings.image | image_url }}" alt="{{ block.settings.title }}" class="top-pick-img">
-            {% endif %}
-            <div class="top-pick-title">${{ block.settings.title }}</div>
-            {% if block.settings.link != blank %}
-              <a href="{{ block.settings.link }}" class="top-pick-btn">SHOP NOW</a>
-            {% endif %}
-          </div>
-        {% endfor %}
-      {% endif %}
+    <div class="top-picks-shoes-wrapper">
+      <div class="top-picks-shoes top-picks-slider" id="women-slider">
+        {% assign women_section = sections['featured-women-shoes'] %}
+        {% assign default_titles = "Shoe 1,Shoe 2,Shoe 3,Shoe 4,Shoe 5,Shoe 6" | split: "," %}
+        {% assign default_prices = "100,120,110,130,140,150" | split: "," %}
+        {% assign default_images = "adidas-samba-sneakers-amy4.jpg,jordan.jpg,nb550.jpg,menshoeGEL1130.jpg,menshoeVEJA.webp,menshoeZOOMVOMERO.webp" | split: "," %}
+        {% if women_section and women_section.blocks.size > 0 %}
+          {% for block in women_section.blocks %}
+            <div class="top-pick-card big">
+              {% if block.settings.image != blank %}
+                <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.title }}" class="top-pick-img" loading="lazy" width="600" height="180">
+              {% endif %}
+              <div class="top-pick-title">{{ block.settings.title }}</div>
+              <div class="top-pick-price">${{ block.settings.price }}</div>
+              {% if block.settings.link != blank %}
+                <a href="{{ block.settings.link }}" class="top-pick-btn">Shop Now</a>
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% else %}
+          {% for i in (0..5) %}
+            <div class="top-pick-card big">
+              <img src="{{ default_images[i] | asset_url }}" alt="{{ default_titles[i] }}" class="top-pick-img" loading="lazy" width="600" height="180">
+              <div class="top-pick-title">{{ default_titles[i] }}</div>
+              <div class="top-pick-price">${{ default_prices[i] }}</div>
+              <a href="#" class="top-pick-btn">Shop Now</a>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+      <button class="slider-arrow left" onclick="slideTopPicks('women-slider', -1)">&#8592;</button>
+      <button class="slider-arrow right" onclick="slideTopPicks('women-slider', 1)">&#8594;</button>
     </div>
   </div>
   <div class="top-picks-row">
     <div class="top-picks-label">Kids</div>
-    <div class="top-picks-shoes">
-      {% assign kid_section = sections['featured-kid-shoes'] %}
-      {% if kid_section %}
-        {% for block in kid_section.blocks %}
-          <div class="top-pick-card">
-            {% if block.settings.image != blank %}
-              <img src="{{ block.settings.image | image_url }}" alt="{{ block.settings.title }}" class="top-pick-img">
-            {% endif %}
-            <div class="top-pick-title">${{ block.settings.title }}</div>
-            {% if block.settings.link != blank %}
-              <a href="{{ block.settings.link }}" class="top-pick-btn">SHOP NOW</a>
-            {% endif %}
-          </div>
-        {% endfor %}
-      {% endif %}
+    <div class="top-picks-shoes-wrapper">
+      <div class="top-picks-shoes top-picks-slider" id="kids-slider">
+        {% assign kid_section = sections['featured-kid-shoes'] %}
+        {% assign default_titles = "Shoe 1,Shoe 2,Shoe 3,Shoe 4,Shoe 5,Shoe 6" | split: "," %}
+        {% assign default_prices = "100,120,110,130,140,150" | split: "," %}
+        {% assign default_images = "nb550.webp,menshoeNB9060.webp,menshoeSAMBA.avif,menshoeOZWEEGO.avif,adidas-samba-sneakers-amy4.jpg,jordan.jpg" | split: "," %}
+        {% if kid_section and kid_section.blocks.size > 0 %}
+          {% for block in kid_section.blocks %}
+            <div class="top-pick-card big">
+              {% if block.settings.image != blank %}
+                <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.title }}" class="top-pick-img" loading="lazy" width="600" height="180">
+              {% endif %}
+              <div class="top-pick-title">{{ block.settings.title }}</div>
+              <div class="top-pick-price">${{ block.settings.price }}</div>
+              {% if block.settings.link != blank %}
+                <a href="{{ block.settings.link }}" class="top-pick-btn">Shop Now</a>
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% else %}
+          {% for i in (0..5) %}
+            <div class="top-pick-card big">
+              <img src="{{ default_images[i] | asset_url }}" alt="{{ default_titles[i] }}" class="top-pick-img" loading="lazy" width="600" height="180">
+              <div class="top-pick-title">{{ default_titles[i] }}</div>
+              <div class="top-pick-price">${{ default_prices[i] }}</div>
+              <a href="#" class="top-pick-btn">Shop Now</a>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+      <button class="slider-arrow left" onclick="slideTopPicks('kids-slider', -1)">&#8592;</button>
+      <button class="slider-arrow right" onclick="slideTopPicks('kids-slider', 1)">&#8594;</button>
     </div>
   </div>
 </div>
@@ -76,9 +113,9 @@
 <style>
 .top-picks { padding: 32px 0; }
 .top-picks-heading { text-align: center; margin-bottom: 32px; font-size: 2rem; font-weight: bold; }
-.top-picks-row { display: flex; align-items: flex-start; margin-bottom: 32px; position: relative; }
-.top-picks-label { width: 120px; font-weight: bold; margin-right: 0; display: flex; align-items: flex-start; justify-content: flex-start; font-size: 1.2rem; margin-left: 40px; }
-.top-picks-shoes-wrapper { position: relative; width: 1120px; overflow: hidden; display: flex; align-items: center; }
+.top-picks-row { display: flex; flex-direction: column; align-items: center; margin-bottom: 32px; position: relative; }
+.top-picks-label { width: auto; font-weight: bold; font-size: 1.2rem; margin-bottom: 16px; margin-top: 0; text-align: center; }
+.top-picks-shoes-wrapper { position: relative; width: 1120px; overflow: hidden; display: flex; align-items: center; margin: 0 auto; }
 .top-picks-shoes { display: flex; gap: 40px; transition: transform 0.3s; min-width: 1640px; }
 .top-pick-card.big { width: 250px; min-width: 250px; background: #f7f7f7; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
 .top-pick-img { width: 100%; height: 180px; object-fit: contain; background: #fff; }

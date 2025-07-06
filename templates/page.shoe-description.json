@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "shoe_description": {
+      "type": "shoe-description",
+      "settings": {}
+    },
+    "footer": {
+      "type": "footer",
+      "settings": {}
+    }
+  },
+  "order": [
+    "shoe_description",
+    "footer"
+  ]
+} 
