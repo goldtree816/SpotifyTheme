@@ -132,12 +132,14 @@ document.addEventListener('DOMContentLoaded', function () {
         btn.classList.add('active');
         btn.setAttribute('aria-label', 'Remove from Wishlist');
         btn.setAttribute('title', 'Remove from Wishlist');
-        btn.querySelector('.wishlist-heart-icon').innerHTML = '&#9829;'; // filled heart
+        btn.querySelector('.wishlist-heart-icon').innerHTML = '&#9829;'; // filled black heart
+        btn.querySelector('.wishlist-heart-icon').style.color = '#000'; // black color
       } else {
         btn.classList.remove('active');
         btn.setAttribute('aria-label', 'Add to Wishlist');
         btn.setAttribute('title', 'Add to Wishlist');
-        btn.querySelector('.wishlist-heart-icon').innerHTML = '&#9825;'; // outline heart
+        btn.querySelector('.wishlist-heart-icon').innerHTML = '&#9825;'; // outline black heart
+        btn.querySelector('.wishlist-heart-icon').style.color = '#000'; // black color
       }
     });
   }
@@ -157,8 +159,7 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
   }
-  document.addEventListener('DOMContentLoaded', function() {
-    updateHeartIcons();
-    setupHeartButtons();
-  });
+  // Call directly, not in nested DOMContentLoaded
+  updateHeartIcons();
+  setupHeartButtons();
 }); 

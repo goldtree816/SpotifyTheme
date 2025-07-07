@@ -48,5 +48,17 @@
     "submit": "Search",
     "no_results_html": "No results found for {{ terms }}",
     "results_for_html": "{{ count }} results found for {{ terms }}"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "submit": "Send Message",
+    "success": "Thank you for contacting us! We'll get back to you soon.",
+    "error": "There was an error submitting the form. Please try again.",
+    "address_label": "Address",
+    "phone_label": "Phone",
+    "email_label": "Email"
   }
 }

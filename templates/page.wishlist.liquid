@@ -1,3 +1,4 @@
+
 {% comment %}
   Wishlist page template: Displays products saved in localStorage wishlist.
 {% endcomment %}
@@ -26,53 +27,83 @@ function setWishlist(ids) {
 function renderWishlist() {
   const container = document.getElementById('wishlist-products');
   const ids = getWishlist();
+  console.log('Wishlist handles:', ids); // DEBUG
   if (!ids.length) {
     container.innerHTML = '<div class="wishlist-empty">Your wishlist is empty.</div>';
     return;
   }
-  // Fetch product details for each ID
-  Promise.all(ids.map(id => fetch(`/products/${id}.js`).then(r => r.json()))).then(products => {
-    container.innerHTML = products.map(product => `
-      <div class="wishlist-product-card">
-        <a href="${product.url}" class="wishlist-product-image-link">
-          <img src="${product.featured_image}" alt="${product.title}" class="wishlist-product-image" />
-        </a>
-        <div class="wishlist-product-info">
-          <a href="${product.url}" class="wishlist-product-title">${product.title}</a>
-          <div class="wishlist-product-price">${(product.price / 100).toLocaleString('en-US', { style: 'currency', currency: product.currency })}</div>
-          <button class="wishlist-remove-btn" data-id="${product.handle}">Remove</button>
-          <form action="/cart/add" method="post" class="wishlist-add-to-cart-form">
-            <input type="hidden" name="id" value="${product.variants[0].id}">
-            <button type="submit" class="wishlist-add-to-cart">Add to Cart</button>
-          </form>
-        </div>
-      </div>
-    `).join('');
-    // Remove button logic
-    container.querySelectorAll('.wishlist-remove-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const id = btn.getAttribute('data-id');
-        const newIds = getWishlist().filter(pid => pid !== id);
-        setWishlist(newIds);
-        renderWishlist();
+  const shopCurrency = window.Shopify && Shopify.currency && Shopify.currency.active ? Shopify.currency.active : "USD";
+  Promise.all(ids.map(id => {
+    return fetch(`/products/${id}.js`).then(r => {
+      console.log('Fetch response for', id, r); // DEBUG
+      if (!r.ok) return null;
+      return r.json().then(data => {
+        console.log('Fetched product data for', id, data); // DEBUG
+        return data;
       });
     });
-    // Add to cart AJAX
-    container.querySelectorAll('.wishlist-add-to-cart-form').forEach(form => {
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const formData = new FormData(form);
-        fetch('/cart/add.js', {
-          method: 'POST',
-          body: formData
-        }).then(() => {
-          alert('Added to cart!');
+  }))
+    .then(products => {
+      products = products.filter(Boolean); // Remove nulls (not found)
+      console.log('Fetched products:', products); // DEBUG
+      if (!products.length) {
+        container.innerHTML = '<div class="wishlist-empty">Your wishlist is empty.</div>';
+        return;
+      }
+      container.innerHTML = products.map(product => {
+        // Defensive: check for variants
+        const variantId = product.variants && product.variants[0] ? product.variants[0].id : '';
+        return `
+          <div class="wishlist-product-card">
+            <a href="${product.url}" class="wishlist-product-image-link">
+              <img src="${product.featured_image}" alt="${product.title}" class="wishlist-product-image" />
+            </a>
+            <div class="wishlist-product-info">
+              <a href="${product.url}" class="wishlist-product-title">${product.title}</a>
+              <div class="wishlist-product-price">${(product.price / 100).toLocaleString('en-US', { style: 'currency', currency: shopCurrency })}</div>
+              <button class="wishlist-remove-btn" data-id="${product.handle}">Remove</button>
+              <form action="/cart/add" method="post" class="wishlist-add-to-cart-form">
+                <input type="hidden" name="id" value="${variantId}">
+                <button type="submit" class="wishlist-add-to-cart">Add to Cart</button>
+              </form>
+            </div>
+          </div>
+        `;
+      }).join('');
+      // Remove button logic
+      container.querySelectorAll('.wishlist-remove-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const id = btn.getAttribute('data-id');
+          const newIds = getWishlist().filter(pid => pid !== id);
+          setWishlist(newIds);
+          renderWishlist();
         });
       });
+      // Add to cart AJAX
+      container.querySelectorAll('.wishlist-add-to-cart-form').forEach(form => {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          const formData = new FormData(form);
+          fetch('/cart/add.js', {
+            method: 'POST',
+            body: formData
+          }).then(() => {
+            alert('Added to cart!');
+          });
+        });
+      });
+    })
+    .catch(err => {
+      console.error('Error rendering wishlist:', err, err.stack);
+      container.innerHTML = '<div class="wishlist-empty">Error loading wishlist. Check console for details.</div>';
     });
-  });
 }
 document.addEventListener('DOMContentLoaded', renderWishlist);
+window.addEventListener('storage', function(e) {
+  if (e.key === 'wishlist') {
+    renderWishlist();
+  }
+});
 </script>
 
 <style>
@@ -91,9 +122,9 @@ document.addEventListener('DOMContentLoaded', renderWishlist);
   text-align: center;
 }
 .wishlist-products {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
 }
 .wishlist-empty {
   text-align: center;
@@ -102,56 +133,63 @@ document.addEventListener('DOMContentLoaded', renderWishlist);
   margin: 3rem 0;
 }
 .wishlist-product-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   background: #fff;
   border-radius: 0.75rem;
   box-shadow: 0 2px 16px rgba(29,29,31,0.08);
-  padding: 1.2rem 1rem 1rem 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: box-shadow 0.2s;
+  padding: 1rem 1.5rem;
+  gap: 1.5rem;
+  width: 100%;
+  min-height: 120px;
 }
 .wishlist-product-image-link {
   display: block;
-  width: 100%;
-  margin-bottom: 1.2rem;
+  min-width: 100px;
+  max-width: 120px;
+  margin-bottom: 0;
 }
 .wishlist-product-image {
-  width: 100%;
-  height: 180px;
+  width: 100px;
+  height: 100px;
   object-fit: contain;
   background: #fff;
   border-radius: 0.5rem;
   box-shadow: 0 1px 8px rgba(29,29,31,0.10);
 }
 .wishlist-product-info {
-  width: 100%;
-  text-align: center;
+  flex: 1 1 auto;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 .wishlist-product-title {
-  font-size: 1rem;
-  font-weight: 550;
+  font-size: 1.1rem;
+  font-weight: 600;
   color: #1D1D1F;
   text-decoration: none;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.2rem;
   display: block;
 }
 .wishlist-product-price {
   font-size: 1.1rem;
   color: #CDAA7D;
   font-weight: 600;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 .wishlist-remove-btn {
   background: #eee;
   color: #CDAA7D;
   border: none;
-  padding: 0.5rem 1.2rem;
+  padding: 0.4rem 1.1rem;
   border-radius: 0.5rem;
   cursor: pointer;
   font-weight: 600;
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.3rem;
   transition: background 0.2s;
+  align-self: flex-start;
 }
 .wishlist-remove-btn:hover {
   background: #CDAA7D;
@@ -161,14 +199,35 @@ document.addEventListener('DOMContentLoaded', renderWishlist);
   background: #CDAA7D;
   color: #fff;
   border: none;
-  padding: 0.7rem 2rem;
+  padding: 0.6rem 1.5rem;
   font-size: 1rem;
   border-radius: 0.5rem;
   cursor: pointer;
   font-weight: 600;
   transition: background 0.2s;
+  align-self: flex-start;
 }
 .wishlist-add-to-cart:hover {
   background: #b89a6b;
+}
+@media (max-width: 600px) {
+  .wishlist-product-card {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1rem 0.5rem;
+  }
+  .wishlist-product-image-link {
+    max-width: 100%;
+    min-width: 0;
+    margin-bottom: 0.7rem;
+  }
+  .wishlist-product-image {
+    width: 90px;
+    height: 90px;
+  }
+  .wishlist-product-info {
+    text-align: center;
+    align-items: center;
+  }
 }
 </style> 
