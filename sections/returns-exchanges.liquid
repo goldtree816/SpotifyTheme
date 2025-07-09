@@ -1,0 +1,102 @@
+<!-- Returns & Exchanges Section -->
+<section class="returns-exchanges">
+  <div class="returns-exchanges__container">
+    <h1 class="returns-exchanges__title">{{ section.settings.title }}</h1>
+    <div class="returns-exchanges__content">
+      {{ section.settings.content }}
+    </div>
+    <div class="returns-exchanges__policy">
+      <h2 class="returns-exchanges__block-title"><i class="fas fa-undo-alt"></i> Returns</h2>
+      <div class="returns-exchanges__block-content">{{ section.settings.returns }}</div>
+    </div>
+    <div class="returns-exchanges__policy">
+      <h2 class="returns-exchanges__block-title"><i class="fas fa-exchange-alt"></i> Exchanges</h2>
+      <div class="returns-exchanges__block-content">{{ section.settings.exchanges }}</div>
+    </div>
+  </div>
+</section>
+
+<style>
+.returns-exchanges {
+  background: #fff;
+  color: #222;
+  padding: 3rem 0;
+}
+.returns-exchanges__container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+.returns-exchanges__title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #1D1D1F;
+  text-align: center;
+}
+.returns-exchanges__content {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+  color: #444;
+}
+.returns-exchanges__policy {
+  margin-bottom: 2.5rem;
+}
+.returns-exchanges__block-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #CDAA7D;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.returns-exchanges__block-title i {
+  color: #CDAA7D;
+}
+.returns-exchanges__block-content {
+  color: #444;
+  line-height: 1.6;
+}
+@media screen and (max-width: 600px) {
+  .returns-exchanges__container {
+    padding: 0 0.5rem;
+  }
+  .returns-exchanges__title {
+    font-size: 1.5rem;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Returns & Exchanges",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Page Title",
+      "default": "Returns & Exchanges"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Intro Content",
+      "default": "<p>At Aura Wear, we want you to love your purchase. But if something isn't quite right, we've got your back. Please read our return and exchange guidelines below.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "returns",
+      "label": "Returns Content",
+      "default": "<ul><li><strong>Return Window:</strong> You can request a return within 7–14 days of receiving your order.</li><li><strong>Eligibility:</strong><ul><li>Items must be unused, unwashed, and in original packaging with tags attached.</li><li>Items marked as final sale or discounted beyond 50% are not eligible for return.</li></ul></li><li><strong>How to Request a Return:</strong><ul><li>Email us at <a href='mailto:support@aurawear.com'>support@aurawear.com</a> with your order number and reason for return.</li><li>We'll send you a return label (if eligible).</li><li>Pack the item and drop it at your nearest post office.</li></ul></li></ul>"
+    },
+    {
+      "type": "richtext",
+      "id": "exchanges",
+      "label": "Exchanges Content",
+      "default": "<ul><li><strong>Size or Color Issue?</strong><ul><li>We offer one-time free exchanges for size or color.</li><li>Email us within 7 days of delivery, and we'll help you exchange your item (subject to availability).</li></ul></li><li><strong>Exchange Conditions:</strong> Same as return conditions — item must be unused and in sellable condition.</li></ul>"
+    }
+  ]
+}
+{% endschema %} 

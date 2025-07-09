@@ -1,0 +1,85 @@
+{% comment %} Register Form Section {% endcomment %}
+<section class="auth-main">
+  <div class="auth-container">
+    <h1 class="auth-title">Create Account</h1>
+    {% form 'create_customer' %}
+      {% if form.errors %}
+        <div class="auth-error">{{ form.errors | default_errors }}</div>
+      {% endif %}
+      <label for="RegisterName">Full Name</label>
+      <input type="text" name="customer[first_name]" id="RegisterName" required>
+      <label for="RegisterEmail">Email</label>
+      <input type="email" name="customer[email]" id="RegisterEmail" required>
+      <label for="RegisterPassword">Password</label>
+      <input type="password" name="customer[password]" id="RegisterPassword" required>
+      <button type="submit" class="auth-btn">Register</button>
+      <p class="auth-link">
+        <a href="/account/login">Already have an account? Login</a>
+      </p>
+    {% endform %}
+  </div>
+</section>
+{% stylesheet %}
+.auth-main {
+  max-width: 500px;
+  margin: 3rem auto;
+  font-family: 'Roboto', sans-serif;
+}
+.auth-title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.auth-container {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 0.8rem;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+}
+.auth-container label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+.auth-container input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.4rem;
+}
+.auth-btn {
+  margin-top: 1.5rem;
+  width: 100%;
+  padding: 1rem;
+  background: #CDAA7D;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.4rem;
+  cursor: pointer;
+}
+.auth-link {
+  margin-top: 1rem;
+  text-align: center;
+}
+.auth-link a {
+  color: #CDAA7D;
+  text-decoration: underline;
+}
+.auth-error {
+  background: #ffeaea;
+  color: #c0392b;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.4rem;
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Register Form",
+  "settings": []
+}
+{% endschema %} 

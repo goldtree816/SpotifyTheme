@@ -1,0 +1,194 @@
+<!-- Size Guide Section -->
+<section class="size-guide">
+  <div class="size-guide__container">
+    <h1 class="size-guide__title">{{ section.settings.title }}</h1>
+    <div class="size-guide__intro">{{ section.settings.intro }}</div>
+    <div class="size-guide__chart">
+      <h2 class="size-guide__heading"><i class="fas fa-female"></i> Women's Clothing Size Chart</h2>
+      <div class="size-guide__table">
+        <table>
+          <thead>
+            <tr>
+              <th>Size</th>
+              <th>Bust (in)</th>
+              <th>Waist (in)</th>
+              <th>Hips (in)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% assign womens_rows = section.settings.womens_chart | newline_to_br | split: '<br />' %}
+            {% for row in womens_rows %}
+              {% assign cols = row | split: ',' %}
+              <tr>
+                <td>{{ cols[0] | strip }}</td>
+                <td>{{ cols[1] | strip }}</td>
+                <td>{{ cols[2] | strip }}</td>
+                <td>{{ cols[3] | strip }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="size-guide__chart">
+      <h2 class="size-guide__heading"><i class="fas fa-male"></i> Men's Clothing Size Chart</h2>
+      <div class="size-guide__table">
+        <table>
+          <thead>
+            <tr>
+              <th>Size</th>
+              <th>Chest (in)</th>
+              <th>Waist (in)</th>
+              <th>Hips (in)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% assign mens_rows = section.settings.mens_chart | newline_to_br | split: '<br />' %}
+            {% for row in mens_rows %}
+              {% assign cols = row | split: ',' %}
+              <tr>
+                <td>{{ cols[0] | strip }}</td>
+                <td>{{ cols[1] | strip }}</td>
+                <td>{{ cols[2] | strip }}</td>
+                <td>{{ cols[3] | strip }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="size-guide__chart">
+      <h2 class="size-guide__heading"><i class="fas fa-globe"></i> International Size Conversion</h2>
+      <div class="size-guide__table">
+        <table>
+          <thead>
+            <tr>
+              <th>US</th>
+              <th>UK</th>
+              <th>EU</th>
+              <th>AUS</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% assign intl_rows = section.settings.international_chart | newline_to_br | split: '<br />' %}
+            {% for row in intl_rows %}
+              {% assign cols = row | split: ',' %}
+              <tr>
+                <td>{{ cols[0] | strip }}</td>
+                <td>{{ cols[1] | strip }}</td>
+                <td>{{ cols[2] | strip }}</td>
+                <td>{{ cols[3] | strip }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.size-guide {
+  background: #fff;
+  color: #222;
+  padding: 3rem 0;
+}
+.size-guide__container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+.size-guide__title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #1D1D1F;
+  text-align: center;
+}
+.size-guide__intro {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+  color: #444;
+  text-align: center;
+}
+.size-guide__chart {
+  margin-bottom: 2.5rem;
+}
+.size-guide__heading {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #CDAA7D;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.size-guide__heading i {
+  color: #CDAA7D;
+}
+.size-guide__table {
+  overflow-x: auto;
+}
+.size-guide__table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+.size-guide__table th, .size-guide__table td {
+  border: 1px solid #ddd;
+  padding: 0.5rem 1rem;
+  text-align: center;
+}
+.size-guide__table th {
+  background: #f7f7f7;
+  color: #1D1D1F;
+  font-weight: 700;
+}
+@media screen and (max-width: 600px) {
+  .size-guide__container {
+    padding: 0 0.5rem;
+  }
+  .size-guide__title {
+    font-size: 1.5rem;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Size Guide",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Page Title",
+      "default": "Size Guide"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro Content",
+      "default": "At Aura Wear, we know the importance of the perfect fit. Use our comprehensive size guide below to help you find the right size for men's and women's apparel, plus a global size conversion chart for easy reference."
+    },
+    {
+      "type": "textarea",
+      "id": "womens_chart",
+      "label": "Women's Size Chart (Size,Bust,Waist,Hips)",
+      "default": "XS,31–32,24–25,33–34\nS,33–34,26–27,35–36\nM,35–36,28–29,37–38\nL,37–39,30–32,39–41\nXL,40–42,33–35,42–44"
+    },
+    {
+      "type": "textarea",
+      "id": "mens_chart",
+      "label": "Men's Size Chart (Size,Chest,Waist,Hips)",
+      "default": "S,35–37,29–31,35–37\nM,38–40,32–34,38–40\nL,41–43,35–37,41–43\nXL,44–46,38–40,44–46\nXXL,47–49,41–43,47–49"
+    },
+    {
+      "type": "textarea",
+      "id": "international_chart",
+      "label": "International Conversion (US,UK,EU,AUS)",
+      "default": "2,6,34,6\n4,8,36,8\n6,10,38,10\n8,12,40,12\n10,14,42,14"
+    }
+  ]
+}
+{% endschema %} 

@@ -1,0 +1,308 @@
+<!-- FAQ Section -->
+<section class="faq">
+  <div class="faq__container">
+    <h1 class="faq__title">{{ section.settings.title }}</h1>
+    <div class="faq__intro">{{ section.settings.intro }}</div>
+    {% for block in section.blocks %}
+      <div class="faq__group">
+        <h2 class="faq__group-title">{{ block.settings.icon }} {{ block.settings.heading }}</h2>
+        <div class="faq__qna-list">
+          {% assign faqs = block.settings.qna | newline_to_br | split: '<br />' %}
+          {% for item in faqs %}
+            {% assign parts = item | split: 'A:' %}
+            {% if parts.size == 2 %}
+              <div class="faq__qna">
+                <div class="faq__question"><strong>Q:</strong> {{ parts[0] | remove: 'Q:' | strip }}</div>
+                <div class="faq__answer"><strong>A:</strong> {{ parts[1] | strip }}</div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+    <div class="faq__contact">
+      <h2 class="faq__group-title"><i class="fas fa-comments"></i> Still have questions?</h2>
+      <div class="faq__contact-content">{{ section.settings.contact }}</div>
+    </div>
+  </div>
+</section>
+
+<style>
+.faq {
+  background: #fff;
+  color: #222;
+  padding: 3rem 0;
+}
+.faq__container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+.faq__title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #1D1D1F;
+  text-align: center;
+}
+.faq__intro {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+  color: #444;
+  text-align: center;
+}
+.faq__group {
+  margin-bottom: 2.5rem;
+}
+.faq__group-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #CDAA7D;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.faq__qna-list {
+  margin-left: 1rem;
+}
+.faq__qna {
+  margin-bottom: 1.2rem;
+}
+.faq__question {
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+.faq__answer {
+  color: #444;
+}
+.faq__contact {
+  margin-top: 3rem;
+  text-align: center;
+}
+.faq__contact-content {
+  margin-top: 1rem;
+  color: #444;
+}
+@media screen and (max-width: 600px) {
+  .faq__container {
+    padding: 0 0.5rem;
+  }
+  .faq__title {
+    font-size: 1.5rem;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Page Title",
+      "default": "Frequently Asked Questions (FAQ)"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro Content",
+      "default": "Welcome to Aura Wear's Help Center. We've compiled answers to the most common questions to help you shop with confidence."
+    },
+    {
+      "type": "textarea",
+      "id": "contact",
+      "label": "Contact/Help Message",
+      "default": "We're happy to help!\n📧 Email us at support@aurawear.com or visit our Contact page."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "orders_shipping",
+      "name": "Orders & Shipping",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon HTML",
+          "default": "<i class='fas fa-shopping-bag'></i>"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Group Heading",
+          "default": "Orders & Shipping"
+        },
+        {
+          "type": "textarea",
+          "id": "qna",
+          "label": "Q&A List (Q:... A:... one per line)",
+          "default": "Q: How long does it take to process my order? A: Orders are typically processed within 1–2 business days. You'll receive an email confirmation once your order is on the way.\nQ: How long is the delivery time? A: Delivery within Nepal takes 2–5 business days. For international orders, it may take 7–14 business days, depending on your location.\nQ: How much is the shipping fee? A: Shipping is free on all domestic orders over NPR 3,000. For other rates, please refer to our Shipping Policy."
+        }
+      ]
+    },
+    {
+      "type": "returns_exchanges",
+      "name": "Returns & Exchanges",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon HTML",
+          "default": "<i class='fas fa-box'></i>"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Group Heading",
+          "default": "Returns & Exchanges"
+        },
+        {
+          "type": "textarea",
+          "id": "qna",
+          "label": "Q&A List (Q:... A:... one per line)",
+          "default": "Q: What is your return policy? A: We accept returns within 7 days of delivery. Items must be unworn, unwashed, and in original packaging.\nQ: How can I start a return or exchange? A: Visit our Returns & Exchange page and fill out the return form. We'll guide you through the rest.\nQ: Are returns free? A: Return shipping costs are covered by the customer unless the product arrived damaged or incorrect."
+        }
+      ]
+    },
+    {
+      "type": "order_tracking",
+      "name": "Order Tracking",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon HTML",
+          "default": "<i class='fas fa-search'></i>"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Group Heading",
+          "default": "Order Tracking"
+        },
+        {
+          "type": "textarea",
+          "id": "qna",
+          "label": "Q&A List (Q:... A:... one per line)",
+          "default": "Q: How do I track my order? A: Once your order ships, you'll receive a tracking link via email. You can also track it via your My Account dashboard.\nQ: I haven't received my order. What should I do? A: First, check the tracking link. If it's delayed or marked as delivered but you didn't receive it, contact our support at support@aurawear.com."
+        }
+      ]
+    },
+    {
+      "type": "payments",
+      "name": "Payments",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon HTML",
+          "default": "<i class='fas fa-credit-card'></i>"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Group Heading",
+          "default": "Payments"
+        },
+        {
+          "type": "textarea",
+          "id": "qna",
+          "label": "Q&A List (Q:... A:... one per line)",
+          "default": "Q: What payment methods do you accept? A: We accept Visa, MasterCard, Khalti, eSewa, and Cash on Delivery (COD) for eligible regions.\nQ: Is it safe to shop on your site? A: Absolutely. We use SSL encryption and secure checkout gateways to protect your data."
+        }
+      ]
+    },
+    {
+      "type": "sizing_fit",
+      "name": "Sizing & Fit",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon HTML",
+          "default": "<i class='fas fa-ruler'></i>"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Group Heading",
+          "default": "Sizing & Fit"
+        },
+        {
+          "type": "textarea",
+          "id": "qna",
+          "label": "Q&A List (Q:... A:... one per line)",
+          "default": "Q: How do I know which size to choose? A: Check our Size Guide for measurements and international conversions.\nQ: What if I ordered the wrong size? A: We're happy to help with an exchange. Visit our Returns & Exchanges page or reach out to support."
+        }
+      ]
+    },
+    {
+      "type": "account_support",
+      "name": "Account & Support",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon HTML",
+          "default": "<i class='fas fa-user'></i>"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Group Heading",
+          "default": "Account & Support"
+        },
+        {
+          "type": "textarea",
+          "id": "qna",
+          "label": "Q&A List (Q:... A:... one per line)",
+          "default": "Q: Do I need an account to order? A: No, you can checkout as a guest. But creating an account makes it easier to track orders and manage returns.\nQ: How can I contact support? A: Email us anytime at support@aurawear.com — we typically respond within 24 hours on business days."
+        }
+      ]
+    },
+    {
+      "type": "product_stock",
+      "name": "Product & Stock",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon HTML",
+          "default": "<i class='fas fa-tshirt'></i>"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Group Heading",
+          "default": "Product & Stock"
+        },
+        {
+          "type": "textarea",
+          "id": "qna",
+          "label": "Q&A List (Q:... A:... one per line)",
+          "default": "Q: Will sold-out items be restocked? A: Some popular items are restocked. Follow us on Instagram and subscribe to our newsletter for updates.\nQ: Where are your clothes made? A: Our products are designed in Nepal and ethically sourced from trusted global partners."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [
+    {
+      "name": "Default",
+      "category": "Pages",
+      "blocks": [
+        { "type": "orders_shipping" },
+        { "type": "returns_exchanges" },
+        { "type": "order_tracking" },
+        { "type": "payments" },
+        { "type": "sizing_fit" },
+        { "type": "account_support" },
+        { "type": "product_stock" }
+      ]
+    }
+  ]
+}
+{% endschema %} 

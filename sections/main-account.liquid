@@ -1,0 +1,120 @@
+{{ 'customer-account.css' | asset_url | stylesheet_tag }}
+
+<div class="customer-account section-{{ section.id }}-padding">
+  <div class="customer-account__header">
+    <div class="customer-account__welcome">
+      <h1 class="customer-account__title">Welcome back, {{ customer.first_name | default: customer.name | escape }}!</h1>
+      <p class="customer-account__subtitle">Manage your account details and view your order history below.</p>
+    </div>
+    <div class="customer-account__logout-wrapper">
+      <a href="{{ routes.account_logout_url }}" class="customer-account__logout-btn" title="Log out">
+        <span class="customer-account__icon">{{- 'icon-account.svg' | inline_asset_content -}}</span>
+        Log out
+      </a>
+    </div>
+  </div>
+
+  <div class="customer-account__content">
+    <section class="customer-account__section customer-account__address-section">
+      <h2 class="customer-account__section-title">Address</h2>
+      <div class="customer-account__address-content">
+        {{ customer.default_address | format_address }}
+      </div>
+      <a href="{{ routes.account_addresses_url }}" class="customer-account__addresses-link">
+        Manage addresses ({{ customer.addresses_count }})
+      </a>
+    </section>
+
+    <section class="customer-account__section customer-account__orders-section">
+      <h2 class="customer-account__section-title">Order History</h2>
+      {% paginate customer.orders by 20 %}
+        {%- if customer.orders.size > 0 -%}
+          <div class="customer-account__table-wrapper">
+            <table class="customer-account__order-table">
+              <caption class="visually-hidden">Order History</caption>
+              <thead>
+                <tr>
+                  <th>Order</th>
+                  <th>Date</th>
+                  <th>Payment</th>
+                  <th>Fulfillment</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {%- for order in customer.orders -%}
+                  <tr>
+                    <td>
+                      <a href="{{ order.customer_url }}" aria-label="View order {{ order.name }}">{{ order.name }}</a>
+                    </td>
+                    <td>{{ order.created_at | time_tag: format: 'date' }}</td>
+                    <td>{{ order.financial_status_label }}</td>
+                    <td>{{ order.fulfillment_status_label }}</td>
+                    <td>{{ order.total_net_amount | money_with_currency }}</td>
+                  </tr>
+                {%- endfor -%}
+              </tbody>
+            </table>
+          </div>
+        {%- else -%}
+          <p class="customer-account__no-orders">You have not placed any orders yet.</p>
+        {%- endif -%}
+        {%- if paginate.pages > 1 and paginate.parts.size > 0 -%}
+          <nav class="customer-account__pagination" role="navigation" aria-label="Pagination">
+            <ul>
+              {%- if paginate.previous -%}
+                <li><a href="{{ paginate.previous.url }}" aria-label="Previous page">&laquo;</a></li>
+              {%- endif -%}
+              {%- for part in paginate.parts -%}
+                <li>
+                  {%- if part.is_link -%}
+                    <a href="{{ part.url }}" aria-label="Go to page {{ part.title }}">{{- part.title -}}</a>
+                  {%- elsif part.title == paginate.current_page -%}
+                    <span aria-current="page">{{- part.title -}}</span>
+                  {%- else -%}
+                    <span>{{ part.title }}</span>
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+              {%- if paginate.next -%}
+                <li><a href="{{ paginate.next.url }}" aria-label="Next page">&raquo;</a></li>
+              {%- endif -%}
+            </ul>
+          </nav>
+        {%- endif -%}
+      {% endpaginate %}
+    </section>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-account.name",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}

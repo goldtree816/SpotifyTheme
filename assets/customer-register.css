@@ -1,0 +1,226 @@
+/* Register Page Styles - matches login page */
+.section-padding {
+    padding-top: 36px;
+    padding-bottom: 36px;
+  }
+  
+  .customer.register {
+    background: var(--color-background);
+    border-radius: 1.5rem;
+    box-shadow: 0 2px 12px rgba(29,29,31,0.06);
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2.5rem 2rem;
+    color: var(--color-text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Autofill override - Fixed to use CSS variable */
+  .customer.register input:-webkit-autofill,
+  .customer.register input:-webkit-autofill:focus,
+  .customer.register input:-webkit-autofill:hover,
+  .customer.register input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px var(--color-background) inset !important;
+    box-shadow: 0 0 0 1000px var(--color-background) inset !important;
+    -webkit-text-fill-color: var(--color-text) !important;
+    color: var(--color-text) !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+  
+  /* Consolidated label styles */
+  .customer.register .field label,
+  .customer.register label {
+    font-size: 0.95rem;
+    color: var(--color-secondary);
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    margin-top: 0;
+  }
+  
+  .customer.register h1 {
+    color: #000;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .customer.register .field {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .customer.register input[type="text"],
+  .customer.register input[type="email"],
+  .customer.register input[type="password"] {
+    padding: 0.75rem 1rem;
+    border: 1.5px solid var(--color-secondary);
+    border-radius: 2rem;
+    background: var(--color-background);
+    color: var(--color-text);
+    font-size: 1rem;
+    transition: border-color 0.2s;
+    outline: none;
+    margin-top: 0.25rem;
+  }
+  
+  .customer.register input:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 2px rgba(205,170,125,0.33);
+  }
+  
+  /* Consolidated button base styles */
+  .customer.register button,
+  .register-actions-row button,
+  .register-actions-row .btn-alt {
+    width: 100%;
+    padding: 0.85rem 0;
+    border: none;
+    border-radius: 2rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(205,170,125,0.08);
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    box-sizing: border-box;
+  }
+  
+  /* Primary button styles */
+  .customer.register button,
+  .register-actions-row button {
+    background: var(--color-accent);
+    color: var(--color-primary);
+    border: 2px solid transparent;
+  }
+  
+  .customer.register button:hover,
+  .register-actions-row button:hover {
+    background: var(--color-highlight);
+    color: #fff;
+  }
+  
+  /* Secondary button styles */
+  .register-links .btn-alt,
+  .register-actions-row .btn-alt {
+    background: #fff;
+    color: var(--color-accent);
+    border: 2px solid var(--color-accent);
+  }
+  
+  .register-links .btn-alt:hover,
+  .register-actions-row .btn-alt:hover {
+    background: var(--color-accent);
+    color: #fff;
+  }
+  
+  .customer.register .form__message {
+    color: var(--color-highlight);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .customer.register ul {
+    margin-bottom: 1rem;
+    padding-left: 1.2rem;
+    color: var(--color-highlight);
+  }
+  
+  .register-links {
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+  
+  .register-actions-row {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  .register-actions-row button,
+  .register-actions-row .btn-alt {
+    width: 180px;
+    flex: 1 1 0;
+    min-width: 120px;
+    margin-top: 1rem;
+  }
+  
+  .register-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    max-width: 900px;
+    margin: 2rem auto;
+    background: transparent;
+    border-radius: 1.5rem;
+    box-shadow: 0 2px 12px rgba(29,29,31,0.06);
+    overflow: hidden;
+  }
+  
+  .register-image-col {
+    flex: 1 1 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    min-width: 240px;
+    min-height: 320px;
+  }
+  
+  .register-logo-image {
+    max-width: 600px;
+    max-height: 600px;
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .register-form-col {
+    flex: 1 1 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-background);
+    min-width: 320px;
+  }
+  
+  @media (max-width: 900px) {
+    .register-wrapper {
+      flex-direction: column;
+      min-height: unset;
+    }
+    .register-image-col {
+      min-height: 180px;
+      height: 180px;
+      width: 100%;
+    }
+    .register-form-col {
+      min-width: unset;
+      padding: 0;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .register-logo-image {
+      max-width: 100px;
+      max-height: 100px;
+    }
+    .register-form-col {
+      padding: 1.5rem 0.5rem;
+    }
+    .register-actions-row button,
+    .register-actions-row .btn-alt {
+      width: 100%;
+      min-width: unset;
+    }
+  }

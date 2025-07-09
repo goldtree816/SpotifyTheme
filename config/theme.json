@@ -2,7 +2,7 @@
     "name": "Your Theme Name",
     "version": "1.0.0",
     "settings": {
-      "supports_legacy_customer_accounts": true
+      "supports_legacy_customer_accounts": false
     }
   }
   

@@ -1,31 +1,23 @@
-{% comment %} Customer Login Page {% endcomment %}
-{% section 'header' %}
-<main class="auth-main">
+{% comment %} Login Form Section {% endcomment %}
+<section class="auth-main">
   <div class="auth-container">
     <h1 class="auth-title">Login to Your Account</h1>
-
     {% form 'customer_login' %}
       {% if form.errors %}
         <div class="auth-error">{{ form.errors | default_errors }}</div>
       {% endif %}
-
       <label for="CustomerEmail">Email</label>
       <input type="email" name="customer[email]" id="CustomerEmail" required>
-
       <label for="CustomerPassword">Password</label>
       <input type="password" name="customer[password]" id="CustomerPassword" required>
-
       <button type="submit" class="auth-btn">Login</button>
-
       <p class="auth-link">
         <a href="/account/register">Don't have an account? Register</a>
       </p>
     {% endform %}
   </div>
-</main>
-{% section 'footer' %}
-
-<style>
+</section>
+{% stylesheet %}
 .auth-main {
   max-width: 500px;
   margin: 3rem auto;
@@ -81,4 +73,11 @@
   margin-bottom: 1rem;
   border-radius: 0.4rem;
 }
-</style>
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Login Form",
+  "settings": []
+}
+{% endschema %} 

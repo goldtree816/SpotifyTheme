@@ -74,9 +74,15 @@
       </button>
     </form>
     {% if shop.customer_accounts_enabled %}
-      <a href="{{ routes.account_login_url }}" class="header__icon-btn header__login-btn" aria-label="Login">
-        Login
-      </a>
+      {% if customer %}
+        <a href="{{ routes.account_url }}" class="header__icon-btn header__login-btn" aria-label="Account">
+          <i class="fa-regular fa-user"></i>
+        </a>
+      {% else %}
+        <a href="{{ routes.account_login_url }}" class="header__icon-btn header__login-btn" aria-label="Login">
+          Login
+        </a>
+      {% endif %}
     {% endif %}
     <button class="header__icon-btn header__cart-btn" id="cart-drawer-open" aria-label="Cart" type="button">
       {% if cart.item_count > 0 %}

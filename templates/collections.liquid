@@ -1,0 +1,107 @@
+{% comment %}
+  Collections page template: lists all products with name, image, price, and add-to-cart button.
+  Uses the same header and footer for consistency.
+{% endcomment %}
+
+{% section 'header' %}
+<main class="collections-main">
+  <h1 class="collections-title">All Products</h1>
+  <div class="collections-grid">
+    {% for product in collections.all.products %}
+      <div class="collections-product-card">
+        <a href="{{ product.url }}" class="collections-product-image-link">
+          {% if product.featured_image %}
+            <img src="{{ product.featured_image | img_url: '500x500' }}" alt="{{ product.title | escape }}" class="collections-product-image" />
+          {% endif %}
+        </a>
+        <div class="collections-product-info">
+          <a href="{{ product.url }}" class="collections-product-title">{{ product.title }}</a>
+          <div class="collections-product-price">{{ product.price | money }}</div>
+          <form action="/cart/add" method="post" enctype="multipart/form-data" class="collections-product-form">
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+            <button type="submit" class="collections-add-to-cart">Add to Cart</button>
+          </form>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</main>
+{% section 'footer' %}
+
+<style>
+.collections-main {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+}
+.collections-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+.collections-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2.5rem;
+}
+.collections-product-card {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 16px rgba(29,29,31,0.08);
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.2s;
+}
+.collections-product-card:hover {
+  box-shadow: 0 4px 24px rgba(29,29,31,0.15);
+}
+.collections-product-image-link {
+  display: block;
+  width: 100%;
+  margin-bottom: 1.2rem;
+}
+.collections-product-image {
+  width: 100%;
+  max-width: 250px;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 8px rgba(29,29,31,0.10);
+}
+.collections-product-info {
+  width: 100%;
+  text-align: center;
+}
+.collections-product-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1D1D1F;
+  text-decoration: none;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.collections-product-price {
+  font-size: 1.1rem;
+  color: #CDAA7D;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+.collections-product-form {
+  margin-top: 0.5rem;
+}
+.collections-add-to-cart {
+  background: #CDAA7D;
+  color: #fff;
+  border: none;
+  padding: 0.7rem 2rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.collections-add-to-cart:hover {
+  background: #b89a6b;
+}
+</style> 

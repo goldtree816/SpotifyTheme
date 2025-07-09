@@ -1,0 +1,223 @@
+{{ 'customer-login.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.enable_shop_login_button == false -%}
+  {%- assign hide_shop_login_button = true -%}
+{%- endif -%}
+
+<div class="login-wrapper section-padding">
+  <div class="login-form-col">
+    <div class="login-form-inner">
+      <h1>{{ 'customer.login_page.title' | t }}</h1>
+      
+      {%- form 'customer_login', novalidate: 'novalidate', id: 'customer_login_form' -%}
+        {%- if form.errors -%}
+          <div class="form__message" tabindex="-1" autofocus>
+            <span class="visually-hidden">{{ 'accessibility.error' | t }} </span>
+            <span class="svg-wrapper"><i class="fa-solid fa-triangle-exclamation"></i></span>
+            {{ form.errors | default_errors }}
+          </div>
+        {%- endif -%}
+
+        <div class="field">
+          <label for="CustomerEmail">
+            {{ 'customer.login_page.email' | t }}
+          </label>
+          <input
+            type="email"
+            name="customer[email]"
+            id="CustomerEmail"
+            autocomplete="email"
+            autocorrect="off"
+            autocapitalize="off"
+            {% if form.errors contains 'form' %}
+              aria-invalid="true"
+            {% endif %}
+            placeholder="{{ 'customer.login_page.email' | t }}"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="CustomerPassword">
+            {{ 'customer.login_page.password' | t }}
+          </label>
+          <input
+            type="password"
+            name="customer[password]"
+            id="CustomerPassword"
+            autocomplete="current-password"
+            {% if form.errors contains 'form' %}
+              aria-invalid="true"
+            {% endif %}
+            placeholder="{{ 'customer.login_page.password' | t }}"
+            required
+          >
+        </div>
+
+        <div class="login-actions-row">
+          <button type="submit" id="login-submit-btn">
+            <span class="btn-text">{{ 'customer.login_page.sign_in' | t }}</span>
+          </button>
+          <a href="{{ routes.account_register_url }}" class="btn-alt">
+            {{ 'customer.login_page.create_account' | t }}
+          </a>
+        </div>
+      {%- endform -%}
+
+      <div class="login-links">
+        <a href="#" id="forgot-password-link">{{ 'customer.login_page.forgot_password' | t }}</a>
+      </div>
+    </div>
+  </div>
+  <div class="login-bg-col"></div>
+</div>
+
+<!-- Password Recovery Modal -->
+<div class="password-recovery-overlay" id="password-recovery-overlay">
+  <div class="password-recovery-modal">
+    <button class="close-modal" id="close-recovery-modal" type="button">&times;</button>
+    <h2>{{ 'customer.recover_password.title' | t }}</h2>
+    <p>{{ 'customer.recover_password.subtext' | t }}</p>
+    
+    {%- form 'recover_customer_password', id: 'recover_customer_password_form' -%}
+      {%- if form.errors -%}
+        <div class="form__message">
+          <span class="svg-wrapper"><i class="fa-solid fa-triangle-exclamation"></i></span>
+          {{ form.errors | default_errors }}
+        </div>
+      {%- endif -%}
+
+      {%- if form.posted_successfully? -%}
+        <div class="form__message success">
+          <span class="svg-wrapper"><i class="fa-solid fa-circle-check"></i></span>
+          {{ 'customer.recover_password.success' | t }}
+        </div>
+      {%- endif -%}
+
+      <div class="field">
+        <label for="RecoverEmail">
+          {{ 'customer.recover_password.email' | t }}
+        </label>
+        <input
+          type="email"
+          name="email"
+          id="RecoverEmail"
+          autocomplete="email"
+          autocorrect="off"
+          autocapitalize="off"
+          placeholder="{{ 'customer.recover_password.email' | t }}"
+          required
+        >
+      </div>
+
+      <div class="password-recovery-actions">
+        <button type="submit" class="btn-primary" id="recover-submit-btn">
+          <span class="btn-text">{{ 'customer.recover_password.submit' | t }}</span>
+        </button>
+        <button type="button" class="btn-secondary" id="cancel-recovery">
+          {{ 'customer.recover_password.cancel' | t }}
+        </button>
+      </div>
+    {%- endform -%}
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const loginForm = document.getElementById('customer_login_form');
+  const loginSubmitBtn = document.getElementById('login-submit-btn');
+  const forgotPasswordLink = document.getElementById('forgot-password-link');
+  const recoveryOverlay = document.getElementById('password-recovery-overlay');
+  const closeRecoveryModal = document.getElementById('close-recovery-modal');
+  const cancelRecovery = document.getElementById('cancel-recovery');
+  const recoverForm = document.getElementById('recover_customer_password_form');
+  const recoverSubmitBtn = document.getElementById('recover-submit-btn');
+
+  // Show loading state on login form submit
+  loginForm.addEventListener('submit', function() {
+    loginSubmitBtn.disabled = true;
+    loginSubmitBtn.innerHTML = '<span class="loading-spinner"></span><span class="btn-text">{{ 'customer.login_page.signing_in' | t }}</span>';
+  });
+
+  // Show password recovery modal
+  forgotPasswordLink.addEventListener('click', function(e) {
+    e.preventDefault();
+    recoveryOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  });
+
+  // Hide password recovery modal
+  function hideRecoveryModal() {
+    recoveryOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  closeRecoveryModal.addEventListener('click', hideRecoveryModal);
+  cancelRecovery.addEventListener('click', hideRecoveryModal);
+
+  // Close modal when clicking outside
+  recoveryOverlay.addEventListener('click', function(e) {
+    if (e.target === recoveryOverlay) {
+      hideRecoveryModal();
+    }
+  });
+
+  // Handle recovery form submission
+  recoverForm.addEventListener('submit', function() {
+    recoverSubmitBtn.disabled = true;
+    recoverSubmitBtn.innerHTML = '<span class="loading-spinner"></span><span class="btn-text">{{ 'customer.recover_password.sending' | t }}</span>';
+  });
+
+  // Close modal on successful recovery
+  if (document.querySelector('.form__message.success')) {
+    setTimeout(function() {
+      hideRecoveryModal();
+    }, 3000);
+  }
+
+  // Handle escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && recoveryOverlay.classList.contains('active')) {
+      hideRecoveryModal();
+    }
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "t:sections.main-login.name",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_shop_login_button",
+      "label": "t:sections.main-login.shop_login_button.enable",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}
