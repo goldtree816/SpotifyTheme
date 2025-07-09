@@ -1,0 +1,30 @@
+<section class="product-recommendations" data-product-id="{{ product.id }}" data-limit="4">
+  <h2 class="section-heading">You may also like</h2>
+  <div class="product-recommendations__grid">
+    {% for product in recommendations.products %}
+      {% render 'product-card', product: product %}
+    {% endfor %}
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const productId = document.querySelector('.product-recommendations').dataset.productId;
+    const limit = document.querySelector('.product-recommendations').dataset.limit;
+    
+    fetch(`${window.Shopify.routes.root}recommendations/products.json?product_id=${productId}&limit=${limit}`)
+      .then(response => response.json())
+      .then(data => {
+        const recommendationsContainer = document.querySelector('.product-recommendations__grid');
+        recommendationsContainer.innerHTML = '';
+        
+        data.products.forEach(product => {
+          const productCard = document.createElement('div');
+          productCard.innerHTML = `
+            {% render 'product-card', product: product %}
+          `;
+          recommendationsContainer.appendChild(productCard);
+        });
+      });
+  });
+</script>

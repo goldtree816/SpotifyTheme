@@ -1,0 +1,88 @@
+<!-- Product Card -->
+<div class="product-card" onclick="showProductModal({{ product.id }})">
+  <img src="{{ product.featured_image | image_url: '400x' }}"height="400" width="400" alt="{{ product.title }}">
+
+  <h2>{{ product.title }}</h2>
+  <span>{{ product.price | money }}</span>
+</div>
+
+<!-- Product Modal (hidden by default) -->
+<div id="product-modal-{{ product.id }}" class="product-modal" style="display:none;">
+  <div class="product-modal__content">
+    <span class="close" onclick="closeProductModal({{ product.id }})">&times;</span>
+    <section class="product" data-section-id="{{ section.id }}" data-section-type="product">
+      <div class="product__container container">
+        <div class="product__gallery">
+          {% for image in product.images %}
+            <div class="product__image">
+              <img src="{{ image.src | image_url: '800x' }}" height="600" width="400"  alt="{{ image.alt }}">
+            </div>
+          {% endfor %}
+        </div>
+        <div class="product__details">
+          <h1 class="product__title">{{ product.title }}</h1>
+          <div class="product__price">
+            <span class="price">{{ product.price | money }}</span>
+            {% if product.compare_at_price > product.price %}
+              <span class="compare-at-price">{{ product.compare_at_price | money }}</span>
+            {% endif %}
+          </div>
+          <div class="product__description">
+            {{ product.description }}
+          </div>
+          {% render 'variant-picker', product: product %}
+          <button class="product__add-to-cart" data-add-to-cart>
+            Add to Cart - {{ product.price | money }}
+          </button>
+        </div>
+      </div>
+      <!-- Product Recommendations -->
+      <div class="product__recommendations">
+        {% section 'product-recommendations' %}
+      </div>
+    </section>
+  </div>
+</div>
+
+<style>
+.product-card {
+  border: 1px solid #eee;
+  padding: 1rem;
+  cursor: pointer;
+  width: 250px;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.product-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.product-modal__content {
+  background: #fff;
+  padding: 2rem;
+  max-width: 900px;
+  width: 100%;
+  position: relative;
+}
+.product-modal .close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  cursor: pointer;
+}
+</style>
+
+<script>
+function showProductModal(productId) {
+  document.getElementById('product-modal-' + productId).style.display = 'flex';
+}
+function closeProductModal(productId) {
+  document.getElementById('product-modal-' + productId).style.display = 'none';
+}
+</script>

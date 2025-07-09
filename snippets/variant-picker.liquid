@@ -1,0 +1,30 @@
+{% if product.variants.size > 1 %}
+  <div class="product__variants">
+    {% for option in product.options_with_values %}
+      <div class="product__option">
+        <label for="Option-{{ section.id }}-{{ forloop.index0 }}">
+          {{ option.name }}
+        </label>
+        <select 
+          id="Option-{{ section.id }}-{{ forloop.index0 }}"
+          class="product__option-select"
+          data-option-selector
+          data-index="option{{ forloop.index }}"
+        >
+          {% for value in option.values %}
+            <option 
+              value="{{ value | escape }}"
+              {% if option.selected_value == value %}selected{% endif %}
+            >
+              {{ value }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+    {% endfor %}
+  </div>
+  
+  <script type="application/json" data-variant-json>
+    {{ product.variants | json }}
+  </script>
+{% endif %}

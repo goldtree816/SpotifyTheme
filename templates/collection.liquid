@@ -1,0 +1,407 @@
+<div class="collection-header">
+  <div class="header-left">
+    <div class="sort-container">
+      <select name="sort_by" class="sort-select" onchange="this.form.submit()">
+        <option value="title-ascending" {% if sort_by == 'title-ascending' %}selected{% endif %}>Sort by Name (A-Z)</option>
+        <option value="title-descending" {% if sort_by == 'title-descending' %}selected{% endif %}>Sort by Name (Z-A)</option>
+        <option value="price-ascending" {% if sort_by == 'price-ascending' %}selected{% endif %}>Sort by Price (Low to High)</option>
+        <option value="price-descending" {% if sort_by == 'price-descending' %}selected{% endif %}>Sort by Price (High to Low)</option>
+      </select>
+    </div>
+  </div>
+  <div class="header-right">
+    
+    <div class="search-container">
+      <form action="{{ routes.search_url }}" method="get" class="search-form" role="search">
+        <input
+          type="text"
+          name="q"
+          value="{{ search.terms | escape }}"
+          placeholder="Search by name or price..."
+          class="search-input"
+          aria-label="Search products by name or price"
+        >
+        <button type="submit" class="search-button" aria-label="Submit search">Search</button>
+      </form>
+    </div>
+  </div>
+  {% if collection.description != blank %}
+    <div class="collection-description">
+      {{ collection.description }}
+    </div>
+  {% endif %}
+</div>
+
+{% if collection.products_count > 0 %}
+  <div class="collection-products">
+    <ul class="product-grid">
+      {% if search.terms or collection.sort_by %}
+        {% assign sorted_products = collection.products | where: "title", search.terms | sort: collection.sort_by | default: collection.products %}
+        {% for product in sorted_products %}
+          <li class="product-item">
+            <a href="{{ product.url }}" class="product-link">
+              <div class="product-image-container">
+                <img
+                  src="{{ product.featured_image | image_url: width:400, height:300, crop:'center' }}"
+                  alt="{{ product.title }}"
+                  width="400"
+                  height="300"
+                  class="product-image"
+                >
+              </div>
+              <div class="product-details">
+                <h2 class="product-title">{{ product.title }}</h2>
+                <span class="product-price">
+                    {{ product.price | money }}</span>
+              </div>
+            </a>
+          </li>
+        {% endfor %}
+      {% else %}
+        {% for product in collection.products %}
+          <li class="product-item">
+            <a href="{{ product.url }}" class="product-link">
+              <div class="product-image-container">
+                <img
+                  src="{{ product.featured_image | image_url: width:400, height:300, crop:'center' }}"
+                  alt="{{ product.title }}"
+                  width="400"
+                  height="300"
+                  class="product-image"
+                >
+              </div>
+              <div class="product-details">
+                <h2 class="product-title">{{ product.title }}</h2>
+                <span class="product-price">{{ product.price | money }}</span>
+              </div>
+            </a>
+          </li>
+        {% endfor %}
+      {% endif %}
+    </ul>
+  </div>
+{% else %}
+  <p class="no-products-message">No products found in this collection.</p>
+{% endif %}
+
+<style>
+  /* Global Styles */
+  :root {
+    --primary-color: #1a1a1a;
+    --accent-color: #2563eb;
+    --background-gradient-start: #f8fafc;
+    --background-gradient-end: #e3e9f3;
+    --text-color: #22223b;
+    --border-color: #e5e7eb;
+    --shadow-light: 0 4px 24px rgba(37, 99, 235, 0.06), 0 1.5px 6px rgba(0, 0, 0, 0.03);
+    --shadow-hover: 0 8px 32px rgba(37, 99, 235, 0.12), 0 3px 12px rgba(0, 0, 0, 0.06);
+    --transition-speed: 0.2s;
+    --spacing-unit: 16px;
+  }
+
+  body {
+    background: linear-gradient(135deg, var(--background-gradient-start) 0%, var(--background-gradient-end) 100%);
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text-color);
+  }
+
+  /* Collection Header */
+  .collection-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-unit) calc(var(--spacing-unit) * 2.5);
+    max-width: 1400px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    gap: calc(var(--spacing-unit) * 1.25);
+  }
+
+  .header-left,
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-unit);
+  }
+
+  .collection-description {
+    width: 100%;
+    color: #666;
+    font-size: 1.1rem;
+    margin-top: calc(var(--spacing-unit) * 1.25);
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  /* Search Bar */
+  .search-container {
+    max-width: 400px;
+    width: 100%;
+  }
+
+  .search-form {
+    display: flex;
+    gap: calc(var(--spacing-unit) / 2);
+    align-items: center;
+  }
+
+  .search-input {
+    flex: 1;
+    padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+  }
+
+  .search-input:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 8px rgba(37, 99, 235, 0.2);
+  }
+
+  .search-button {
+    padding: calc(var(--spacing-unit) / 2) calc(var(--spacing-unit) * 1.5);
+    background: var(--accent-color);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background var(--transition-speed), transform var(--transition-speed);
+  }
+
+  .search-button:hover {
+    background: darken(var(--accent-color), 10%);
+    transform: translateY(-2px);
+  }
+
+  /* Sort Dropdown */
+  .sort-container {
+    max-width: 250px;
+    width: 100%;
+  }
+
+  .sort-select {
+    padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    background: #fff;
+    cursor: pointer;
+    transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23333' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+  }
+
+  .sort-select:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 8px rgba(37, 99, 235, 0.2);
+    outline: none;
+  }
+
+  /* Collection Products */
+  .collection-products {
+    display: flex;
+    justify-content: center;
+    padding: 0 calc(var(--spacing-unit) * 1.25);
+    max-width: 1400px;
+    margin: calc(var(--spacing-unit) * 2.5) auto;
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: calc(var(--spacing-unit) * 2);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+
+  .product-item {
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: var(--shadow-light);
+    text-align: center;
+    transition: box-shadow var(--transition-speed), transform var(--transition-speed);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .product-item:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-4px) scale(1.01);
+  }
+
+  .product-image-container {
+    margin-bottom: calc(var(--spacing-unit) / 2);
+  }
+
+  .product-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  }
+
+  .product-item:hover .product-image {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .product-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+.product-details {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: var(--spacing-unit);
+    gap: 0.5rem;
+}
+
+.product-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.25rem;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    letter-spacing: 0.01em;
+}
+
+.product-price {
+    color: #2563eb;
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.5rem;
+    display: block;
+    background: #f1f5fb;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(37, 99, 235, 0.06);
+}
+
+.product-details .product-vendor {
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 0.15rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+
+.product-details .product-description {
+    font-size: 0.97rem;
+    color: #444;
+    margin-bottom: 0.25rem;
+    text-align: center;
+    line-height: 1.4;
+    max-height: 2.8em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+  .no-products-message {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
+    padding: calc(var(--spacing-unit) * 2);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .collection-header {
+      padding: var(--spacing-unit) calc(var(--spacing-unit) * 1.5);
+    }
+
+    .product-grid {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: calc(var(--spacing-unit) * 1.5);
+    }
+
+    .product-image {
+      height: 160px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .collection-header {
+      flex-direction: column;
+      padding: var(--spacing-unit);
+      text-align: center;
+    }
+
+    .header-left,
+    .header-right {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .search-container,
+    .sort-container {
+      max-width: 100%;
+    }
+
+    .collection-description {
+      font-size: 1rem;
+    }
+
+    .product-grid {
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+
+    .product-image {
+      height: 140px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .collection-header {
+      gap: calc(var(--spacing-unit) / 2);
+    }
+
+    .search-form,
+    .sort-container {
+      width: 100%;
+    }
+
+    .product-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .product-image {
+      height: 120px;
+    }
+
+    .product-title {
+      font-size: 1.1rem;
+    }
+
+    .product-price {
+      font-size: 1rem;
+    }
+  }
+</style>

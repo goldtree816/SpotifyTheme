@@ -1,92 +1,363 @@
 <header class="main-header">
   <div class="header-logo">
     <a href="{{ routes.root_url }}">
-      <img src="{{ 'logo.png' | asset_url }}" height="80" width="130" loading="lazy" alt="logo">
+      <img src="{{ 'logo.png' | asset_url }}" height="80" width="130" loading="lazy" alt="Brand Logo">
     </a>
   </div>
-  <div class="main-navigation">
-    {% for link in linklists['main-menu'].links %}
+  <nav class="main-navigation" aria-label="Main navigation">
+    <ul class="nav-list">
       <li class="nav-item">
-        <a href="{{ link.url }}" class="nav-link">{{ link.title }}</a>
+        <a href="{{ routes.root_url }}" class="nav-link">Home</a>
       </li>
-    {% endfor %}
-  </div>
+      <li class="nav-item">
+        <div class="dropdown">
+          <a href="{{ routes.all_products_collection_url }}" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">Shop</a>
+          <ul class="dropdown-menu">
+            <li><a href="{{ routes.collections_url }}/men-collections" class="dropdown-item">Men's</a></li>
+            <li><a href="{{ routes.collections_url }}/women-collections" class="dropdown-item">Women's</a></li>
+            <li><a href="{{ routes.collections_url }}/kid-collections" class="dropdown-item">Kid's</a></li>
+            <li><a href="{{ routes.collections_url }}/accessories-collections" class="dropdown-item">Accessories</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a href="/blogs/news" class="nav-link">Blog</a>
+      </li>
+      <li class="nav-item">
+        <a href="/pages/about" class="nav-link">About</a>
+      </li>
+      <li class="nav-item">
+        <a href="/pages/careers" class="nav-link">Careers</a>
+      </li>
+      <li class="nav-item">
+        <a href="/pages/faq" class="nav-link">FAQ's</a>
+      </li>
+      <li class="nav-item">
+        <a href="/pages/contact" class="nav-link">Contact</a>
+      </li>
+    </ul>
+  </nav>
   <div class="right-navigation">
-    <li>
-      <a href="{{ routes.account_url }}">
-        <img class="icon-account" src="{{ 'icon-account.svg' | asset_url }}" width="24" height="24" alt="Account icon">
-      </a>
-    </li>
-    <li>
-      <a href="{{ routes.cart_url }}">
-        <img class="icon-cart" src="{{ 'shopping-bag.png' | asset_url }}" width="24" height="24" alt="Cart icon">
-      </a>
-    </li>
+    <ul class="nav-list">
+      <li class="nav-item">
+        <a href="{{ routes.account_url }}" aria-label="Account">
+          <img class="icon-account" src="{{ 'icon-account.svg' | asset_url }}" width="24" height="24" alt="Account icon">
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{{ routes.cart_url }}" aria-label="Cart">
+          <img class="icon-cart" src="{{ 'shopping-bag.png' | asset_url }}" width="24" height="24" alt="Cart icon">
+        </a>
+      </li>
+    </ul>
   </div>
+  <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+    <span class="hamburger-icon"></span>
+  </button>
 </header>
 
 <style>
+  /* Root variables for theming and consistency */
+  :root {
+    --primary-color: #1a1a1a;
+    --accent-color: #2c7be5;
+    --background-color: #ffffff;
+    --text-color: #333333;
+    --transition-speed: 0.3s;
+    --border-radius: 4px;
+    --spacing-unit: 1rem;
+  }
+
+  /* Base header styles */
   .main-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 50px;
-    background-color: #f8f9fa;
+    padding: var(--spacing-unit) calc(var(--spacing-unit) * 3);
+    background-color: var(--background-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: background-color var(--transition-speed) ease;
   }
 
+  /* Logo interaction */
+  .header-logo img {
+    transition: transform var(--transition-speed) ease;
+    max-height: 80px;
+    width: auto;
+  }
+
+  .header-logo img:hover {
+    transform: scale(1.05);
+  }
+
+  /* Navigation base styles */
   .main-navigation {
     display: flex;
-    justify-content: center;
-    list-style-type: none;
+    align-items: center;
+  }
+
+  .nav-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
     gap: 20px;
   }
 
-  .nav-item .nav-link {
+  .nav-item {
     position: relative;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 17px;
-    color: #000;
-    padding: 5px 0;
   }
 
-  /* Hover Underline Animation (Center to Left & Right) */
-  .nav-item .nav-link::after {
+  /* Navigation link styles */
+  .nav-link {
+    text-decoration: none;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-color);
+    padding: calc(var(--spacing-unit) / 2) 0;
+    transition: color var(--transition-speed) ease;
+  }
+
+  .nav-link:hover,
+  .nav-link:focus {
+    color: var(--accent-color);
+    outline: none;
+  }
+
+  .nav-link::after {
     content: '';
     position: absolute;
     bottom: 0;
     left: 50%;
     width: 0;
     height: 2px;
-    background-color: #000;
-    transition: width 0.3s ease, left 0.3s ease;
+    background-color: var(--accent-color);
+    transition: width var(--transition-speed) ease, left var(--transition-speed) ease;
   }
 
-  .nav-item .nav-link:hover::after {
+  .nav-link:hover::after,
+  .nav-link:focus::after {
     width: 100%;
     left: 0;
   }
 
+  /* Dropdown styles */
+  .dropdown {
+    position: relative;
+  }
+
+  .dropdown-toggle {
+    cursor: pointer;
+  }
+
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 200px;
+    background-color: var(--background-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: var(--border-radius);
+    padding: calc(var(--spacing-unit) / 2) 0;
+    z-index: 1001;
+    list-style: none;
+    margin: 0;
+  }
+
+  .dropdown-item {
+    text-decoration: none;
+    display: block;
+    padding: calc(var(--spacing-unit) / 4) calc(var(--spacing-unit) * 1.5);
+    color: var(--text-color);
+    font-size: 0.95rem;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+  }
+
+  .dropdown-item:hover,
+  .dropdown-item:focus {
+    background-color: #f1f1f1;
+    color: var(--accent-color);
+    outline: none;
+  }
+
+  .dropdown:hover .dropdown-menu,
+  .dropdown .dropdown-menu:hover,
+  .dropdown .nav-link:focus + .dropdown-menu {
+    display: block;
+  }
+
+  /* Right navigation styles */
   .right-navigation {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 20px;
   }
 
-  .right-navigation li {
-    text-decoration: none;
-    list-style-type: none;
+  .right-navigation .nav-list {
+    gap: calc(var(--spacing-unit) / 2);
   }
 
-  /* Add hover effect to icons */
   .icon-account,
   .icon-cart {
-    transition: transform 0.2s ease;
+    transition: transform var(--transition-speed) ease, opacity var(--transition-speed) ease;
   }
 
   .icon-account:hover,
   .icon-cart:hover {
-    transform: scale(1.1);
+    transform: scale(1.15);
+    opacity: 0.8;
+  }
+
+  /* Mobile menu toggle */
+  .mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: calc(var(--spacing-unit) / 2);
+    z-index: 1002;
+  }
+
+  .hamburger-icon,
+  .hamburger-icon::before,
+  .hamburger-icon::after {
+    width: 24px;
+    height: 2px;
+    background-color: var(--text-color);
+    display: block;
+    transition: all var(--transition-speed) ease;
+  }
+
+  .hamburger-icon {
+    position: relative;
+  }
+
+  .hamburger-icon::before,
+  .hamburger-icon::after {
+    content: '';
+    position: absolute;
+    left: 0;
+  }
+
+  .hamburger-icon::before {
+    top: -8px;
+  }
+
+  .hamburger-icon::after {
+    bottom: -8px;
+  }
+
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .main-header {
+      padding: var(--spacing-unit) calc(var(--spacing-unit) * 1.5);
+      flex-wrap: wrap;
+    }
+
+    .main-navigation {
+      display: none;
+      width: 100%;
+      order: 3;
+    }
+
+    .main-navigation.active {
+      display: block;
+    }
+
+    .nav-list {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: var(--spacing-unit) 0;
+    }
+
+    .nav-list .dropdown-menu {
+      position: static;
+      width: 100%;
+      box-shadow: none;
+      padding-left: var(--spacing-unit);
+    }
+
+    .right-navigation {
+      order: 2;
+    }
+
+    .mobile-menu-toggle {
+      display: block;
+      order: 3;
+    }
+
+    .mobile-menu-toggle.active .hamburger-icon {
+      transform: rotate(45deg);
+    }
+
+    .mobile-menu-toggle.active .hamburger-icon::before {
+      transform: rotate(90deg);
+      top: 0;
+    }
+
+    .mobile-menu-toggle.active .hamburger-icon::after {
+      opacity: 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .header-logo img {
+      max-height: 60px;
+      width: auto;
+    }
+
+    .main-header {
+      padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
+    }
+
+    .nav-link,
+    .dropdown-item {
+      font-size: 0.9rem;
+    }
+  }
+
+  /* Accessibility and focus styles */
+  .nav-link:focus,
+  .dropdown-item:focus,
+  .mobile-menu-toggle:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+  }
+
+  /* Vendor prefixes for broader compatibility */
+  @supports (-webkit-overflow-scrolling: touch) {
+    .main-header {
+      -webkit-overflow-scrolling: touch;
+    }
   }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    const mainNav = document.querySelector('.main-navigation');
+
+    menuToggle.addEventListener('click', () => {
+      mainNav.classList.toggle('active');
+      menuToggle.classList.toggle('active');
+      const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+      menuToggle.setAttribute('aria-expanded', !isExpanded);
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', (e) => {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach((dropdown) => {
+        const menu = dropdown.querySelector('.dropdown-menu');
+        if (!dropdown.contains(e.target)) {
+          menu.style.display = 'none';
+          dropdown.querySelector('.dropdown-toggle').setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+  });
+</script>

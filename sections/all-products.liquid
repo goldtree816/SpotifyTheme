@@ -1,72 +1,74 @@
 <section class="all-products-section">
   <div class="products-header">
     <h1 class="products-main-title">All Products</h1>
-    <p class="products-main-description">Discover our full range of premium products, curated for every taste and style.</p>
+    <p class="products-main-description">
+      Discover our full range of premium products, curated for every taste and style.
+    </p>
   </div>
 
   <div class="products-grid">
-    {% unless collections.all-products %}
-  <div class="collection-error">
-    <p>Error: 'all-products' collection not found. Please create this collection in Shopify admin.</p>
-  </div>
-{% else %}
-  {% paginate collections.all-products.products by 12 %}
-      {% for product in collections.all-products.products %}
-        <div class="product-card">
-          <a href="{{ product.url }}" class="product-link">
-            <div class="product-media">
-              {% if product.featured_image %}
-                <img
-                  src="{{ product.featured_image | image_url: width: 600 }}"
-                  width="600"
-                  height="400"
-                  alt="{{ product.title | escape }}"
-                  loading="lazy"
-                  class="product-image"
-                >
-              {% else %}
-                <img
-                  src="https://placehold.co/600x400"
-                  width="600"
-                  height="400"
-                  alt="Placeholder Product Image"
-                  loading="lazy"
-                  class="product-image"
-                >
-              {% endif %}
-            </div>
-            <div class="product-content">
-              <h2 class="product-title">{{ product.title | truncate: 50 }}</h2>
-              <p class="product-price">
-                {% if product.compare_at_price > product.price %}
-                  <span class="price-discounted">{{ product.price | money }}</span>
-                  <span class="price-original">{{ product.compare_at_price | money }}</span>
+    {% unless collections.all %}
+      <div class="collection-error">
+        <p>Error: No products found. Please add products to your Shopify store.</p>
+      </div>
+    {% else %}
+      {% paginate collections.all.products by 12 %}
+        {% for product in collections.all.products %}
+          <div class="product-card">
+            <a href="{{ product.url }}" class="product-link" aria-label="View {{ product.title | escape }}">
+              <div class="product-media">
+                {% if product.featured_image %}
+                  <img
+                    src="{{ product.featured_image | image_url: width: 600 }}"
+                    width="600"
+                    height="400"
+                    alt="{{ product.title | escape }}"
+                    loading="lazy"
+                    class="product-image"
+                  >
                 {% else %}
-                  <span class="price-regular">{{ product.price | money }}</span>
+                  <img
+                    src="https://placehold.co/600x400"
+                    width="600"
+                    height="400"
+                    alt="Placeholder Product Image"
+                    loading="lazy"
+                    class="product-image"
+                  >
                 {% endif %}
-              </p>
-              <span
-                class="product-cta"
-                style="background-color: {{ section.settings.button_background_color }}; color: {{ section.settings.button_text_color }};"
-              >
-                View Product
-              </span>
-            </div>
-          </a>
-        </div>
-      {% endfor %}
-      {% if paginate.pages > 1 %}
-        <div class="pagination">
-          {% if paginate.previous.is_link %}
-            <a href="{{ paginate.previous.url }}" class="pagination-link">Previous</a>
-          {% endif %}
-          <span class="pagination-info">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
-          {% if paginate.next.is_link %}
-            <a href="{{ paginate.next.url }}" class="pagination-link">Next</a>
-          {% endif %}
-        </div>
-      {% endif %}
-    {% endpaginate %}
+              </div>
+              <div class="product-content">
+                <h2 class="product-title">{{ product.title | truncate: 50 }}</h2>
+                <p class="product-price">
+                  {% if product.compare_at_price > product.price %}
+                    <span class="price-discounted">{{ product.price | money }}</span>
+                    <span class="price-original">{{ product.compare_at_price | money }}</span>
+                  {% else %}
+                    <span class="price-regular">{{ product.price | money }}</span>
+                  {% endif %}
+                </p>
+                <span
+                  class="product-cta"
+                  style="background-color: {{ section.settings.button_background_color }}; color: {{ section.settings.button_text_color }};"
+                >
+                  View Product
+                </span>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+        {% if paginate.pages > 1 %}
+          <nav class="pagination" aria-label="Pagination">
+            {% if paginate.previous.is_link %}
+              <a href="{{ paginate.previous.url }}" class="pagination-link" aria-label="Previous page">Previous</a>
+            {% endif %}
+            <span class="pagination-info">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+            {% if paginate.next.is_link %}
+              <a href="{{ paginate.next.url }}" class="pagination-link" aria-label="Next page">Next</a>
+            {% endif %}
+          </nav>
+        {% endif %}
+      {% endpaginate %}
     {% endunless %}
   </div>
 </section>
@@ -217,7 +219,8 @@
     transition: all 0.3s ease;
   }
 
-  .pagination-link:hover {
+  .pagination-link:hover,
+  .pagination-link:focus {
     background-color: {{ section.settings.button_background_color }};
     color: {{ section.settings.button_text_color }};
   }

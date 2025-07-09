@@ -1,0 +1,13 @@
+<div class="product-card">
+  <a href="{{ product.url }}" class="product-card__link">
+    <div class="product-card__image">
+      <img src="{{ product.featured_image | image_url: '400x' }}" height="400" width="400" alt="{{ product.featured_image.alt }}">
+    </div>
+    <div class="product-card__info">
+      <h3 class="product-card__title">{{ product.title }}</h3>
+      <div class="product-card__price">
+        {{ product.price | money }}
+      </div>
+    </div>
+  </a>
+</div>
