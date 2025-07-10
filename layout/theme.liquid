@@ -3,7 +3,8 @@
     {{ content_for_header }}
 
     {{ 'theme.css' | asset_url | stylesheet_tag }}
-  </head>
+    {% comment %} {{ 'theme.js' | asset_url | script_tag }} {% endcomment %}
+</head>
   <body>
     {% section 'header' %}
     {% section 'announcement-bar' %}

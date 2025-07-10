@@ -2,15 +2,42 @@
   <div class="header-left">
     <div class="sort-container">
       <select name="sort_by" class="sort-select" onchange="this.form.submit()">
-        <option value="title-ascending" {% if sort_by == 'title-ascending' %}selected{% endif %}>Sort by Name (A-Z)</option>
-        <option value="title-descending" {% if sort_by == 'title-descending' %}selected{% endif %}>Sort by Name (Z-A)</option>
-        <option value="price-ascending" {% if sort_by == 'price-ascending' %}selected{% endif %}>Sort by Price (Low to High)</option>
-        <option value="price-descending" {% if sort_by == 'price-descending' %}selected{% endif %}>Sort by Price (High to Low)</option>
+        <option
+          value="title-ascending"
+          {% if sort_by == 'title-ascending' %}
+            selected
+          {% endif %}
+        >
+          Sort by Name (A-Z)
+        </option>
+        <option
+          value="title-descending"
+          {% if sort_by == 'title-descending' %}
+            selected
+          {% endif %}
+        >
+          Sort by Name (Z-A)
+        </option>
+        <option
+          value="price-ascending"
+          {% if sort_by == 'price-ascending' %}
+            selected
+          {% endif %}
+        >
+          Sort by Price (Low to High)
+        </option>
+        <option
+          value="price-descending"
+          {% if sort_by == 'price-descending' %}
+            selected
+          {% endif %}
+        >
+          Sort by Price (High to Low)
+        </option>
       </select>
     </div>
   </div>
   <div class="header-right">
-    
     <div class="search-container">
       <form action="{{ routes.search_url }}" method="get" class="search-form" role="search">
         <input
@@ -36,13 +63,17 @@
   <div class="collection-products">
     <ul class="product-grid">
       {% if search.terms or collection.sort_by %}
-        {% assign sorted_products = collection.products | where: "title", search.terms | sort: collection.sort_by | default: collection.products %}
+        {% assign sorted_products = collection.products
+          | where: 'title', search.terms
+          | sort: collection.sort_by
+          | default: collection.products
+        %}
         {% for product in sorted_products %}
           <li class="product-item">
             <a href="{{ product.url }}" class="product-link">
               <div class="product-image-container">
                 <img
-                  src="{{ product.featured_image | image_url: width:400, height:300, crop:'center' }}"
+                  src="{{ product.featured_image | image_url: width:400, height:300 }}"
                   alt="{{ product.title }}"
                   width="400"
                   height="300"
@@ -51,8 +82,27 @@
               </div>
               <div class="product-details">
                 <h2 class="product-title">{{ product.title }}</h2>
+                <span class="product-gender">{{ product.metafields.custom.gender.value }}</span>
                 <span class="product-price">
-                    {{ product.price | money }}</span>
+                  {% if product.price_min == product.price_max %}
+                    Rs.{{ product.price_min | money_without_currency }}
+                  {% else %}
+                    Rs.{{ product.price_min | money_without_currency }}-Rs.
+                    {{- product.price_max | money_without_currency }}
+                  {% endif %}
+                </span>
+                <span class="product-sizes">
+                  {%- for value in product.options_with_values.first.values -%}
+                    {{- value -}}
+                    {%- unless forloop.last %}, {% endunless -%}
+                  {%- endfor -%}
+                </span>
+                <span class="product-color">
+                  {%- for value in product.product_option_value.variant -%}
+                    {{- value -}}
+                    {%- unless forloop.last %}, {% endunless -%}
+                  {%- endfor -%}
+                </span>
               </div>
             </a>
           </li>
@@ -72,7 +122,7 @@
               </div>
               <div class="product-details">
                 <h2 class="product-title">{{ product.title }}</h2>
-                <span class="product-price">{{ product.price | money }}</span>
+                <span class="product-price">Rs.{{ product.price | money_without_currency }}</span>
               </div>
             </a>
           </li>
@@ -227,7 +277,6 @@
     background: #fff;
     border: 1px solid var(--border-color);
     border-radius: 12px;
-    padding: 10px;
     box-shadow: var(--shadow-light);
     text-align: center;
     transition: box-shadow var(--transition-speed), transform var(--transition-speed);
@@ -268,7 +317,7 @@
     height: 100%;
   }
 
-.product-details {
+  .product-details {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -276,9 +325,9 @@
     justify-content: flex-start;
     padding-top: var(--spacing-unit);
     gap: 0.5rem;
-}
+  }
 
-.product-title {
+  .product-title {
     font-size: 1.15rem;
     font-weight: 700;
     color: var(--primary-color);
@@ -289,9 +338,9 @@
     white-space: nowrap;
     width: 100%;
     letter-spacing: 0.01em;
-}
+  }
 
-.product-price {
+  .product-price {
     color: #2563eb;
     font-weight: 700;
     font-size: 1.05rem;
@@ -302,17 +351,17 @@
     padding: 0.25rem 0.75rem;
     border-radius: 6px;
     box-shadow: 0 1px 4px rgba(37, 99, 235, 0.06);
-}
+  }
 
-.product-details .product-vendor {
+  .product-details .product-vendor {
     font-size: 0.95rem;
     color: #666;
     margin-bottom: 0.15rem;
     font-weight: 400;
     letter-spacing: 0.01em;
-}
+  }
 
-.product-details .product-description {
+  .product-details .product-description {
     font-size: 0.97rem;
     color: #444;
     margin-bottom: 0.25rem;
@@ -322,7 +371,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-}
+  }
 
   .no-products-message {
     text-align: center;
@@ -405,3 +454,4 @@
     }
   }
 </style>
+

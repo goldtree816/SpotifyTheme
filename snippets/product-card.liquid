@@ -1,13 +1,36 @@
+{% comment %}
+  Reusable Product Card Snippet for Shopify
+  Used in collections, recommendations, or featured product sections.
+{% endcomment %}
+
 <div class="product-card">
   <a href="{{ product.url }}" class="product-card__link">
-    <div class="product-card__image">
-      <img src="{{ product.featured_image | image_url: '400x' }}" height="400" width="400" alt="{{ product.featured_image.alt }}">
+    <div class="product-card__image-wrapper">
+      {% if product.featured_image %}
+        <img
+          src="{{ product.featured_image | image_url: '400x' }}"
+          alt="{{ product.featured_image.alt | escape }}"
+          class="product-card__image"
+          loading="lazy">
+      {% else %}
+        <div class="product-card__image--placeholder"></div>
+      {% endif %}
     </div>
     <div class="product-card__info">
-      <h3 class="product-card__title">{{ product.title }}</h3>
-      <div class="product-card__price">
-        {{ product.price | money }}
-      </div>
+      <h3 class="product-card__title">{{ product.title | escape }}</h3>
+      <span class="product-card__price">
+        {% if product.compare_at_price > product.price %}
+          <span class="product-card__price--sale">{{ product.price | money }}</span>
+          <span class="product-card__price--compare">{{ product.compare_at_price | money }}</span>
+        {% else %}
+          <span class="product-card__price--regular">{{ product.price | money }}</span>
+        {% endif %}
+      </span>
+      {% if product.available %}
+        <span class="product-card__badge product-card__badge--available">In Stock</span>
+      {% else %}
+        <span class="product-card__badge product-card__badge--soldout">Sold Out</span>
+      {% endif %}
     </div>
   </a>
 </div>
