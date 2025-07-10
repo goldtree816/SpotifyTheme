@@ -1,45 +1,27 @@
 <div class="men-shoes-gallery">
   <h2 class="men-shoes-heading">{{ section.settings.heading }}</h2>
+  {% if section.settings.subheading != blank %}
+    <div class="men-shoes-subheading">{{ section.settings.subheading }}</div>
+  {% endif %}
   <div class="men-shoes-gallery-wrapper">
     <div class="men-shoes-grid">
       {% if section.blocks.size > 0 %}
         {% for block in section.blocks %}
+          {% assign product = all_products[block.settings.product] %}
           <div class="men-shoe-card" {{ block.shopify_attributes }}>
-            {% if block.settings.image != blank %}
-              <img src="{{ block.settings.image | image_url: width: 400 }}" alt="{{ block.settings.title }}" class="men-shoe-img" loading="lazy">
-            {% else %}
-              {% assign default_images = "menshoeGEL1130.jpg,menshoeNB9060.webp,menshoeOZWEEGO.avif,menshoeSAMBA.avif,menshoeVEJA.webp,menshoeZOOMVOMERO.webp,adidas-samba-sneakers-amy4.jpg,jordan.jpg,nb550.jpg,nb550.webp" | split: "," %}
-              <img src="{{ default_images[forloop.index0] | asset_url }}" alt="{{ block.settings.title | default: 'Shoe' }}" class="men-shoe-img" loading="lazy">
+            {% if product and product.featured_image %}
+              <img src="{{ product.featured_image | img_url: '400x' }}" alt="{{ product.title }}" class="men-shoe-img" loading="lazy">
             {% endif %}
             <div class="men-shoe-info">
-              <div class="men-shoe-title">{{ block.settings.title | default: 'Shoe ' | append: forloop.index }}</div>
-              <div class="men-shoe-price">${{ block.settings.price | default: '120' }}</div>
-              <div class="men-shoe-desc">{{ block.settings.desc | default: 'Premium quality shoe' }}</div>
-              {% if block.settings.link != blank %}
-                <a href="{{ block.settings.link }}" class="men-shoe-link">Shop Now</a>
-              {% else %}
-                <a href="/pages/shoe-description?shoe={{ forloop.index0 }}" class="men-shoe-link">Shop Now</a>
-              {% endif %}
+              <div class="men-shoe-title">{{ product.title }}</div>
+              <div class="men-shoe-price">{{ product.price | money }}</div>
+              <div class="men-shoe-desc">{{ product.description | strip_html | truncate: 120 }}</div>
+              <a href="/products/{{ product.handle }}" class="men-shoe-link">Shop Now</a>
             </div>
           </div>
         {% endfor %}
       {% else %}
-        {% comment %} Default 10 containers when no blocks exist {% endcomment %}
-        {% assign default_titles = "GEL-1130,NB 9060,OZWEEGO,Adidas Samba,VEJA Sneakers,Zoom Vomero,Adidas Samba Pro,Air Jordan,NB 550,NB 550 Pro" | split: "," %}
-        {% assign default_prices = "120,140,130,150,160,170,145,180,135,155" | split: "," %}
-        {% assign default_descs = "Premium running shoe,Classic lifestyle sneaker,Comfortable daily wear,Iconic street style,Ethical fashion choice,Performance running,Professional grade,Legendary basketball,Heritage design,Advanced comfort" | split: "," %}
-        {% assign default_images = "menshoeGEL1130.jpg,menshoeNB9060.webp,menshoeOZWEEGO.avif,menshoeSAMBA.avif,menshoeVEJA.webp,menshoeZOOMVOMERO.webp,adidas-samba-sneakers-amy4.jpg,jordan.jpg,nb550.jpg,nb550.webp" | split: "," %}
-        {% for i in (0..9) %}
-          <div class="men-shoe-card">
-            <img src="{{ default_images[i] | asset_url }}" alt="{{ default_titles[i] }}" class="men-shoe-img" loading="lazy">
-            <div class="men-shoe-info">
-              <div class="men-shoe-title">{{ default_titles[i] }}</div>
-              <div class="men-shoe-price">${{ default_prices[i] }}</div>
-              <div class="men-shoe-desc">{{ default_descs[i] }}</div>
-              <a href="/pages/shoe-description?shoe={{ i }}" class="men-shoe-link">Shop Now</a>
-            </div>
-          </div>
-        {% endfor %}
+        <div class="men-shoes-empty">No products selected. Click "Add Product Card" to feature products here.</div>
       {% endif %}
     </div>
   </div>
@@ -47,7 +29,8 @@
 
 <style>
 .men-shoes-gallery { padding: 48px 0 32px 0; background: #fff; max-width: 100%; }
-.men-shoes-heading { text-align: center; margin-bottom: 32px; font-size: 2rem; font-weight: bold; }
+.men-shoes-heading { text-align: center; margin-bottom: 12px; font-size: 2rem; font-weight: bold; }
+.men-shoes-subheading { text-align: center; margin-bottom: 32px; font-size: 1.1rem; color: #666; }
 .men-shoes-gallery-wrapper { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 .men-shoes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 24px; justify-items: center; }
 .men-shoe-card { width: 100%; max-width: 280px; background: #f7f7f7; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: transform 0.2s, box-shadow 0.2s; }
@@ -59,6 +42,7 @@
 .men-shoe-desc { font-size: 0.9rem; color: #666; margin-bottom: 12px; line-height: 1.4; }
 .men-shoe-link { color: #fff; background: #111; border: none; border-radius: 6px; padding: 10px 20px; text-decoration: none; font-size: 0.9rem; display: inline-block; text-align: center; transition: background 0.2s; }
 .men-shoe-link:hover { background: #0071e3; }
+.men-shoes-empty { text-align: center; color: #999; font-size: 1.1rem; padding: 40px 0; }
 
 @media (max-width: 768px) {
   .men-shoes-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
@@ -76,40 +60,24 @@
       "id": "heading",
       "label": "Heading",
       "default": "Men's Shoes Collection"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Browse our featured men's products."
     }
   ],
   "blocks": [
     {
-      "type": "shoe",
-      "name": "Shoe",
+      "type": "product",
+      "name": "Product Card",
+      "limit": 10,
       "settings": [
         {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Shoe Image"
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Shoe Title",
-          "default": "Shoe Name"
-        },
-        {
-          "type": "text",
-          "id": "price",
-          "label": "Price",
-          "default": "120"
-        },
-        {
-          "type": "textarea",
-          "id": "desc",
-          "label": "Description",
-          "default": "Premium quality shoe with excellent comfort and style."
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Product Link"
+          "type": "product",
+          "id": "product",
+          "label": "Select Product"
         }
       ]
     }
@@ -117,38 +85,7 @@
   "presets": [
     {
       "name": "Men Shoes Gallery",
-      "blocks": [
-        {
-          "type": "shoe"
-        },
-        {
-          "type": "shoe"
-        },
-        {
-          "type": "shoe"
-        },
-        {
-          "type": "shoe"
-        },
-        {
-          "type": "shoe"
-        },
-        {
-          "type": "shoe"
-        },
-        {
-          "type": "shoe"
-        },
-        {
-          "type": "shoe"
-        },
-        {
-          "type": "shoe"
-        },
-        {
-          "type": "shoe"
-        }
-      ]
+      "blocks": []
     }
   ]
 }

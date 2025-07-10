@@ -1,45 +1,27 @@
 <div class="kids-shoes-gallery">
   <h2 class="kids-shoes-heading">{{ section.settings.heading }}</h2>
+  {% if section.settings.subheading != blank %}
+    <div class="kids-shoes-subheading">{{ section.settings.subheading }}</div>
+  {% endif %}
   <div class="kids-shoes-gallery-wrapper">
     <div class="kids-shoes-grid">
       {% if section.blocks.size > 0 %}
         {% for block in section.blocks %}
+          {% assign product = all_products[block.settings.product] %}
           <div class="kids-shoe-card" {{ block.shopify_attributes }}>
-            {% if block.settings.image != blank %}
-              <img src="{{ block.settings.image | image_url: width: 400 }}" alt="{{ block.settings.title }}" class="kids-shoe-img" loading="lazy">
-            {% else %}
-              {% assign default_images = "nb550.webp,menshoeNB9060.webp,menshoeSAMBA.avif,menshoeOZWEEGO.avif,adidas-samba-sneakers-amy4.jpg,jordan.jpg,nb550.jpg,menshoeGEL1130.jpg,menshoeVEJA.webp,menshoeZOOMVOMERO.webp" | split: "," %}
-              <img src="{{ default_images[forloop.index0] | asset_url }}" alt="{{ block.settings.title | default: 'Shoe' }}" class="kids-shoe-img" loading="lazy">
+            {% if product and product.featured_image %}
+              <img src="{{ product.featured_image | img_url: '400x' }}" alt="{{ product.title }}" class="kids-shoe-img" loading="lazy">
             {% endif %}
             <div class="kids-shoe-info">
-              <div class="kids-shoe-title">{{ block.settings.title | default: 'Shoe ' | append: forloop.index }}</div>
-              <div class="kids-shoe-price">${{ block.settings.price | default: '80' }}</div>
-              <div class="kids-shoe-desc">{{ block.settings.desc | default: 'Premium quality shoe' }}</div>
-              {% if block.settings.link != blank %}
-                <a href="{{ block.settings.link }}" class="kids-shoe-link">Shop Now</a>
-              {% else %}
-                <a href="/pages/shoe-description?shoe={{ forloop.index0 }}" class="kids-shoe-link">Shop Now</a>
-              {% endif %}
+              <div class="kids-shoe-title">{{ product.title }}</div>
+              <div class="kids-shoe-price">{{ product.price | money }}</div>
+              <div class="kids-shoe-desc">{{ product.description | strip_html | truncate: 120 }}</div>
+              <a href="/products/{{ product.handle }}" class="kids-shoe-link">Shop Now</a>
             </div>
           </div>
         {% endfor %}
       {% else %}
-        {% comment %} Default 10 containers when no blocks exist {% endcomment %}
-        {% assign default_titles = "NB 550 Kids,NB 9060 Kids,Adidas Samba Kids,Air Jordan Kids,NB 550 Pro Kids,GEL-1130 Kids,VEJA Kids,Zoom Vomero Kids,OZWEEGO Kids,NB 550 Elite Kids" | split: "," %}
-        {% assign default_prices = "80,90,85,95,88,92,87,93,89,91" | split: "," %}
-        {% assign default_descs = "Heritage design for kids,Classic lifestyle for children,Iconic street style kids,Legendary basketball for youth,Advanced comfort for kids,Premium running for children,Ethical fashion for kids,Performance running for youth,Comfortable daily wear for kids,Elite comfort for children" | split: "," %}
-        {% assign default_images = "nb550.webp,menshoeNB9060.webp,menshoeSAMBA.avif,menshoeOZWEEGO.avif,adidas-samba-sneakers-amy4.jpg,jordan.jpg,nb550.jpg,menshoeGEL1130.jpg,menshoeVEJA.webp,menshoeZOOMVOMERO.webp" | split: "," %}
-        {% for i in (0..9) %}
-          <div class="kids-shoe-card">
-            <img src="{{ default_images[i] | asset_url }}" alt="{{ default_titles[i] }}" class="kids-shoe-img" loading="lazy">
-            <div class="kids-shoe-info">
-              <div class="kids-shoe-title">{{ default_titles[i] }}</div>
-              <div class="kids-shoe-price">${{ default_prices[i] }}</div>
-              <div class="kids-shoe-desc">{{ default_descs[i] }}</div>
-              <a href="/pages/shoe-description?shoe={{ i }}" class="kids-shoe-link">Shop Now</a>
-            </div>
-          </div>
-        {% endfor %}
+        <div class="kids-shoes-empty">No products selected. Click "Add Product Card" to feature products here.</div>
       {% endif %}
     </div>
   </div>
@@ -47,7 +29,8 @@
 
 <style>
 .kids-shoes-gallery { padding: 48px 0 32px 0; background: #fff; max-width: 100%; }
-.kids-shoes-heading { text-align: center; margin-bottom: 32px; font-size: 2rem; font-weight: bold; }
+.kids-shoes-heading { text-align: center; margin-bottom: 12px; font-size: 2rem; font-weight: bold; }
+.kids-shoes-subheading { text-align: center; margin-bottom: 32px; font-size: 1.1rem; color: #666; }
 .kids-shoes-gallery-wrapper { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 .kids-shoes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 24px; justify-items: center; }
 .kids-shoe-card { width: 100%; max-width: 280px; background: #f7f7f7; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: transform 0.2s, box-shadow 0.2s; }
@@ -59,6 +42,7 @@
 .kids-shoe-desc { font-size: 0.9rem; color: #666; margin-bottom: 12px; line-height: 1.4; }
 .kids-shoe-link { color: #fff; background: #111; border: none; border-radius: 6px; padding: 10px 20px; text-decoration: none; font-size: 0.9rem; display: inline-block; text-align: center; transition: background 0.2s; }
 .kids-shoe-link:hover { background: #0071e3; }
+.kids-shoes-empty { text-align: center; color: #999; font-size: 1.1rem; padding: 40px 0; }
 
 @media (max-width: 768px) {
   .kids-shoes-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
@@ -76,40 +60,24 @@
       "id": "heading",
       "label": "Heading",
       "default": "Kids Shoes Collection"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Browse our featured kids' products."
     }
   ],
   "blocks": [
     {
-      "type": "shoe",
-      "name": "Shoe",
+      "type": "product",
+      "name": "Product Card",
+      "limit": 10,
       "settings": [
         {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Shoe Image"
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Shoe Title",
-          "default": "Shoe Name"
-        },
-        {
-          "type": "text",
-          "id": "price",
-          "label": "Price",
-          "default": "80"
-        },
-        {
-          "type": "textarea",
-          "id": "desc",
-          "label": "Description",
-          "default": "Premium quality shoe with excellent comfort and style for kids."
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Product Link"
+          "type": "product",
+          "id": "product",
+          "label": "Select Product"
         }
       ]
     }
@@ -117,38 +85,7 @@
   "presets": [
     {
       "name": "Kids Shoes Gallery",
-      "blocks": [
-        {
-          "type": "shoe"
-        },
-        {
-          "type": "shoe"
-        },
-        {
-          "type": "shoe"
-        },
-        {
-          "type": "shoe"
-        },
-        {
-          "type": "shoe"
-        },
-        {
-          "type": "shoe"
-        },
-        {
-          "type": "shoe"
-        },
-        {
-          "type": "shoe"
-        },
-        {
-          "type": "shoe"
-        },
-        {
-          "type": "shoe"
-        }
-      ]
+      "blocks": []
     }
   ]
 }

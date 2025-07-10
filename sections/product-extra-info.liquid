@@ -1,0 +1,105 @@
+<div class="product-extra-info">
+  {% if section.settings.image != blank %}
+    <div class="product-extra-image">
+      <img src="{{ section.settings.image | image_url: width: 800 }}" alt="{{ section.settings.image_alt | escape }}">
+    </div>
+  {% endif %}
+  {% if section.settings.heading != blank %}
+    <h2 class="product-extra-heading">{{ section.settings.heading }}</h2>
+  {% endif %}
+  {% if section.settings.text != blank %}
+    <div class="product-extra-text">{{ section.settings.text }}</div>
+  {% endif %}
+  {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+    <a href="{{ section.settings.button_link }}" class="product-extra-btn">{{ section.settings.button_label }}</a>
+  {% endif %}
+</div>
+
+<style>
+.product-extra-info {
+  max-width: 800px;
+  margin: 40px auto;
+  background: #fafbfc;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 32px 24px;
+  text-align: center;
+}
+.product-extra-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+.product-extra-heading {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+.product-extra-text {
+  font-size: 1.1rem;
+  color: #444;
+  margin-bottom: 24px;
+}
+.product-extra-btn {
+  display: inline-block;
+  background: #111;
+  color: #fff;
+  border-radius: 6px;
+  padding: 12px 28px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.product-extra-btn:hover {
+  background: #0071e3;
+}
+</style>
+
+{% schema %}
+{
+  "name": "Product Extra Info",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image Alt Text",
+      "default": "Product image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "More About This Product"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Share more details, features, or a story about this product. You can add images, lists, or links here.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Learn More"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Extra Info"
+    }
+  ]
+}
+{% endschema %}

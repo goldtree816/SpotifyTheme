@@ -1,0 +1,61 @@
+<div id="favorites-container"></div>
+<script>
+async function fetchProduct(handle) {
+  const res = await fetch(`/products/${handle}.js`);
+  if (!res.ok) return null;
+  return await res.json();
+}
+async function renderFavorites() {
+  const favs = JSON.parse(localStorage.getItem('favorites') || '[]');
+  const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  const container = document.getElementById('favorites-container');
+  if (!container) return;
+  if (favs.length === 0) {
+    container.innerHTML = '<div class="favorites-empty">No favorites yet.</div>';
+    return;
+  }
+  let html = '<div class="favorites-list">';
+  for (const handle of favs) {
+    const product = await fetchProduct(handle);
+    if (!product) continue;
+    const inCart = cart.includes(product.id);
+    html += `<div class="favorite-card">
+      <img src="${product.featured_image}" class="favorite-img" alt="${product.title}">
+      <div class="favorite-info">
+        <div class="favorite-title">${product.title}</div>
+        <div class="favorite-price">${Shopify.formatMoney(product.price)}</div>
+        <button class="favorite-btn starred" disabled>&#9733; Starred</button>
+        <button class="add-to-cart-btn" onclick="addToCart(${product.variants[0].id}, this)" ${inCart ? 'disabled' : ''}>${inCart ? 'In Cart' : 'Add to Cart'}</button>
+      </div>
+    </div>`;
+  }
+  html += '</div>';
+  container.innerHTML = html;
+}
+async function addToCart(variantId, btn) {
+  btn.disabled = true;
+  btn.textContent = 'In Cart';
+  await fetch('/cart/add.js', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: variantId, quantity: 1 })
+  });
+  // Optionally update localStorage cart
+  let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  cart.push(variantId);
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+document.addEventListener('DOMContentLoaded', renderFavorites);
+</script>
+<style>
+.favorites-list { display: flex; flex-wrap: wrap; gap: 32px; justify-content: center; margin: 32px 0; }
+.favorite-card { width: 260px; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); display: flex; flex-direction: column; align-items: center; padding: 20px; }
+.favorite-img { width: 180px; height: 180px; object-fit: contain; border-radius: 8px; background: #f7f7f7; margin-bottom: 12px; }
+.favorite-info { text-align: center; }
+.favorite-title { font-size: 1.1rem; font-weight: bold; margin-bottom: 6px; }
+.favorite-price { font-size: 1.1rem; font-weight: bold; color: #333; margin-bottom: 8px; }
+.favorite-btn.starred { background: #ffeaea; color: #e00; border: 1px solid #e00; border-radius: 4px; padding: 6px 12px; margin-bottom: 8px; cursor: default; }
+.add-to-cart-btn { background: #111; color: #fff; border: none; border-radius: 4px; padding: 8px 16px; font-size: 1rem; margin-bottom: 8px; cursor: pointer; transition: background 0.2s; }
+.add-to-cart-btn:disabled { background: #aaa; cursor: not-allowed; }
+.favorites-empty { text-align: center; font-size: 1.2rem; color: #888; margin: 48px 0; }
+</style> 

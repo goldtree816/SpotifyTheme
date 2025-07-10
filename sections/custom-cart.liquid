@@ -1,0 +1,62 @@
+<div class="custom-cart-container">
+  {% if cart.item_count == 0 %}
+    <div class="cart-empty">Your cart is empty.</div>
+  {% else %}
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in cart.items %}
+        <tr>
+          <td>
+            <img src="{{ item.image | image_url: '100x' }}" class="cart-img" alt="{{ item.title }}" />
+            <span class="cart-title">{{ item.product.title }}</span>
+          </td>
+          <td>{{ item.price | money }}</td>
+          <td>
+            <form method="post" action="/cart/change">
+              <input type="hidden" name="id" value="{{ item.key }}">
+              <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="{{ item.variant.inventory_quantity }}" class="cart-qty-input" onchange="this.form.submit()">
+            </form>
+          </td>
+          <td>{{ item.line_price | money }}</td>
+          <td>
+            <form method="post" action="/cart/change">
+              <input type="hidden" name="id" value="{{ item.key }}">
+              <input type="hidden" name="quantity" value="0">
+              <button type="submit" class="cart-remove-btn">Remove</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="cart-total-row">
+      <span class="cart-total-label">Total:</span>
+      <span class="cart-total-value">{{ cart.total_price | money }}</span>
+    </div>
+    <a href="/checkout" class="cart-checkout-btn">Checkout</a>
+  {% endif %}
+</div>
+<style>
+.custom-cart-container { max-width: 900px; margin: 48px auto; background: #fff; border-radius: 16px; box-shadow: 0 2px 16px rgba(0,0,0,0.06); padding: 32px; }
+.cart-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+.cart-table th, .cart-table td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
+.cart-img { width: 60px; height: 60px; object-fit: contain; border-radius: 6px; background: #f7f7f7; margin-right: 8px; }
+.cart-title { font-weight: bold; }
+.cart-qty-input { width: 60px; padding: 4px; border-radius: 4px; border: 1px solid #ccc; }
+.cart-remove-btn { background: #ffeaea; color: #e00; border: 1px solid #e00; border-radius: 4px; padding: 6px 12px; cursor: pointer; }
+.cart-total-row { display: flex; justify-content: flex-end; align-items: center; gap: 16px; font-size: 1.2rem; font-weight: bold; margin-bottom: 24px; }
+.cart-total-label { color: #333; }
+.cart-total-value { color: #0071e3; }
+.cart-checkout-btn { background: #111; color: #fff; border: none; border-radius: 6px; padding: 14px 32px; font-size: 1.1rem; font-weight: bold; cursor: pointer; text-decoration: none; transition: background 0.2s; }
+.cart-checkout-btn:hover { background: #0071e3; }
+.cart-empty { text-align: center; font-size: 1.2rem; color: #888; margin: 48px 0; }
+</style> 
