@@ -36,36 +36,73 @@
             aria-label="Add to Wishlist"
             title="Add to Wishlist"
           >
-            <span class="wishlist-heart-icon">&#9825;</span>
+            <span class="wishlist-heart-icon">♡</span>
           </button>
         </div>
-        <div class="product-category">Category: {{ product.type }}</div>
-        <div class="product-price">{{ product.price | money }}</div>
-        <form action="/cart/add" method="post" enctype="multipart/form-data" class="product-form">
-          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <div class="product-category">{{ product.type }}</div>
+        <div class="product-price" id="product-price">{{ product.price | money }}</div>
+        <div class="product-description">{{ product.description }}</div>
+        <form action="/cart/add" method="post" enctype="multipart/form-data" class="product-form" id="product-form" data-variants='{{ product.variants | json }}'>
+          <input type="hidden" name="id" id="variant-id" value="{{ product.selected_or_first_available_variant.id }}">
           {% for option in product.options_with_values %}
             <div class="product-option">
-              <div class="option-buttons">
-                {% for value in option.values %}
-                  <label class="option-btn-label">
-                    <input
-                      type="radio"
-                      name="options[{{ option.name }}]"
-                      value="{{ value }}"
-                      {% if forloop.first %}
-                        checked
-                      {% endif %}
-                      class="option-btn-input"
-                    >
-                    <span class="option-btn">{{ value }}</span>
-                  </label>
-                {% endfor %}
-              </div>
+              {% if option.name == 'Size' %}
+                <div class="option-buttons" id="size-options">
+                  {% for value in option.values %}
+                    <label class="option-btn-label">
+                      <input
+                        type="radio"
+                        name="options[{{ option.name }}]"
+                        value="{{ value }}"
+                        {% if forloop.first %}
+                          checked
+                        {% endif %}
+                        class="option-btn-input"
+                      >
+                      <span class="option-btn">{{ value }}</span>
+                      <div class="variant-details">
+                        {% for variant in product.variants %}
+                          {% if variant.option1 == value %}
+                            <span class="option-btn" style="background-color: {{ variant.option2 | downcase }}; color: #fff; margin-top: 5px; display: inline-block; padding: 0.3rem 0.7rem; border-radius: 0.3rem;">{{ variant.option2 }}</span>
+                          {% endif %}
+                        {% endfor %}
+                      </div>
+                    </label>
+                  {% endfor %}
+                </div>
+              {% elsif option.name == 'Color' %}
+                <div class="option-buttons" id="color-options">
+                  {% assign unique_colors = '' %}
+                  {% for variant in product.variants %}
+                    {% unless unique_colors contains variant.option2 %}
+                      {% assign unique_colors = unique_colors | append: variant.option2 | append: ',' %}
+                      <label class="option-btn-label">
+                        <input
+                          type="radio"
+                          name="options[{{ option.name }}]"
+                          value="{{ variant.option2 }}"
+                          {% if forloop.first and unique_colors == variant.option2 %}
+                            checked
+                          {% endif %}
+                          class="option-btn-input"
+                        >
+                        <span class="option-btn" style="background-color: {{ variant.option2 | downcase }}; color: #fff;">{{ variant.option2 }}</span>
+                      </label>
+                    {% endunless %}
+                  {% endfor %}
+                </div>
+              {% endif %}
             </div>
+            <hr class="option-separator">
           {% endfor %}
-          <button type="submit" class="product-add-to-cart">Add to Cart</button>
+          <div class="selected-variant-price" id="selected-variant-price"></div>
+          <div class="product-quantity">
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" value="1" min="1" class="quantity-input">
+            <button type="button" class="clear-selection-btn">Clear</button>
+            <button type="submit" class="product-add-to-cart">Add to Cart</button>
+          </div>
         </form>
-        <div class="product-description">{{ product.description }}</div>
       </div>
     </div>
     {% if product.collections.size > 0 %}
@@ -73,32 +110,40 @@
         <h2>Similar Products</h2>
         <div class="similar-products-grid">
           {% assign similar_collection = product.collections.first %}
-          {% for similar_product in similar_collection.products %}
-            {% if similar_product.id != product.id %}
-              <div class="similar-product-card">
-                <a href="{{ similar_product.url }}">
-                  {% if similar_product.featured_image %}
-                    <img
-                      src="{{ similar_product.featured_image | img_url: '300x300' }}"
-                      alt="{{ similar_product.title | escape }}"
-                      class="similar-product-image"
-                    >
-                  {% endif %}
-                  <div class="similar-product-title">{{ similar_product.title }}</div>
-                  <div class="similar-product-price">{{ similar_product.price | money }}</div>
-                </a>
-              </div>
-            {% endif %}
-          {% endfor %}
+          {% if similar_collection and similar_collection.products.size > 0 %}
+            {% for similar_product in similar_collection.products limit: 4 %}
+              {% if similar_product.id != product.id %}
+                <div class="similar-product-card">
+                  <a href="{{ similar_product.url }}">
+                    {% if similar_product.featured_image %}
+                      <img
+                        src="{{ similar_product.featured_image | img_url: '300x300' }}"
+                        alt="{{ similar_product.title | escape }}"
+                        class="similar-product-image"
+                      >
+                    {% else %}
+                      {{ 'no-image' | placeholder_svg_tag: '300x300' }}
+                    {% endif %}
+                    <div class="similar-product-title">{{ similar_product.title }}</div>
+                    <div class="similar-product-price">{{ similar_product.price | money }}</div>
+                  </a>
+                </div>
+              {% endif %}
+            {% endfor %}
+          {% else %}
+            <p>No similar products found in this collection.</p>
+          {% endif %}
         </div>
       </div>
+    {% else %}
+      <p>This product is not assigned to any collection.</p>
     {% endif %}
   </main>
 </section>
 
 <style>
   .product-main {
-    max-width: 1200px;
+    max-width: 1250px;
     margin: 0 auto;
     padding: 3rem 1rem;
   }
@@ -106,124 +151,86 @@
     display: flex;
     flex-wrap: wrap;
     gap: 3rem;
-    background: #fff;
-    border-radius: 1rem;
-    box-shadow: 0 2px 16px rgba(29, 29, 31, 0.08);
   }
   .product-gallery {
-    flex: 1 1 400px;
+    flex: 1 1 450px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     min-width: 350px;
   }
   .product-gallery-thumbnails.thumbnails-below {
     display: flex;
-    gap: 0.5rem;
-    margin-top: 1rem;
-    margin-bottom: 0;
-  }
-  .product-image {
-    width: 250px;
-    height: 250px;
-    object-fit: contain;
-    border-radius: 0.75rem;
-    box-shadow: 0 1px 8px rgba(29, 29, 31, 0.1);
-  }
-  .product-details {
-    flex: 1 1 350px;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
     justify-content: center;
   }
+  .product-image {
+    width: 600px;
+    height: 500px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  .product-image:hover {
+    transform: scale(1.02);
+  }
+  .product-thumbnail {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+  .product-thumbnail:hover {
+    border-color: #cdaa7d;
+  }
+  .product-details {
+    flex: 1 1 400px;
+    margin-bottom: 1rem;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem 0;
+  }
+  .product-title-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
   .product-title {
-    font-size: 2.2rem;
+    font-size: 1.5rem;
     font-weight: 500;
-    margin: 0;
+    color: #1a1a1a;
+    margin-bottom: 10px;
   }
   .product-category {
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: #888;
-    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
   }
   .product-price {
     font-size: 1.5rem;
-    color: var(--primary-color);
+    color: #131212;
     font-weight: 600;
   }
   .product-form {
-    margin-top: 2rem;
+    margin-top: 1.5rem;
   }
   .product-option {
-    margin-bottom: 1rem;
-  }
-  .product-add-to-cart {
-    background: #131211;
-    color: #fff;
-    border: none;
-    padding: 1rem 2.5rem;
-    font-size: 1.1rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background 0.2s;
-  }
-  .product-add-to-cart:hover {
-    background: #3a3938;
-  }
-  .similar-products {
-    margin-top: 4rem;
-  }
-  .similar-products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1.5rem;
-  }
-  .similar-product-card {
-    background: #fff;
-    border-radius: 0.75rem;
-    box-shadow: 0 2px 16px rgba(29, 29, 31, 0.08);
-    padding: 1rem;
-    text-align: center;
-    transition: box-shadow 0.2s;
-  }
-  .similar-product-card:hover {
-    box-shadow: 0 4px 24px rgba(29, 29, 31, 0.15);
-  }
-  .similar-product-image {
-    width: 100%;
-    height: 150px;
-    object-fit: contain;
-    background: #fff;
-    border-radius: 0.5rem;
-    margin-bottom: 0.5rem;
-  }
-  .similar-product-title {
-    font-size: 1rem;
-    font-weight: 500;
-    color: #1d1d1f;
-    margin-bottom: 0.25rem;
-    text-decoration: none;
-  }
-  .similar-product-price {
-    font-size: 1.1rem;
-    color: #cdaa7d;
-    font-weight: 600;
-  }
-  .option-label {
-    font-size: 1rem;
-    color: #888;
-    margin-bottom: 0.25rem;
+    margin-top: -10px;
   }
   .option-buttons {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.75rem;
     flex-wrap: wrap;
   }
   .option-btn-label {
     display: flex;
+    flex-direction: column;
     align-items: center;
   }
   .option-btn-input {
@@ -231,46 +238,208 @@
   }
   .option-btn {
     display: inline-block;
-    padding: 0.3rem 0.9rem;
-    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
     border-radius: 0.5rem;
-    border: 1px solid var(--primary-color);
+    border: 1px solid #1a1a1a;
     background: #fff;
-    color: var(--primary-color);
+    color: #1a1a1a;
     cursor: pointer;
-    transition: background 0.2s, color 0.2s;
+    transition: background 0.3s, color 0.3s;
   }
   .option-btn-label input:checked + .option-btn {
-    background: var(--primary-color);
+    background: #1a1a1a;
     color: #fff;
+  }
+  .variant-details {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 5px;
+    flex-wrap: wrap;
+  }
+  .option-separator {
+    border: 0;
+    height: 1px;
+    background: #e5e7eb;
+    margin: 1rem 0;
+  }
+  .selected-variant-price {
+    font-size: 1.2rem;
+    color: #131212;
+    margin: 1rem 0;
+  }
+  .product-quantity {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 1rem 0;
+  }
+  .quantity-input {
+    padding: 0.5rem;
+    width: 60px;
+    font-size: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+  }
+  .clear-selection-btn {
+    background: #f0f0f0;
+    color: #1a1a1a;
+    border: 1px solid #e5e7eb;
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .clear-selection-btn:hover {
+    background: #e0e0e0;
+  }
+  .product-add-to-cart {
+    background: #131211;
+    color: #fff;
+    border: none;
+    padding: 0.7rem;
+    font-size: 0.8rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s, transform 0.3s;
+  }
+  .product-add-to-cart:hover {
+    background: #3a3938;
+    transform: translateY(-2px);
   }
   .product-description {
     color: #444;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     line-height: 1.7;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
   }
-  .product-title-row {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
+  .similar-products {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e5e7eb;
+  }
+  .similar-products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+    justify-content: flex-start;
+  }
+  .similar-product-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 16px rgba(29, 29, 31, 0.08);
+    padding: 1rem;
+    text-align: center;
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+  .similar-product-card:hover {
+    box-shadow: 0 4px 24px rgba(29, 29, 31, 0.15);
+    transform: translateY(-4px);
+  }
+  .similar-product-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background: #fff;
+    border-radius: 0.5rem;
+    margin-bottom: 0.75rem;
+    transition: transform 0.3s ease;
+  }
+  .similar-product-card:hover .similar-product-image {
+    transform: scale(1.05);
+  }
+  .similar-product-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #1d1d1f;
+    margin-bottom: 0.5rem;
+    text-decoration: none;
+  }
+  .similar-product-price {
+    font-size: 1.2rem;
+    color: #cdaa7d;
+    font-weight: 600;
   }
   .wishlist-heart-btn {
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 1.7rem;
-    color: var(--text-dark);
-    transition: color 0.2s;
+    font-size: 1.8rem;
+    color: #1a1a1a;
+    transition: color 0.3s;
   }
+  .wishlist-heart-btn:hover .wishlist-heart-icon,
   .wishlist-heart-btn.active .wishlist-heart-icon {
-    color: #000;
-    content: '\2665';
+    color: #cdaa7d;
   }
   .wishlist-heart-icon {
     pointer-events: none;
-    font-size: 1.7rem;
-    transition: color 0.2s;
-    color: var(--text-dark);
+  }
+
+  @media (max-width: 1024px) {
+    .product-container {
+      flex-direction: column;
+      padding: 1.5rem;
+    }
+    .product-gallery {
+      flex: 1 1 100%;
+    }
+    .product-details {
+      flex: 1 1 100%;
+      padding: 0;
+    }
+    .product-image {
+      width: 350px;
+      height: 350px;
+    }
+    .product-gallery-thumbnails {
+      gap: 0.75rem;
+    }
+    .product-thumbnail {
+      width: 60px;
+      height: 60px;
+    }
+    .similar-products-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 768px) {
+    .product-main {
+      padding: 1.5rem 0.5rem;
+    }
+    .product-image {
+      width: 300px;
+      height: 300px;
+    }
+    .product-title {
+      font-size: 2rem;
+    }
+    .product-price {
+      font-size: 1.5rem;
+    }
+    .product-add-to-cart {
+      font-size: 1.1rem;
+    }
+    .product-description {
+      font-size: 1.1rem;
+    }
+    .similar-products-grid {
+      grid-template-columns: 1fr;
+    }
+    .similar-product-image {
+      height: 180px;
+    }
+    .similar-product-title {
+      font-size: 1rem;
+    }
+    .similar-product-price {
+      font-size: 1.1rem;
+    }
   }
 </style>
+
+<script src="{{ 'product.js' | asset_url }}" defer></script>
