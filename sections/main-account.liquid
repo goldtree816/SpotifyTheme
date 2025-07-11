@@ -5,6 +5,12 @@
     <div class="customer-account__welcome">
       <h1 class="customer-account__title">Welcome back, {{ customer.first_name | default: customer.name | escape }}!</h1>
       <p class="customer-account__subtitle">Manage your account details and view your order history below.</p>
+      <div class="customer-account__details">
+        <p class="customer-account__detail"><strong>Email:</strong> {{ customer.email }}</p>
+        {% if customer.phone %}
+          <p class="customer-account__detail"><strong>Phone:</strong> {{ customer.phone }}</p>
+        {% endif %}
+      </div>
     </div>
     <div class="customer-account__logout-wrapper">
       <a href="{{ routes.account_logout_url }}" class="customer-account__logout-btn" title="Log out">

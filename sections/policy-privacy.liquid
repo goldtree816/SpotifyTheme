@@ -1,0 +1,68 @@
+<div class="policy-wrapper section-padding">
+  <h1>{{ section.settings.heading }}</h1>
+  <div class="policy-content">
+    {{ section.settings.content }}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Privacy Policy Content",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Policy Title",
+      "default": "Privacy Policy"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Policy Content",
+      "default": "<p><strong>Effective Date:</strong>  11 July 2025</p>\n<p>At Aura Wear, we value your privacy and are committed to protecting your personal information. This policy outlines how we collect, use, and safeguard your data when you visit or make a purchase from our store.</p>\n<ol>\n<li><strong>Information We Collect</strong><br>When you browse our site or make a purchase, we may collect the following information:<ul>\n<li><strong>Personal Info:</strong> Name, email address, billing/shipping address, phone number.</li>\n<li><strong>Payment Details:</strong> Handled securely by third-party payment processors. We do not store your credit card information.</li>\n<li><strong>Device Info:</strong> IP address, browser type, time zone, and cookies.</li>\n<li><strong>Order Info:</strong> Products viewed, items added to cart, and order history.</li>\n</ul></li>\n<li><strong>How We Use Your Information</strong><br>We use your data to:<ul>\n<li>Process and fulfill orders</li>\n<li>Communicate with you (order updates, promotional emails, customer support)</li>\n<li>Improve our store’s layout and offerings</li>\n<li>Prevent fraud or other security threats</li>\n<li>Comply with legal obligations</li>\n</ul></li>\n<li><strong>Cookies</strong><br>We use cookies to:<ul>\n<li>Keep items in your cart</li>\n<li>Remember your preferences</li>\n<li>Analyze site traffic</li>\n<li>Show personalized content</li>\n</ul>You can disable cookies in your browser, but some features may not work as expected.</li>\n<li><strong>Sharing Your Information</strong><br>We never sell your personal data. We may share information with:<ul>\n<li>Shopify – Our store platform provider</li>\n<li>Payment gateways – To securely process transactions</li>\n<li>Shipping carriers – To deliver your orders</li>\n<li>Legal entities – If required by law or for fraud prevention</li>\n</ul></li>\n<li><strong>Data Retention</strong><br>We retain your personal information only as long as necessary to fulfill the purposes outlined in this policy or as required by law.</li>\n<li><strong>Your Rights</strong><br>Depending on your location, you may have the right to:<ul>\n<li>Access, correct, or delete your personal information</li>\n<li>Opt out of marketing emails at any time</li>\n<li>Request data portability (where applicable)</li>\n</ul>To exercise your rights, email us at hello@aurawear.com.</li>\n<li><strong>Security</strong><br>We take reasonable steps to protect your data. However, no method of transmission over the Internet is 100% secure. Use the site at your own risk.</li>\n</ol>"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+.policy-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2.5rem 1rem 4rem 1rem;
+  font-family: 'Roboto Condensed', Arial, sans-serif;
+  color: #1D1D1F;
+}
+.policy-wrapper h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #CDAA7D;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+.policy-content {
+  font-size: 1.1rem;
+  color: #222;
+  background: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 16px rgba(29,29,31,0.08);
+  padding: 2rem 2.5rem;
+  line-height: 1.7;
+}
+.policy-content ul, .policy-content ol {
+  margin-left: 1.5rem;
+  margin-bottom: 1.2rem;
+}
+.policy-content li {
+  margin-bottom: 0.7rem;
+}
+@media (max-width: 600px) {
+  .policy-wrapper {
+    padding: 1.5rem 0.5rem 2rem 0.5rem;
+  }
+  .policy-content {
+    padding: 1rem 0.7rem;
+    font-size: 1rem;
+  }
+}
+</style> 

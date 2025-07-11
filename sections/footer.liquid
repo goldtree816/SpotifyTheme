@@ -74,7 +74,7 @@
       <h4 class="footer__section-title">Stay Connected</h4>
       <p class="footer__newsletter-text">Subscribe to get updates on new arrivals, exclusive offers, and styling tips.</p>
       
-      <form class="footer__newsletter-form" action="/contact#contact_form" method="post">
+      {% form 'customer' %}
         <div class="footer__newsletter-input-group">
           <input 
             type="email" 
@@ -83,11 +83,20 @@
             class="footer__newsletter-input" 
             required
           />
+          <input type="hidden" name="contact[tags]" value="newsletter" />
           <button type="submit" class="footer__newsletter-btn">
             <i class="fas fa-arrow-right"></i>
           </button>
         </div>
-      </form>
+
+        {% if form.posted_successfully? %}
+          <p class="footer__success-message">Thanks for subscribing!</p>
+        {% endif %}
+
+        {% if form.errors %}
+          <p class="footer__error-message">Please enter a valid email.</p>
+        {% endif %}
+      {% endform %}
       
       <div class="footer__newsletter-note">
         <i class="fas fa-shield-alt"></i>

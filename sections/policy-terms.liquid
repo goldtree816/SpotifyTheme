@@ -1,0 +1,68 @@
+<div class="policy-wrapper section-padding">
+  <h1>{{ section.settings.heading }}</h1>
+  <div class="policy-content">
+    {{ section.settings.content }}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Terms of Service Content",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Policy Title",
+      "default": "Terms of Service"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Policy Content",
+      "default": "<p><strong>Effective Date:</strong>  11 July 2025</p>\n<p>Welcome to Aura Wear. By accessing or using our website (www.aurawear.com), you agree to the following terms. Please read them carefully.</p>\n<ol>\n<li><strong>Overview</strong><br>These Terms of Service govern your use of our website and services. By placing an order or browsing the site, you agree to be bound by these terms, including any additional policies referenced here.</li>\n<li><strong>Online Store Terms</strong><ul>\n<li>You must be at least 18 years old (or the age of majority in your area) to use this site.</li>\n<li>You agree not to use our products for any illegal or unauthorized purpose.</li>\n<li>You must not transmit any viruses or any code of a destructive nature.</li>\n</ul></li>\n<li><strong>General Conditions</strong><br>We reserve the right to refuse service to anyone for any reason at any time. Your content (not including credit card info) may be transferred unencrypted.</li>\n<li><strong>Accuracy of Information</strong><br>We strive to provide accurate product and pricing information. However, errors may occur. We reserve the right to correct such errors and to cancel any orders placed for the incorrect price.</li>\n<li><strong>Products & Services</strong><ul>\n<li>All products are subject to availability.</li>\n<li>We may limit the quantities of any products or services.</li>\n<li>Colors and descriptions may vary slightly depending on your screen settings.</li>\n</ul></li>\n<li><strong>Billing & Account Information</strong><br>You agree to provide current, complete, and accurate information for all purchases. You are responsible for maintaining the confidentiality of your account.</li>\n<li><strong>Intellectual Property</strong><br>All content on this site—including text, graphics, logos, and images—is the property of Aura Wear or its content suppliers and is protected by copyright laws.</li>\n</ol>"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+.policy-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2.5rem 1rem 4rem 1rem;
+  font-family: 'Roboto Condensed', Arial, sans-serif;
+  color: #1D1D1F;
+}
+.policy-wrapper h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #CDAA7D;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+.policy-content {
+  font-size: 1.1rem;
+  color: #222;
+  background: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 16px rgba(29,29,31,0.08);
+  padding: 2rem 2.5rem;
+  line-height: 1.7;
+}
+.policy-content ul, .policy-content ol {
+  margin-left: 1.5rem;
+  margin-bottom: 1.2rem;
+}
+.policy-content li {
+  margin-bottom: 0.7rem;
+}
+@media (max-width: 600px) {
+  .policy-wrapper {
+    padding: 1.5rem 0.5rem 2rem 0.5rem;
+  }
+  .policy-content {
+    padding: 1rem 0.7rem;
+    font-size: 1rem;
+  }
+}
+</style> 

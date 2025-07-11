@@ -1,0 +1,56 @@
+<div class="cart-wrapper section-padding">
+  <h1>{{ 'cart.title' | t }}</h1>
+  {% if cart.item_count == 0 %}
+    <p>{{ 'cart.empty' | t }}</p>
+  {% else %}
+    <form action="/cart" method="post" novalidate>
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th>{{ 'cart.product' | t }}</th>
+            <th>{{ 'cart.price' | t }}</th>
+            <th>{{ 'cart.quantity' | t }}</th>
+            <th>{{ 'cart.total' | t }}</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in cart.items %}
+            <tr>
+              <td>
+                <a href="{{ item.url }}">
+                  <img src="{{ item.image | img_url: '100x' }}" alt="{{ item.title }}" width="50" height="50">
+                  {{ item.product.title }}
+                </a>
+                {% if item.variant.title != 'Default Title' %}<div>{{ item.variant.title }}</div>{% endif %}
+              </td>
+              <td>{{ item.price | money }}</td>
+              <td>
+                <input type="number" name="updates[]" value="{{ item.quantity }}" min="0">
+              </td>
+              <td>{{ item.line_price | money }}</td>
+              <td>
+                <button type="submit" name="updates[]" value="0" aria-label="{{ 'cart.remove' | t }}">&times;</button>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div class="cart-footer">
+        <div class="cart-total">
+          <span>{{ 'cart.total' | t }}:</span>
+          <span>{{ cart.total_price | money }}</span>
+        </div>
+        <button type="submit" name="update" class="btn-primary">{{ 'cart.update' | t }}</button>
+        <a href="/checkout" class="btn-primary">{{ 'cart.checkout' | t }}</a>
+      </div>
+    </form>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Cart/Checkout Section",
+  "settings": []
+}
+{% endschema %} 

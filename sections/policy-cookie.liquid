@@ -1,0 +1,68 @@
+<div class="policy-wrapper section-padding">
+  <h1>{{ section.settings.heading }}</h1>
+  <div class="policy-content">
+    {{ section.settings.content }}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cookie Policy Content",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Policy Title",
+      "default": "Cookie Policy"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Policy Content",
+      "default": "<p><strong>Effective Date:</strong> 11 July 2025</p>\n<p>Welcome to Aura Wear. Like most websites, we use cookies to enhance your experience, analyze traffic, and deliver personalized content.</p>\n<ol>\n<li><strong>What Are Cookies?</strong><br>Cookies are small text files stored on your device (computer, tablet, or mobile) when you visit a website. They help the site remember your actions and preferences over time.</li>\n<li><strong>Why We Use Cookies</strong><br>We use cookies for the following purposes:<ul>\n<li><strong>Essential Cookies:</strong> Required for basic website functionality (e.g., cart, login).</li>\n<li><strong>Performance Cookies:</strong> Help us understand how visitors use the site (e.g., Google Analytics).</li>\n<li><strong>Functionality Cookies:</strong> Remember your preferences (e.g., language, currency).</li>\n<li><strong>Marketing Cookies:</strong> Show relevant ads and measure campaign effectiveness.</li>\n</ul></li>\n<li><strong>Third-Party Cookies</strong><br>Some cookies are set by trusted third parties, such as:<ul>\n<li>Google Analytics – For visitor tracking</li>\n<li>Meta Pixel – For ad performance and targeting</li>\n<li>Shopify – For store functionality and checkout process</li>\n</ul></li>\n<li><strong>Managing Cookies</strong><br>You can choose to accept or decline cookies at any time by:<ul>\n<li>Adjusting browser settings (to block or delete cookies)</li>\n<li>Clicking “Cookie Settings” on our site (if implemented)</li>\n</ul>Note: Disabling cookies may impact site performance and certain features may not work.</li>\n</ol>"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+.policy-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2.5rem 1rem 4rem 1rem;
+  font-family: 'Roboto Condensed', Arial, sans-serif;
+  color: #1D1D1F;
+}
+.policy-wrapper h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #CDAA7D;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+.policy-content {
+  font-size: 1.1rem;
+  color: #222;
+  background: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 16px rgba(29,29,31,0.08);
+  padding: 2rem 2.5rem;
+  line-height: 1.7;
+}
+.policy-content ul, .policy-content ol {
+  margin-left: 1.5rem;
+  margin-bottom: 1.2rem;
+}
+.policy-content li {
+  margin-bottom: 0.7rem;
+}
+@media (max-width: 600px) {
+  .policy-wrapper {
+    padding: 1.5rem 0.5rem 2rem 0.5rem;
+  }
+  .policy-content {
+    padding: 1rem 0.7rem;
+    font-size: 1rem;
+  }
+}
+</style> 

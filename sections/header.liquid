@@ -150,12 +150,31 @@
 </style>
 
 <script>
-// Hamburger menu toggle for mobile
+// Hamburger menu toggle for mobile/tablet
 const hamburgerBtn = document.querySelector('.header__hamburger-btn');
 const nav = document.querySelector('.header__nav');
+
+function isMobileNav() {
+  return window.innerWidth <= 900;
+}
+
 if (hamburgerBtn && nav) {
   hamburgerBtn.addEventListener('click', () => {
-    nav.classList.toggle('header__nav--open');
+    if (isMobileNav()) {
+      nav.classList.toggle('header__nav--open');
+      // Update ARIA
+      const expanded = nav.classList.contains('header__nav--open');
+      hamburgerBtn.setAttribute('aria-expanded', expanded);
+      nav.setAttribute('aria-hidden', !expanded);
+    }
+  });
+  // Close nav if resizing above 900px
+  window.addEventListener('resize', () => {
+    if (!isMobileNav()) {
+      nav.classList.remove('header__nav--open');
+      hamburgerBtn.setAttribute('aria-expanded', 'false');
+      nav.setAttribute('aria-hidden', 'true');
+    }
   });
 }
 // Search field toggle and close on outside click

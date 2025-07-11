@@ -95,6 +95,7 @@
 }
 .header__nav-link:hover {
   color: var(--color-highlight);
+  border-radius: 10px;
 }
 .header__nav-link::after {
   content: '';
@@ -259,6 +260,7 @@
   background: var(--color-accent);
   color: var(--color-primary);
   transform: translateX(5px);
+  border-radius: 10px;
 }
 .header__dropdown-item--submenu {
   position: relative;
@@ -285,6 +287,8 @@
   align-items: center;
   justify-content: space-between;
 }
+
+/* Tablet and below: stack or adjust spacing if needed */
 @media screen and (max-width: 900px) {
   .header__nav {
     display: none;
@@ -330,35 +334,73 @@
     padding: 0;
     border: none;
   }
+  .header__hamburger-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
 }
+
+/* Mobile: only show icons and hamburger, hide nav by default */
 @media screen and (max-width: 600px) {
   .header {
+    flex-wrap: wrap;
     padding: 0 1rem;
+    height: auto;
   }
   .header__brand-name {
     font-size: 1.1rem;
   }
   .header__logo {
-    height: 2rem;
+    height: 2.5rem;
   }
   .announcement-text {
     font-size: 12px;
-    padding: 0 20px;
+    padding: 0 10px;
   }
   .announcement-text i {
     font-size: 14px;
   }
+  .header__nav {
+    display: none;
+  }
+  .header__nav.header__nav--open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100vw;
+    background: var(--color-background);
+    z-index: 500;
+    box-shadow: 0 8px 24px rgba(29, 29, 31, 0.12);
+    border-top: 1px solid rgba(205, 170, 125, 0.1);
+  }
+  .header__actions {
+    gap: 0.5rem;
+  }
+  .header__login-btn {
+    padding: 0.5rem;
+    min-width: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    border: none;
+    background: none;
+    margin-right: 0;
+    font-size: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .header__login-btn i {
+    font-size: 1.2rem;
+  }
+  .header__login-btn:not(:has(i)) {
+    display: none !important;
+  }
+  /* Hide text in login button if not icon */
+  .header__login-btn {
+    color: var(--color-primary);
+  }
 }
-
-.header__cart-btn {
-  background: none;
-  border: none;
-  padding: 0;
-  margin: 0 0.5rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-.header__cart-btn:focus {
-  outline: 2px solid #CDAA7D;
-} 
