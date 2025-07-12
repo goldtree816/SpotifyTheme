@@ -1,16 +1,29 @@
 <!-- Font Awesome CDN for icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="{{ 'footer.css' | asset_url }}">
 
 <footer class="footer">
   <div class="footer__content">
     <!-- Company Info Section -->
     <div class="footer__section">
       <div class="footer__branding">
-        <img src="{{ 'logo.png' | asset_url }}" alt="Aura Wear logo" class="footer__logo" />
-        <h3 class="footer__brand-name">Aura Wear</h3>
+        {% if section.settings.logo != blank %}
+          <img src="{{ section.settings.logo | image_url: width: 200 }}" alt="{{ section.settings.brand_name | default: 'Aura Wear' }} logo" class="footer__logo" />
+        {% else %}
+          <img src="{{ 'logo.png' | asset_url }}" alt="{{ section.settings.brand_name | default: 'Aura Wear' }} logo" class="footer__logo" />
+        {% endif %}
+        <h3 class="footer__brand-name">{{ section.settings.brand_name | default: 'Aura Wear' }}</h3>
       </div>
-      <p class="footer__tagline">Let Your Aura Flow Freely</p>
-      <p class="footer__description">Designed for movement, made with intention. Aura Wear brings harmony between comfort and confidence.</p>
+      {% if section.settings.tagline != blank %}
+        <p class="footer__tagline">{{ section.settings.tagline }}</p>
+      {% else %}
+        <p class="footer__tagline">Let Your Aura Flow Freely</p>
+      {% endif %}
+      {% if section.settings.description != blank %}
+        <p class="footer__description">{{ section.settings.description }}</p>
+      {% else %}
+        <p class="footer__description">Designed for movement, made with intention. Aura Wear brings harmony between comfort and confidence.</p>
+      {% endif %}
       
       <!-- Social Media Links -->
       <div class="footer__social">
@@ -109,7 +122,7 @@
   <div class="footer__bottom">
     <div class="footer__bottom-content">
       <div class="footer__legal">
-        <p class="footer__copyright">&copy; {{ 'now' | date: '%Y' }} Aura Wear. All rights reserved.</p>
+        <p class="footer__copyright">&copy; {{ 'now' | date: '%Y' }} {{ section.settings.brand_name | default: 'Aura Wear' }}. All rights reserved.</p>
         <div class="footer__legal-links">
           <a href="/pages/privacy-policy" class="footer__legal-link">Privacy Policy</a>
           <a href="/pages/terms-of-service" class="footer__legal-link">Terms of Service</a>
@@ -131,300 +144,33 @@
   </div>
 </footer>
 
-<style>
-/* Footer Styles */
-.footer {
-  background: #1D1D1F;
-  color: white;
-  padding: 0;
-  margin-top: 4rem;
-  border-radius: 6px;
-}
-
-.footer__content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 3rem 2rem;
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
-  gap: 2rem;
-}
-
-.footer__section {
-  display: flex;
-  flex-direction: column;
-}
-
-.footer__branding {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-}
-
-.footer__logo {
-  height: 6rem;
-  width: auto;
-  filter: brightness(0) invert(1);
-}
-
-.footer__brand-name {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: white;
-  margin: 0;
-}
-
-.footer__tagline {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #CDAA7D;
-  margin: 0 0 1rem 0;
-}
-
-.footer__description {
-  color: #AAAAAA;
-  line-height: 1.6;
-  margin-bottom: 2rem;
-}
-
-.footer__social {
-  display: flex;
-  gap: 1rem;
-}
-
-.footer__social-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  background: rgba(205, 170, 125, 0.1);
-  color: #CDAA7D;
-  border-radius: 50%;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  font-size: 1.2rem;
-}
-
-.footer__social-link:hover {
-  background: #CDAA7D;
-  color: #1D1D1F;
-  transform: translateY(-2px);
-}
-
-.footer__section-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: white;
-  margin: 0 0 1.5rem 0;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.footer__links {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.footer__links li {
-  margin-bottom: 0.75rem;
-}
-
-.footer__link {
-  color: #AAAAAA;
-  text-decoration: none;
-  transition: color 0.3s ease;
-  font-size: 0.95rem;
-}
-
-.footer__link:hover {
-  color: #CDAA7D;
-}
-
-.footer__section--newsletter {
-  grid-column: span 1;
-}
-
-.footer__newsletter-text {
-  color: #AAAAAA;
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
-}
-
-.footer__newsletter-form {
-  margin-bottom: 1rem;
-}
-
-.footer__newsletter-input-group {
-  display: flex;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid rgba(205, 170, 125, 0.2);
-}
-
-.footer__newsletter-input {
-  flex: 1;
-  padding: 0.75rem 1rem;
-  border: none;
-  background: transparent;
-  color: white;
-  font-size: 0.95rem;
-}
-
-.footer__newsletter-input::placeholder {
-  color: #AAAAAA;
-}
-
-.footer__newsletter-input:focus {
-  outline: none;
-}
-
-.footer__newsletter-btn {
-  padding: 0.75rem 1rem;
-  background: #CDAA7D;
-  color: #1D1D1F;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 600;
-}
-
-.footer__newsletter-btn:hover {
-  background: #DB2955;
-  color: white;
-}
-
-.footer__newsletter-note {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #AAAAAA;
-  font-size: 0.85rem;
-}
-
-.footer__newsletter-note i {
-  color: #CDAA7D;
-}
-
-.footer__bottom {
-  border-top: 1px solid rgba(205, 170, 125, 0.2);
-  padding: 1.5rem 2rem;
-  background: rgba(0, 0, 0, 0.2);
-}
-
-.footer__bottom-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.footer__legal {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.footer__copyright {
-  color: #AAAAAA;
-  font-size: 0.9rem;
-  margin: 0;
-}
-
-.footer__legal-links {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.footer__legal-link {
-  color: #AAAAAA;
-  text-decoration: none;
-  font-size: 0.85rem;
-  transition: color 0.3s ease;
-}
-
-.footer__legal-link:hover {
-  color: #CDAA7D;
-}
-
-.footer__payment-methods {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.footer__payment-label {
-  color: #AAAAAA;
-  font-size: 0.9rem;
-}
-
-.footer__payment-icons {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.footer__payment-icons i {
-  font-size: 1.5rem;
-  color: #CDAA7D;
-}
-
-/* Responsive Design */
-@media screen and (max-width: 1024px) {
-  .footer__content {
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-  }
-  
-  .footer__section--newsletter {
-    grid-column: span 2;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .footer__content {
-    grid-template-columns: 1fr;
-    padding: 2rem 1rem;
-  }
-  
-  .footer__section--newsletter {
-    grid-column: span 1;
-  }
-  
-  .footer__bottom-content {
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
-  }
-  
-  .footer__legal-links {
-    justify-content: center;
-  }
-  
-  .footer__payment-methods {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .footer__content {
-    padding: 1.5rem 1rem;
-  }
-  
-  .footer__legal-links {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-}
-</style>
-
 {% schema %}
 {
   "name": "Footer",
-  "settings": []
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Footer Logo"
+    },
+    {
+      "type": "text",
+      "id": "brand_name",
+      "label": "Brand Name",
+      "default": "Aura Wear"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Let Your Aura Flow Freely"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Designed for movement, made with intention. Aura Wear brings harmony between comfort and confidence."
+    }
+  ]
 }
 {% endschema %} 

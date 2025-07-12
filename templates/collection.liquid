@@ -4,11 +4,28 @@
 {% endcomment %}
 
 {% section 'header' %}
+
+<!-- Link to collection styles -->
+<link rel="stylesheet" href="{{ 'collection.css' | asset_url }}">
+
 <main class="collections-main">
-  <h1 class="collections-title">All Products</h1>
+  <div class="collections-header">
+    <h1 class="collections-title">All Products</h1>
+    <button class="mobile-filter-toggle" id="mobileFilterToggle" aria-label="Toggle filters">
+      <i class="fa-solid fa-filter"></i>
+      Filters
+    </button>
+  </div>
+  
   <div class="collections-layout">
-    <aside class="collections-sidebar sticky-sidebar">
-      <div class="sidebar-heading">Filter Products</div>
+    <aside class="collections-sidebar" id="collectionsSidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-heading">Filter Products</div>
+        <button class="sidebar-close" id="sidebarClose" aria-label="Close filters">
+          <i class="fa-solid fa-times"></i>
+        </button>
+      </div>
+      
       <!-- Gender Filter Buttons -->
       <div class="filter-group gender-filter-group">
         <div class="filter-group-title">Gender</div>
@@ -18,6 +35,7 @@
           <a href="/collections/female" class="gender-btn{% if collection.handle == 'female' %} active-gender{% endif %}">Female</a>
         </div>
       </div>
+      
       <!-- Sort Buttons -->
       <div class="filter-group sort-btn-group">
         <div class="filter-group-title">Sort By</div>
@@ -35,6 +53,7 @@
           </select>
         </div>
       </div>
+      
       <form id="CollectionFiltersForm" method="get" action="">
         <div id="active-filters" class="active-filters">
           {% for filter in collection.filters %}
@@ -46,6 +65,7 @@
             {% endfor %}
           {% endfor %}
         </div>
+        
         {% for filter in collection.filters %}
           {% if filter.label == 'Availability' %}
             {% continue %}
@@ -71,6 +91,7 @@
             </div>
           </div>
         {% endfor %}
+        
         <div class="clear-filter-area">
           <button type="submit" class="filter-apply-btn">Apply Filters</button>
           {% if collection.filters | map: 'active_values' | join: '' != '' %}
@@ -79,369 +100,83 @@
         </div>
       </form>
     </aside>
-    <div class="collections-grid">
-      {% for product in collection.products %}
-        <div class="collections-product-card">
-          <button class="wishlist-heart-btn" data-handle="{{ product.handle }}" aria-label="Add to Wishlist" title="Add to Wishlist">
-            <span class="wishlist-heart-icon">&#9825;</span>
-          </button>
-          <a href="{{ product.url }}" class="collections-product-image-link">
-            {% if product.featured_image %}
-              <img src="{{ product.featured_image | img_url: '500x500' }}" alt="{{ product.title | escape }}" class="collections-product-image" />
-            {% endif %}
-          </a>
-          <div class="collections-product-info">
-            <a href="{{ product.url }}" class="collections-product-title">{{ product.title }}</a>
-            <div class="collections-product-price">{{ product.price | money }}</div>
-            <form action="/cart/add" method="post" enctype="multipart/form-data" class="collections-product-form">
-              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-              <button type="submit" class="collections-add-to-cart">Add to Cart</button>
-            </form>
+    
+    <div class="collections-content">
+      <div class="collections-grid">
+        {% for product in collection.products %}
+          <div class="collections-product-card">
+            <button class="wishlist-heart-btn" data-handle="{{ product.handle }}" aria-label="Add to Wishlist" title="Add to Wishlist">
+              <span class="wishlist-heart-icon">&#9825;</span>
+            </button>
+            <a href="{{ product.url }}" class="collections-product-image-link">
+              {% if product.featured_image %}
+                <img src="{{ product.featured_image | img_url: '500x500' }}" alt="{{ product.title | escape }}" class="collections-product-image" />
+              {% endif %}
+            </a>
+            <div class="collections-product-info">
+              <a href="{{ product.url }}" class="collections-product-title">{{ product.title }}</a>
+              <div class="collections-product-price">{{ product.price | money }}</div>
+              <form action="/cart/add" method="post" enctype="multipart/form-data" class="collections-product-form">
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                <button type="submit" class="collections-add-to-cart">Add to Cart</button>
+              </form>
+            </div>
           </div>
-        </div>
-      {% endfor %}
+        {% endfor %}
+      </div>
     </div>
   </div>
 </main>
+
+<!-- Mobile sidebar overlay -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
 {% section 'footer' %}
 
-<style>
-.collections-layout {
-  display: flex;
-  gap: 2rem;
-}
-.collections-sidebar {
-  width: 270px;
-  background: linear-gradient(135deg, #f7f7fa 0%, #f0f0f5 100%);
-  border-radius: 1rem;
-  box-shadow: 0 4px 24px rgba(29,29,31,0.10);
-  padding: 2.5rem 1.5rem 2rem 1.5rem;
-  height: fit-content;
-  min-width: 220px;
-  border: 1px solid #ececec;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-}
-.sidebar-heading {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #CDAA7D;
-  margin-bottom: 2rem;
-  letter-spacing: 0.5px;
-  text-align: left;
-}
-.filter-group {
-  margin-bottom: 2rem;
-}
-.filter-group-title {
-font-size: 1.08rem;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-  color: #FFF;
-  background: #cdaa7d;
-  border: none;
-  border-radius: .5rem;
-  width: 95%;
-  text-align: center;
-  padding: 6px;
-}
-
-.filter-group-options {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-.filter-option {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1rem;
-  padding: 0.2rem 0.1rem;
-  border-radius: 0.3rem;
-  transition: background 0.2s;
-}
-.filter-option input[type="checkbox"] {
-  accent-color: #CDAA7D;
-  width: 1.1rem;
-  height: 1.1rem;
-  margin-right: 0.3rem;
-}
-.filter-option input[type="checkbox"]:disabled + span {
-  color: #bbb;
-}
-.filter-option:hover {
-  background: #f3ede4;
-}
-.filter-price-range {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.filter-price-input.styled-input {
-  width: 70px;
-  padding: 0.35rem 0.7rem;
-  border: 1px solid #CDAA7D;
-  border-radius: 0.4rem;
-  font-size: 1rem;
-  background: #fff;
-  color: #1D1D1F;
-  transition: border 0.2s;
-}
-.filter-price-input.styled-input:focus {
-  border-color: #b89a6b;
-  outline: none;
-}
-.styled-input {
-  font-size: 1rem;
-  border-radius: 0.4rem;
-  border: 1px solid #CDAA7D;
-  padding: 0.4rem 0.7rem;
-  background: #fff;
-  color: #1D1D1F;
-  margin-top: 0.3rem;
-  margin-bottom: 0.7rem;
-  width: 100%;
-  transition: border 0.2s;
-}
-.styled-input:focus {
-  border-color: #b89a6b;
-  outline: none;
-}
-.filter-apply-btn {
-  background: #CDAA7D;
-  color: #fff;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  font-size: 1.08rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  font-weight: 700;
-  margin-top: 2rem;
-  width: 100%;
-  box-shadow: 0 2px 8px rgba(205,170,125,0.08);
-  letter-spacing: 0.5px;
-  transition: background 0.2s, box-shadow 0.2s;
-}
-.filter-apply-btn:hover {
-  background: #b89a6b;
-  box-shadow: 0 4px 16px rgba(205,170,125,0.13);
-}
-.filter-sort-form {
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-@media (max-width: 900px) {
-  .collections-layout {
-    flex-direction: column;
+<script>
+// Mobile sidebar toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const mobileFilterToggle = document.getElementById('mobileFilterToggle');
+  const sidebar = document.getElementById('collectionsSidebar');
+  const sidebarClose = document.getElementById('sidebarClose');
+  const sidebarOverlay = document.getElementById('sidebarOverlay');
+  
+  function openSidebar() {
+    sidebar.classList.add('active');
+    sidebarOverlay.style.display = 'block';
+    document.body.style.overflow = 'hidden';
   }
-  .collections-sidebar {
-    width: 100%;
-    margin-bottom: 2rem;
-    min-width: unset;
+  
+  function closeSidebar() {
+    sidebar.classList.remove('active');
+    sidebarOverlay.style.display = 'none';
+    document.body.style.overflow = '';
   }
-}
-.collections-main {
-  margin: 0 3rem 3rem 3rem;
-  padding: 3rem 1rem;
-  padding-top: 0rem;
-}
-.collections-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 2.5rem;
-  text-align: center;
-}
-.collections-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-}
-@media (max-width: 900px) {
-  .collections-grid {
-    grid-template-columns: repeat(2, 1fr);
+  
+  if (mobileFilterToggle) {
+    mobileFilterToggle.addEventListener('click', openSidebar);
   }
-}
-@media (max-width: 600px) {
-  .collections-grid {
-    grid-template-columns: 1fr;
+  
+  if (sidebarClose) {
+    sidebarClose.addEventListener('click', closeSidebar);
   }
-}
-.collections-product-card {
-  background: #fff;
-  border-radius: 0.75rem;
-  box-shadow: 0 2px 16px rgba(29,29,31,0.08);
-  padding: 1.2rem 1rem 1rem 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: box-shadow 0.2s;
-  min-height: unset;
-  position: relative;
-}
-.collections-product-card:hover {
-  box-shadow: 0 4px 24px rgba(29,29,31,0.15);
-}
-.collections-product-image-link {
-  display: block;
-  width: 100%;
-  margin-bottom: 0.7rem;
-}
-.collections-product-image {
-  width: 100%;
-  height: 180px;
-  object-fit: contain;
-  background: #fff;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 8px rgba(29,29,31,0.10);
-}
-.collections-product-info {
-  width: 100%;
-  text-align: center;
-}
-.collections-product-title {
-  font-size: 1rem;
-  font-weight: 550;
-  color: #1D1D1F;
-  text-decoration: none;
-  margin-bottom: 0.5rem;
-  display: block;
-}
-.collections-product-price {
-  font-size: 1.1rem;
-  color: #CDAA7D;
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-.collections-product-form {
-  margin-top: 0.5rem;
-}
-.collections-add-to-cart {
-  background: #CDAA7D;
-  color: #fff;
-  border: none;
-  padding: 0.7rem 2rem;
-  font-size: 1rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background 0.2s;
-}
-.collections-add-to-cart:hover {
-  background: #b89a6b;
-}
-.gender-filter-group {
-  margin-bottom: 2.2rem;
-}
-.gender-filter-buttons {
-  display: flex;
-  gap: 0.7rem;
-  margin-top: 0.5rem;
-}
-.gender-btn {
-  display: inline-block;
-  padding: 0.5rem 1.2rem;
-  border-radius: 2em;
-  background: #f3ede4;
-  color: #CDAA7D;
-  font-weight: 600;
-  border: 1px solid #CDAA7D;
-  text-decoration: none;
-  transition: background 0.2s, color 0.2s;
-}
-.gender-btn:hover, .gender-btn.active-gender {
-  background: #CDAA7D;
-  color: #fff;
-}
-.sort-btn-group {
-  margin-bottom: 2.2rem;
-}
-.sort-btns {
-  display: flex;
-  gap: 0.7rem;
-  margin-top: 0.5rem;
-}
-.sort-btn {
-  display: inline-block;
-  padding: 0.8rem;
-  border-radius: 2em;
-  background: #f3ede4;
-  color: #CDAA7D;
-  font-weight: 600;
-  border: 1px solid #CDAA7D;
-  text-decoration: none;
-  transition: background 0.2s, color 0.2s;
-}
-.sort-btn:hover, .sort-btn.active-sort {
-  background: #CDAA7D;
-  color: #fff;
-}
-.sort-dropdown-group {
-  margin-top: 0.7rem;
-}
-.sort-dropdown {
-  width: 100%;
-  font-size: 1rem;
-  border-radius: 0.4rem;
-  border: 1px solid #CDAA7D;
-  padding: 0.4rem 0.7rem;
-  background: #fff;
-  color: #1D1D1F;
-  margin-bottom: 0.7rem;
-  transition: border 0.2s;
-}
-.sort-dropdown:focus {
-  border-color: #b89a6b;
-  outline: none;
-}
-.styled-checkbox {
-  accent-color: #CDAA7D;
-  width: 1.1rem;
-  height: 1.1rem;
-  margin-right: 0.3rem;
-}
-.clear-all-filters {
- display: block;
-  font-size: 1rem;
-  margin-top: 0.7rem;
-  cursor: pointer;
-  text-align: center;
-  background: #CDAA7D;
-  color: #fff;
-  padding: 0.8rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 700;
-  box-shadow: 0 2px 8px rgba(205,170,125,0.08);
-  letter-spacing: 0.5px;
-  transition: background 0.2s, box-shadow 0.2s;
-
-}
-.filter-group.price-filter-group, .clear-filter-area {
-  background: #f3ede4;
-  border-radius: 0.7rem;
-  padding: 1rem 0.7rem;
-  margin-bottom: 1.2rem;
-}
-.wishlist-heart-btn {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  z-index: 2;
-  font-size: 1.5rem;
-  color: #000;
-  transition: color 0.2s;
-}
-.wishlist-heart-btn.active .wishlist-heart-icon {
-  color: #000;
-  content: '\2665';
-}
-.wishlist-heart-icon {
-  pointer-events: none;
-  font-size: 1.5rem;
-  transition: color 0.2s;
-  color: #000;
-}
-</style> 
+  
+  if (sidebarOverlay) {
+    sidebarOverlay.addEventListener('click', closeSidebar);
+  }
+  
+  // Close sidebar on escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && sidebar.classList.contains('active')) {
+      closeSidebar();
+    }
+  });
+  
+  // Close sidebar on window resize if screen becomes large
+  window.addEventListener('resize', function() {
+    if (window.innerWidth > 768 && sidebar.classList.contains('active')) {
+      closeSidebar();
+    }
+  });
+});
+</script> 

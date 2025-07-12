@@ -161,7 +161,7 @@ function isMobileNav() {
 if (hamburgerBtn && nav) {
   hamburgerBtn.addEventListener('click', () => {
     if (isMobileNav()) {
-      nav.classList.toggle('header__nav--open');
+    nav.classList.toggle('header__nav--open');
       // Update ARIA
       const expanded = nav.classList.contains('header__nav--open');
       hamburgerBtn.setAttribute('aria-expanded', expanded);
