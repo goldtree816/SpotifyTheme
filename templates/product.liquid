@@ -4,52 +4,65 @@
 {% endcomment %}
 
 <section class="product-card-section">
-  <main class="product-main">
-    <div class="product-container">
-      <div class="product-gallery">
+  <main class="product-card-main">
+    <div class="product-card-container">
+      <div class="product-card-gallery">
         {% assign main_image = product.featured_image | default: product.images.first %}
         <img
           id="main-product-image"
           src="{{ main_image | img_url: '400x400' }}"
           alt="{{ product.title | escape }}"
-          class="product-image"
+          class="product-card-image"
         >
         {% if product.images.size > 1 %}
-          <div class="product-gallery-thumbnails thumbnails-below">
+          <div class="product-card-gallery-thumbnails product-card-thumbnails-below">
             {% for image in product.images %}
               <img
                 src="{{ image | img_url: '60x60' }}"
                 alt="{{ product.title | escape }} thumbnail"
-                class="product-thumbnail"
-                {% comment %} onclick="document.getElementById('main-product-image').src='{{ image | img_url: '400x400' }}'" {% endcomment %}
+                class="product-card-thumbnail"
               >
             {% endfor %}
           </div>
         {% endif %}
       </div>
-      <div class="product-details">
-        <div class="product-title-row">
-          <h1 class="product-title" style="font-weight:500;">{{ product.title }}</h1>
+      <div class="product-card-details">
+        <div class="product-card-title-row">
+          <h1 class="product-card-title">{{ product.title }}</h1>
           <button
-            class="wishlist-heart-btn"
+            class="product-card-wishlist-heart-btn"
             data-handle="{{ product.handle }}"
             aria-label="Add to Wishlist"
             title="Add to Wishlist"
           >
-            <span class="wishlist-heart-icon">♡</span>
+            <span class="product-card-wishlist-heart-icon">♡</span>
           </button>
         </div>
-        <div class="product-category">{{ product.type }}</div>
-        <div class="product-price" id="product-price">{{ product.price | money }}</div>
-        <div class="product-description">{{ product.description }}</div>
-        <form action="/cart/add" method="post" enctype="multipart/form-data" class="product-form" id="product-form" data-variants='{{ product.variants | json }}'>
+        <div class="product-card-category">{{ product.type }}</div>
+        <div class="product-card-price" id="product-price">
+          {% if product.price_varies %}
+            From {{ product.price_min | money }} - {{ product.price_max | money }}
+          {% else %}
+            {{ product.price | money }}
+          {% endif %}
+        </div>
+        <div class="product-card-description">{{ product.description }}</div>
+        <form
+          action="{{routes.cart_add_url}}"
+          method="post"
+          enctype="multipart/form-data"
+          class="product-card-form"
+          id="product-form"
+          data-variants="{{ product.variants | json }}"
+        >
           <input type="hidden" name="id" id="variant-id" value="{{ product.selected_or_first_available_variant.id }}">
           {% for option in product.options_with_values %}
-            <div class="product-option">
+            <div class="product-card-option">
               {% if option.name == 'Size' %}
-                <div class="option-buttons" id="size-options">
+                <h3>Size</h3>
+                <div class="product-card-option-buttons" id="size-options">
                   {% for value in option.values %}
-                    <label class="option-btn-label">
+                    <label class="product-card-option-btn-label">
                       <input
                         type="radio"
                         name="options[{{ option.name }}]"
@@ -57,75 +70,65 @@
                         {% if forloop.first %}
                           checked
                         {% endif %}
-                        class="option-btn-input"
+                        class="product-card-option-btn-input"
                       >
-                      <span class="option-btn">{{ value }}</span>
-                      <div class="variant-details">
-                        {% for variant in product.variants %}
-                          {% if variant.option1 == value %}
-                            <span class="option-btn" style="background-color: {{ variant.option2 | downcase }}; color: #fff; margin-top: 5px; display: inline-block; padding: 0.3rem 0.7rem; border-radius: 0.3rem;">{{ variant.option2 }}</span>
-                          {% endif %}
-                        {% endfor %}
-                      </div>
+                      <span class="product-card-option-btn">{{ value }}</span>
                     </label>
                   {% endfor %}
                 </div>
-              {% elsif option.name == 'Color' %}
-                <div class="option-buttons" id="color-options">
-                  {% assign unique_colors = '' %}
-                  {% for variant in product.variants %}
-                    {% unless unique_colors contains variant.option2 %}
-                      {% assign unique_colors = unique_colors | append: variant.option2 | append: ',' %}
-                      <label class="option-btn-label">
-                        <input
-                          type="radio"
-                          name="options[{{ option.name }}]"
-                          value="{{ variant.option2 }}"
-                          {% if forloop.first and unique_colors == variant.option2 %}
-                            checked
-                          {% endif %}
-                          class="option-btn-input"
-                        >
-                        <span class="option-btn" style="background-color: {{ variant.option2 | downcase }}; color: #fff;">{{ variant.option2 }}</span>
-                      </label>
-                    {% endunless %}
+              {% endif %}
+              {% if option.name == 'Color' %}
+                <h3>Color</h3>
+                <div class="product-card-option-buttons" id="color-options">
+                  {% for value in option.values %}
+                    <label class="product-card-option-btn-label">
+                      <input
+                        type="radio"
+                        name="options[{{ option.name }}]"
+                        value="{{ value }}"
+                        class="product-card-option-btn-input"
+                      >
+                      <span class="product-card-option-swatch" data-color="{{ value | downcase }}"></span>
+                    </label>
                   {% endfor %}
                 </div>
               {% endif %}
             </div>
-            <hr class="option-separator">
+            <hr class="product-card-option-separator">
           {% endfor %}
-          <div class="selected-variant-price" id="selected-variant-price"></div>
-          <div class="product-quantity">
+          <div class="product-card-selected-variant-price" id="selected-variant-price">
+            {% comment %} After the size and color are selected, the price is shown here. If size or color is not selected, the price is not shown. {% endcomment %}
+          </div>
+          <div class="product-card-quantity">
             <label for="quantity">Quantity:</label>
-            <input type="number" id="quantity" name="quantity" value="1" min="1" class="quantity-input">
-            <button type="button" class="clear-selection-btn">Clear</button>
-            <button type="submit" class="product-add-to-cart">Add to Cart</button>
+            <input type="number" id="quantity" name="quantity" value="1" min="1" class="product-card-quantity-input">
+            <button type="button" class="product-card-clear-selection-btn hidden">Clear</button>
+            <button type="submit" class="product-card-add-to-cart">Add to Cart</button>
           </div>
         </form>
       </div>
     </div>
     {% if product.collections.size > 0 %}
-      <div class="similar-products">
+      <div class="product-card-similar-products">
         <h2>Similar Products</h2>
-        <div class="similar-products-grid">
+        <div class="product-card-similar-products-grid">
           {% assign similar_collection = product.collections.first %}
           {% if similar_collection and similar_collection.products.size > 0 %}
-            {% for similar_product in similar_collection.products limit: 4 %}
+            {% for similar_product in similar_collection.products %}
               {% if similar_product.id != product.id %}
-                <div class="similar-product-card">
+                <div class="product-card-similar-product-card">
                   <a href="{{ similar_product.url }}">
                     {% if similar_product.featured_image %}
                       <img
                         src="{{ similar_product.featured_image | img_url: '300x300' }}"
                         alt="{{ similar_product.title | escape }}"
-                        class="similar-product-image"
+                        class="product-card-similar-product-image"
                       >
                     {% else %}
                       {{ 'no-image' | placeholder_svg_tag: '300x300' }}
                     {% endif %}
-                    <div class="similar-product-title">{{ similar_product.title }}</div>
-                    <div class="similar-product-price">{{ similar_product.price | money }}</div>
+                    <div class="product-card-similar-product-title">{{ similar_product.title }}</div>
+                    <div class="product-card-similar-product-price">{{ similar_product.price | money }}</div>
                   </a>
                 </div>
               {% endif %}
@@ -142,40 +145,46 @@
 </section>
 
 <style>
-  .product-main {
+  .product-card-section .product-card-main {
     max-width: 1250px;
     margin: 0 auto;
     padding: 3rem 1rem;
   }
-  .product-container {
+
+  .product-card-container {
     display: flex;
     flex-wrap: wrap;
     gap: 3rem;
   }
-  .product-gallery {
+
+  .product-card-gallery {
     flex: 1 1 450px;
     display: flex;
     flex-direction: column;
     align-items: center;
     min-width: 350px;
   }
-  .product-gallery-thumbnails.thumbnails-below {
+
+  .product-card-gallery-thumbnails.product-card-thumbnails-below {
     display: flex;
     gap: 1rem;
     margin-top: 1.5rem;
     flex-wrap: wrap;
     justify-content: center;
   }
-  .product-image {
+
+  .product-card-image {
     width: 600px;
     height: 500px;
     object-fit: cover;
     transition: transform 0.3s ease;
   }
-  .product-image:hover {
+
+  .product-card-image:hover {
     transform: scale(1.02);
   }
-  .product-thumbnail {
+
+  .product-card-thumbnail {
     width: 80px;
     height: 80px;
     object-fit: cover;
@@ -184,59 +193,71 @@
     border: 2px solid transparent;
     transition: border-color 0.3s ease;
   }
-  .product-thumbnail:hover {
+
+  .product-card-thumbnail:hover {
     border-color: #cdaa7d;
   }
-  .product-details {
+
+  .product-card-details {
     flex: 1 1 400px;
     margin-bottom: 1rem;
     flex-direction: column;
     gap: 1.5rem;
     padding: 1rem 0;
   }
-  .product-title-row {
+
+  .product-card-title-row {
     display: flex;
     align-items: center;
     gap: 1rem;
   }
-  .product-title {
+
+  .product-card-title {
     font-size: 1.5rem;
     font-weight: 500;
     color: #1a1a1a;
     margin-bottom: 10px;
   }
-  .product-category {
+
+  .product-card-category {
     font-size: 1.1rem;
     color: #888;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: 10px;
   }
-  .product-price {
+
+  .product-card-price {
     font-size: 1.5rem;
     color: #131212;
     font-weight: 600;
   }
-  .product-form {
+
+  .product-card-form {
     margin-top: 1.5rem;
   }
-  .product-option {
+
+  .product-card-option {
     margin-top: -10px;
   }
-  .option-buttons {
+
+  .product-card-option-buttons {
     display: flex;
     gap: 0.75rem;
     flex-wrap: wrap;
   }
-  .option-btn-label {
+
+  .product-card-option-btn-label {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  .option-btn-input {
+
+  .product-card-option-btn-input {
     display: none;
   }
-  .option-btn {
+
+  .product-card-option-btn {
     display: inline-block;
     padding: 0.5rem 1rem;
     font-size: 0.8rem;
@@ -247,41 +268,61 @@
     cursor: pointer;
     transition: background 0.3s, color 0.3s;
   }
-  .option-btn-label input:checked + .option-btn {
+
+  .product-card-option-btn-label input:checked + .product-card-option-btn {
     background: #1a1a1a;
     color: #fff;
   }
-  .variant-details {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: 5px;
-    flex-wrap: wrap;
+
+  .product-card-option-swatch {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    background-color: var(--color, #fff);
   }
-  .option-separator {
+
+  .product-card-option-btn-label input:checked ~ .product-card-option-swatch {
+    border: 2px solid #000;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  }
+
+  .product-card-option-swatch:hover {
+    opacity: 0.8;
+  }
+
+  .product-card-option-separator {
     border: 0;
     height: 1px;
     background: #e5e7eb;
     margin: 1rem 0;
   }
-  .selected-variant-price {
+
+  .product-card-selected-variant-price {
     font-size: 1.2rem;
     color: #131212;
     margin: 1rem 0;
   }
-  .product-quantity {
+
+  .product-card-quantity {
     display: flex;
     align-items: center;
     gap: 5px;
     margin: 1rem 0;
   }
-  .quantity-input {
+
+  .product-card-quantity-input {
     padding: 0.5rem;
     width: 60px;
     font-size: 1rem;
     border: 1px solid #e5e7eb;
     border-radius: 0.5rem;
   }
-  .clear-selection-btn {
+
+  .product-card-clear-selection-btn {
     background: #f0f0f0;
     color: #1a1a1a;
     border: 1px solid #e5e7eb;
@@ -291,10 +332,16 @@
     cursor: pointer;
     transition: background 0.3s;
   }
-  .clear-selection-btn:hover {
+
+  .product-card-clear-selection-btn.hidden {
+    display: none;
+  }
+
+  .product-card-clear-selection-btn:hover {
     background: #e0e0e0;
   }
-  .product-add-to-cart {
+
+  .product-card-add-to-cart {
     background: #131211;
     color: #fff;
     border: none;
@@ -305,28 +352,33 @@
     font-weight: 600;
     transition: background 0.3s, transform 0.3s;
   }
-  .product-add-to-cart:hover {
+
+  .product-card-add-to-cart:hover {
     background: #3a3938;
     transform: translateY(-2px);
   }
-  .product-description {
+
+  .product-card-description {
     color: #444;
     font-size: 1.2rem;
     line-height: 1.7;
     margin-top: 1.5rem;
   }
-  .similar-products {
+
+  .product-card-similar-products {
     margin-top: 4rem;
     padding-top: 2rem;
     border-top: 1px solid #e5e7eb;
   }
-  .similar-products-grid {
+
+  .product-card-similar-products-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1.5rem;
     justify-content: flex-start;
   }
-  .similar-product-card {
+
+  .product-card-similar-product-card {
     background: #fff;
     border: 1px solid #e5e7eb;
     border-radius: 0.75rem;
@@ -335,11 +387,13 @@
     text-align: center;
     transition: box-shadow 0.3s, transform 0.3s;
   }
-  .similar-product-card:hover {
+
+  .product-card-similar-product-card:hover {
     box-shadow: 0 4px 24px rgba(29, 29, 31, 0.15);
     transform: translateY(-4px);
   }
-  .similar-product-image {
+
+  .product-card-similar-product-image {
     width: 100%;
     height: 200px;
     object-fit: cover;
@@ -348,22 +402,26 @@
     margin-bottom: 0.75rem;
     transition: transform 0.3s ease;
   }
-  .similar-product-card:hover .similar-product-image {
+
+  .product-card-similar-product-card:hover .product-card-similar-product-image {
     transform: scale(1.05);
   }
-  .similar-product-title {
+
+  .product-card-similar-product-title {
     font-size: 1.1rem;
     font-weight: 500;
     color: #1d1d1f;
     margin-bottom: 0.5rem;
     text-decoration: none;
   }
-  .similar-product-price {
+
+  .product-card-similar-product-price {
     font-size: 1.2rem;
-    color: #cdaa7d;
+    color: #272726c2;
     font-weight: 600;
   }
-  .wishlist-heart-btn {
+
+  .product-card-wishlist-heart-btn {
     background: none;
     border: none;
     cursor: pointer;
@@ -371,72 +429,74 @@
     color: #1a1a1a;
     transition: color 0.3s;
   }
-  .wishlist-heart-btn:hover .wishlist-heart-icon,
-  .wishlist-heart-btn.active .wishlist-heart-icon {
+
+  .product-card-wishlist-heart-btn:hover .product-card-wishlist-heart-icon,
+  .product-card-wishlist-heart-btn.active .product-card-wishlist-heart-icon {
     color: #cdaa7d;
   }
-  .wishlist-heart-icon {
+
+  .product-card-wishlist-heart-icon {
     pointer-events: none;
   }
 
   @media (max-width: 1024px) {
-    .product-container {
+    .product-card-container {
       flex-direction: column;
       padding: 1.5rem;
     }
-    .product-gallery {
+    .product-card-gallery {
       flex: 1 1 100%;
     }
-    .product-details {
+    .product-card-details {
       flex: 1 1 100%;
       padding: 0;
     }
-    .product-image {
+    .product-card-image {
       width: 350px;
       height: 350px;
     }
-    .product-gallery-thumbnails {
+    .product-card-gallery-thumbnails {
       gap: 0.75rem;
     }
-    .product-thumbnail {
+    .product-card-thumbnail {
       width: 60px;
       height: 60px;
     }
-    .similar-products-grid {
+    .product-card-similar-products-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
   @media (max-width: 768px) {
-    .product-main {
+    .product-card-main {
       padding: 1.5rem 0.5rem;
     }
-    .product-image {
+    .product-card-image {
       width: 300px;
       height: 300px;
     }
-    .product-title {
+    .product-card-title {
       font-size: 2rem;
     }
-    .product-price {
+    .product-card-price {
       font-size: 1.5rem;
     }
-    .product-add-to-cart {
+    .product-card-add-to-cart {
       font-size: 1.1rem;
     }
-    .product-description {
+    .product-card-description {
       font-size: 1.1rem;
     }
-    .similar-products-grid {
+    .product-card-similar-products-grid {
       grid-template-columns: 1fr;
     }
-    .similar-product-image {
+    .product-card-similar-product-image {
       height: 180px;
     }
-    .similar-product-title {
+    .product-card-similar-product-title {
       font-size: 1rem;
     }
-    .similar-product-price {
+    .product-card-similar-product-price {
       font-size: 1.1rem;
     }
   }

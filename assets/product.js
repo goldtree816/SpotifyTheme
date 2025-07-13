@@ -1,12 +1,32 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const sizeInputs = document.querySelectorAll('#size-options .option-btn-input');
-  const colorInputs = document.querySelectorAll('#color-options .option-btn-input');
+  const sizeInputs = document.querySelectorAll('#size-options .product-card-option-btn-input');
+  const colorInputs = document.querySelectorAll('#color-options .product-card-option-btn-input');
   const quantityInput = document.getElementById('quantity');
   const priceElement = document.getElementById('product-price');
   const variantIdInput = document.getElementById('variant-id');
   const form = document.getElementById('product-form');
-  const clearButton = document.querySelector('.clear-selection-btn');
+  const clearButton = document.querySelector('.product-card-clear-selection-btn');
   const selectedVariantPrice = document.getElementById('selected-variant-price');
+
+  // Map non-standard color names to CSS-compatible colors
+  const colorMap = {
+    'royal blue': 'royalblue',
+    'light blue': 'lightblue',
+    'dark green': 'darkgreen',
+    'brown': '#8B4513',
+    'black': '#000000',
+    'white': '#FFFFFF'
+    // Add more mappings as needed
+  };
+
+  // Dynamically set swatch colors
+  document.querySelectorAll('.product-card-option-swatch').forEach(swatch => {
+    const colorName = swatch.dataset.color;
+    console.log('Color name:', colorName); // Debug: Log color name
+    const cssColor = colorMap[colorName] || colorName;
+    console.log('CSS color:', cssColor); // Debug: Log CSS color
+    swatch.style.setProperty('--color', cssColor);
+  });
 
   // Initial price and variant setup
   let currentVariantId = variantIdInput.value;
@@ -21,16 +41,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Update price and variant ID based on size and color selection
   function updateVariant() {
-    const selectedSize = Array.from(sizeInputs).find(input => input.checked)?.value;
-    const selectedColor = Array.from(colorInputs).find(input => input.checked)?.value;
-    toggleClearButton(); // Toggle visibility based on selection
+    const selectedSize = Array.from(sizeInputs).find(input => input.checked)?.value.trim().toLowerCase();
+    const selectedColor = Array.from(colorInputs).find(input => input.checked)?.value.trim().toLowerCase();
+    toggleClearButton();
+
+    // Update size selection display
+    if (selectedSize) {
+      console.log('Selected Size:', selectedSize);
+      document.querySelectorAll('#size-options .product-card-option-btn').forEach(btn => {
+        btn.classList.remove('selected');
+        if (btn.textContent.toLowerCase() === selectedSize) {
+          btn.classList.add('selected');
+        }
+      });
+    }
+
+    // Update color selection display
+    if (selectedColor) {
+      console.log('Selected Color:', selectedColor);
+      // All swatches remain visible, selected one is highlighted via CSS
+    }
+
     if (!selectedSize || !selectedColor) {
       selectedVariantPrice.textContent = '';
       return;
     }
 
     const productVariants = JSON.parse(document.querySelector('#product-form').dataset.variants);
-    const selectedVariant = productVariants.find(v => v.option1 === selectedSize && v.option2 === selectedColor);
+    const selectedVariant = productVariants.find(v => v.option1.trim().toLowerCase() === selectedSize && v.option2.trim().toLowerCase() === selectedColor);
 
     if (!selectedVariant) {
       console.error('Variant not found:', { size: selectedSize, color: selectedColor });
@@ -60,29 +98,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Clear selection and reset
   clearButton.addEventListener('click', function () {
-    // Uncheck all radio buttons
     sizeInputs.forEach(input => input.checked = false);
     colorInputs.forEach(input => input.checked = false);
-    // Reset to first variant
     const productVariants = JSON.parse(document.querySelector('#product-form').dataset.variants);
     const firstVariant = productVariants[0];
     currentVariantId = firstVariant.id;
     currentPrice = firstVariant.price / 100;
     variantIdInput.value = currentVariantId;
-    // Reset quantity
     quantityInput.value = 1;
-    // Reset price display
     selectedVariantPrice.textContent = '';
     priceElement.textContent = Shopify.formatMoney(currentPrice * 100, window.theme.moneyFormat);
-    // Reset button styles
-    document.querySelectorAll('.option-btn').forEach(btn => {
-      btn.style.background = '#fff';
-      btn.style.color = '#1a1a1a';
+    document.querySelectorAll('.product-card-option-btn').forEach(btn => {
+      btn.classList.remove('selected');
     });
-    // Re-check the first size and color to match the first variant
     if (sizeInputs.length > 0) sizeInputs[0].checked = true;
     if (colorInputs.length > 0) colorInputs[0].checked = true;
-    updateVariant(); // Update after reset
+    updateVariant();
   });
 
   function updatePrice() {
@@ -94,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Submit handler to ensure correct variant and quantity
   form.addEventListener('submit', function (e) {
     variantIdInput.value = currentVariantId;
-    quantityInput.name = 'quantity'; // Ensure quantity is sent with the form
+    quantityInput.name = 'quantity';
   });
 
   // Initial call to set up the price and toggle clear button
