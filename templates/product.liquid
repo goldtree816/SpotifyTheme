@@ -19,6 +19,7 @@
             {% for image in product.images %}
               <img
                 src="{{ image | img_url: '60x60' }}"
+                data-full="{{ image | img_url: '400x400' }}"
                 alt="{{ product.title | escape }} thumbnail"
                 class="product-card-thumbnail"
               >
@@ -41,7 +42,7 @@
         <div class="product-card-category">{{ product.type }}</div>
         <div class="product-card-price" id="product-price">
           {% if product.price_varies %}
-            From {{ product.price_min | money }} - {{ product.price_max | money }}
+            {{ product.price_min | money }} - {{ product.price_max | money }}
           {% else %}
             {{ product.price | money }}
           {% endif %}
@@ -53,7 +54,7 @@
           enctype="multipart/form-data"
           class="product-card-form"
           id="product-form"
-          data-variants="{{ product.variants | json }}"
+          data-variants="{{ product.variants | json | escape }}"
         >
           <input type="hidden" name="id" id="variant-id" value="{{ product.selected_or_first_available_variant.id }}">
           {% for option in product.options_with_values %}
@@ -77,6 +78,7 @@
                   {% endfor %}
                 </div>
               {% endif %}
+
               {% if option.name == 'Color' %}
                 <h3>Color</h3>
                 <div class="product-card-option-buttons" id="color-options">
@@ -96,9 +98,7 @@
             </div>
             <hr class="product-card-option-separator">
           {% endfor %}
-          <div class="product-card-selected-variant-price" id="selected-variant-price">
-            {% comment %} After the size and color are selected, the price is shown here. If size or color is not selected, the price is not shown. {% endcomment %}
-          </div>
+          <div class="product-card-selected-variant-price" id="selected-variant-price" style="display: none;"></div>
           <div class="product-card-quantity">
             <label for="quantity">Quantity:</label>
             <input type="number" id="quantity" name="quantity" value="1" min="1" class="product-card-quantity-input">
@@ -231,6 +231,18 @@
     font-size: 1.5rem;
     color: #131212;
     font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .price-range-separator {
+    color: #666;
+  }
+  .product-card-section .product-card-main {
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
   }
 
   .product-card-form {
