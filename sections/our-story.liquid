@@ -1,0 +1,123 @@
+{% stylesheet %}
+.our-story {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  color: var(--our-story-text, #222);
+}
+.our-story__headline {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+.our-story__mission {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+.our-story__section {
+  margin-bottom: 2.5rem;
+}
+.our-story__section-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+.our-story__timeline {
+  margin: 2rem 0 2.5rem 0;
+  padding-left: 0;
+  list-style: none;
+}
+.our-story__timeline-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1.2rem;
+}
+.our-story__timeline-year {
+  font-weight: 700;
+  min-width: 60px;
+  color: #DB2955;
+}
+.our-story__timeline-desc {
+  margin-left: 1.2rem;
+}
+.our-story__unique-list {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+.our-story__unique-list li {
+  margin-bottom: 0.5rem;
+}
+@media screen and (max-width: 600px) {
+  .our-story {
+    padding: 1.5rem 0.5rem;
+  }
+  .our-story__headline {
+    font-size: 1.4rem;
+  }
+  .our-story__mission {
+    font-size: 1rem;
+  }
+}
+{% endstylesheet %}
+
+<section class="our-story">
+  <div class="our-story__headline">Our Story</div>
+  <div class="our-story__mission">Fashion with Purpose. Confidence in Every Stitch.</div>
+
+  <div class="our-story__section">
+    <div class="our-story__section-title">The Beginning</div>
+    <p>
+      Aura Wear was born in 2023 from a simple idea: to create fashion that empowers and inspires. Motivated by a passion for self-expression and a desire to make a positive impact, we set out to build a brand where every piece tells a story and every stitch is made with intention.
+    </p>
+  </div>
+
+  <div class="our-story__section">
+    <div class="our-story__section-title">What Drives Us</div>
+    <p>
+      Our core values are the foundation of everything we do:
+    </p>
+    <ul>
+      <li>Sustainability — We prioritize eco-friendly materials and responsible production.</li>
+      <li>Inclusivity — Fashion is for everyone, and we celebrate diversity in all forms.</li>
+      <li>Quality & Craftsmanship — Every piece is thoughtfully designed and expertly crafted.</li>
+    </ul>
+  </div>
+
+  <div class="our-story__section">
+    <div class="our-story__section-title">Our Journey</div>
+    <ul class="our-story__timeline">
+      <li class="our-story__timeline-item"><span class="our-story__timeline-year">2023</span><span class="our-story__timeline-desc">Brand launched</span></li>
+      <li class="our-story__timeline-item"><span class="our-story__timeline-year">2024</span><span class="our-story__timeline-desc">First international orders</span></li>
+      <li class="our-story__timeline-item"><span class="our-story__timeline-year">2025</span><span class="our-story__timeline-desc">Expanded eco-friendly collections</span></li>
+    </ul>
+  </div>
+
+  <div class="our-story__section">
+    <div class="our-story__section-title">What Makes Us Unique</div>
+    <ul class="our-story__unique-list">
+      <li>In-house design</li>
+      <li>Ethical sourcing</li>
+      <li>Focus on slow fashion and limited editions</li>
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Our Story",
+  "settings": [
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#222222"
+    }
+  ],
+  "presets": [
+    { "name": "Our Story" }
+  ]
+}
+{% endschema %} 

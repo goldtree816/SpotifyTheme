@@ -269,19 +269,29 @@
   text-decoration: underline;
 }
 
+@media (max-width: 1024px) {
+  .customer-account {
+    padding: 2rem 1.5rem;
+    margin: 2rem auto;
+  }
+  .customer-account__content {
+    gap: 2rem;
+  }
+}
+
 @media (max-width: 900px) {
   .customer-account {
-    padding: 1.2rem 0.5rem;
-    font-size: 0.98rem;
+    padding: 1.5rem 1rem;
+    font-size: 1rem;
   }
   .customer-account__header {
     flex-direction: column;
-    gap: 1.2rem;
-    align-items: stretch;
+    gap: 1.5rem;
+    align-items: flex-start;
   }
   .customer-account__content {
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 2rem;
   }
   .customer-account__address-section {
     margin-right: 0;
@@ -292,28 +302,28 @@
   }
   .customer-account__order-table {
     min-width: 400px;
-    font-size: 0.97rem;
+    font-size: 0.98rem;
   }
 }
 
 @media (max-width: 600px) {
-  .customer-account__title {
-    font-size: 1.4rem;
+  .customer-account__table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: -8vw;
+    margin-right: -8vw;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    margin-bottom: 1.5rem;
   }
-  .customer-account__orders h2,
-  .customer-account__address h2 {
-    font-size: 1.05rem;
+  .customer-account__order-table {
+    min-width: 500px;
+    font-size: 0.93rem;
   }
-  .customer-account__section {
-    padding: 1.2rem 0.7rem 1rem 0.7rem;
-    min-width: 0;
-  }
-  .customer-account__section-title {
-    font-size: 1.05rem;
-  }
-  .customer-account__order-table th,
-  .customer-account__order-table td {
-    padding: 0.5rem 0.4rem;
-    font-size: 0.95rem;
+  .customer-account__orders {
+    margin-top: 1.2rem;
   }
 } 

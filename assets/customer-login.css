@@ -249,6 +249,22 @@
     .login-form-inner {
       padding: 24px 8px;
     }
+    .field input[type="email"],
+    .field input[type="password"] {
+      font-size: 15px;
+      padding: 10px 10px;
+      max-width: 85vw;
+      min-width: 220px;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      background: #ffffe0;
+    }
+    .password-recovery-modal {
+      padding: 20px 10px !important;
+      max-width: 98vw;
+      width: 98vw;
+    }
     
     .login-bg-col {
       min-height: 100px;
@@ -258,9 +274,21 @@
     .login-actions-row {
       flex-direction: column;
       gap: 12px;
+      align-items: center;
+    }
+    
+    .login-actions-row button,
+    .login-actions-row .btn-alt {
+      width: 80%;
+      min-width: 140px;
+      max-width: 320px;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 18px;
     }
     
     .login-form-inner h1 {
+      text-align: center;
       font-size: 24px;
       margin: 16px 0 32px 0;
     }

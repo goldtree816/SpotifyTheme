@@ -472,10 +472,16 @@
   }
   
   .footer__newsletter-btn {
-    padding: 1.25rem;
-    width: 100%;
-    font-size: 1rem;
-    border-radius: 12px;
+    width: auto;
+    min-width: 48px;
+    max-width: 80px;
+    align-self: center;
+    padding: 0.75rem 1rem;
+    font-size: 1.2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .footer__newsletter-note {
@@ -632,5 +638,18 @@
   
   .footer__payment-icons i {
     font-size: 1.3rem;
+  }
+
+  .footer__newsletter-btn {
+    width: auto;
+    min-width: 44px;
+    max-width: 64px;
+    align-self: center;
+    padding: 0.6rem 0.8rem;
+    font-size: 1.1rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 } 

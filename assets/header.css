@@ -388,19 +388,17 @@
     border: none;
     background: none;
     margin-right: 0;
-    font-size: 0;
+    font-size: 1rem; /* Restore font size for text visibility */
     display: flex;
     align-items: center;
     justify-content: center;
+    color: var(--color-primary);
   }
   .header__login-btn i {
     font-size: 1.2rem;
   }
-  .header__login-btn:not(:has(i)) {
+  /* Remove this rule to always show the button */
+  /* .header__login-btn:not(:has(i)) {
     display: none !important;
-  }
-  /* Hide text in login button if not icon */
-  .header__login-btn {
-    color: var(--color-primary);
-  }
+  } */
 }

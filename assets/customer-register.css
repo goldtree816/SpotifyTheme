@@ -1,8 +1,5 @@
 /* Register Page Styles - matches login page */
-.section-padding {
-    padding-top: 36px;
-    padding-bottom: 36px;
-  }
+
   
   .customer.register {
     background: var(--color-background);
@@ -220,7 +217,26 @@
     }
     .register-actions-row button,
     .register-actions-row .btn-alt {
+      width: 80%;
+      min-width: 140px;
+      max-width: 320px;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 18px;
+    }
+    .customer.register input[type="text"],
+    .customer.register input[type="email"],
+    .customer.register input[type="password"] {
+      font-size: 15px;
+      padding: 10px 10px;
+      max-width: 85vw;
+      min-width: 220px;
       width: 100%;
-      min-width: unset;
+      margin-left: auto;
+      margin-right: auto;
+      background: #ffffe0;
+    }
+    .register-image-col {
+      display: none !important;
     }
   }
