@@ -16,9 +16,9 @@
   </div>
   <div class="navbar-center">
     <nav>
-      <a href="/pages/men-page">MEN</a>
-      <a href="/pages/women-page">WOMEN</a>
-      <a href="/pages/kid-page">KIDS</a>
+      <a href="/collections/male">MEN</a>
+      <a href="/collections/female">WOMEN</a>
+      <a href="/collections/kids">KIDS</a>
     </nav>
   </div>
   <div class="navbar-right">
@@ -66,7 +66,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 64px;
+    height: 40px;
     font-size: 1.2rem;
     font-weight: 600;
     letter-spacing: 1px;
@@ -86,11 +86,22 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 32px;
-    background: #fff;
+    padding: 4px 24px;
+    background: #f8f9f9;
+    border-radius: 16px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    margin: 12px auto 0 auto;
+    max-width: 1300px;
+    position: relative;
+    z-index: 10;
+    min-height: 56px;
   }
   .header-logo {
-    height: 80px;
+    height: 48px;
+    transition: transform 0.2s;
+  }
+  .header-logo:hover {
+    transform: scale(1.04) rotate(-2deg);
   }
   .navbar-center {
     display: flex;
@@ -100,37 +111,71 @@
   }
   .navbar-center nav {
     display: flex;
-    gap: 24px;
+    gap: 32px;
   }
   .navbar-center nav a {
     font-weight: bold;
-    color: #111;
+    color: #222;
     text-decoration: none;
     letter-spacing: 2px;
+    font-size: 1.08rem;
+    padding: 8px 18px;
+    border-radius: 8px;
+    transition: color 0.18s;
+    position: relative;
+    overflow: hidden;
+  }
+  .navbar-center nav a::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    bottom: 6px;
+    height: 2px;
+    background: #111;
+    border-radius: 2px;
+    transform: scaleX(0);
+    transition: transform 0.22s cubic-bezier(.4,0,.2,1);
+  }
+  .navbar-center nav a:hover, .navbar-center nav a:focus {
+    color: #111;
+  }
+  .navbar-center nav a:hover::after, .navbar-center nav a:focus::after {
+    transform: scaleX(1);
   }
   .navbar-right {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 28px;
   }
   .navbar-actions {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 18px;
     height: 48px;
   }
   .search-form {
     display: flex;
     align-items: center;
     background: #f1f3f4;
-    border-radius: 2px;
-    padding: 2px 8px;
+    border-radius: 24px;
+    padding: 2px 12px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+    border: 1px solid #e3e6ea;
+    transition: box-shadow 0.18s, border 0.18s;
+  }
+  .search-form:focus-within {
+    box-shadow: 0 2px 8px rgba(0,113,227,0.10);
+    border: 1px solid #b3d4fc;
   }
   .search-form input {
     border: none;
     background: transparent;
     outline: none;
-    padding: 4px 8px;
+    padding: 6px 8px;
+    font-size: 1rem;
+    min-width: 120px;
   }
   .search-form button {
     background: none;
@@ -139,19 +184,33 @@
     font-size: 1.2rem;
     display: flex;
     align-items: center;
+    color: #222;
+    padding: 4px;
+    border-radius: 50%;
+    transition: background 0.18s;
+  }
+  .search-form button:hover {
+    background: #e6f7ef;
   }
   .navbar-actions a {
     display: flex;
     align-items: center;
-    color: #111;
+    color: #222;
     text-decoration: none;
-    padding: 0 4px;
+    padding: 0 6px;
+    border-radius: 6px;
+    transition: background 0.18s, color 0.18s;
   }
-  .navbar-actions a:hover svg {
-    stroke: #0071e3;
+  .navbar-actions a:hover, .navbar-actions a:focus {
+    background: #e6f7ef;
+    color: #3bb77e;
+  }
+  .navbar-actions a:hover svg, .navbar-actions a:focus svg {
+    stroke: #3bb77e;
   }
   .navbar-actions svg {
     display: block;
+    transition: stroke 0.18s;
   }
 </style>
 

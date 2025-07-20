@@ -1,0 +1,113 @@
+<section class="product-section">
+  <div class="product-section__container">
+    <!-- Product Gallery -->
+    <div class="product-section__gallery">
+      <div class="product-section__main-image">
+        {% if product.featured_image %}
+          <img src="{{ product.featured_image | image_url: width: 600, height: 600, crop: 'center' }}" alt="{{ product.featured_image.alt | default: product.title }}" class="product-section__image" id="product-main-image" />
+        {% else %}
+          <div class="product-section__placeholder">
+            {{ 'product-1' | placeholder_svg_tag: 'product-section__placeholder-svg' }}
+          </div>
+        {% endif %}
+      </div>
+      {% if product.images.size > 1 %}
+        <div class="product-section__thumbnails">
+          {% for image in product.images %}
+            <button type="button" class="product-section__thumbnail {% if forloop.first %}product-section__thumbnail--active{% endif %}" data-image="{{ image | image_url: width: 600, height: 600, crop: 'center' }}" data-alt="{{ image.alt | default: product.title }}">
+              <img src="{{ image | image_url: width: 100, height: 100, crop: 'center' }}" alt="{{ image.alt | default: product.title }}" class="product-section__thumbnail-img" />
+            </button>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+    <!-- Product Details -->
+    <div class="product-section__details">
+      <h2 class="product-section__title">{{ product.title }}</h2>
+      <div class="product-section__price">
+        {% if product.compare_at_price > product.price %}
+          <span class="product-section__old-price">{{ product.compare_at_price | money }}</span>
+          <span class="product-section__current-price">{{ product.price | money }}</span>
+          <span class="product-section__discount">Save {{ product.compare_at_price | minus: product.price | money }}</span>
+        {% else %}
+          <span class="product-section__current-price">{{ product.price | money }}</span>
+        {% endif %}
+      </div>
+      <form action="/cart/add" method="post" enctype="multipart/form-data" class="product-section__form" id="product-form">
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="variant-id">
+        {% if product.has_only_default_variant == false %}
+          <div class="product-section__variants">
+            {% for option in product.options_with_values %}
+              <div class="product-section__option">
+                <label class="product-section__option-label">{{ option.name }}</label>
+                <div class="product-section__option-values" data-option-index="{{ forloop.index0 }}">
+                  {% for value in option.values %}
+                    <button type="button" class="product-section__option-btn{% if option.selected_value == value %} product-section__option-btn--selected{% endif %}" data-value="{{ value }}">{{ value }}</button>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+        <div class="product-section__actions-row">
+          <div class="product-section__quantity">
+            <label class="product-section__quantity-label">Quantity</label>
+            <div class="product-section__quantity-controls">
+              <button type="button" class="product-section__quantity-btn" data-action="decrease">-</button>
+              <input type="number" name="quantity" value="1" min="1" class="product-section__quantity-input" id="quantity-input">
+              <button type="button" class="product-section__quantity-btn" data-action="increase">+</button>
+            </div>
+          </div>
+          <div class="product-section__actions">
+            {% if product.available %}
+              <button type="submit" class="product-section__add-to-cart" id="add-to-cart-btn">
+                <span class="product-section__add-to-cart-text">Add to cart</span>
+                <span class="product-section__add-to-cart-loading" style="display: none;">Adding...</span>
+              </button>
+            {% else %}
+              <button type="button" class="product-section__sold-out" disabled>Sold out</button>
+            {% endif %}
+          </div>
+        </div>
+      </form>
+      {% if product.description != blank %}
+        <div class="product-section__description">
+          <h3 class="product-section__description-title">Description</h3>
+          <div class="product-section__description-content">{{ product.description }}</div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Image gallery: change main image on thumbnail click
+  document.querySelectorAll('.product-section__thumbnail').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.getElementById('product-main-image').src = btn.getAttribute('data-image');
+      document.getElementById('product-main-image').alt = btn.getAttribute('data-alt');
+      document.querySelectorAll('.product-section__thumbnail').forEach(function(b) { b.classList.remove('product-section__thumbnail--active'); });
+      btn.classList.add('product-section__thumbnail--active');
+    });
+  });
+  // Option selection: clear previous and select new
+  document.querySelectorAll('.product-section__option-values').forEach(function(group) {
+    group.addEventListener('click', function(e) {
+      if (e.target.classList.contains('product-section__option-btn')) {
+        group.querySelectorAll('.product-section__option-btn').forEach(function(btn) { btn.classList.remove('product-section__option-btn--selected'); });
+        e.target.classList.add('product-section__option-btn--selected');
+      }
+    });
+  });
+});
+</script>
+
+{{ 'product.css' | asset_url | stylesheet_tag }}
+
+{% schema %}
+{
+  "name": "Product Section",
+  "settings": []
+}
+{% endschema %} 
