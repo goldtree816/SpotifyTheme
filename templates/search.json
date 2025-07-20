@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "header": { "type": "header", "settings": {} },
+    "main": { "type": "search" },
+    "footer": { "type": "footer", "settings": {} }
+  },
+  "order": [
+    "header",
+    "main",
+    "footer"
+  ]
+} 

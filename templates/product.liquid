@@ -30,7 +30,12 @@
         </button>
       </div>
       <div class="product-category">Category: {{ product.type }}</div>
-      <div class="product-price">{{ product.price | money }}</div>
+      <div class="product-price">
+        {% if product.compare_at_price > product.price %}
+          <span class="compare-at-price" style="text-decoration:line-through;color:#b0b0b0;margin-right:0.5em;">{{ product.compare_at_price | money }}</span>
+        {% endif %}
+        <span class="actual-price">{{ product.price | money }}</span>
+      </div>
       <form action="/cart/add" method="post" enctype="multipart/form-data" class="product-form">
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
         {% for option in product.options_with_values %}

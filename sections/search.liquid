@@ -1,0 +1,76 @@
+{% comment %}
+  Search Section
+  Renders a search form and displays search results.
+{% endcomment %}
+
+{% schema %}
+{
+  "name": "Search",
+  "settings": [
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Placeholder text",
+      "default": "Search for products, articles, and more"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Search"
+    }
+  ]
+}
+{% endschema %}
+
+<link rel="stylesheet" href="{{ 'search.css' | asset_url }}">
+
+<div class="search-section">
+  <form class="search-section__form" action="/search" method="get" role="search">
+    <input
+      class="search-section__input"
+      type="search"
+      name="q"
+      value="{{ request.search.terms | escape }}"
+      placeholder="{{ section.settings.placeholder }}"
+      aria-label="Search"
+    >
+    <button class="search-section__button" type="submit">Search</button>
+  </form>
+
+  {% if search.performed %}
+    <div class="search-section__results">
+      {% if search.results_count > 0 %}
+                      <a href="{{ item.url }}" class="search-section__result-title">{{ item.title }}</a>
+
+        <p>{{ search.results_count }} results for "{{ search.terms }}"</p>
+        <div class="search-section__result-list">
+          {% for item in search.results %}
+            <div class="search-section__result{% if item.object_type == 'product' %} search-section__result--product{% endif %}">
+              {% if item.object_type == 'product' %}
+                <a href="{{ item.url }}" class="search-section__result-image-link">
+                  {% if item.featured_image %}
+                    <img class="search-section__result-image" src="{{ item.featured_image | img_url: '400x400' }}" alt="{{ item.title }}">
+                  {% endif %}
+                </a>
+
+                {% comment %}
+                <a href="{{ item.url }}" class="search-section__result-title">{{ item.title }}</a>
+                {% endcomment %}
+
+                {% if item.price %}
+                  <div class="search-section__result-price">{{ item.price | money }}</div>
+                {% endif %}
+                <div class="search-section__result-desc">{{ item.content | strip_html | truncatewords: 20 }}</div>
+              {% else %}
+                <a href="{{ item.url }}" class="search-section__result-title">{{ item.title }}</a>
+                <div class="search-section__result-desc">{{ item.content | strip_html | truncatewords: 20 }}</div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p>No results found for "{{ search.terms }}"</p>
+      {% endif %}
+    </div>
+  {% endif %}
+</div> 
