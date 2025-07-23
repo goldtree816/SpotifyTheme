@@ -1,0 +1,8 @@
+{
+  "sections": {
+    "header": { "type": "header", "settings": {} },
+    "returns-exchanges": { "type": "returns-exchanges", "settings": {} },
+    "footer": { "type": "footer", "settings": {} }
+  },
+  "order": ["header", "returns-exchanges", "footer"]
+} 

@@ -1,0 +1,8 @@
+{
+  "sections": {
+    "header": { "type": "header", "settings": {} },
+    "policy-cookie": { "type": "policy-cookie", "settings": {} },
+    "footer": { "type": "footer", "settings": {} }
+  },
+  "order": ["header", "policy-cookie", "footer"]
+} 

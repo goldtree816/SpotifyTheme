@@ -1,0 +1,8 @@
+{
+  "sections": {
+    "header": { "type": "header", "settings": {} },
+    "policy-terms": { "type": "policy-terms", "settings": {} },
+    "footer": { "type": "footer", "settings": {} }
+  },
+  "order": ["header", "policy-terms", "footer"]
+} 

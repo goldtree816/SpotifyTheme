@@ -1,0 +1,21 @@
+{
+  "sections": {
+    "header": {
+      "type": "header",
+      "settings": {}
+    },
+    "contact-section": {
+      "type": "contact-section",
+      "settings": {}
+    },
+    "footer": {
+      "type": "footer",
+      "settings": {}
+    }
+  },
+  "order": [
+    "header",
+    "contact-section",
+    "footer"
+  ]
+} 
