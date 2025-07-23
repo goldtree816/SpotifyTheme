@@ -1,71 +1,70 @@
-<section class="page-404">
-  <div class="page-404__wrapper">
-    <h1 class="page-404__title">{{ section.settings.heading }}</h1>
-    <p class="page-404__text">{{ section.settings.message }}</p>
-    
-    <a href="{{ routes.root_url }}" class="page-404__btn">
-      {{ section.settings.button_text }}
+<section class="error-page">
+  <div class="error-wrapper">
+    <h1>{{ section.settings.title }}</h1>
+    <p>{{ section.settings.message }}</p>
+    <a href="{{ routes.root_url }}" class="error-btn">
+      {{ section.settings.button_label }}
     </a>
   </div>
 </section>
 
 <style>
-.page-404 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+.error-page {
+  padding: 80px 20px;
   text-align: center;
-  padding: 4rem 2rem;
 }
-.page-404__title {
+.error-wrapper {
+  max-width: 700px;
+  margin: 0 auto;
+}
+.error-wrapper h1 {
   font-size: 3rem;
   margin-bottom: 1rem;
 }
-.page-404__text {
-  font-size: 1.25rem;
-  color: #555;
+.error-wrapper p {
+  font-size: 1.2rem;
+  color: #666;
   margin-bottom: 2rem;
 }
-.page-404__btn {
-  padding: 0.75rem 2rem;
-  background-color: #000;
+.error-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background: #000;
   color: #fff;
   text-decoration: none;
   border-radius: 4px;
 }
-.page-404__btn:hover {
-  background-color: #222;
+.error-btn:hover {
+  background: #222;
 }
 </style>
 
 {% schema %}
 {
-  "name": "404 Page Section",
-  "tag": "section",
+  "name": "404 Error Section",
   "settings": [
     {
       "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "Oops! Page not found."
+      "id": "title",
+      "label": "Page Title",
+      "default": "404 - Page Not Found"
     },
     {
       "type": "textarea",
       "id": "message",
-      "label": "Message",
-      "default": "The page you are looking for doesn't exist or has been moved."
+      "label": "Description",
+      "default": "Sorry, the page you're looking for doesn't exist or has been moved."
     },
     {
       "type": "text",
-      "id": "button_text",
-      "label": "Button Text",
-      "default": "Go back to Home"
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Return Home"
     }
   ],
   "presets": [
     {
-      "name": "Default 404 Content"
+      "name": "Default 404 Layout"
     }
   ]
 }
