@@ -1,0 +1,72 @@
+<section class="page-404">
+  <div class="page-404__wrapper">
+    <h1 class="page-404__title">{{ section.settings.heading }}</h1>
+    <p class="page-404__text">{{ section.settings.message }}</p>
+    
+    <a href="{{ routes.root_url }}" class="page-404__btn">
+      {{ section.settings.button_text }}
+    </a>
+  </div>
+</section>
+
+<style>
+.page-404 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 4rem 2rem;
+}
+.page-404__title {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.page-404__text {
+  font-size: 1.25rem;
+  color: #555;
+  margin-bottom: 2rem;
+}
+.page-404__btn {
+  padding: 0.75rem 2rem;
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+}
+.page-404__btn:hover {
+  background-color: #222;
+}
+</style>
+
+{% schema %}
+{
+  "name": "404 Page Section",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Oops! Page not found."
+    },
+    {
+      "type": "textarea",
+      "id": "message",
+      "label": "Message",
+      "default": "The page you are looking for doesn't exist or has been moved."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Go back to Home"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Default 404 Content"
+    }
+  ]
+}
+{% endschema %}

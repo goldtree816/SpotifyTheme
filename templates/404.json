@@ -1,0 +1,15 @@
+{
+    "sections": {
+      "main": {
+        "type": "404-section"
+      },
+      "header": {
+        "type": "header"
+      },
+      "footer": {
+        "type": "footer"
+      }
+    },
+    "order": ["header", "main", "footer"]
+  }
+  
