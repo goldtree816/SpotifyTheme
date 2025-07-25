@@ -1,0 +1,19 @@
+<nav class="header__menu">
+  <ul class="list-menu list-menu--inline">
+    {% for link in section.settings.menu.links %}
+      <li class="list-menu__item list-menu__item--link{% if link.links != blank %} list-menu__item--has-dropdown{% endif %}">
+        <a href="{{ link.url }}">{{ link.title }}</a>
+        {% if link.links != blank %}
+          <span class="svg-wrapper">{{ 'icon-caret.svg' | inline_asset_content }}</span>
+          <ul class="list-menu list-menu--dropdown">
+            {% for sublink in link.links %}
+              <li class="list-menu__item">
+                <a href="{{ sublink.url }}" class="list-menu__item--link">{{ sublink.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</nav>

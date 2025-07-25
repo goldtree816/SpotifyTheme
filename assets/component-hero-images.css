@@ -1,0 +1,74 @@
+.three-images-wrapper {
+  display: flex;
+  width: 100%;
+  gap: 0;
+}
+
+.first {
+  background-image: url("{{ 'first.jpg' | asset_url }}");
+  background-size: cover;
+  width: 33.3333%;
+  height: 500px;
+  background-position: center;
+}
+
+.first-user {
+  background-size: cover;
+  width: 33.3333%;
+  height: 500px;
+  background-position: center;
+}
+
+.second {
+  background-image: url("{{ 'second.jpg' | asset_url }}");
+  background-size: cover;
+  width: 33.3333%;
+  height: 500px;
+  background-position: center;
+}
+
+.second-user {
+  background-size: cover;
+  width: 33.3333%;
+  height: 500px;
+  background-position: center;
+}
+
+.third {
+  background-image: url("{{ 'third.jpg' | asset_url }}");
+  background-size: cover;
+  width: 33.3333%;
+  height: 500px;
+  background-position: center;
+}
+
+.third-user {
+  background-size: cover;
+  width: 33.3333%;
+  height: 500px;
+  background-position: center;
+}
+
+.three-images-wrapper h1 {
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  margin: 0;
+  font-size: 2rem;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+@media screen and (max-width: 749px) {
+  .three-images-wrapper {
+    flex-direction: column;
+  }
+
+  .first, .first-user, .second, .second-user, .third, .third-user {
+    width: 100%;
+    height: 300px;
+  }
+
+  .three-images-wrapper h1 {
+    font-size: 1.5rem;
+  }
+}

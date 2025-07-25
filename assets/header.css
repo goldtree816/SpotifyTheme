@@ -1,0 +1,302 @@
+/* General Header Styles */
+.header-wrapper {
+  display: flex;
+  width: 100%;
+  background: linear-gradient(180deg, var(--color-background, #ffffff), #f8fafc);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s ease;
+}
+
+.header-wrapper--border-bottom {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: nowrap;
+  max-width: 1400px;
+  margin: 0 auto;
+  transition: all 0.3s ease;
+  gap: 2rem;
+}
+
+/* Main Header Block (Groups Logo and Navigation) */
+.header__main {
+display: flex;
+align-items: center;
+gap: 3.5rem;
+flex-grow: 1;
+padding-right: 2rem;
+}
+
+/* Logo Styles */
+.header__heading {
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.header__heading-link {
+  text-decoration: none;
+  color: #1f2937;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.header__heading-logo-wrapper {
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+}
+
+.header__heading-logo {
+  max-width: 100px;
+  height: auto;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.header__heading-logo:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+.header__heading-logo.motion-reduce {
+  transition: none;
+}
+
+.shop-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #1f2937;
+  font-family: var(--font-body-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+}
+
+/* Icon Container */
+.header__icons {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.header__icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #374151;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.header__icon:hover {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+.header__icon .svg-wrapper {
+  width: 1.3rem !important;
+  height: 1.3rem !important;
+  fill: currentColor;
+  stroke: currentColor;
+  transition: transform 0.2s ease;
+}
+
+.header__icon:hover .svg-wrapper {
+  transform: scale(1.1);
+}
+
+.header__icon .svg-wrapper svg {
+  width: 100%;
+  height: 100%;
+  fill: inherit;
+  stroke: inherit;
+}
+
+.cart-count-bubble {
+  position: absolute;
+  top: -0.3rem;
+  right: -0.3rem;
+  background: #ef4444;
+  color: #fff;
+  border-radius: 50%;
+  padding: 0.3rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  min-width: 1rem;
+  height: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Sticky Header Styles */
+.section-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: inherit;
+  transition: box-shadow 0.3s ease;
+}
+
+.shopify-section-header-sticky {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.shopify-section-header-hidden {
+  transform: translateY(-100%);
+}
+
+.animate {
+  transition: transform 0.4s ease-in-out;
+}
+
+/* Visually Hidden */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* Focus Styles */
+.focus-inset:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 640px) {
+  .header__main {
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .header__heading-logo {
+    max-width: 80px;
+  }
+
+  .header__icons {
+    gap: 1rem;
+  }
+
+  .header__icon {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  .header__icon .svg-wrapper {
+    width: 1.4rem !important;
+    height: 1.4rem !important;
+  }
+
+  .shop-name {
+    font-size: 1rem;
+  }
+
+  .header--has-menu .header__icon--account {
+    display: none;
+  }
+
+  .header--mobile-center .header__main {
+    justify-content: center;
+  }
+
+  .header--mobile-left .header__main {
+    justify-content: flex-start;
+  }
+
+  .cart-count-bubble {
+    top: -0.4rem;
+    right: -0.4rem;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.7rem;
+    min-width: 1.2rem;
+    height: 1.2rem;
+  }
+}
+
+@media screen and (min-width: 641px) and (max-width: 991px) {
+  .header__heading-logo {
+    max-width: 90px;
+  }
+
+  .header__main {
+    gap: 1.5rem;
+  }
+
+  .header__icons {
+    gap: 1.2rem;
+  }
+
+  .header__icon {
+    width: 2.7rem;
+    height: 2.7rem;
+  }
+
+  .header__icon .svg-wrapper {
+    width: 1.6rem !important;
+    height: 1.6rem !important;
+  }
+
+  .shop-name {
+    font-size: 1.1rem;
+  }
+
+  .cart-count-bubble {
+    top: -0.5rem;
+    right: -0.5rem;
+    padding: 0.25rem 0.55rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  header-drawer {
+    display: none;
+  }
+
+  .header__heading-logo {
+    max-width: 100px;
+  }
+
+  .header__main {
+    gap: 2rem;
+  }
+
+  .header--middle-left {
+    display: grid;
+    grid-template-areas: "main icons";
+    grid-template-columns: 1fr auto;
+  }
+
+  .header--middle-left .header__main {
+    grid-area: main;
+    justify-content: flex-start;
+  }
+
+  .header--top-center {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .header--top-center .header__main {
+    flex-grow: 0;
+  }
+
+  .shop-name {
+    font-size: 1.2rem;
+  }
+}

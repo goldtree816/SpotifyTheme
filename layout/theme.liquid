@@ -6,12 +6,12 @@
     {% comment %} {{ 'theme.js' | asset_url | script_tag }} {% endcomment %}
 </head>
   <body>
-    {% section 'header' %}
     {% section 'announcement-bar' %}
+    {% section 'header' %}
 
-    <main id="main" role="main">
+     <main id="main" role="main">
       {{ content_for_layout }}
-    </main>
+    </main> 
 
     {% section 'footer' %}
   </body>

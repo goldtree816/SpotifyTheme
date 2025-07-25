@@ -1,0 +1,26 @@
+<header-drawer>
+  {% comment %}
+    <button class="header__icon header__icon--menu" aria-label="{{ 'sections.header.menu' | t }}">
+      <span class="svg-wrapper">{{ 'icon-hamburger.svg' | inline_asset_content }}</span>
+    </button>
+  {% endcomment %}
+  <div class="menu-drawer" id="menu-drawer">
+    <button class="menu-drawer__close-button" aria-label="{{ 'accessibility.close' | t }}">X</button>
+    <ul class="menu-drawer__menu">
+      {% for link in section.settings.menu.links %}
+        <li class="menu-drawer__item">
+          <a href="{{ link.url }}" class="menu-drawer__link">{{ link.title }}</a>
+          {% if link.links != blank %}
+            <ul class="menu-drawer__submenu">
+              {% for sublink in link.links %}
+                <li>
+                  <a href="{{ sublink.url }}">{{ sublink.title }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</header-drawer>

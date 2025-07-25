@@ -1,29 +1,14 @@
-{% if section.settings.show_announcement_bar %}
-  <section>
-    <div class="announcement-bar">
-      {% comment %} <p class="announcement-bar__text"> Get 15% off on your first order</p> {% endcomment %}
-      {% if section.settings.announcement_bar_image != blank %}
-        <img
-          src="{{ section.settings.announcement_bar_image | asset_url }}"
-          alt="image"
-          height="50"
-          width="50"
-          class="announcement-bar__image"
-          loading="lazy"
-        >
-      {% else %}
-        <p class="announcement-bar__text">Get 15% off on your first order</p>
-      {% endif %}
-    </div>
-  </section>
-{% endif %}
+{{ 'announcement-bar.css' | asset_url | stylesheet_tag }}
 
-<style>
-  .announcement-bar {
-      background-color: {{ section.settings.announcement_bar_background_color }};
-      color: {{ section.settings.announcement_bar_text }};
-    }
-</style>
+{% if section.settings.show_announcement_bar %}
+  <div class="announcement-bar" style="--announcement-bg: {{ section.settings.announcement_bar_background_color }}; --announcement-text: {{ section.settings.announcement_bar_text_color }};">
+    <div class="announcement-bar__content page-width">
+      <p class="announcement-bar__text">
+        {{ section.settings.announcement_bar_text | default: "Get 15% off on your first order" }}
+      </p>
+    </div>
+  </div>
+{% endif %}
 
 {% schema %}
 {
@@ -36,27 +21,27 @@
       "default": true
     },
     {
-      "type": "image_picker",
-      "id": "announcement_bar_image",
-      "label": "Announcement Bar Image",
-      "info": "png recommended"
+      "type": "text",
+      "id": "announcement_bar_text",
+      "label": "Announcement Text",
+      "default": "Get 15% off on your first order"
     },
     {
       "type": "color",
       "id": "announcement_bar_background_color",
       "label": "Background Color",
-      "default": "#000000"
+      "default": "#6d6a6ac7"
     },
     {
       "type": "color",
-      "id": "announcement_bar_text",
-      "label": "Announcement Text",
-      "default": "#f8f8f8"
+      "id": "announcement_bar_text_color",
+      "label": "Text Color",
+      "default": "#FFFFFF"
     }
   ],
   "presets": [
     {
-      "name": "announcement-bar"
+      "name": "Announcement bar"
     }
   ]
 }
