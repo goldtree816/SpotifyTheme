@@ -30,6 +30,8 @@
       box-shadow: 0 0 5px #0276d9, 0 0 10px #0276d9;
     }
   </style>
+  {{ 'cart-drawer.css' | asset_url | stylesheet_tag }}
+  {{ 'cart-drawer.js' | asset_url | script_tag }}
 </head>
 <body>
   <main id="MainContent" role="main" tabindex="-1">
