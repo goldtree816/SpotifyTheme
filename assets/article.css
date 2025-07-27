@@ -1,0 +1,236 @@
+.article-main {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 32px 16px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+}
+.article-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.article-layout {
+  display: flex;
+  gap: 40px;
+  width: 100%;
+  margin-bottom: 28px;
+  align-items: flex-start;
+}
+.article-content-left {
+  flex: 2;
+  min-width: 0;
+}
+.article-content-right {
+  flex: 1;
+  min-width: 300px;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .article-layout {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .article-content-left {
+    flex: none;
+    width: 100%;
+  }
+  .article-content-right {
+    flex: none;
+    width: 100%;
+    min-width: auto;
+  }
+  .article-image {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+.article-title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-align: center;
+}
+.article-meta {
+  display: flex;
+  gap: 16px;
+  font-size: 1rem;
+  color: #888;
+  margin-bottom: 18px;
+  justify-content: center;
+}
+.article-date, .article-author {
+  font-style: italic;
+}
+.article-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.08);
+  margin-bottom: 0;
+}
+.article-body {
+  font-size: 1.15rem;
+  color: #222;
+  line-height: 1.7;
+  margin-bottom: 28px;
+  width: 100%;
+}
+.article-tags {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  color: #555;
+  flex-wrap: wrap;
+}
+.article-tag {
+  background: #f0f0f0;
+  color: #333;
+  border-radius: 4px;
+  padding: 2px 10px;
+  margin-left: 4px;
+  font-size: 0.95em;
+}
+.article-likes {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+.like-btn {
+  background: #f0f0f0;
+  color: #333;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 24px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.like-btn i {
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+}
+.like-btn:hover {
+  background: #e0e0e0;
+  transform: translateY(-1px);
+}
+.like-btn:hover i {
+  transform: scale(1.1);
+}
+.like-btn.liked {
+  background: #cdaa7d;
+  color: #fff;
+}
+.article-comments {
+  margin-top: 40px;
+  background: #fafbfc;
+  border-radius: 8px;
+  padding: 28px 20px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.comments-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 18px;
+  text-align: center;
+}
+.comments-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 24px;
+}
+.comment {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 12px 0;
+}
+.comment:last-child {
+  border-bottom: none;
+}
+.comment-author {
+  font-weight: 600;
+  color: #333;
+}
+.comment-date {
+  font-size: 0.95rem;
+  color: #888;
+  margin-bottom: 6px;
+}
+.comment-content {
+  font-size: 1.05rem;
+  color: #222;
+}
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 18px;
+}
+.comment-form-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.comment-form-row .comment-input {
+  flex: 1;
+  min-width: 200px;
+}
+.comment-input, .comment-textarea {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+.comment-textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+.comment-submit {
+  background: #cdaa7d;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.comment-submit:hover {
+  background: #b89a6b;
+}
+.comment-error {
+  color: #d32f2f;
+  margin-top: 8px;
+  text-align: center;
+}
+.comment-success {
+  color: #388e3c;
+  margin-top: 8px;
+  text-align: center;
+}
+.comments-section {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #e0e0e0;
+}
+.comments-list-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #333;
+}
+.no-comments {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  margin: 20px 0;
+} 

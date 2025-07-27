@@ -3,7 +3,6 @@
   Uses the same header and footer for consistency.
 {% endcomment %}
 
-{% section 'header' %}
 
 <!-- Link to collection styles -->
 <link rel="stylesheet" href="{{ 'collection.css' | asset_url }}">
@@ -94,7 +93,13 @@
         
         <div class="clear-filter-area">
           <button type="submit" class="filter-apply-btn">Apply Filters</button>
-          {% if collection.filters | map: 'active_values' | join: '' != '' %}
+          {% assign active_filters = false %}
+          {% for filter in collection.filters %}
+            {% if filter.active_values.size > 0 %}
+              {% assign active_filters = true %}
+            {% endif %}
+          {% endfor %}
+          {% if active_filters %}
             <a href="{{ collection.url }}" class="clear-all-filters">Clear All</a>
           {% endif %}
         </div>
@@ -136,7 +141,6 @@
 <!-- Mobile sidebar overlay -->
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-{% section 'footer' %}
 
 <script>
 // Mobile sidebar toggle functionality

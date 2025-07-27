@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "header": { "type": "header" },
+    "main-collection": { "type": "main-collection" },
+    "footer": { "type": "footer" }
+  },
+  "order": [
+    "header",
+    "main-collection",
+    "footer"
+  ]
+}
