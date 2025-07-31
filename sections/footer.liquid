@@ -8,11 +8,11 @@
     <div class="footer__section">
       <div class="footer__branding">
         {% if section.settings.logo != blank %}
-          <img src="{{ section.settings.logo | image_url: width: 200 }}" alt="{{ section.settings.brand_name | default: 'Aura Wear' }} logo" class="footer__logo" />
+          <img src="{{ section.settings.logo | image_url: width: 200 }}" alt="{{ section.settings.brand_name | default: 'GoldTree Fashion' }} logo" class="footer__logo" />
         {% else %}
-          <img src="{{ 'logo.png' | asset_url }}" alt="{{ section.settings.brand_name | default: 'Aura Wear' }} logo" class="footer__logo" />
+          <img src="{{ 'logo.png' | asset_url }}" alt="{{ section.settings.brand_name | default: 'GoldTree Fashion' }} logo" class="footer__logo" />
         {% endif %}
-        <h3 class="footer__brand-name">{{ section.settings.brand_name | default: 'Aura Wear' }}</h3>
+        <h3 class="footer__brand-name">{{ section.settings.brand_name | default: 'GoldTree Fashion' }}</h3>
       </div>
       {% if section.settings.tagline != blank %}
         <p class="footer__tagline">{{ section.settings.tagline }}</p>
@@ -22,7 +22,7 @@
       {% if section.settings.description != blank %}
         <p class="footer__description">{{ section.settings.description }}</p>
       {% else %}
-        <p class="footer__description">Designed for movement, made with intention. Aura Wear brings harmony between comfort and confidence.</p>
+        <p class="footer__description">Designed for movement, made with intention. GoldTree Fashion brings harmony between comfort and confidence.</p>
       {% endif %}
       
       <!-- Social Media Links -->
@@ -120,7 +120,7 @@
   <div class="footer__bottom">
     <div class="footer__bottom-content">
       <div class="footer__legal">
-        <p class="footer__copyright">&copy; {{ 'now' | date: '%Y' }} {{ section.settings.brand_name | default: 'Aura Wear' }}. All rights reserved.</p>
+        <p class="footer__copyright">&copy; {{ 'now' | date: '%Y' }} {{ section.settings.brand_name | default: 'GoldTree Fashion' }}. All rights reserved.</p>
         <div class="footer__legal-links">
           <a href="/pages/privacy-policy" class="footer__legal-link">Privacy Policy</a>
           <a href="/pages/terms-of-service" class="footer__legal-link">Terms of Service</a>
@@ -155,7 +155,7 @@
       "type": "text",
       "id": "brand_name",
       "label": "Brand Name",
-      "default": "Aura Wear"
+      "default": "GoldTree Fashion"
     },
     {
       "type": "text",
@@ -167,7 +167,7 @@
       "type": "textarea",
       "id": "description",
       "label": "Description",
-      "default": "Designed for movement, made with intention. Aura Wear brings harmony between comfort and confidence."
+      "default": "Designed for movement, made with intention. GoldTree Fashion brings harmony between comfort and confidence."
     }
   ]
 }
