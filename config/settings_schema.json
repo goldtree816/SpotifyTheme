@@ -1,12 +1,12 @@
 [
-  {
-    "name": "theme_info",
-    "theme_name": "Skeleton",
-    "theme_version": "0.1.0",
-    "theme_author": "Shopify",
-    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
-    "theme_support_url": "https://support.shopify.com/"
-  },
+ {
+  "name": "theme_info",
+  "theme_name": "GoldTree Fashion",
+  "theme_version": "1.0.0",
+  "theme_author": "GoldTree Group",
+  "theme_documentation_url": "https://docs.google.com/document/d/19lY4yFX7fDHna20ULG_sbbnOzbjGvKT8qNb8itd9Xzw/edit?usp=sharing", 
+  "theme_support_url": "mailto:business@goldtree.com.np"
+},
   {
     "name": "t:general.typography",
     "settings": [
@@ -19,7 +19,7 @@
         "id": "type_primary_font",
         "default": "work_sans_n4",
         "label": "t:general.primary"
-      },
+      }
     ]
   },
   {
