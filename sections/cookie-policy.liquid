@@ -1,0 +1,143 @@
+<section class="legal legal--cookie">
+  <div class="legal__container">
+    <h1 class="legal__title">{{ section.settings.heading | default: 'Cookie Policy' }}</h1>
+    <div class="legal__content">
+      {{ section.settings.content }}
+    </div>
+  </div>
+
+  {% schema %}
+  {
+    "name": "Cookie Policy Content",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Policy Title",
+        "default": "Cookie Policy"
+      },
+      {
+        "type": "richtext",
+        "id": "content",
+        "label": "Policy Content",
+        "default": "<p><strong>Effective Date:</strong> 11 July 2025</p><p>This Cookie Policy explains how Lapzone uses cookies and similar technologies on our website. By using our site, you consent to the use of cookies as described in this policy.</p><h2>What Are Cookies?</h2><p>Cookies are small text files stored on your device by your web browser. They help us remember your preferences, understand how you use our site, and improve your experience.</p><h2>Types of Cookies We Use</h2><h3>Essential Cookies</h3><p>These cookies are necessary for the website to function properly. They enable basic functions like page navigation, access to secure areas, and shopping cart functionality.</p><h3>Analytics Cookies</h3><p>These cookies help us understand how visitors interact with our website by collecting and reporting information anonymously.</p><h3>Functional Cookies</h3><p>These cookies remember your preferences and choices to provide enhanced, personalized features.</p><h3>Marketing Cookies</h3><p>These cookies are used to track visitors across websites to display relevant advertisements.</p><h2>How We Use Cookies</h2><ul><li>To remember your preferences and settings</li><li>To analyze site traffic and usage patterns</li><li>To provide personalized content and advertisements</li><li>To enable essential site functionality</li><li>To improve our website performance</li></ul><h2>Third-Party Cookies</h2><p>We may use third-party services that place cookies on your device. These services help us with analytics, advertising, and other website functions.</p><h2>Your Cookie Choices</h2><p>You can control or delete cookies through your browser settings. However, disabling certain cookies may affect your experience on our site.</p><h2>Updates to This Policy</h2><p>We may update this Cookie Policy from time to time. Please check this page regularly for any changes.</p><h2>Contact Us</h2><p>If you have any questions about our Cookie Policy, please contact us at <a href=\"mailto:lapzone@gmail.com\">lapzone@gmail.com</a>.</p>"
+      }
+    ]
+  }
+  {% endschema %}
+
+  <style>
+    .legal {
+      background: var(--background, #f5f7fa);
+      padding: 3rem 0;
+      min-height: 100vh;
+    }
+    
+    .legal__container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    
+    .legal__title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary, #222);
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .legal__content {
+      background: var(--surface, #fff);
+      border-radius: 16px;
+      box-shadow: 0 2px 12px var(--shadow, rgba(33, 150, 243, 0.08));
+      padding: 2.5rem;
+      color: var(--primary, #222);
+      line-height: 1.7;
+    }
+    
+    .legal__content h2 {
+      color: var(--accent, #2196f3);
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 2rem 0 1rem 0;
+    }
+    
+    .legal__content h2:first-of-type {
+      margin-top: 0;
+    }
+    
+    .legal__content h3 {
+      color: var(--primary, #222);
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.5rem 0;
+    }
+    
+    .legal__content p {
+      margin-bottom: 1rem;
+      color: var(--secondary, #666);
+    }
+    
+    .legal__content ul, .legal__content ol {
+      margin: 1rem 0 1rem 1.5rem;
+      color: var(--secondary, #666);
+    }
+    
+    .legal__content li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .legal__content a {
+      color: var(--accent, #2196f3);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    .legal__content a:hover {
+      text-decoration: underline;
+    }
+    
+    .legal__content strong {
+      color: var(--primary, #222);
+      font-weight: 600;
+    }
+    
+    @media (max-width: 768px) {
+      .legal {
+        padding: 2rem 0;
+      }
+      
+      .legal__title {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      .legal__content {
+        padding: 1.5rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .legal__container {
+        padding: 0 1rem;
+      }
+      
+      .legal__title {
+        font-size: 1.75rem;
+      }
+      
+      .legal__content {
+        padding: 1rem;
+      }
+      
+      .legal__content h2 {
+        font-size: 1.25rem;
+      }
+      
+      .legal__content h3 {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</section> 

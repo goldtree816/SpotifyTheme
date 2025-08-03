@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "navbar": {
+      "type": "navbar"
+    },
+    "collections": {
+      "type": "collections"
+    },
+    "footer": {
+      "type": "footer"
+    }
+  },
+  "order": [
+    "navbar",
+    "collections",
+    "footer"
+  ]
+} 

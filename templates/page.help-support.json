@@ -1,0 +1,15 @@
+{
+  "name": "Help & Support",
+  "sections": {
+    "header": {
+      "type": "header"
+    },
+    "main": {
+      "type": "help-support"
+    },
+    "footer": {
+      "type": "footer"
+    }
+  },
+  "order": ["header", "main", "footer"]
+} 

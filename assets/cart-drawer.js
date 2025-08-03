@@ -35,6 +35,17 @@ document.addEventListener('DOMContentLoaded', function () {
     badge.style.display = count > 0 ? 'inline-block' : 'none';
   }
 
+  function showCartPopup(message) {
+    let popup = document.createElement('div');
+    popup.className = 'cart-popup-success';
+    popup.textContent = message;
+    document.body.appendChild(popup);
+    setTimeout(() => {
+      popup.classList.add('fade-out');
+      setTimeout(() => popup.remove(), 500);
+    }, 2000);
+  }
+
   function renderCart(cart) {
     if (cart.items.length === 0) {
       body.innerHTML = '<p>Your cart is empty.</p>';
@@ -59,13 +70,27 @@ document.addEventListener('DOMContentLoaded', function () {
       </div>
     `).join('');
     footer.innerHTML = `
-      <div style="display:flex;justify-content:space-between;align-items:center;">
-        <div><strong>Subtotal:</strong> ${(cart.total_price / 100).toLocaleString('en-IN', { style: 'currency', currency: cart.currency })}</div>
-        <a href="/cart" class="button">View Cart</a>
-        <a href="/checkout" class="button">Checkout</a>
+      <div class="cart-subtotal"><strong>Subtotal:</strong> ${(cart.total_price / 100).toLocaleString('en-IN', { style: 'currency', currency: cart.currency })}</div>
+      <div class="drawer-actions">
+        <button type="button" class="drawer-link update-cart-btn" style="cursor:pointer;">Update Cart</button>
+        <a href="/checkout" class="drawer-link">Checkout</a>
       </div>
     `;
     addCartListeners();
+
+    // Always re-attach the Update Cart event listener after rendering
+    const updateCartBtn = footer.querySelector('.update-cart-btn');
+    if (updateCartBtn) {
+      updateCartBtn.addEventListener('click', function() {
+        fetch('/cart.js')
+          .then(res => res.json())
+          .then(newCart => {
+            updateBadge(newCart.item_count);
+            renderCart(newCart);
+            showCartPopup('Your cart is updated successfully.');
+          });
+      });
+    }
   }
 
   function addCartListeners() {
@@ -112,4 +137,52 @@ document.addEventListener('DOMContentLoaded', function () {
   fetch('/cart.js')
     .then(res => res.json())
     .then(cart => updateBadge(cart.item_count));
+
+  // Collection page AJAX Add to Cart
+  document.querySelectorAll('.collection__form').forEach(function(form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+      fetch('/cart/add.js', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(() => {
+        // Open and update the cart drawer
+        if (typeof fetchCart === 'function') {
+          drawer.classList.add('open');
+          drawer.setAttribute('aria-hidden', 'false');
+          fetchCart();
+        } else {
+          location.reload();
+        }
+      });
+    });
+  });
+
+  // Add popup CSS
+  const style = document.createElement('style');
+  style.textContent = `
+  .cart-popup-success {
+    position: fixed;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #27ae60;
+    color: #fff;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    z-index: 9999;
+    box-shadow: 0 2px 12px rgba(44,62,80,0.15);
+    opacity: 1;
+    transition: opacity 0.5s;
+  }
+  .cart-popup-success.fade-out {
+    opacity: 0;
+  }
+  `;
+  document.head.appendChild(style);
 }); 

@@ -1,0 +1,15 @@
+{
+  "name": "Cookie Policy",
+  "sections": {
+    "header": {
+      "type": "header"
+    },
+    "main": {
+      "type": "cookie-policy"
+    },
+    "footer": {
+      "type": "footer"
+    }
+  },
+  "order": ["header", "main", "footer"]
+} 

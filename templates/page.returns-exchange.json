@@ -1,0 +1,15 @@
+{
+  "name": "Returns & Exchange",
+  "sections": {
+    "header": {
+      "type": "header"
+    },
+    "main": {
+      "type": "returns-exchange"
+    },
+    "footer": {
+      "type": "footer"
+    }
+  },
+  "order": ["header", "main", "footer"]
+} 

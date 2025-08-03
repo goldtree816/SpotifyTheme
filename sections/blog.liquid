@@ -1,0 +1,34 @@
+{{ 'blog.css' | asset_url | stylesheet_tag }}
+<section class="blog-section">
+  <div class="blog-section__hero">
+    <h1 class="blog-section__title">Our Blog</h1>
+    <p class="blog-section__subtitle">Insights, tips, and stories from Lapzone. Explore our latest articles and stay inspired!</p>
+  </div>
+  <div class="blog-section__container">
+    <div class="blog-section__articles">
+      {% for article in blog.articles %}
+        <div class="blog-section__article">
+          <a href="{{ article.url }}" class="blog-section__article-image-link">
+            {% if article.image %}
+              <img src="{{ article.image | image_url: width: 600 }}" alt="{{ article.title }}" class="blog-section__article-image" />
+            {% endif %}
+          </a>
+          <a href="{{ article.url }}" class="blog-section__article-title">{{ article.title }}</a>
+          <div class="blog-section__article-meta">
+            {{ article.published_at | date: "%B %d, %Y" }}
+            {% if article.author %} | By {{ article.author }}{% endif %}
+          </div>
+          <div class="blog-section__article-excerpt">{{ article.excerpt | strip_html | truncate: 180 }}</div>
+          <a href="{{ article.url }}" class="blog-section__article-link">Read More</a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Blog",
+  "settings": []
+}
+{% endschema %} 

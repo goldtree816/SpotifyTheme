@@ -1,0 +1,275 @@
+
+{{ 'product.css' | asset_url | stylesheet_tag }}
+{{ 'product.js' | asset_url | script_tag }}
+
+<section class="product-page">
+  <div class="product-page__container">
+    <!-- Left Side - Product Visuals -->
+    <div class="product-page__media">
+      <!-- Main Image -->
+      <div class="product-page__main-image">
+        <figure class="product-page__figure">
+          {% if product.featured_image %}
+            <img 
+              src="{{ product.featured_image | image_url: width: 500 }}" 
+              alt="{{ product.featured_image.alt | default: product.title }}" 
+              class="product-page__img" 
+              id="main-product-img"
+            />
+          {% else %}
+            <div class="product-page__placeholder">
+              {{ 'product-1' | placeholder_svg_tag: 'product-page__placeholder-svg' }}
+            </div>
+          {% endif %}
+        </figure>
+        
+        <!-- Gallery Navigation -->
+        {% if product.images.size > 1 %}
+          <button class="product-page__gallery-nav product-page__gallery-nav--next" id="gallery-next">
+            <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        {% endif %}
+      </div>
+
+      <!-- Thumbnail Gallery -->
+      {% if product.images.size > 1 %}
+        <div class="product-page__thumbnails">
+          <div class="product-page__thumbnails-container" id="thumbnails-container">
+            {% for image in product.images %}
+              <button 
+                class="product-page__thumb-btn {% if forloop.first %}product-page__thumb-btn--active{% endif %}" 
+                data-img="{{ image | image_url: width: 500 }}" 
+                data-alt="{{ image.alt | default: product.title }}"
+                data-index="{{ forloop.index0 }}"
+              >
+                <img 
+                  src="{{ image | image_url: width: 120, height: 120, crop: 'center' }}" 
+                  alt="{{ image.alt | default: product.title }}" 
+                  class="product-page__thumb-img" 
+                />
+              </button>
+            {% endfor %}
+          </div>
+          
+          {% if product.images.size > 5 %}
+            <button class="product-page__thumbnails-nav product-page__thumbnails-nav--next" id="thumbnails-next">
+              <svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      <!-- Feature Icons -->
+      <div class="product-page__features">
+        {% if product.metafields.custom.ram %}
+          <div class="product-page__feature">
+            <span class="product-page__feature-text">{{ product.metafields.custom.ram }}</span>
+          </div>
+        {% endif %}
+        {% if product.metafields.custom.resolution %}
+          <div class="product-page__feature">
+            <span class="product-page__feature-text">{{ product.metafields.custom.resolution }}</span>
+          </div>
+        {% endif %}
+        {% if product.metafields.custom.refresh_rate %}
+          <div class="product-page__feature">
+            <span class="product-page__feature-text">{{ product.metafields.custom.refresh_rate }}</span>
+          </div>
+        {% endif %}
+        {% if product.metafields.custom.technology %}
+          <div class="product-page__feature">
+            <span class="product-page__feature-text">{{ product.metafields.custom.technology }}</span>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Right Side - Product Information -->
+    <div class="product-page__info">
+      <!-- Product Header -->
+      <header class="product-page__header">
+        <h1 class="product-page__title">{{ product.title }}</h1>
+        {% if product.metafields.custom.part_number %}
+          <p class="product-page__part-number">{{ product.metafields.custom.part_number }}</p>
+        {% endif %}
+        
+        <!-- Reviews -->
+        <div class="product-page__reviews">
+          <div class="product-page__stars">
+            {% for i in (1..5) %}
+              <svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 2l2.5 7.5H20l-6.25 4.5 2.5 7.5L10 16.5l-6.25 4.5 2.5-7.5L0 9.5h7.5L10 2z" fill="#E5E7EB"/>
+              </svg>
+            {% endfor %}
+          </div>
+          <span class="product-page__review-count">({{ product.metafields.custom.review_count | default: 0 }}) Write a review</span>
+        </div>
+      </header>
+
+      <!-- Pricing -->
+      <div class="product-page__pricing">
+        <div class="product-page__price-main">{{ product.price | money }}</div>
+        
+        {% if product.compare_at_price > product.price %}
+          <div class="product-page__price-old">{{ product.compare_at_price | money }}</div>
+          <div class="product-page__price-save">Save {{ product.compare_at_price | minus: product.price | money }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Payment Options -->
+      {% if product.metafields.custom.payment_info %}
+        <div class="product-page__payment">
+          <div class="product-page__payment-info">
+            <span class="product-page__payment-icon">💜</span>
+            <span class="product-page__payment-text">{{ product.metafields.custom.payment_info }}</span>
+          </div>
+        </div>
+      {% endif %}
+
+      <!-- Availability -->
+      <div class="product-page__availability">
+        {% if product.available %}
+          <span class="product-page__in-stock">IN STOCK</span>
+        {% else %}
+          <span class="product-page__out-of-stock">OUT OF STOCK</span>
+        {% endif %}
+      </div>
+
+      <!-- Add to Cart Form -->
+      <form action="/cart/add" method="post" enctype="multipart/form-data" class="product-page__form" id="product-form">
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="variant-id">
+        
+        <!-- Variants -->
+        {% if product.has_only_default_variant == false %}
+          <div class="product-page__variants">
+            {% for option in product.options_with_values %}
+              <div class="product-page__option-group">
+                <label class="product-page__option-label">{{ option.name }}</label>
+                <div class="product-page__option-values">
+                  {% for value in option.values %}
+                    <button 
+                      type="button" 
+                      class="product-page__option-btn {% if option.selected_value == value %}product-page__option-btn--selected{% endif %}" 
+                      data-option="{{ option.name | handleize }}" 
+                      data-value="{{ value | handleize }}"
+                    >
+                      {{ value }}
+                    </button>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <!-- Quantity -->
+        <div class="product-page__quantity">
+          <label class="product-page__quantity-label" for="quantity">Quantity</label>
+          <select name="quantity" id="quantity" class="product-page__quantity-select">
+            {% for i in (1..10) %}
+              <option value="{{ i }}" {% if i == 1 %}selected{% endif %}>{{ i }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- Add to Cart Button -->
+        <div class="product-page__actions">
+          {% if product.available %}
+            <button type="submit" class="product-page__add-cart" id="add-to-cart-btn">
+              <span class="product-page__add-cart-text">ADD TO CART</span>
+              <span class="product-page__add-cart-loading" style="display: none;">Adding...</span>
+            </button>
+          {% else %}
+            <button type="button" class="product-page__sold-out" disabled>OUT OF STOCK</button>
+          {% endif %}
+        </div>
+
+        <!-- Compare Option -->
+        <div class="product-page__compare">
+          <label class="product-page__compare-label">
+            <input type="checkbox" class="product-page__compare-checkbox">
+            <span class="product-page__compare-text">Compare</span>
+          </label>
+        </div>
+      </form>
+
+      <!-- Product Specifications -->
+      {% if product.description != blank or product.metafields.custom.specifications %}
+        <div class="product-page__specs">
+          <h3 class="product-page__specs-title">Key Specifications</h3>
+          <ul class="product-page__specs-list">
+            {% if product.metafields.custom.screen %}
+              <li class="product-page__spec-item">{{ product.metafields.custom.screen }}</li>
+            {% endif %}
+            {% if product.metafields.custom.panel_technology %}
+              <li class="product-page__spec-item">{{ product.metafields.custom.panel_technology }}</li>
+            {% endif %}
+            {% if product.metafields.custom.inputs %}
+              <li class="product-page__spec-item">{{ product.metafields.custom.inputs }}</li>
+            {% endif %}
+            {% if product.metafields.custom.response_time %}
+              <li class="product-page__spec-item">{{ product.metafields.custom.response_time }}</li>
+            {% endif %}
+            {% if product.metafields.custom.brightness %}
+              <li class="product-page__spec-item">{{ product.metafields.custom.brightness }}</li>
+            {% endif %}
+          </ul>
+        </div>
+      {% endif %}
+
+      <!-- Product Description -->
+      {% if product.description != blank %}
+        <div class="product-page__description">
+          <h3 class="product-page__description-title">Description</h3>
+          <div class="product-page__description-content">{{ product.description }}</div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Scroll to Top Button -->
+  <button class="product-page__scroll-top" id="scroll-to-top" aria-label="Scroll to top">
+    <svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 18V6M4 12l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</section>
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product Display Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_compare",
+      "label": "Show compare option",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_specifications",
+      "label": "Show specifications section",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show description section",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product"
+    }
+  ]
+}
+{% endschema %}

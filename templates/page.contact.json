@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "navbar": {
+      "type": "navbar"
+    },
+    "contact": {
+      "type": "contact"
+    },
+    "footer": {
+      "type": "footer"
+    }
+  },
+  "order": [
+    "navbar",
+    "contact",
+    "footer"
+  ]
+} 

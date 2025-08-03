@@ -1,0 +1,93 @@
+{{ 'about.css' | asset_url | stylesheet_tag }} 
+<main class="about">
+  <section class="about__hero">
+    <div class="about__hero-content">
+      <h1 class="about__hero-title">MOVING FORWARD<br><span>WITH US IS EASY</span></h1>
+      <p class="about__hero-sub">Fast & Secure Service for All Your Needs</p>
+      <a href="/collections/all" class="about__cta-btn">Get Started</a>
+    </div>
+    <div class="about__hero-img">
+      <img src="{{ 'desktop.jpeg' | asset_url }}" alt="Moving Truck" />
+    </div>
+    <div class="about__stats">
+      <div class="about__stat"><span>80+</span> Relocations</div>
+      <div class="about__stat"><span>12K</span> Clients</div>
+      <div class="about__stat"><span>150+</span> Cities</div>
+    </div>
+  </section>
+
+  <section class="about__company">
+    <div class="about__company-img">
+      <img src="{{ 'apolo.jpeg' | asset_url }}" alt="Team Member" />
+    </div>
+    <div class="about__company-info">
+      <h2 class="about__company-title">About Us</h2>
+      <h3 class="about__company-headline">Transport & Logistics</h3>
+      <p class="about__company-desc">We are dedicated to providing fast, secure, and reliable moving and logistics services. Our experienced team ensures your belongings are handled with care, whether you're moving across town or across the country. With years of expertise and a passion for customer satisfaction, we make your move easy and stress-free.</p>
+      <div class="about__exp-box">
+        <span class="about__exp-num">23</span>
+        <span class="about__exp-label">Years of Experience</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="about__features">
+    <div class="about__feature">
+      <div class="about__feature-icon">🚚</div>
+      <h4>Professional Service</h4>
+      <p>Our team is trained to handle every aspect of your move with professionalism and care.</p>
+    </div>
+    <div class="about__feature">
+      <div class="about__feature-icon">⏰</div>
+      <h4>Always On Time</h4>
+      <p>We value your time and guarantee prompt, reliable service every step of the way.</p>
+    </div>
+    <div class="about__feature">
+      <div class="about__feature-icon">💸</div>
+      <h4>Flat Rate Fees</h4>
+      <p>Transparent pricing with no hidden charges. Get the best value for your move.</p>
+    </div>
+    <div class="about__feature">
+      <div class="about__feature-icon">📞</div>
+      <h4>24/7 Support</h4>
+      <p>Our support team is available around the clock to assist you with any questions.</p>
+    </div>
+  </section>
+
+  <section class="about__testimonials">
+    <h2 class="about__testimonials-title">Our Happy Customers</h2>
+    <div class="about__testimonials-list">
+      <div class="about__testimonial">
+        <div class="about__testimonial-img">
+          <img src="{{ 'dell.jpeg' | asset_url }}" alt="Customer" />
+        </div>
+        <div class="about__testimonial-content">
+          <div class="about__testimonial-stars">★★★★★</div>
+          <p>"The team was professional, efficient, and made my move completely stress-free! Highly recommended."</p>
+          <div class="about__testimonial-author">David Craig <span>Chicago</span></div>
+        </div>
+      </div>
+      <div class="about__testimonial">
+        <div class="about__testimonial-img">
+          <img src="{{ 'xlab.jpeg' | asset_url }}" alt="Customer" />
+        </div>
+        <div class="about__testimonial-content">
+          <div class="about__testimonial-stars">★★★★★</div>
+          <p>"Excellent service and great value. The team was friendly and handled everything with care."</p>
+          <div class="about__testimonial-author">Elizabeth Wright <span>Seattle</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about__fleet">
+    <div class="about__fleet-content">
+      <h2>Our Fleet is Ready to Ship <span>Worldwide</span></h2>
+      <a href="tel:+9779815045184" class="about__cta-btn">Call Us Now</a>
+    </div>
+    <div class="about__fleet-img">
+      <img src="{{ 'notebook-inspiron-7441-t-fpr-ice-blue-gallery-1.avif' | asset_url }}" alt="Fleet" />
+    </div>
+  </section>
+</main>
+

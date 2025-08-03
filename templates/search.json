@@ -1,0 +1,15 @@
+{
+  "name": "Search Results",
+  "sections": {
+    "header": {
+      "type": "header"
+    },
+    "main": {
+      "type": "search"
+    },
+    "footer": {
+      "type": "footer"
+    }
+  },
+  "order": ["header", "main", "footer"]
+} 

@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "navbar": {
+      "type": "navbar"
+    },
+    "product": {
+      "type": "product"
+    },
+    "footer": {
+      "type": "footer"
+    }
+  },
+  "order": [
+    "navbar",
+    "product",
+    "footer"
+  ]
+} 

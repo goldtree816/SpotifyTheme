@@ -1,0 +1,224 @@
+/* Cart Drawer Styles - Modern Blue/Teal Theme */
+:root {
+  --accent: #2196f3;
+  --accent-dark: #1769aa;
+  --accent-light: #e3f2fd;
+  --primary: #222;
+  --secondary: #666;
+  --background: #f5f7fa;
+  --surface: #fff;
+  --border: #e0e7ef;
+  --shadow: rgba(33, 150, 243, 0.08);
+  --danger: #d32f2f;
+}
+
+#cart-drawer {
+  background: var(--surface);
+  box-shadow: -2px 0 16px var(--shadow);
+  max-width: 420px;
+  width: 100vw;
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  z-index: 1000;
+  display: none;
+  flex-direction: column;
+  border-radius: 1.2rem 0 0 1.2rem;
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+}
+#cart-drawer.open {
+  display: flex;
+}
+
+#cart-drawer-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 1.2rem 1rem 0.5rem 1rem;
+}
+
+.cart-item {
+  background: var(--background);
+  border-radius: 1rem;
+  box-shadow: 0 1px 6px var(--shadow);
+  margin-bottom: 1.2rem;
+  padding: 1rem 0.7rem;
+  display: flex;
+  align-items: flex-start;
+}
+.cart-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 0.7rem;
+  border: 1px solid #eee;
+  background: #fff;
+  margin-right: 1rem;
+}
+.cart-item a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.cart-item a:hover {
+  color: var(--accent-dark);
+}
+.cart-item div {
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+}
+.cart-qty-btn {
+  background: var(--accent-light);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 0.4em;
+  font-size: 1.1em;
+  font-weight: 700;
+  width: 2em;
+  height: 2em;
+  cursor: pointer;
+  margin: 0 0.2em;
+  transition: background 0.2s, color 0.2s;
+}
+.cart-qty-btn:hover {
+  background: var(--accent);
+  color: #fff;
+}
+.cart-qty-input {
+  width: 44px;
+  padding: 0.3em 0.2em;
+  border: 1.5px solid var(--border);
+  border-radius: 0.4em;
+  background: var(--surface);
+  color: var(--primary);
+  font-size: 1em;
+  text-align: center;
+  margin: 0 0.2em;
+}
+.cart-remove-btn {
+  background: var(--danger);
+  color: #fff;
+  border: none;
+  border-radius: 0.4em;
+  padding: 0.4em 1.2em;
+  font-size: 1em;
+  font-weight: 600;
+  margin-top: 0.5em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.cart-remove-btn:hover {
+  background: #b71c1c;
+}
+/* --- Enhanced Cart Drawer Footer Styles --- */
+#cart-drawer-footer {
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  padding: 1.2rem 1rem;
+  box-shadow: 0 -1px 4px var(--shadow);
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+#cart-drawer-footer .cart-subtotal {
+  font-size: 1.15em;
+  font-weight: 700;
+  color: var(--primary);
+  margin-right: 1.2em;
+  letter-spacing: 0.01em;
+}
+#cart-drawer-footer .cart-subtotal strong {
+  color: var(--accent);
+}
+#cart-drawer-footer .drawer-actions {
+  display: flex;
+  gap: 0.7em;
+}
+#cart-drawer-footer .drawer-link {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 2rem;
+  padding: 0.7em 1.8em;
+  font-size: 1.1em;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+  box-shadow: 0 2px 8px var(--shadow);
+  display: inline-block;
+  outline: none;
+}
+#cart-drawer-footer .drawer-link:hover,
+#cart-drawer-footer .drawer-link:focus {
+  background: var(--accent-dark);
+  color: #fff;
+  box-shadow: 0 4px 16px var(--shadow);
+  transform: translateY(-2px) scale(1.04);
+}
+
+/* --- Force styling for View Cart and Checkout links in cart drawer footer --- */
+#cart-drawer-footer a[href="/cart"],
+#cart-drawer-footer a[href="/checkout"] {
+  background: var(--accent) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 2rem !important;
+  padding: 0.7em 1.8em !important;
+  font-size: 1.1em !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.15s !important;
+  box-shadow: 0 2px 8px var(--shadow) !important;
+  display: inline-block !important;
+  outline: none !important;
+  margin-left: 0.7em;
+}
+#cart-drawer-footer a[href="/cart"]:hover,
+#cart-drawer-footer a[href="/cart"]:focus,
+#cart-drawer-footer a[href="/checkout"]:hover,
+#cart-drawer-footer a[href="/checkout"]:focus {
+  background: var(--accent-dark) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 16px var(--shadow) !important;
+  transform: translateY(-2px) scale(1.04) !important;
+}
+#cart-drawer-footer div strong,
+#cart-drawer-footer .cart-subtotal strong {
+  color: var(--accent) !important;
+  font-weight: 700 !important;
+}
+
+@media (max-width: 600px) {
+  #cart-drawer {
+    max-width: 100vw;
+    border-radius: 0;
+  }
+  #cart-drawer-body {
+    padding: 0.7rem 0.2rem 0.5rem 0.2rem;
+  }
+  .cart-item img {
+    width: 44px;
+    height: 44px;
+  }
+  #cart-drawer-footer {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.7rem 0.2rem;
+    gap: 0.5rem;
+  }
+  #cart-drawer-footer .drawer-actions {
+    flex-direction: column;
+    gap: 0.5em;
+  }
+  #cart-drawer-footer .drawer-link {
+    width: 100%;
+    text-align: center;
+    padding: 0.8em 0;
+  }
+} 

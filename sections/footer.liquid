@@ -1,8 +1,29 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <footer class="footer">
   <div class="footer__main">
     <div class="footer__col footer__about">
       <h4 class="footer__heading">LAPZONE</h4>
       <p class="footer__desc">Discover the perfect laptop for work, study, gaming, or everyday use. At Lapzone, we offer a wide selection of the latest laptops from top brands, with detailed specs, honest reviews, and unbeatable prices.</p>
+      <div class="footer__social-section">
+        <h5 class="footer__social-title">FOLLOW US</h5>
+        <div class="footer__social">
+          <a href="#" class="footer__social-link" aria-label="Follow us on Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" class="footer__social-link" aria-label="Follow us on Facebook">
+            <i class="fab fa-facebook"></i>
+          </a>
+          <a href="#" class="footer__social-link" aria-label="Follow us on Twitter">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" class="footer__social-link" aria-label="Follow us on Pinterest">
+            <i class="fab fa-pinterest"></i>
+          </a>
+          <a href="#" class="footer__social-link" aria-label="Follow us on TikTok">
+            <i class="fab fa-tiktok"></i>
+          </a>
+        </div>
+      </div>
     </div>
     <div class="footer__col footer__products">
       <h4 class="footer__heading">PRODUCTS</h4>
@@ -10,6 +31,22 @@
         <li><a href="#">Laptops</a></li>
         <li><a href="#">Desktop</a></li>
         <li><a href="#">PCs</a></li>
+      </ul>
+    </div>
+    <div class="footer__col footer__company">
+      <h4 class="footer__heading">COMPANY</h4>
+      <ul class="footer__list">
+        <li><a href="/pages/about" class="footer__link">About Us</a></li>
+        <li><a href="/pages/our-history" class="footer__link">Our History</a></li>
+        <li><a href="/pages/bog" class="footer__link">Blog</a></li>
+      </ul>
+    </div>
+    <div class="footer__col footer__customer-service">
+      <h4 class="footer__heading">CUSTOMER SERVICE</h4>
+      <ul class="footer__list">
+        <li><a href="/pages/help-support" class="footer__link">Help & Support</a></li>
+        <li><a href="/pages/returns-exchange" class="footer__link">Returns & Exchange</a></li>
+        <li><a href="/pages/contact" class="footer__link">Contact Us</a></li>
       </ul>
     </div>
     <div class="footer__col footer__contact">
@@ -20,18 +57,28 @@
         <li><span class="footer__icon">📞</span> +977 9815045184</li>
       </ul>
     </div>
-    <div class="footer__col footer__social">
-      <h4 class="footer__heading">FOLLOW US</h4>
-      <div class="footer__social-icons">
-        <a href="#" class="footer__social-icon footer__social-icon--fb" aria-label="Facebook"> <svg width="32" height="32"><circle cx="16" cy="16" r="15" fill="#3b5998"/><text x="16" y="22" text-anchor="middle" font-size="18" fill="#fff">f</text></svg></a>
-        <a href="#" class="footer__social-icon footer__social-icon--tw" aria-label="Twitter"> <svg width="32" height="32"><circle cx="16" cy="16" r="15" fill="#55acee"/><text x="16" y="22" text-anchor="middle" font-size="18" fill="#fff">t</text></svg></a>
-        <a href="#" class="footer__social-icon footer__social-icon--ig" aria-label="Instagram"> <svg width="32" height="32"><circle cx="16" cy="16" r="15" fill="#e4405f"/><text x="16" y="22" text-anchor="middle" font-size="18" fill="#fff">i</text></svg></a>
-        <a href="#" class="footer__social-icon footer__social-icon--gh" aria-label="GitHub"> <svg width="32" height="32"><circle cx="16" cy="16" r="15" fill="#333"/><text x="16" y="22" text-anchor="middle" font-size="18" fill="#fff">gh</text></svg></a>
-      </div>
+  </div>
+  
+  <div class="footer__payment-methods">
+    <span class="footer__payment-label">We Accept:</span>
+    <div class="footer__payment-icons">
+      <i class="fab fa-cc-visa"></i>
+      <i class="fab fa-cc-mastercard"></i>
+      <i class="fab fa-cc-amex"></i>
+      <i class="fab fa-cc-paypal"></i>
+      <i class="fab fa-apple-pay"></i>
     </div>
   </div>
+  
   <div class="footer__copyright">
-    <p>&copy; {{ 'now' | date: '%Y' }} Copyright: MDBootstrap.com</p>
+    <p>
+      &copy; {{ 'now' | date: '%Y' }} Copyright: LAPZONE.com
+      <span style="margin-left:1.5rem;">
+        <a href="/pages/privacy-policy" class="footer__policy-link">Privacy Policy</a> |
+        <a href="/pages/terms-conditions" class="footer__policy-link">Terms of conditions</a> |
+        <a href="/pages/cookie-policy" class="footer__policy-link">Cookie Policy</a>
+      </span>
+    </p>
   </div>
 
   {% stylesheet %}
@@ -47,24 +94,58 @@
     justify-content: space-between;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 2.5rem 1.5rem 1.5rem 1.5rem;
-    gap: 2rem;
+    padding: 2rem 1.5rem 1rem 1.5rem;
+    gap: 1.5rem;
   }
   .footer__col {
     flex: 1 1 200px;
     min-width: 180px;
-    max-width: 260px;
+    max-width: 280px;
   }
   .footer__heading {
     font-size: 1.1rem;
     font-weight: bold;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
     letter-spacing: 0.5px;
   }
   .footer__desc {
-    font-size: 0.97rem;
+    font-size: 0.95rem;
     opacity: 0.85;
-    margin-bottom: 0;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+  .footer__social-section {
+    margin-top: 0.8rem;
+  }
+  .footer__social-title {
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.5px;
+    opacity: 0.9;
+  }
+  .footer__social {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+  .footer__social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+  }
+  .footer__social-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+    color: #fff;
   }
   .footer__list {
     list-style: none;
@@ -72,13 +153,14 @@
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.4rem;
   }
   .footer__list a {
     color: #fff;
     text-decoration: none;
     opacity: 0.9;
     transition: opacity 0.2s;
+    font-size: 0.95rem;
   }
   .footer__list a:hover {
     opacity: 1;
@@ -90,57 +172,112 @@
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    font-size: 0.97rem;
+    gap: 0.4rem;
+    font-size: 0.95rem;
   }
   .footer__icon {
-    margin-right: 0.5rem;
-    font-size: 1.1em;
+    margin-right: 0.4rem;
+    font-size: 1em;
     vertical-align: middle;
   }
-  .footer__social-icons {
+  .footer__payment-methods {
+    background: #4a5a6a;
+    padding: 0.8rem 0;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .footer__payment-label {
+    display: block;
+    font-size: 0.85rem;
+    opacity: 0.8;
+    margin-bottom: 0.4rem;
+    font-weight: 500;
+  }
+  .footer__payment-icons {
     display: flex;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.6rem;
     flex-wrap: wrap;
   }
-  .footer__social-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    width: 38px;
-    height: 38px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    background: transparent;
-    transition: transform 0.15s;
+  .footer__payment-icons i {
+    font-size: 1.4rem;
+    color: #fff;
+    opacity: 0.9;
+    transition: opacity 0.2s, transform 0.2s;
   }
-  .footer__social-icon:hover {
-    transform: scale(1.08);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  .footer__payment-icons i:hover {
+    opacity: 1;
+    transform: scale(1.05);
   }
   .footer__copyright {
     background: #4a5a6a;
     text-align: center;
-    padding: 1rem 0;
-    font-size: 0.98rem;
+    padding: 0.8rem 0;
+    font-size: 0.95rem;
     opacity: 0.95;
     letter-spacing: 0.2px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .footer__policy-link {
+    color: #fff;
+    opacity: 0.85;
+    text-decoration: none;
+    margin: 0 0.25rem;
+    font-size: 0.95rem;
+    transition: opacity 0.2s;
+  }
+  .footer__policy-link:hover {
+    opacity: 1;
+    text-decoration: underline;
   }
   @media screen and (max-width: 900px) {
     .footer__main {
       flex-direction: column;
       align-items: center;
-      gap: 2rem;
-      padding: 2rem 1rem 1rem 1rem;
+      gap: 1.5rem;
+      padding: 1.5rem 1rem 1rem 1rem;
     }
     .footer__col {
       max-width: 100%;
       width: 100%;
       text-align: center;
     }
-    .footer__social-icons {
+    .footer__social {
       justify-content: center;
+    }
+    .footer__payment-icons {
+      gap: 0.5rem;
+    }
+    .footer__payment-icons i {
+      font-size: 1.2rem;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .footer__main {
+      padding: 1rem 0.5rem 0.5rem 0.5rem;
+      gap: 1rem;
+    }
+    .footer__social {
+      gap: 0.3rem;
+    }
+    .footer__social-link {
+      width: 26px;
+      height: 26px;
+      font-size: 0.8rem;
+    }
+    .footer__payment-methods {
+      padding: 0.6rem 0;
+    }
+    .footer__payment-icons {
+      gap: 0.4rem;
+    }
+    .footer__payment-icons i {
+      font-size: 1rem;
+    }
+    .footer__copyright {
+      padding: 0.6rem 0;
+      font-size: 0.9rem;
     }
   }
   {% endstylesheet %}

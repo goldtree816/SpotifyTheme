@@ -1,0 +1,224 @@
+<!-- Returns & Exchanges Section -->
+<section class="returns-exchanges">
+  <div class="returns-exchanges__container">
+    <h1 class="returns-exchanges__title">{{ section.settings.title }}</h1>
+    <div class="returns-exchanges__content">
+      {{ section.settings.content }}
+    </div>
+    <div class="returns-exchanges__policy">
+      <h2 class="returns-exchanges__block-title"><i class="fas fa-undo-alt"></i> Returns</h2>
+      <div class="returns-exchanges__block-content">{{ section.settings.returns }}</div>
+    </div>
+    <div class="returns-exchanges__policy">
+      <h2 class="returns-exchanges__block-title"><i class="fas fa-exchange-alt"></i> Exchanges</h2>
+      <div class="returns-exchanges__block-content">{{ section.settings.exchanges }}</div>
+    </div>
+    <div class="returns-exchanges__policy">
+      <h2 class="returns-exchanges__block-title"><i class="fas fa-shipping-fast"></i> Shipping & Processing</h2>
+      <div class="returns-exchanges__block-content">{{ section.settings.shipping }}</div>
+    </div>
+    <div class="returns-exchanges__policy">
+      <h2 class="returns-exchanges__block-title"><i class="fas fa-exclamation-triangle"></i> Non-Returnable Items</h2>
+      <div class="returns-exchanges__block-content">{{ section.settings.non_returnable }}</div>
+    </div>
+    <div class="returns-exchanges__contact">
+      <h3>Need Help with Returns?</h3>
+      <p>Our customer service team is here to help you with any questions about returns or exchanges.</p>
+      <div class="returns-exchanges__contact-info">
+        <div class="returns-exchanges__contact-item">
+          <i class="fas fa-phone"></i>
+          <span>+977 9815045184</span>
+        </div>
+        <div class="returns-exchanges__contact-item">
+          <i class="fas fa-envelope"></i>
+          <span>support@lapzone.com</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.returns-exchanges {
+  background: var(--background, #ffffff);
+  color: var(--primary, #333);
+  padding: 3rem 0;
+  min-height: 100vh;
+}
+.returns-exchanges__container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+.returns-exchanges__title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: var(--primary, #333);
+  text-align: center;
+}
+.returns-exchanges__content {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 3rem;
+  color: var(--secondary, #666);
+  text-align: center;
+}
+.returns-exchanges__policy {
+  background: var(--surface, #fff);
+  border: 1px solid var(--border, #e1e5e9);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.returns-exchanges__block-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: var(--accent, #007bff);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.returns-exchanges__block-title i {
+  color: var(--accent, #007bff);
+  font-size: 1.2rem;
+}
+.returns-exchanges__block-content {
+  color: var(--secondary, #666);
+  line-height: 1.7;
+  font-size: 1rem;
+}
+.returns-exchanges__block-content ul {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+.returns-exchanges__block-content li {
+  margin-bottom: 0.75rem;
+}
+.returns-exchanges__block-content strong {
+  color: var(--primary, #333);
+  font-weight: bold;
+}
+.returns-exchanges__block-content a {
+  color: var(--accent, #007bff);
+  text-decoration: none;
+  font-weight: bold;
+}
+.returns-exchanges__block-content a:hover {
+  text-decoration: underline;
+}
+.returns-exchanges__contact {
+  background: var(--surface, #fff);
+  border: 2px solid var(--accent, #007bff);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  margin-top: 2rem;
+}
+.returns-exchanges__contact h3 {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: var(--primary, #333);
+}
+.returns-exchanges__contact p {
+  color: var(--secondary, #666);
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+.returns-exchanges__contact-info {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.returns-exchanges__contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: var(--primary, #333);
+}
+.returns-exchanges__contact-item i {
+  color: var(--accent, #007bff);
+  font-size: 1.1rem;
+}
+@media screen and (max-width: 768px) {
+  .returns-exchanges {
+    padding: 2rem 0;
+  }
+  .returns-exchanges__container {
+    padding: 0 1rem;
+  }
+  .returns-exchanges__title {
+    font-size: 2rem;
+  }
+  .returns-exchanges__policy {
+    padding: 1.5rem;
+  }
+  .returns-exchanges__contact-info {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+@media screen and (max-width: 480px) {
+  .returns-exchanges__title {
+    font-size: 1.8rem;
+  }
+  .returns-exchanges__policy {
+    padding: 1rem;
+  }
+  .returns-exchanges__block-title {
+    font-size: 1.2rem;
+  }
+  .returns-exchanges__contact {
+    padding: 1.5rem;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Returns & Exchanges",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Page Title",
+      "default": "Returns & Exchanges"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Intro Content",
+      "default": "<p>At LAPZONE, we want you to be completely satisfied with your laptop purchase. If you're not happy with your order, we offer a comprehensive return and exchange policy to ensure your peace of mind.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "returns",
+      "label": "Returns Content",
+      "default": "<ul><li><strong>Return Window:</strong> You can request a return within 30 days of receiving your order.</li><li><strong>Eligibility:</strong><ul><li>Laptops must be in original condition with all accessories, manuals, and packaging included.</li><li>No physical damage, scratches, or signs of use beyond initial testing.</li><li>All original seals and protective films must be intact.</li><li>Software must not be installed or modified beyond factory settings.</li></ul></li><li><strong>How to Request a Return:</strong><ul><li>Log into your account and go to 'My Orders' to initiate a return.</li><li>Or email us at <a href='mailto:support@lapzone.com'>support@lapzone.com</a> with your order number and reason for return.</li><li>We'll provide you with a prepaid return shipping label.</li><li>Pack the laptop securely in its original packaging and ship it back to us.</li></ul></li><li><strong>Refund Process:</strong> Once we receive and inspect your return, we'll process your refund within 3-5 business days. Refunds will be issued to your original payment method.</li></ul>"
+    },
+    {
+      "type": "richtext",
+      "id": "exchanges",
+      "label": "Exchanges Content",
+      "default": "<ul><li><strong>Exchange Options:</strong><ul><li>Size/Configuration: Exchange for different RAM, storage, or processor options (subject to availability).</li><li>Model: Exchange for a different laptop model within the same price range.</li><li>Color: Exchange for different color variants if available.</li></ul></li><li><strong>Exchange Process:</strong><ul><li>Contact our support team within 14 days of delivery.</li><li>Provide your order number and desired exchange specifications.</li><li>We'll confirm availability and arrange the exchange.</li><li>Return shipping is free for exchanges.</li></ul></li><li><strong>Exchange Conditions:</strong> Same as return conditions — laptop must be in original condition with all accessories included.</li><li><strong>Price Differences:</strong> If the new item costs more, you'll pay the difference. If it costs less, we'll refund the difference.</li></ul>"
+    },
+    {
+      "type": "richtext",
+      "id": "shipping",
+      "label": "Shipping & Processing Content",
+      "default": "<ul><li><strong>Return Shipping:</strong> We provide prepaid return shipping labels for eligible returns within Nepal.</li><li><strong>Processing Time:</strong> Returns are processed within 2-3 business days of receipt.</li><li><strong>Refund Timeline:</strong> Refunds are issued within 3-5 business days after processing.</li><li><strong>Shipping Costs:</strong> Return shipping is free for defective items or our errors. For change-of-mind returns, shipping costs may apply.</li><li><strong>Tracking:</strong> All returns include tracking information for your peace of mind.</li></ul>"
+    },
+    {
+      "type": "richtext",
+      "id": "non_returnable",
+      "label": "Non-Returnable Items Content",
+      "default": "<ul><li><strong>Software & Digital Products:</strong> Downloaded software, digital licenses, and online services are non-refundable.</li><li><strong>Custom Configurations:</strong> Laptops with custom modifications or special configurations may not be eligible for return.</li><li><strong>Damaged Items:</strong> Items with physical damage, missing parts, or signs of misuse cannot be returned.</li><li><strong>Personal Data:</strong> Laptops with personal data or software installations beyond factory settings may not be eligible.</li><li><strong>Clearance Items:</strong> Items marked as final sale or clearance may have different return policies.</li></ul>"
+    }
+  ]
+}
+{% endschema %} 

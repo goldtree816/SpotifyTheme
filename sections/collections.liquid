@@ -1,5 +1,6 @@
-{% section 'navbar' %}
 
+
+{{ 'collection.css' | asset_url | stylesheet_tag }} 
 <section class="collection">
   <div class="collection__header">
     <h1 class="collection__title">{{ collection.title }}</h1>
@@ -15,7 +16,7 @@
           <a href="{{ product.url }}" class="collection__link">
             {% if product.featured_image %}
               <img 
-                src="{{ product.featured_image | image_url: width: 400, height: 400, crop: 'center' }}" 
+                src="{{ product.featured_image | image_url: width: 350 }}" 
                 alt="{{ product.featured_image.alt | default: product.title }}" 
                 class="collection__img"
                 loading="lazy"
@@ -26,23 +27,19 @@
               </div>
             {% endif %}
           </a>
-          
           <div class="collection__info">
             <h3 class="collection__name">
               <a href="{{ product.url }}" class="collection__product-link">
                 {{ product.title }}
               </a>
             </h3>
-            
-            <div class="collection__prices">
-              {% if product.compare_at_price > product.price %}
-                <span class="collection__old">{{ product.compare_at_price | money }}</span>
-                <span class="collection__new">{{ product.price | money }}</span>
-              {% else %}
-                <span class="collection__price">{{ product.price | money }}</span>
-              {% endif %}
-            </div>
-            
+            {% if product.metafields.custom.ram %}
+              <div class="collection__specs">{{ product.metafields.custom.ram }}</div>
+            {% endif %}
+            {%- comment -%}
+              Optional: Add a rating snippet here if you have one, e.g.
+              {% render 'product-rating', product: product %}
+            {%- endcomment -%}
             {% unless product.available %}
               <span class="collection__sold-out">{{ 'products.product.sold_out' | t }}</span>
             {% else %}
@@ -53,11 +50,7 @@
                   class="collection__cart"
                   {% unless product.available %}disabled{% endunless %}
                 >
-                  {% if product.available %}
-                    {{ 'products.product.add_to_cart' | t }}
-                  {% else %}
-                    {{ 'products.product.sold_out' | t }}
-                  {% endif %}
+                  {{ 'products.product.add_to_cart' | t }}
                 </button>
               </form>
             {% endunless %}
@@ -78,6 +71,36 @@
   {% endpaginate %}
 </section>
 
-{% section 'footer' %}
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collection Display Settings"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 8,
+      "max": 24,
+      "step": 4,
+      "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_description",
+      "label": "Show collection description",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection"
+    }
+  ]
+}
+{% endschema %}
 
-{{ 'collection.css' | asset_url | stylesheet_tag }} 
+

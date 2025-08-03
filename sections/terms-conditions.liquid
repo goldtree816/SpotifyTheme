@@ -1,0 +1,132 @@
+<section class="legal legal--terms">
+  <div class="legal__container">
+    <h1 class="legal__title">{{ section.settings.heading | default: 'Terms & Conditions' }}</h1>
+    <div class="legal__content">
+      {{ section.settings.content }}
+    </div>
+  </div>
+
+  {% schema %}
+  {
+    "name": "Terms of Service Content",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Policy Title",
+        "default": "Terms & Conditions"
+      },
+      {
+        "type": "richtext",
+        "id": "content",
+        "label": "Policy Content",
+        "default": "<p><strong>Effective Date:</strong> 11 July 2025</p><p>Welcome to Lapzone. By accessing or using our website, you agree to the following terms. Please read them carefully.</p><h2>Overview</h2><p>These Terms of Service govern your use of our website and services. By placing an order or browsing the site, you agree to be bound by these terms, including any additional policies referenced here.</p><h2>Online Store Terms</h2><ul><li>You must be at least 18 years old (or the age of majority in your area) to use this site.</li><li>You agree not to use our products for any illegal or unauthorized purpose.</li><li>You must not transmit any viruses or any code of a destructive nature.</li></ul><h2>General Conditions</h2><p>We reserve the right to refuse service to anyone for any reason at any time. Your content (not including credit card info) may be transferred unencrypted.</p><h2>Accuracy of Information</h2><p>We strive to provide accurate product and pricing information. However, errors may occur. We reserve the right to correct such errors and to cancel any orders placed for the incorrect price.</p><h2>Products & Services</h2><ul><li>All products are subject to availability.</li><li>We may limit the quantities of any products or services.</li><li>Colors and descriptions may vary slightly depending on your screen settings.</li></ul><h2>Billing & Account Information</h2><p>You agree to provide current, complete, and accurate information for all purchases. You are responsible for maintaining the confidentiality of your account.</p><h2>Intellectual Property</h2><p>All content on this site—including text, graphics, logos, and images—is the property of Lapzone or its content suppliers and is protected by copyright laws.</p><h2>Limitation of Liability</h2><p>We are not liable for any damages arising from your use of the site or our products.</p><h2>Contact Us</h2><p>If you have questions about these Terms & Conditions, please contact us at <a href=\"mailto:lapzone@gmail.com\">lapzone@gmail.com</a>.</p>"
+      }
+    ]
+  }
+  {% endschema %}
+
+  <style>
+    .legal {
+      background: var(--background, #f5f7fa);
+      padding: 3rem 0;
+      min-height: 100vh;
+    }
+    
+    .legal__container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    
+    .legal__title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary, #222);
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .legal__content {
+      background: var(--surface, #fff);
+      border-radius: 16px;
+      box-shadow: 0 2px 12px var(--shadow, rgba(33, 150, 243, 0.08));
+      padding: 2.5rem;
+      color: var(--primary, #222);
+      line-height: 1.7;
+    }
+    
+    .legal__content h2 {
+      color: var(--accent, #2196f3);
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 2rem 0 1rem 0;
+    }
+    
+    .legal__content h2:first-of-type {
+      margin-top: 0;
+    }
+    
+    .legal__content p {
+      margin-bottom: 1rem;
+      color: var(--secondary, #666);
+    }
+    
+    .legal__content ul, .legal__content ol {
+      margin: 1rem 0 1rem 1.5rem;
+      color: var(--secondary, #666);
+    }
+    
+    .legal__content li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .legal__content a {
+      color: var(--accent, #2196f3);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    .legal__content a:hover {
+      text-decoration: underline;
+    }
+    
+    .legal__content strong {
+      color: var(--primary, #222);
+      font-weight: 600;
+    }
+    
+    @media (max-width: 768px) {
+      .legal {
+        padding: 2rem 0;
+      }
+      
+      .legal__title {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      .legal__content {
+        padding: 1.5rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .legal__container {
+        padding: 0 1rem;
+      }
+      
+      .legal__title {
+        font-size: 1.75rem;
+      }
+      
+      .legal__content {
+        padding: 1rem;
+      }
+      
+      .legal__content h2 {
+        font-size: 1.25rem;
+      }
+    }
+  </style>
+</section> 
