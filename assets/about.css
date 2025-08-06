@@ -57,23 +57,6 @@
   margin-bottom: 1.5rem;
 }
 
-.about__cta-btn {
-  display: inline-block;
-  background: var(--accent);
-  color: #fff;
-  font-weight: 600;
-  padding: 0.8rem 1.8rem;
-  border-radius: 8px;
-  text-decoration: none;
-  font-size: 1rem;
-  transition: background 0.2s, transform 0.2s;
-  box-shadow: 0 2px 8px var(--shadow);
-}
-
-.about__cta-btn:hover {
-  background: var(--accent-dark);
-  transform: translateY(-1px);
-}
 
 .about__hero-img {
   flex: 1 1 220px;
@@ -367,74 +350,4 @@
   object-fit: cover;
 }
 
-@media (max-width: 768px) {
-  .about {
-    padding: 1.5rem 1rem;
-  }
-  
-  .about__hero, .about__fleet {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 1.5rem 1rem;
-  }
-  
-  .about__hero-img, .about__fleet-img {
-    align-items: center;
-    justify-content: center;
-    margin-top: 1rem;
-  }
-  
-  .about__stats {
-    gap: 1rem;
-  }
-  
-  .about__company {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 1.5rem 1rem;
-  }
-  
-  .about__testimonials-list {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .about__testimonial {
-    width: 100%;
-    max-width: 320px;
-  }
-  
-  .about__features {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 480px) {
-  .about {
-    padding: 1rem 0.5rem;
-  }
-  
-  .about__hero, .about__fleet {
-    padding: 1rem 0.5rem;
-  }
-  
-  .about__company, .about__testimonials {
-    padding: 1rem 0.5rem;
-  }
-  
-  .about__feature {
-    padding: 1rem 0.5rem;
-  }
-  
-  .about__testimonial {
-    padding: 1rem 0.5rem;
-  }
-  
-  .about__hero-title {
-    font-size: 2rem;
-  }
-  
-  .about__company-headline {
-    font-size: 1.3rem;
-  }
-} 
+/* Responsive styles are now handled by responsive.css */ 

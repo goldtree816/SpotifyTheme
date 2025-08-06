@@ -1,18 +1,15 @@
 {
+  "name": "404 Error",
   "sections": {
     "header": {
       "type": "header"
     },
     "main": {
-      "type": "contact"
+      "type": "404"
     },
     "footer": {
       "type": "footer"
     }
   },
-  "order": [
-    "header",
-    "main",
-    "footer"
-  ]
+  "order": ["header", "main", "footer"]
 } 

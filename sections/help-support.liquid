@@ -5,15 +5,6 @@
       <p class="help-support__subtitle">Find answers to common questions and get the support you need</p>
     </div>
 
-    <div class="help-support__search">
-      <div class="help-support__search-box">
-        <input type="text" id="helpSearch" placeholder="Search for help topics..." class="help-support__search-input">
-        <button type="button" class="help-support__search-btn">
-          <i class="fas fa-search"></i>
-        </button>
-      </div>
-    </div>
-
     <div class="help-support__content">
       <div class="help-support__categories">
         <div class="help-support__category" data-category="account">
@@ -194,14 +185,6 @@
                 <span>Response within 24 hours</span>
               </div>
             </div>
-            <div class="help-support__contact-method">
-              <i class="fas fa-comments"></i>
-              <div>
-                <h4>Live Chat</h4>
-                <p>Available on website</p>
-                <span>Real-time support</span>
-              </div>
-            </div>
           </div>
           <a href="/pages/contact" class="help-support__contact-btn">Contact Support</a>
         </div>
@@ -211,9 +194,9 @@
 
   {% stylesheet %}
   .help-support {
-    background: var(--background, #ffffff);
-    color: var(--primary, #333);
-    padding: 2rem 0;
+    background: #ffffff;
+    color: #333333;
+    padding: 3rem 0;
     min-height: 100vh;
   }
   .help-support__container {
@@ -228,51 +211,14 @@
   .help-support__title {
     font-size: 2.5rem;
     font-weight: bold;
-    color: var(--primary, #333);
+    color: #333333;
     margin-bottom: 1rem;
   }
   .help-support__subtitle {
     font-size: 1.1rem;
-    color: var(--secondary, #666);
+    color: #666666;
     max-width: 600px;
     margin: 0 auto;
-  }
-  .help-support__search {
-    margin-bottom: 3rem;
-  }
-  .help-support__search-box {
-    max-width: 500px;
-    margin: 0 auto;
-    position: relative;
-  }
-  .help-support__search-input {
-    width: 100%;
-    padding: 1rem 3rem 1rem 1.5rem;
-    border: 2px solid var(--border, #e1e5e9);
-    border-radius: 12px;
-    font-size: 1rem;
-    background: var(--surface, #fff);
-    transition: border-color 0.2s;
-  }
-  .help-support__search-input:focus {
-    outline: none;
-    border-color: var(--accent, #007bff);
-  }
-  .help-support__search-btn {
-    position: absolute;
-    right: 0.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    background: var(--accent, #007bff);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 0.75rem;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .help-support__search-btn:hover {
-    background: var(--accent-dark, #0056b3);
   }
   .help-support__content {
     display: grid;
@@ -285,26 +231,26 @@
     gap: 1.5rem;
   }
   .help-support__category {
-    background: var(--surface, #fff);
-    border: 1px solid var(--border, #e1e5e9);
+    background: #ffffff;
+    border: 1px solid #e1e5e9;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   }
   .help-support__category-header {
     display: flex;
     align-items: center;
     padding: 1.5rem;
-    background: var(--surface, #fff);
+    background: #ffffff;
     cursor: pointer;
     transition: background 0.2s;
   }
   .help-support__category-header:hover {
-    background: var(--background-light, #f8f9fa);
+    background: #f8f9fa;
   }
   .help-support__category-header i:first-child {
     font-size: 1.5rem;
-    color: var(--accent, #007bff);
+    color: #007bff;
     margin-right: 1rem;
   }
   .help-support__category-header h2 {
@@ -315,7 +261,7 @@
   }
   .help-support__toggle {
     font-size: 0.9rem;
-    color: var(--secondary, #666);
+    color: #666666;
     transition: transform 0.2s;
   }
   .help-support__category.active .help-support__toggle {
@@ -331,7 +277,7 @@
   }
   .help-support__item {
     padding: 1.5rem;
-    border-top: 1px solid var(--border, #e1e5e9);
+    border-top: 1px solid #e1e5e9;
   }
   .help-support__item:first-child {
     border-top: none;
@@ -340,10 +286,10 @@
     font-size: 1.1rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
-    color: var(--primary, #333);
+    color: #333333;
   }
   .help-support__item p {
-    color: var(--secondary, #666);
+    color: #666666;
     line-height: 1.6;
     margin: 0;
   }
@@ -352,20 +298,20 @@
     top: 2rem;
   }
   .help-support__contact-card {
-    background: var(--surface, #fff);
-    border: 1px solid var(--border, #e1e5e9);
+    background: #ffffff;
+    border: 1px solid #e1e5e9;
     border-radius: 12px;
     padding: 2rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   }
   .help-support__contact-card h3 {
     font-size: 1.3rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
-    color: var(--primary, #333);
+    color: #333333;
   }
   .help-support__contact-card > p {
-    color: var(--secondary, #666);
+    color: #666666;
     margin-bottom: 2rem;
   }
   .help-support__contact-methods {
@@ -381,29 +327,29 @@
   }
   .help-support__contact-method i {
     font-size: 1.2rem;
-    color: var(--accent, #007bff);
+    color: #007bff;
     margin-top: 0.2rem;
   }
   .help-support__contact-method h4 {
     font-size: 1rem;
     font-weight: bold;
     margin-bottom: 0.25rem;
-    color: var(--primary, #333);
+    color: #333333;
   }
   .help-support__contact-method p {
     font-size: 0.95rem;
     margin-bottom: 0.25rem;
-    color: var(--primary, #333);
+    color: #333333;
   }
   .help-support__contact-method span {
     font-size: 0.85rem;
-    color: var(--secondary, #666);
+    color: #666666;
   }
   .help-support__contact-btn {
     display: block;
-    width: 100%;
+    width: 90%;
     padding: 1rem;
-    background: var(--accent, #007bff);
+    background: #007bff;
     color: white;
     text-decoration: none;
     text-align: center;
@@ -412,7 +358,7 @@
     transition: background 0.2s;
   }
   .help-support__contact-btn:hover {
-    background: var(--accent-dark, #0056b3);
+    background: #0056b3;
   }
   @media screen and (max-width: 900px) {
     .help-support__content {
@@ -428,7 +374,7 @@
   }
   @media screen and (max-width: 480px) {
     .help-support {
-      padding: 1rem 0;
+      padding: 2rem 0;
     }
     .help-support__container {
       padding: 0 1rem;
@@ -467,47 +413,6 @@
             category.classList.add('active');
           }
         });
-      });
-
-      // Search functionality
-      const searchInput = document.getElementById('helpSearch');
-      const searchBtn = document.querySelector('.help-support__search-btn');
-      
-      function performSearch() {
-        const searchTerm = searchInput.value.toLowerCase().trim();
-        const items = document.querySelectorAll('.help-support__item');
-        
-        items.forEach(item => {
-          const title = item.querySelector('h3').textContent.toLowerCase();
-          const content = item.querySelector('p').textContent.toLowerCase();
-          const matches = title.includes(searchTerm) || content.includes(searchTerm);
-          
-          if (searchTerm === '' || matches) {
-            item.style.display = 'block';
-            item.parentElement.style.display = 'block';
-            item.parentElement.parentElement.style.display = 'block';
-          } else {
-            item.style.display = 'none';
-          }
-        });
-        
-        // Show/hide categories based on visible items
-        document.querySelectorAll('.help-support__category').forEach(category => {
-          const visibleItems = category.querySelectorAll('.help-support__item[style="display: block"]');
-          if (visibleItems.length === 0 && searchTerm !== '') {
-            category.style.display = 'none';
-          } else {
-            category.style.display = 'block';
-          }
-        });
-      }
-      
-      searchInput.addEventListener('input', performSearch);
-      searchBtn.addEventListener('click', performSearch);
-      searchInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-          performSearch();
-        }
       });
     });
   </script>

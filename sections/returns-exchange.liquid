@@ -36,148 +36,149 @@
       </div>
     </div>
   </div>
-</section>
 
-<style>
-.returns-exchanges {
-  background: var(--background, #ffffff);
-  color: var(--primary, #333);
-  padding: 3rem 0;
-  min-height: 100vh;
-}
-.returns-exchanges__container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-.returns-exchanges__title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin-bottom: 2rem;
-  color: var(--primary, #333);
-  text-align: center;
-}
-.returns-exchanges__content {
-  font-size: 1.1rem;
-  line-height: 1.7;
-  margin-bottom: 3rem;
-  color: var(--secondary, #666);
-  text-align: center;
-}
-.returns-exchanges__policy {
-  background: var(--surface, #fff);
-  border: 1px solid var(--border, #e1e5e9);
-  border-radius: 12px;
-  padding: 2rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-.returns-exchanges__block-title {
-  font-size: 1.3rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  color: var(--accent, #007bff);
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-.returns-exchanges__block-title i {
-  color: var(--accent, #007bff);
-  font-size: 1.2rem;
-}
-.returns-exchanges__block-content {
-  color: var(--secondary, #666);
-  line-height: 1.7;
-  font-size: 1rem;
-}
-.returns-exchanges__block-content ul {
-  margin: 1rem 0;
-  padding-left: 1.5rem;
-}
-.returns-exchanges__block-content li {
-  margin-bottom: 0.75rem;
-}
-.returns-exchanges__block-content strong {
-  color: var(--primary, #333);
-  font-weight: bold;
-}
-.returns-exchanges__block-content a {
-  color: var(--accent, #007bff);
-  text-decoration: none;
-  font-weight: bold;
-}
-.returns-exchanges__block-content a:hover {
-  text-decoration: underline;
-}
-.returns-exchanges__contact {
-  background: var(--surface, #fff);
-  border: 2px solid var(--accent, #007bff);
-  border-radius: 12px;
-  padding: 2rem;
-  text-align: center;
-  margin-top: 2rem;
-}
-.returns-exchanges__contact h3 {
-  font-size: 1.4rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  color: var(--primary, #333);
-}
-.returns-exchanges__contact p {
-  color: var(--secondary, #666);
-  margin-bottom: 1.5rem;
-  font-size: 1rem;
-}
-.returns-exchanges__contact-info {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  flex-wrap: wrap;
-}
-.returns-exchanges__contact-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1rem;
-  color: var(--primary, #333);
-}
-.returns-exchanges__contact-item i {
-  color: var(--accent, #007bff);
-  font-size: 1.1rem;
-}
-@media screen and (max-width: 768px) {
+  {% stylesheet %}
   .returns-exchanges {
-    padding: 2rem 0;
+    background: #ffffff;
+    color: #333333;
+    padding: 3rem 0;
+    min-height: 100vh;
   }
   .returns-exchanges__container {
-    padding: 0 1rem;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
   }
   .returns-exchanges__title {
-    font-size: 2rem;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    color: #333333;
+    text-align: center;
+  }
+  .returns-exchanges__content {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+    color: #666666;
+    text-align: center;
   }
   .returns-exchanges__policy {
-    padding: 1.5rem;
-  }
-  .returns-exchanges__contact-info {
-    flex-direction: column;
-    gap: 1rem;
-  }
-}
-@media screen and (max-width: 480px) {
-  .returns-exchanges__title {
-    font-size: 1.8rem;
-  }
-  .returns-exchanges__policy {
-    padding: 1rem;
+    background: #ffffff;
+    border: 1px solid #e1e5e9;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   }
   .returns-exchanges__block-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #007bff;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .returns-exchanges__block-title i {
+    color: #007bff;
     font-size: 1.2rem;
   }
-  .returns-exchanges__contact {
-    padding: 1.5rem;
+  .returns-exchanges__block-content {
+    color: #666666;
+    line-height: 1.7;
+    font-size: 1rem;
   }
-}
-</style>
+  .returns-exchanges__block-content ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+  .returns-exchanges__block-content li {
+    margin-bottom: 0.75rem;
+  }
+  .returns-exchanges__block-content strong {
+    color: #333333;
+    font-weight: bold;
+  }
+  .returns-exchanges__block-content a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  .returns-exchanges__block-content a:hover {
+    text-decoration: underline;
+  }
+  .returns-exchanges__contact {
+    background: #ffffff;
+    border: 2px solid #007bff;
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    margin-top: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .returns-exchanges__contact h3 {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #333333;
+  }
+  .returns-exchanges__contact p {
+    color: #666666;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+  }
+  .returns-exchanges__contact-info {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .returns-exchanges__contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    color: #333333;
+  }
+  .returns-exchanges__contact-item i {
+    color: #007bff;
+    font-size: 1.1rem;
+  }
+  @media screen and (max-width: 768px) {
+    .returns-exchanges {
+      padding: 2rem 0;
+    }
+    .returns-exchanges__container {
+      padding: 0 1rem;
+    }
+    .returns-exchanges__title {
+      font-size: 2rem;
+    }
+    .returns-exchanges__policy {
+      padding: 1.5rem;
+    }
+    .returns-exchanges__contact {
+      padding: 1.5rem;
+    }
+    .returns-exchanges__contact-info {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .returns-exchanges__title {
+      font-size: 1.8rem;
+    }
+    .returns-exchanges__policy {
+      padding: 1rem;
+    }
+    .returns-exchanges__contact {
+      padding: 1rem;
+    }
+  }
+  {% endstylesheet %}
+</section>
 
 {% schema %}
 {

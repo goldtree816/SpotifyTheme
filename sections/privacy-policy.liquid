@@ -1,132 +1,113 @@
-<section class="legal legal--privacy">
-  <div class="legal__container">
-    <h1 class="legal__title">{{ section.settings.heading | default: 'Privacy Policy' }}</h1>
-    <div class="legal__content">
+<section class="privacy-policy">
+  <div class="privacy-policy__container">
+    <h1 class="privacy-policy__title">{{ section.settings.heading }}</h1>
+    <div class="privacy-policy__content">
       {{ section.settings.content }}
     </div>
   </div>
 
-  {% schema %}
-  {
-    "name": "Privacy Policy Content",
-    "settings": [
-      {
-        "type": "text",
-        "id": "heading",
-        "label": "Policy Title",
-        "default": "Privacy Policy"
-      },
-      {
-        "type": "richtext",
-        "id": "content",
-        "label": "Policy Content",
-        "default": "<p><strong>Effective Date:</strong> 11 July 2025</p><p>This Privacy Policy describes how Lapzone collects, uses, and protects your personal information when you use our website and services.</p><h2>Information We Collect</h2><ul><li>Personal information you provide (name, email, address, phone number)</li><li>Order and payment information</li><li>Usage data and cookies</li><li>Device and browser information</li></ul><h2>How We Use Your Information</h2><ul><li>To process orders and provide customer service</li><li>To communicate with you about orders and updates</li><li>To improve our website and services</li><li>To send marketing communications (with your consent)</li><li>To comply with legal obligations</li></ul><h2>Information Sharing</h2><p>We do not sell, trade, or rent your personal information to third parties. We may share information with trusted partners who assist us in operating our website and serving you.</p><h2>Data Security</h2><p>We implement appropriate security measures to protect your personal information. However, no method of transmission over the internet is 100% secure.</p><h2>Your Rights</h2><p>You have the right to access, update, or delete your personal information. Contact us at <a href=\"mailto:lapzone@gmail.com\">lapzone@gmail.com</a> for requests.</p><h2>Cookies</h2><p>We use cookies to enhance your browsing experience and analyze site traffic. You can control cookie settings through your browser.</p><h2>Contact Us</h2><p>If you have questions about this Privacy Policy, please contact us at <a href=\"mailto:lapzone@gmail.com\">lapzone@gmail.com</a>.</p>"
-      }
-    ]
+  {% stylesheet %}
+  .privacy-policy {
+    background: #ffffff;
+    color: #333333;
+    padding: 3rem 0;
+    min-height: 100vh;
   }
-  {% endschema %}
+  .privacy-policy__container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+  .privacy-policy__title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  .privacy-policy__content {
+    background: #ffffff;
+    border: 1px solid #e1e5e9;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    line-height: 1.7;
+    color: #666666;
+  }
+  .privacy-policy__content h2 {
+    color: #333333;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 2rem 0 1rem 0;
+  }
+  .privacy-policy__content h2:first-child {
+    margin-top: 0;
+  }
+  .privacy-policy__content h3 {
+    color: #333333;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 1.5rem 0 0.75rem 0;
+  }
+  .privacy-policy__content p {
+    margin-bottom: 1rem;
+  }
+  .privacy-policy__content ul, .privacy-policy__content ol {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+  .privacy-policy__content li {
+    margin-bottom: 0.5rem;
+  }
+  .privacy-policy__content a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  .privacy-policy__content a:hover {
+    text-decoration: underline;
+  }
+  @media screen and (max-width: 768px) {
+    .privacy-policy {
+      padding: 2rem 0;
+    }
+    .privacy-policy__container {
+      padding: 0 1rem;
+    }
+    .privacy-policy__title {
+      font-size: 2rem;
+    }
+    .privacy-policy__content {
+      padding: 1.5rem;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .privacy-policy__title {
+      font-size: 1.8rem;
+    }
+    .privacy-policy__content {
+      padding: 1rem;
+    }
+  }
+  {% endstylesheet %}
+</section>
 
-  <style>
-    .legal {
-      background: var(--background, #f5f7fa);
-      padding: 3rem 0;
-      min-height: 100vh;
+{% schema %}
+{
+  "name": "Privacy Policy",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Page Title",
+      "default": "Privacy Policy"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content",
+      "default": "<h2>Privacy Policy for LAPZONE</h2><p>Last updated: January 2025</p><p>At LAPZONE, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or make purchases from us.</p><h3>Information We Collect</h3><p>We collect information you provide directly to us, such as when you create an account, make a purchase, or contact our customer service team. This may include:</p><ul><li>Name and contact information (email, phone, address)</li><li>Payment information (processed securely through our payment partners)</li><li>Order history and preferences</li><li>Communication records with our support team</li></ul><h3>How We Use Your Information</h3><p>We use the information we collect to:</p><ul><li>Process and fulfill your orders</li><li>Provide customer support and respond to inquiries</li><li>Send order confirmations and shipping updates</li><li>Improve our website and services</li><li>Send marketing communications (with your consent)</li></ul><h3>Information Sharing</h3><p>We do not sell, trade, or otherwise transfer your personal information to third parties except as described in this policy. We may share information with:</p><ul><li>Payment processors to complete transactions</li><li>Shipping partners to deliver your orders</li><li>Service providers who assist in our operations</li><li>Legal authorities when required by law</li></ul><h3>Data Security</h3><p>We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. This includes SSL encryption, secure payment processing, and regular security assessments.</p><h3>Your Rights</h3><p>You have the right to:</p><ul><li>Access and update your personal information</li><li>Request deletion of your account and data</li><li>Opt-out of marketing communications</li><li>File a complaint with relevant authorities</li></ul><h3>Cookies and Tracking</h3><p>We use cookies and similar technologies to enhance your browsing experience, analyze website traffic, and personalize content. You can control cookie settings through your browser preferences.</p><h3>Contact Us</h3><p>If you have questions about this Privacy Policy or our data practices, please contact us at:</p><p>Email: privacy@lapzone.com<br>Phone: +977 9815045184<br>Address: Dulhari, Morang, Nepal</p>"
     }
-    
-    .legal__container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
-    
-    .legal__title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--primary, #222);
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    
-    .legal__content {
-      background: var(--surface, #fff);
-      border-radius: 16px;
-      box-shadow: 0 2px 12px var(--shadow, rgba(33, 150, 243, 0.08));
-      padding: 2.5rem;
-      color: var(--primary, #222);
-      line-height: 1.7;
-    }
-    
-    .legal__content h2 {
-      color: var(--accent, #2196f3);
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin: 2rem 0 1rem 0;
-    }
-    
-    .legal__content h2:first-of-type {
-      margin-top: 0;
-    }
-    
-    .legal__content p {
-      margin-bottom: 1rem;
-      color: var(--secondary, #666);
-    }
-    
-    .legal__content ul, .legal__content ol {
-      margin: 1rem 0 1rem 1.5rem;
-      color: var(--secondary, #666);
-    }
-    
-    .legal__content li {
-      margin-bottom: 0.5rem;
-    }
-    
-    .legal__content a {
-      color: var(--accent, #2196f3);
-      text-decoration: none;
-      font-weight: 500;
-    }
-    
-    .legal__content a:hover {
-      text-decoration: underline;
-    }
-    
-    .legal__content strong {
-      color: var(--primary, #222);
-      font-weight: 600;
-    }
-    
-    @media (max-width: 768px) {
-      .legal {
-        padding: 2rem 0;
-      }
-      
-      .legal__title {
-        font-size: 2rem;
-        margin-bottom: 1.5rem;
-      }
-      
-      .legal__content {
-        padding: 1.5rem;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .legal__container {
-        padding: 0 1rem;
-      }
-      
-      .legal__title {
-        font-size: 1.75rem;
-      }
-      
-      .legal__content {
-        padding: 1rem;
-      }
-      
-      .legal__content h2 {
-        font-size: 1.25rem;
-      }
-    }
-  </style>
-</section> 
+  ]
+}
+{% endschema %} 

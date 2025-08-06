@@ -1,0 +1,108 @@
+<section class="error-page">
+  <div class="error-wrapper">
+    <h1>{{ section.settings.title }}</h1>
+    <p>{{ section.settings.message }}</p>
+    <a href="{{ routes.root_url }}" class="error-btn">
+      {{ section.settings.button_label }}
+    </a>
+  </div>
+
+  {% stylesheet %}
+  .error-page {
+    background: #ffffff;
+    color: #333333;
+    padding: 3rem 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .error-wrapper {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    text-align: center;
+  }
+  .error-wrapper h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 1rem;
+  }
+  .error-wrapper p {
+    font-size: 1.2rem;
+    color: #666666;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+  .error-btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: #007bff;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background 0.2s;
+  }
+  .error-btn:hover {
+    background: #0056b3;
+  }
+  @media screen and (max-width: 768px) {
+    .error-page {
+      padding: 2rem 0;
+    }
+    .error-wrapper {
+      padding: 0 1rem;
+    }
+    .error-wrapper h1 {
+      font-size: 2.5rem;
+    }
+    .error-wrapper p {
+      font-size: 1.1rem;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .error-wrapper h1 {
+      font-size: 2rem;
+    }
+    .error-wrapper p {
+      font-size: 1rem;
+    }
+    .error-btn {
+      padding: 0.875rem 1.75rem;
+    }
+  }
+  {% endstylesheet %}
+</section>
+
+{% schema %}
+{
+  "name": "404 Error Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Page Title",
+      "default": "404 - Page Not Found"
+    },
+    {
+      "type": "textarea",
+      "id": "message",
+      "label": "Description",
+      "default": "Sorry, the page you're looking for doesn't exist or has been moved."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Return Home"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Default 404 Layout"
+    }
+  ]
+}
+{% endschema %} 

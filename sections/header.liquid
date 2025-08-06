@@ -7,48 +7,34 @@
     </a>
     <ul class="navbar__links">
       <li class="navbar__dropdown-parent">
-        <a href="{{ section.settings.laptops_url }}">{{ section.settings.laptops_label }}</a>
+         <a href="/collections/Laptop">Laptop</a>
         <ul class="navbar__dropdown">
-          <li><a href="/collections/acer">Acer</a></li>
-          <li><a href="/collections/asus">Asus</a></li>
-          <li><a href="/collections/hp">HP</a></li>
-          <li><a href="/collections/dell">Dell</a></li>
+          <li><a href="/collections/Acer">Acer</a></li>
+          <li><a href="/collections/Asus">Asus</a></li>
+          <li><a href="/collections/Dell">Dell</a></li>
         </ul>
       </li>
       <li class="navbar__dropdown-parent">
-        <a href="/collections/apple">Apple</a>
+        <a href="/collections/Apple">Apple</a>
         <ul class="navbar__dropdown">
-          <li><a href="/collections/mac-mini">Mac mini</a></li>
-          <li><a href="/collections/mac-pro">Mac Pro</a></li>
-          <li><a href="/collections/macbook-air">MacBook Air</a></li>
-          <li><a href="/collections/macbook-pro">MacBook Pro</a></li>
+          <li><a href="/collections/Mac-mini">Mac mini</a></li>
+          <li><a href="/collections/Macbook-air">MacBook Air</a></li>
+          <li><a href="/collections/Macbook-pro">MacBook Pro</a></li>
         </ul>
       </li>
       <li class="navbar__dropdown-parent">
-        <a href="/collections/monitors">Monitors</a>
+        <a href="/collections/Monitors">Monitors</a>
         <ul class="navbar__dropdown">
-          <li><a href="/collections/samsung">Samsung</a></li>
-          <li><a href="/collections/lg">LG</a></li>
-          <li><a href="/collections/dell">Dell</a></li>
-          <li><a href="/collections/hp">HP</a></li>
-          <li><a href="/collections/asus">Asus</a></li>
-        </ul>
-      </li>
-      <li class="navbar__dropdown-parent">
-        <a href="{{ section.settings.desktops_url }}">{{ section.settings.desktops_label }}</a>
-        <ul class="navbar__dropdown">
-          <li><a href="/collections/dell-desktops">Dell</a></li>
-          <li><a href="/collections/hp-desktops">HP</a></li>
-          <li><a href="/collections/lenovo">Lenovo</a></li>
-          <li><a href="/collections/asus-desktops">Asus</a></li>
-          <li><a href="/collections/acer-desktops">Acer</a></li>
+          <li><a href="/collections/Samsung">Samsung</a></li>
+          <li><a href="/collections/Lg">LG</a></li>
+          <li><a href="/collections/Lenovo">Lenevo</a></li>
         </ul>
       </li>
       <li>
-        <a href="/pages/contact">Contact</a>
+        <a href="/pages/contact">ContactUs</a>
       </li>
        <li>
-        <a href="/pages/about">About Us</a>
+        <a href="/pages/about">AboutUs</a>
       </li>
       <li class="navbar__search-wrap">
         <form class="navbar__search" action="/search" method="get">
@@ -169,6 +155,7 @@
       flex-direction: column;
       align-items: stretch;
       gap: 1rem;
+      padding: 0.5rem 1rem;
     }
     .navbar__links {
       flex-wrap: wrap;
@@ -185,6 +172,103 @@
     }
     .navbar__search {
       max-width: 100%;
+    }
+    .navbar__actions {
+      margin-left: 0;
+      justify-content: center;
+    }
+  }
+  @media screen and (max-width: 600px) {
+    .navbar__container {
+      padding: 0.5rem;
+    }
+    .navbar__logo-circle {
+      width: 60px;
+      height: 60px;
+    }
+    .navbar__logo-img {
+      height: 45px;
+      width: 45px;
+    }
+    .navbar__links {
+      gap: 0.25rem;
+    }
+    .navbar__links a {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.875rem;
+    }
+    .navbar__search {
+      max-width: 100%;
+    }
+    .navbar__search-input {
+      font-size: 0.875rem;
+    }
+    .navbar__search-btn {
+      width: 32px;
+      height: 32px;
+    }
+    .navbar__dropdown {
+      min-width: 150px;
+    }
+    .navbar__dropdown a {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.875rem;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .navbar__container {
+      padding: 0.25rem;
+    }
+    .navbar__logo-circle {
+      width: 50px;
+      height: 50px;
+    }
+    .navbar__logo-img {
+      height: 35px;
+      width: 35px;
+    }
+    .navbar__links {
+      flex-direction: column;
+      gap: 0.25rem;
+      width: 100%;
+    }
+    .navbar__links a {
+      width: 100%;
+      text-align: center;
+      padding: 0.5rem;
+      font-size: 0.8rem;
+    }
+    .navbar__dropdown {
+      position: static;
+      box-shadow: none;
+      background: transparent;
+      padding: 0;
+      margin-top: 0.25rem;
+    }
+    .navbar__dropdown a {
+      color: #fff;
+      padding: 0.25rem 1rem;
+      font-size: 0.8rem;
+    }
+    .navbar__dropdown a:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+    .navbar__search {
+      max-width: 100%;
+    }
+    .navbar__search-input {
+      font-size: 0.8rem;
+    }
+    .navbar__search-btn {
+      width: 28px;
+      height: 28px;
+    }
+    .navbar__actions {
+      gap: 1rem;
+    }
+    .navbar__action-link {
+      font-size: 0.8rem;
     }
   }
   .navbar__search {
@@ -266,6 +350,14 @@
   .navbar__dropdown-parent:hover > .navbar__dropdown {
     display: block;
   }
+  @media screen and (max-width: 480px) {
+    .navbar__dropdown-parent:hover > .navbar__dropdown {
+      display: none;
+    }
+    .navbar__dropdown-parent:focus-within > .navbar__dropdown {
+      display: block;
+    }
+  }
   .cart-drawer {
     position: fixed;
     top: 0;
@@ -340,6 +432,32 @@
     margin-left: 0.3em;
     vertical-align: top;
     display: inline-block;
+  }
+  @media screen and (max-width: 600px) {
+    .cart-drawer {
+      width: 100%;
+      max-width: 100%;
+    }
+    .cart-drawer__header {
+      padding: 0.75rem 1rem;
+    }
+    .cart-drawer__body {
+      padding: 1rem;
+    }
+    .cart-drawer__footer {
+      padding: 0.75rem 1rem;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .cart-drawer__header {
+      padding: 0.5rem;
+    }
+    .cart-drawer__body {
+      padding: 0.75rem;
+    }
+    .cart-drawer__footer {
+      padding: 0.5rem;
+    }
   }
   {% endstylesheet %}
 

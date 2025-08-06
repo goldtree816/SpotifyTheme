@@ -1,143 +1,119 @@
-<section class="legal legal--cookie">
-  <div class="legal__container">
-    <h1 class="legal__title">{{ section.settings.heading | default: 'Cookie Policy' }}</h1>
-    <div class="legal__content">
+<section class="cookie-policy">
+  <div class="cookie-policy__container">
+    <h1 class="cookie-policy__title">{{ section.settings.heading }}</h1>
+    <div class="cookie-policy__content">
       {{ section.settings.content }}
     </div>
   </div>
 
-  {% schema %}
-  {
-    "name": "Cookie Policy Content",
-    "settings": [
-      {
-        "type": "text",
-        "id": "heading",
-        "label": "Policy Title",
-        "default": "Cookie Policy"
-      },
-      {
-        "type": "richtext",
-        "id": "content",
-        "label": "Policy Content",
-        "default": "<p><strong>Effective Date:</strong> 11 July 2025</p><p>This Cookie Policy explains how Lapzone uses cookies and similar technologies on our website. By using our site, you consent to the use of cookies as described in this policy.</p><h2>What Are Cookies?</h2><p>Cookies are small text files stored on your device by your web browser. They help us remember your preferences, understand how you use our site, and improve your experience.</p><h2>Types of Cookies We Use</h2><h3>Essential Cookies</h3><p>These cookies are necessary for the website to function properly. They enable basic functions like page navigation, access to secure areas, and shopping cart functionality.</p><h3>Analytics Cookies</h3><p>These cookies help us understand how visitors interact with our website by collecting and reporting information anonymously.</p><h3>Functional Cookies</h3><p>These cookies remember your preferences and choices to provide enhanced, personalized features.</p><h3>Marketing Cookies</h3><p>These cookies are used to track visitors across websites to display relevant advertisements.</p><h2>How We Use Cookies</h2><ul><li>To remember your preferences and settings</li><li>To analyze site traffic and usage patterns</li><li>To provide personalized content and advertisements</li><li>To enable essential site functionality</li><li>To improve our website performance</li></ul><h2>Third-Party Cookies</h2><p>We may use third-party services that place cookies on your device. These services help us with analytics, advertising, and other website functions.</p><h2>Your Cookie Choices</h2><p>You can control or delete cookies through your browser settings. However, disabling certain cookies may affect your experience on our site.</p><h2>Updates to This Policy</h2><p>We may update this Cookie Policy from time to time. Please check this page regularly for any changes.</p><h2>Contact Us</h2><p>If you have any questions about our Cookie Policy, please contact us at <a href=\"mailto:lapzone@gmail.com\">lapzone@gmail.com</a>.</p>"
-      }
-    ]
+  {% stylesheet %}
+  .cookie-policy {
+    background: #ffffff;
+    color: #333333;
+    padding: 3rem 0;
+    min-height: 100vh;
   }
-  {% endschema %}
+  .cookie-policy__container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+  .cookie-policy__title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  .cookie-policy__content {
+    background: #ffffff;
+    border: 1px solid #e1e5e9;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    line-height: 1.7;
+    color: #666666;
+  }
+  .cookie-policy__content h2 {
+    color: #333333;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 2rem 0 1rem 0;
+  }
+  .cookie-policy__content h2:first-child {
+    margin-top: 0;
+  }
+  .cookie-policy__content h3 {
+    color: #333333;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 1.5rem 0 0.75rem 0;
+  }
+  .cookie-policy__content h4 {
+    color: #333333;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: 1.2rem 0 0.5rem 0;
+  }
+  .cookie-policy__content p {
+    margin-bottom: 1rem;
+  }
+  .cookie-policy__content ul, .cookie-policy__content ol {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+  .cookie-policy__content li {
+    margin-bottom: 0.5rem;
+  }
+  .cookie-policy__content a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  .cookie-policy__content a:hover {
+    text-decoration: underline;
+  }
+  @media screen and (max-width: 768px) {
+    .cookie-policy {
+      padding: 2rem 0;
+    }
+    .cookie-policy__container {
+      padding: 0 1rem;
+    }
+    .cookie-policy__title {
+      font-size: 2rem;
+    }
+    .cookie-policy__content {
+      padding: 1.5rem;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .cookie-policy__title {
+      font-size: 1.8rem;
+    }
+    .cookie-policy__content {
+      padding: 1rem;
+    }
+  }
+  {% endstylesheet %}
+</section>
 
-  <style>
-    .legal {
-      background: var(--background, #f5f7fa);
-      padding: 3rem 0;
-      min-height: 100vh;
+{% schema %}
+{
+  "name": "Cookie Policy",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Page Title",
+      "default": "Cookie Policy"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content",
+      "default": "<h2>Cookie Policy for LAPZONE</h2><p>Last updated: January 2025</p><p>This Cookie Policy explains how LAPZONE uses cookies and similar technologies to recognize you when you visit our website. It explains what these technologies are and why we use them, as well as your rights to control our use of them.</p><h3>What are Cookies?</h3><p>Cookies are small data files that are placed on your computer or mobile device when you visit a website. Cookies are widely used by website owners to make their websites work, or to work more efficiently, as well as to provide reporting information.</p><h3>How We Use Cookies</h3><p>We use cookies for several reasons. Some cookies are required for technical reasons in order for our website to operate, and we refer to these as \"essential\" or \"strictly necessary\" cookies. Other cookies also enable us to track and target the interests of our users to enhance the experience on our website.</p><h3>Types of Cookies We Use</h3><h4>Essential Cookies</h4><p>These cookies are necessary for the website to function and cannot be switched off in our systems. They are usually only set in response to actions made by you which amount to a request for services, such as setting your privacy preferences, logging in or filling in forms.</p><h4>Performance Cookies</h4><p>These cookies allow us to count visits and traffic sources so we can measure and improve the performance of our site. They help us to know which pages are the most and least popular and see how visitors move around the site.</p><h4>Functional Cookies</h4><p>These cookies enable the website to provide enhanced functionality and personalization. They may be set by us or by third-party providers whose services we have added to our pages.</p><h4>Targeting Cookies</h4><p>These cookies may be set through our site by our advertising partners. They may be used by those companies to build a profile of your interests and show you relevant adverts on other sites.</p><h3>Managing Cookies</h3><p>You can set or amend your web browser controls to accept or refuse cookies. If you choose to reject cookies, you may still use our website though your access to some functionality and areas of our website may be restricted.</p><h3>Third-Party Cookies</h3><p>In addition to our own cookies, we may also use various third-party cookies to report usage statistics of the website, deliver advertisements on and through the website, and so on.</p><h3>Updates to This Policy</h3><p>We may update this Cookie Policy from time to time in order to reflect, for example, changes to the cookies we use or for other operational, legal or regulatory reasons.</p><h3>Contact Us</h3><p>If you have any questions about our use of cookies, please contact us at:</p><p>Email: privacy@lapzone.com<br>Phone: +977 9815045184<br>Address: Dulhari, Morang, Nepal</p>"
     }
-    
-    .legal__container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
-    
-    .legal__title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--primary, #222);
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    
-    .legal__content {
-      background: var(--surface, #fff);
-      border-radius: 16px;
-      box-shadow: 0 2px 12px var(--shadow, rgba(33, 150, 243, 0.08));
-      padding: 2.5rem;
-      color: var(--primary, #222);
-      line-height: 1.7;
-    }
-    
-    .legal__content h2 {
-      color: var(--accent, #2196f3);
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin: 2rem 0 1rem 0;
-    }
-    
-    .legal__content h2:first-of-type {
-      margin-top: 0;
-    }
-    
-    .legal__content h3 {
-      color: var(--primary, #222);
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin: 1.5rem 0 0.5rem 0;
-    }
-    
-    .legal__content p {
-      margin-bottom: 1rem;
-      color: var(--secondary, #666);
-    }
-    
-    .legal__content ul, .legal__content ol {
-      margin: 1rem 0 1rem 1.5rem;
-      color: var(--secondary, #666);
-    }
-    
-    .legal__content li {
-      margin-bottom: 0.5rem;
-    }
-    
-    .legal__content a {
-      color: var(--accent, #2196f3);
-      text-decoration: none;
-      font-weight: 500;
-    }
-    
-    .legal__content a:hover {
-      text-decoration: underline;
-    }
-    
-    .legal__content strong {
-      color: var(--primary, #222);
-      font-weight: 600;
-    }
-    
-    @media (max-width: 768px) {
-      .legal {
-        padding: 2rem 0;
-      }
-      
-      .legal__title {
-        font-size: 2rem;
-        margin-bottom: 1.5rem;
-      }
-      
-      .legal__content {
-        padding: 1.5rem;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .legal__container {
-        padding: 0 1rem;
-      }
-      
-      .legal__title {
-        font-size: 1.75rem;
-      }
-      
-      .legal__content {
-        padding: 1rem;
-      }
-      
-      .legal__content h2 {
-        font-size: 1.25rem;
-      }
-      
-      .legal__content h3 {
-        font-size: 1.1rem;
-      }
-    }
-  </style>
-</section> 
+  ]
+}
+{% endschema %} 

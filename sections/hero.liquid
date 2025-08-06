@@ -5,7 +5,7 @@
       <h1 class="hero__title">4th of July <span class="hero__title--sale">Sale</span></h1>
       <p class="hero__desc">Celebrate Independence with incredible deals up to 58% on select laptops. Plus, pay with HP Financing.</p>
       <p class="hero__desc">Save $30 on select printers when you buy any PC.</p>
-      <a href="#" class="hero__btn">Shop</a>
+      <a href="/collections/all" class="hero__btn">Shop Now</a>
     </div>
     <div class="hero__image-wrap">
       <img src="{{ '24_06_22_Hero_July4th-A.avif' | asset_url }}" alt="Laptop Sale" class="hero__image" />
@@ -26,6 +26,28 @@
     padding: 0 2rem;
     gap: 2.5rem;
     flex-wrap: wrap;
+  }
+  .hero__btn {
+    display: inline-block;
+    background: #5c6e87;
+    color: #fff;
+    font-weight: 600;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(92, 110, 135, 0.2);
+    margin-top: 1.5rem;
+    border: none;
+    cursor: pointer;
+  }
+  .hero__btn:hover {
+    background: #4a5a6a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(92, 110, 135, 0.3);
+    color: #fff;
+    text-decoration: none;
   }
   .hero__content {
     flex: 1 1 420px;
@@ -56,22 +78,6 @@
     margin-bottom: 1.25rem;
     font-weight: 400;
     max-width: 90%;
-  }
-  .hero__btn {
-    display: inline-block;
-    background: #222;
-    color: #fff;
-    font-size: 1.1rem;
-    font-weight: 600;
-    padding: 0.75rem 2rem;
-    border-radius: 2px;
-    text-decoration: none;
-    margin-top: 1.5rem;
-    transition: background 0.2s;
-  }
-  .hero__btn:hover {
-    background: #ff4d4d;
-    color: #fff;
   }
   .hero__image-wrap {
     flex: 1 1 500px;
@@ -106,7 +112,20 @@
     }
     .hero__btn {
       width: 100%;
-      padding: 0.75rem 0;
+      padding: 1rem 0;
+      text-align: center;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .hero__title {
+      font-size: 2rem;
+    }
+    .hero__desc, .hero__subtitle {
+      font-size: 1rem;
+    }
+    .hero__btn {
+      font-size: 1rem;
+      padding: 0.9rem 0;
     }
   }
   {% endstylesheet %}

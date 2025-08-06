@@ -4,7 +4,6 @@
     <div class="about__hero-content">
       <h1 class="about__hero-title">MOVING FORWARD<br><span>WITH US IS EASY</span></h1>
       <p class="about__hero-sub">Fast & Secure Service for All Your Needs</p>
-      <a href="/collections/all" class="about__cta-btn">Get Started</a>
     </div>
     <div class="about__hero-img">
       <img src="{{ 'desktop.jpeg' | asset_url }}" alt="Moving Truck" />
@@ -90,4 +89,66 @@
     </div>
   </section>
 </main>
+
+{% stylesheet %}
+/* Call Now Button Styles */
+.about__cta-btn {
+  display: inline-block;
+  background:rgb(19, 90, 191);
+  color: #fff;
+  font-weight: 600;
+  padding: 0.9rem 2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(26, 188, 156, 0.2);
+  margin-top: 1.5rem;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.about__cta-btn::before {
+  content: "📞";
+  margin-right: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.about__cta-btn:hover {
+  background: #16a085;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(26, 188, 156, 0.3);
+  color: #fff;
+  text-decoration: none;
+}
+
+.about__cta-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(26, 188, 156, 0.2);
+}
+
+.about__cta-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.3), 0 2px 8px rgba(26, 188, 156, 0.2);
+}
+
+/* Responsive Design for Call Now Button */
+@media screen and (max-width: 768px) {
+  .about__cta-btn {
+    padding: 0.8rem 1.8rem;
+    font-size: 0.95rem;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .about__cta-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
+{% endstylesheet %}
 

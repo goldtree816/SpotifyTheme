@@ -1,132 +1,113 @@
-<section class="legal legal--terms">
-  <div class="legal__container">
-    <h1 class="legal__title">{{ section.settings.heading | default: 'Terms & Conditions' }}</h1>
-    <div class="legal__content">
+<section class="terms-conditions">
+  <div class="terms-conditions__container">
+    <h1 class="terms-conditions__title">{{ section.settings.heading }}</h1>
+    <div class="terms-conditions__content">
       {{ section.settings.content }}
     </div>
   </div>
 
-  {% schema %}
-  {
-    "name": "Terms of Service Content",
-    "settings": [
-      {
-        "type": "text",
-        "id": "heading",
-        "label": "Policy Title",
-        "default": "Terms & Conditions"
-      },
-      {
-        "type": "richtext",
-        "id": "content",
-        "label": "Policy Content",
-        "default": "<p><strong>Effective Date:</strong> 11 July 2025</p><p>Welcome to Lapzone. By accessing or using our website, you agree to the following terms. Please read them carefully.</p><h2>Overview</h2><p>These Terms of Service govern your use of our website and services. By placing an order or browsing the site, you agree to be bound by these terms, including any additional policies referenced here.</p><h2>Online Store Terms</h2><ul><li>You must be at least 18 years old (or the age of majority in your area) to use this site.</li><li>You agree not to use our products for any illegal or unauthorized purpose.</li><li>You must not transmit any viruses or any code of a destructive nature.</li></ul><h2>General Conditions</h2><p>We reserve the right to refuse service to anyone for any reason at any time. Your content (not including credit card info) may be transferred unencrypted.</p><h2>Accuracy of Information</h2><p>We strive to provide accurate product and pricing information. However, errors may occur. We reserve the right to correct such errors and to cancel any orders placed for the incorrect price.</p><h2>Products & Services</h2><ul><li>All products are subject to availability.</li><li>We may limit the quantities of any products or services.</li><li>Colors and descriptions may vary slightly depending on your screen settings.</li></ul><h2>Billing & Account Information</h2><p>You agree to provide current, complete, and accurate information for all purchases. You are responsible for maintaining the confidentiality of your account.</p><h2>Intellectual Property</h2><p>All content on this site—including text, graphics, logos, and images—is the property of Lapzone or its content suppliers and is protected by copyright laws.</p><h2>Limitation of Liability</h2><p>We are not liable for any damages arising from your use of the site or our products.</p><h2>Contact Us</h2><p>If you have questions about these Terms & Conditions, please contact us at <a href=\"mailto:lapzone@gmail.com\">lapzone@gmail.com</a>.</p>"
-      }
-    ]
+  {% stylesheet %}
+  .terms-conditions {
+    background: #ffffff;
+    color: #333333;
+    padding: 3rem 0;
+    min-height: 100vh;
   }
-  {% endschema %}
+  .terms-conditions__container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+  .terms-conditions__title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  .terms-conditions__content {
+    background: #ffffff;
+    border: 1px solid #e1e5e9;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    line-height: 1.7;
+    color: #666666;
+  }
+  .terms-conditions__content h2 {
+    color: #333333;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 2rem 0 1rem 0;
+  }
+  .terms-conditions__content h2:first-child {
+    margin-top: 0;
+  }
+  .terms-conditions__content h3 {
+    color: #333333;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 1.5rem 0 0.75rem 0;
+  }
+  .terms-conditions__content p {
+    margin-bottom: 1rem;
+  }
+  .terms-conditions__content ul, .terms-conditions__content ol {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+  .terms-conditions__content li {
+    margin-bottom: 0.5rem;
+  }
+  .terms-conditions__content a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  .terms-conditions__content a:hover {
+    text-decoration: underline;
+  }
+  @media screen and (max-width: 768px) {
+    .terms-conditions {
+      padding: 2rem 0;
+    }
+    .terms-conditions__container {
+      padding: 0 1rem;
+    }
+    .terms-conditions__title {
+      font-size: 2rem;
+    }
+    .terms-conditions__content {
+      padding: 1.5rem;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .terms-conditions__title {
+      font-size: 1.8rem;
+    }
+    .terms-conditions__content {
+      padding: 1rem;
+    }
+  }
+  {% endstylesheet %}
+</section>
 
-  <style>
-    .legal {
-      background: var(--background, #f5f7fa);
-      padding: 3rem 0;
-      min-height: 100vh;
+{% schema %}
+{
+  "name": "Terms & Conditions",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Page Title",
+      "default": "Terms & Conditions"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content",
+      "default": "<h2>Terms and Conditions for LAPZONE</h2><p>Last updated: January 2025</p><p>Welcome to LAPZONE. These Terms and Conditions govern your use of our website and services. By accessing or using our website, you agree to be bound by these terms.</p><h3>1. Acceptance of Terms</h3><p>By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.</p><h3>2. Use License</h3><p>Permission is granted to temporarily download one copy of the materials (information or software) on LAPZONE's website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:</p><ul><li>Modify or copy the materials</li><li>Use the materials for any commercial purpose or for any public display</li><li>Attempt to reverse engineer any software contained on the website</li><li>Remove any copyright or other proprietary notations from the materials</li></ul><h3>3. Product Information</h3><p>We strive to provide accurate product information, including descriptions, specifications, and pricing. However, we do not warrant that product descriptions or other content is accurate, complete, reliable, current, or error-free.</p><h3>4. Pricing and Payment</h3><p>All prices are subject to change without notice. Payment must be made at the time of order placement. We accept various payment methods as indicated on our website.</p><h3>5. Shipping and Delivery</h3><p>Delivery times are estimates only. We are not responsible for delays beyond our control. Risk of loss and title for items purchased pass to you upon delivery.</p><h3>6. Returns and Refunds</h3><p>Our return policy is available on our website. Returns must be made within the specified time period and in accordance with our return policy.</p><h3>7. Privacy Policy</h3><p>Your privacy is important to us. Please review our Privacy Policy, which also governs your use of the website.</p><h3>8. Limitation of Liability</h3><p>In no event shall LAPZONE or its suppliers be liable for any damages arising out of the use or inability to use the materials on our website.</p><h3>9. Governing Law</h3><p>These terms and conditions are governed by and construed in accordance with the laws of Nepal and you irrevocably submit to the exclusive jurisdiction of the courts in that location.</p><h3>10. Changes to Terms</h3><p>We reserve the right to modify these terms at any time. Changes will be effective immediately upon posting on the website.</p><h3>Contact Information</h3><p>If you have any questions about these Terms and Conditions, please contact us at:</p><p>Email: legal@lapzone.com<br>Phone: +977 9815045184<br>Address: Dulhari, Morang, Nepal</p>"
     }
-    
-    .legal__container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
-    
-    .legal__title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--primary, #222);
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    
-    .legal__content {
-      background: var(--surface, #fff);
-      border-radius: 16px;
-      box-shadow: 0 2px 12px var(--shadow, rgba(33, 150, 243, 0.08));
-      padding: 2.5rem;
-      color: var(--primary, #222);
-      line-height: 1.7;
-    }
-    
-    .legal__content h2 {
-      color: var(--accent, #2196f3);
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin: 2rem 0 1rem 0;
-    }
-    
-    .legal__content h2:first-of-type {
-      margin-top: 0;
-    }
-    
-    .legal__content p {
-      margin-bottom: 1rem;
-      color: var(--secondary, #666);
-    }
-    
-    .legal__content ul, .legal__content ol {
-      margin: 1rem 0 1rem 1.5rem;
-      color: var(--secondary, #666);
-    }
-    
-    .legal__content li {
-      margin-bottom: 0.5rem;
-    }
-    
-    .legal__content a {
-      color: var(--accent, #2196f3);
-      text-decoration: none;
-      font-weight: 500;
-    }
-    
-    .legal__content a:hover {
-      text-decoration: underline;
-    }
-    
-    .legal__content strong {
-      color: var(--primary, #222);
-      font-weight: 600;
-    }
-    
-    @media (max-width: 768px) {
-      .legal {
-        padding: 2rem 0;
-      }
-      
-      .legal__title {
-        font-size: 2rem;
-        margin-bottom: 1.5rem;
-      }
-      
-      .legal__content {
-        padding: 1.5rem;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .legal__container {
-        padding: 0 1rem;
-      }
-      
-      .legal__title {
-        font-size: 1.75rem;
-      }
-      
-      .legal__content {
-        padding: 1rem;
-      }
-      
-      .legal__content h2 {
-        font-size: 1.25rem;
-      }
-    }
-  </style>
-</section> 
+  ]
+}
+{% endschema %} 

@@ -1,9 +1,9 @@
 {
   "sections": {
-    "navbar": {
-      "type": "navbar"
+    "header": {
+      "type": "header"
     },
-    "collections": {
+    "main": {
       "type": "collections"
     },
     "footer": {
@@ -11,8 +11,8 @@
     }
   },
   "order": [
-    "navbar",
-    "collections",
+    "header",
+    "main",
     "footer"
   ]
 } 

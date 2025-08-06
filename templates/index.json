@@ -1,8 +1,8 @@
 {
   "name": "Homepage",
   "sections": {
-    "navbar": {
-      "type": "navbar"
+    "header": {
+      "type": "header"
     },
     "hero": {
       "type": "hero"
@@ -14,5 +14,5 @@
       "type": "footer"
     }
   },
-  "order": ["navbar", "hero", "deal-of-the-week", "footer"]
+  "order": ["header", "hero", "deal-of-the-week", "footer"]
 } 
