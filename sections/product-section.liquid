@@ -59,6 +59,10 @@
             </div>
           </div>
           <div class="product-section__actions">
+            <button type="button" class="product-section__favorite-btn" id="favorite-btn" data-product-handle="{{ product.handle }}">
+              <span class="favorite-icon">☆</span>
+              <span class="favorite-text">Add to Favorites</span>
+            </button>
             {% if product.available %}
               <button type="submit" class="product-section__add-to-cart" id="add-to-cart-btn">
                 <span class="product-section__add-to-cart-text">Add to cart</span>
@@ -140,6 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
       btn.classList.add('product-section__thumbnail--active');
     });
   });
+  
   // Option selection: clear previous and select new
   document.querySelectorAll('.product-section__option-values').forEach(function(group) {
     group.addEventListener('click', function(e) {
@@ -149,8 +154,105 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
+  
+  // Favorite button functionality
+  const favoriteBtn = document.getElementById('favorite-btn');
+  if (favoriteBtn) {
+    const productHandle = favoriteBtn.getAttribute('data-product-handle');
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    
+    // Check if product is already in favorites
+    if (favorites.includes(productHandle)) {
+      favoriteBtn.classList.add('favorited');
+      favoriteBtn.querySelector('.favorite-icon').textContent = '★';
+      favoriteBtn.querySelector('.favorite-text').textContent = 'Remove from Favorites';
+    }
+    
+    favoriteBtn.addEventListener('click', function() {
+      const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+      const productHandle = this.getAttribute('data-product-handle');
+      
+      if (favorites.includes(productHandle)) {
+        // Remove from favorites
+        const index = favorites.indexOf(productHandle);
+        favorites.splice(index, 1);
+        this.classList.remove('favorited');
+        this.querySelector('.favorite-icon').textContent = '☆';
+        this.querySelector('.favorite-text').textContent = 'Add to Favorites';
+      } else {
+        // Add to favorites
+        favorites.push(productHandle);
+        this.classList.add('favorited');
+        this.querySelector('.favorite-icon').textContent = '★';
+        this.querySelector('.favorite-text').textContent = 'Remove from Favorites';
+      }
+      
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+    });
+  }
 });
 </script>
+
+<style>
+.product-section__favorite-btn {
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  color: #333;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  width: 100%;
+  justify-content: center;
+}
+
+.product-section__favorite-btn:hover {
+  background: #e9ecef;
+  border-color: #007bff;
+  color: #007bff;
+}
+
+.product-section__favorite-btn.favorited {
+  background: #fff3cd;
+  border-color: #ffc107;
+  color: #856404;
+}
+
+.product-section__favorite-btn.favorited:hover {
+  background: #ffeaa7;
+  border-color: #f39c12;
+}
+
+.favorite-icon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.favorite-text {
+  font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+  .product-section__favorite-btn {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+  
+  .favorite-icon {
+    font-size: 1.1rem;
+  }
+  
+  .favorite-text {
+    font-size: 0.9rem;
+  }
+}
+</style>
 
 {{ 'product.css' | asset_url | stylesheet_tag }}
 {{ 'product.js' | asset_url | script_tag }}

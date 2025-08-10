@@ -3,51 +3,52 @@
 </div>
 
 <div class="navbar">
-  <div class="navbar-left">
-    {% if section.settings.logo != blank %}
-      <a href="/">
-        <img src="{{ section.settings.logo | image_url: width: 120 }}" alt="Logo" class="header-logo">
-      </a>
-    {% else %}
-      <a href="/">
-        <img src="{{ 'logo.png' | asset_url }}" alt="Logo" class="header-logo">
-      </a>
-    {% endif %}
+  <div class="navbar-top-row">
+    <div class="navbar-left">
+      {% if section.settings.logo != blank %}
+        <a href="/">
+          <img src="{{ section.settings.logo | image_url: width: 120 }}" alt="Logo" class="header-logo">
+        </a>
+      {% else %}
+        <a href="/">
+          <img src="{{ 'logo.png' | asset_url }}" alt="Logo" class="header-logo">
+        </a>
+      {% endif %}
+    </div>
+    <button class="navbar-hamburger" id="navbarHamburger" aria-label="Open menu" aria-expanded="false" aria-controls="navbarCenter">
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+    </button>
   </div>
-  <div class="navbar-center">
-    <nav>
+  <div class="navbar-bottom-row">
+    <div class="navbar-nav desktop-nav">
       <a href="/collections/male">MEN</a>
       <a href="/collections/female">WOMEN</a>
       <a href="/collections/kids">KIDS</a>
-    </nav>
-  </div>
-  <div class="navbar-right">
+    </div>
+    <form class="search-form minimal" action="/search" method="get">
+      <input type="text" name="q" placeholder="Search products..." class="search-input" aria-label="Search products">
+      <button type="submit" aria-label="Search" class="search-btn">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </button>
+    </form>
     <div class="navbar-actions">
-      <form class="search-form" action="/search" method="get">
-        <input type="text" name="q" placeholder="Search">
-        <button type="submit" aria-label="Search">
-          <!-- Search SVG -->
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <circle cx="11" cy="11" r="8"/>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-          </svg>
-        </button>
-      </form>
-      <!-- Favorite SVG -->
       <a href="/pages/favorites" title="Wishlist">
         <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path d="M12 21s-6-4.35-9-7.5C-1.5 8.5 2.5 3 7.5 5.5 9.24 6.44 12 9 12 9s2.76-2.56 4.5-3.5C21.5 3 25.5 8.5 21 13.5c-3 3.15-9 7.5-9 7.5z"/>
         </svg>
       </a>
-      <!-- Cart SVG -->
       <button id="cart-drawer-open" title="Cart" style="background:none;border:none;position:relative;cursor:pointer;">
         <i class="fa fa-shopping-cart" style="font-size:22px;"></i>
         <span id="cart-count-badge" style="position:absolute;top:-6px;right:-6px;background:#e74c3c;color:#fff;border-radius:50%;padding:2px 6px;font-size:0.8rem;display:none;">0</span>
       </button>
-      <!-- Customer Authentication Links -->
       {% if customer %}
-        <a href="/account">Account</a>
-        <a href="/account/logout">Logout</a>
+        <a href="/account">Login</a>
+        <a href="/account/logout">Sign Up</a>
       {% else %}
         <a href="/account/login">Login</a>
         <a href="/account/register">Sign Up</a>
@@ -55,6 +56,28 @@
     </div>
   </div>
 </div>
+
+<div class="navbar-center" id="navbarCenter" aria-hidden="true">
+  <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+  </button>
+  <nav>
+    <a href="/collections/male">MEN</a>
+    <a href="/collections/female">WOMEN</a>
+    <a href="/collections/kids">KIDS</a>
+    <hr style="margin: 16px 0; border: none; border-top: 1px solid #eee;">
+    <a href="/pages/favorites">Wishlist</a>
+    <a href="/cart">Cart</a>
+    {% if customer %}
+      <a href="/account">Account</a>
+      <a href="/account/logout">Logout</a>
+    {% else %}
+      <a href="/account/login">Login</a>
+      <a href="/account/register">Sign Up</a>
+    {% endif %}
+  </nav>
+</div>
+
 <style>
   .top-bar {
     background: #000;
@@ -149,31 +172,63 @@
     background: #fff;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
-    padding: 4px 8px;
+    padding: 4px;
     transition: all 0.2s ease;
+    min-width: 280px;
   }
   .search-form:focus-within {
     border-color: #1976d2;
     box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.1);
   }
-  .search-form input {
+  
+  .search-category-selector {
+    position: relative;
+    margin-right: 4px;
+  }
+  
+  .category-select {
     border: none;
     outline: none;
-    padding: 4px 8px;
+    background: #f8f9fa;
+    padding: 6px 8px;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    color: #333;
+    cursor: pointer;
+    min-width: 100px;
+    transition: all 0.2s ease;
+  }
+  
+  .category-select:hover {
+    background: #e9ecef;
+  }
+  
+  .category-select:focus {
+    background: #e3f2fd;
+    color: #1976d2;
+  }
+  
+  .search-input {
+    border: none;
+    outline: none;
+    padding: 6px 8px;
     font-size: 0.9rem;
     background: transparent;
+    flex: 1;
     min-width: 120px;
   }
-  .search-form button {
+  
+  .search-btn {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 4px;
+    padding: 6px;
     border-radius: 4px;
     color: #666;
     transition: all 0.2s ease;
+    margin-left: 4px;
   }
-  .search-form button:hover {
+  .search-btn:hover {
     background: #e3f2fd;
     color: #1976d2;
   }
@@ -196,6 +251,407 @@
   .navbar-actions svg {
     display: block;
     transition: stroke 0.18s;
+  }
+  
+  /* Responsive Design for Search */
+  @media (max-width: 768px) {
+    .search-form {
+      min-width: 200px;
+      flex-direction: column;
+      gap: 4px;
+      padding: 8px;
+    }
+    
+    .search-category-selector {
+      margin-right: 0;
+      margin-bottom: 4px;
+      width: 100%;
+    }
+    
+    .category-select {
+      width: 100%;
+      min-width: auto;
+    }
+    
+    .search-input {
+      width: 100%;
+      min-width: auto;
+    }
+    
+    .search-btn {
+      margin-left: 0;
+      align-self: flex-end;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .navbar-actions {
+      gap: 8px;
+    }
+    
+    .search-form {
+      min-width: 160px;
+    }
+    
+    .navbar {
+      padding: 4px 12px;
+    }
+  }
+  .navbar-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 12px;
+    z-index: 20;
+  }
+  .hamburger-bar {
+    width: 26px;
+    height: 3px;
+    background: #222;
+    margin: 3px 0;
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  @media (max-width: 900px) {
+    .navbar-center nav {
+      gap: 18px;
+    }
+  }
+  @media (max-width: 768px) {
+    .navbar-center {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 70vw;
+      max-width: 320px;
+      height: 100vh;
+      background: #fff;
+      box-shadow: 2px 0 16px rgba(0,0,0,0.08);
+      z-index: 100;
+      transform: translateX(-100%);
+      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      padding: 80px 24px 24px 24px;
+    }
+    .navbar-center.open {
+      transform: translateX(0);
+    }
+    .navbar-center nav {
+      flex-direction: column;
+      gap: 24px;
+      width: 100%;
+    }
+    .navbar-center nav a {
+      font-size: 1.2rem;
+      padding: 12px 0;
+      width: 100%;
+      border-radius: 0;
+      text-align: left;
+    }
+    .navbar-hamburger {
+      display: flex;
+    }
+    .navbar {
+      padding: 4px 8px;
+    }
+  }
+  @media (max-width: 480px) {
+    .navbar-center {
+      width: 90vw;
+      max-width: 100vw;
+      padding: 60px 12px 12px 12px;
+    }
+  }
+  /* --- Enhanced Mobile Responsiveness --- */
+  @media (max-width: 768px) {
+    .top-bar {
+      font-size: 1rem;
+      height: 32px;
+    }
+    .header-logo {
+      height: 36px;
+      max-width: 90px;
+    }
+    .navbar {
+      padding: 4px 6px;
+      min-height: 48px;
+    }
+    .navbar-center nav a {
+      font-size: 1rem;
+      padding: 10px 0;
+    }
+    .navbar-actions a, .navbar-actions button {
+      font-size: 0.95rem;
+      padding: 0 4px;
+    }
+    .search-form {
+      min-width: 140px;
+      font-size: 0.95rem;
+    }
+    .search-input, .category-select {
+      font-size: 0.95rem;
+    }
+    .navbar-hamburger {
+      width: 36px;
+      height: 36px;
+    }
+  }
+  @media (max-width: 480px) {
+    .top-bar {
+      font-size: 0.9rem;
+      height: 28px;
+      padding: 0 4px;
+    }
+    .header-logo {
+      height: 28px;
+      max-width: 70px;
+    }
+    .navbar {
+      padding: 2px 2px;
+      min-height: 36px;
+      border-radius: 8px;
+    }
+    .navbar-center {
+      padding: 48px 6px 6px 6px;
+    }
+    .navbar-center nav a {
+      font-size: 0.95rem;
+      padding: 8px 0;
+    }
+    .navbar-actions {
+      gap: 6px;
+    }
+    .navbar-actions a, .navbar-actions button {
+      font-size: 0.9rem;
+      padding: 0 2px;
+    }
+    .search-form {
+      min-width: 100px;
+      font-size: 0.9rem;
+      padding: 2px;
+    }
+    .search-input, .category-select {
+      font-size: 0.9rem;
+    }
+    .navbar-hamburger {
+      width: 28px;
+      height: 28px;
+    }
+  }
+  .search-form.minimal {
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+  .search-form.minimal .search-input {
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 0 8px 0 0;
+    font-size: inherit;
+    min-width: 80px;
+    color: #222;
+  }
+  .search-form.minimal .search-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  .search-form.minimal .search-btn:hover svg {
+    stroke: #1976d2;
+  }
+  .navbar-center nav a, .navbar-actions a, .navbar-actions button, .search-form.minimal .search-input {
+    font-size: 0.92rem;
+  }
+  @media (max-width: 900px) {
+    .navbar-center nav a, .navbar-actions a, .navbar-actions button, .search-form.minimal .search-input {
+      font-size: 0.89rem;
+    }
+  }
+  @media (max-width: 600px) {
+    .navbar-center nav a, .navbar-actions a, .navbar-actions button, .search-form.minimal .search-input {
+      font-size: 0.85rem;
+    }
+  }
+  @media (min-width: 901px) {
+    .navbar {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 24px;
+      min-height: 56px;
+    }
+    .navbar-top-row, .navbar-bottom-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 24px;
+      width: auto;
+      margin: 0;
+    }
+    .navbar-top-row {
+      flex: 1 1 auto;
+      justify-content: flex-start;
+    }
+    .navbar-bottom-row {
+      flex: 1 1 auto;
+      justify-content: flex-end;
+    }
+    .header-logo {
+      height: 48px;
+      margin: 0 16px 0 0;
+    }
+    .navbar-hamburger {
+      display: none !important;
+    }
+    .navbar-center {
+      display: none !important;
+    }
+    #mobile-nav-overlay {
+      display: none !important;
+    }
+  }
+  @media (max-width: 900px) {
+    .navbar {
+      flex-direction: column;
+      align-items: stretch;
+      padding: 6px 4px;
+      min-height: unset;
+    }
+    .navbar-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 4px;
+    }
+    .navbar-bottom-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      gap: 8px;
+    }
+    .navbar-left, .navbar-right {
+      flex: unset;
+    }
+    .header-logo {
+      margin: 0 0 0 2px;
+      height: 36px;
+      width: auto;
+    }
+    .navbar-hamburger {
+      margin-right: 2px;
+    }
+    .search-form.minimal {
+      flex: 1;
+      margin-right: 8px;
+      min-width: 0;
+    }
+    .navbar-actions {
+      gap: 8px;
+    }
+  }
+  .mobile-nav-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.3);
+    z-index: 199;
+  }
+  .mobile-nav-overlay.active {
+    display: block;
+  }
+  @media (max-width: 900px) {
+    .navbar-center {
+      display: none;
+      pointer-events: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 75vw;
+      max-width: 320px;
+      height: 100vh;
+      background: #fff;
+      box-shadow: 2px 0 16px rgba(0,0,0,0.08);
+      z-index: 200;
+      transform: translateX(-100%);
+      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      padding: 24px 24px 24px 24px;
+      overflow-y: auto;
+    }
+    .navbar-center.open {
+      display: flex;
+      pointer-events: auto;
+      transform: translateX(0);
+    }
+  }
+  .mobile-menu-close {
+    background: none;
+    border: none;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 210;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mobile-menu-close svg {
+    stroke: #222;
+    width: 28px;
+    height: 28px;
+  }
+  .desktop-nav {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+  }
+  .desktop-nav a {
+    color: #222;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    position: relative;
+  }
+  .desktop-nav a:hover {
+    background: #e3f2fd;
+    color: #1976d2;
+    transform: translateY(-1px);
+  }
+  @media (max-width: 900px) {
+    .desktop-nav {
+      display: none !important;
+    }
   }
 </style>
 {% schema %}
@@ -230,4 +686,118 @@
 
 <!-- Font Awesome CDN -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+<script>
+// --- Top Bar Messages: Edit this array to change the rotating messages ---
+const topBarMessages = [
+  'STANDARD SHIPPING WITH GOLDTREE',
+  'FREE RETURNS ON ALL ORDERS',
+  '24/7 CUSTOMER SUPPORT',
+  'GET 15% OFF ON YOUR FIRST ORDER'
+];
+// ---------------------------------------------------------------
+document.addEventListener('DOMContentLoaded', function() {
+  const searchForm = document.querySelector('.search-form');
+  const categorySelect = document.querySelector('.category-select');
+  
+  searchForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const searchQuery = document.querySelector('.search-input').value.trim();
+    const selectedOption = categorySelect.options[categorySelect.selectedIndex];
+    const collection = selectedOption.getAttribute('data-collection');
+    
+    let searchUrl = '/search?';
+    
+    // Add search query
+    if (searchQuery) {
+      searchUrl += `q=${encodeURIComponent(searchQuery)}`;
+    }
+    
+    // Add product type
+    searchUrl += '&type=product';
+    
+    // Add collection filter if selected
+    if (collection) {
+      searchUrl += `&collection=${collection}`;
+    }
+    
+    // Redirect to search results
+    window.location.href = searchUrl;
+  });
+  
+  // Update placeholder based on category selection
+  categorySelect.addEventListener('change', function() {
+    const selectedOption = this.options[this.selectedIndex];
+    const collection = selectedOption.getAttribute('data-collection');
+    const searchInput = document.querySelector('.search-input');
+    
+    if (collection) {
+      const categoryName = selectedOption.textContent;
+      searchInput.placeholder = `Search ${categoryName.toLowerCase()} products...`;
+    } else {
+      searchInput.placeholder = 'Search products...';
+    }
+  });
+
+  // Hamburger menu logic
+  const hamburger = document.getElementById('navbarHamburger');
+  const navbarCenter = document.getElementById('navbarCenter');
+  let overlay = document.getElementById('mobile-nav-overlay');
+  const mobileMenuClose = document.getElementById('mobileMenuClose');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'mobile-nav-overlay';
+    overlay.className = 'mobile-nav-overlay';
+    document.body.appendChild(overlay);
+  }
+  function closeMobileNav() {
+    navbarCenter.classList.remove('open');
+    navbarCenter.setAttribute('aria-hidden', 'true');
+    overlay.classList.remove('active');
+    hamburger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+  function openMobileNav() {
+    navbarCenter.classList.add('open');
+    navbarCenter.setAttribute('aria-hidden', 'false');
+    overlay.classList.add('active');
+    hamburger.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  hamburger.addEventListener('click', function() {
+    if (navbarCenter.classList.contains('open')) {
+      closeMobileNav();
+    } else {
+      openMobileNav();
+    }
+  });
+  overlay.addEventListener('click', closeMobileNav);
+  // Close nav when clicking a nav link (mobile only)
+  navbarCenter.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      if (window.innerWidth <= 900) closeMobileNav();
+    });
+  });
+  // Close nav on resize if desktop
+  window.addEventListener('resize', function() {
+    if (window.innerWidth > 900) {
+      closeMobileNav();
+    }
+  });
+
+  // --- Rotating Top Bar Message ---
+  let topBarIndex = 0;
+  const topBarMessageEl = document.getElementById('TopBarMessage');
+  if (topBarMessageEl && topBarMessages.length > 1) {
+    setInterval(function() {
+      topBarIndex = (topBarIndex + 1) % topBarMessages.length;
+      topBarMessageEl.textContent = topBarMessages[topBarIndex];
+    }, 3000);
+  }
+  if (mobileMenuClose) {
+    mobileMenuClose.addEventListener('click', closeMobileNav);
+  }
+});
+</script>
 

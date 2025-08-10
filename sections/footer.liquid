@@ -43,12 +43,15 @@
           <li><a href="#">Help</a></li>
           <li><a href="#">Promotions</a></li>
           <li><a href="#">Sitemap</a></li>
+          <li><a href="/blogs/shoes-tips" class="footer__link">Blog</a></li>
+
         </ul>
       </div>
       <div class="footer-column">
         <h3 class="footer-heading">COMPANY INFO</h3>
         <ul class="footer-links">
-          <li><a href="#">About Us</a></li>
+          <li><a href="/pages/about-us">About Us</a></li>
+          <li><a href="/pages/contact">Contact Us</a></li>
           <li><a href="#">GOLDTREE Club</a></li>
         </ul>
       </div>
@@ -85,26 +88,29 @@
 .site-footer {
   background-color: #000;
   color: #fff;
-  padding: 60px 0 0;
+  padding: 48px 0 0;
 }
 .footer-content {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
 }
 .footer-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .footer-column {
-  /* No specific styles needed here for now */
+  min-width: 0;
 }
 .footer-heading {
   font-weight: bold;
-  font-size: 0.8rem;
-  margin-bottom: 20px;
+  font-size: 0.82rem;
+  margin-bottom: 18px;
   text-transform: uppercase;
+  letter-spacing: 1px;
 }
 .footer-links {
   list-style: none;
@@ -112,14 +118,17 @@
   margin: 0;
 }
 .footer-links li {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 .footer-links a {
   color: #fff;
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  opacity: 0.85;
+  transition: opacity 0.2s;
 }
 .footer-links a:hover {
+  opacity: 1;
   text-decoration: underline;
 }
 .footer-social-links {
@@ -127,41 +136,103 @@
   padding: 0;
   margin: 0;
   display: flex;
-  gap: 15px;
+  gap: 12px;
+}
+.footer-social-links svg {
+  width: 22px;
+  height: 22px;
 }
 .footer-bottom {
-  border-top: 1px solid #444;
-  margin-top: 40px;
-  padding: 20px 0;
+  border-top: 1px solid #222;
+  margin-top: 32px;
+  padding: 16px 0;
 }
 .footer-bottom-content {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.8rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  gap: 8px;
 }
 .footer-legal {
   display: flex;
-  gap: 20px;
+  gap: 16px;
   align-items: center;
+  flex-wrap: wrap;
 }
 .footer-legal a {
   color: #fff;
   text-decoration: none;
+  opacity: 0.85;
+  transition: opacity 0.2s;
 }
 .footer-legal a:hover {
+  opacity: 1;
   text-decoration: underline;
 }
 .privacy-choices {
-    display: flex;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .footer-content, .footer-bottom-content {
+    max-width: 100%;
+    padding: 0 8px;
+  }
+  .footer-grid {
+    grid-template-columns: repeat(4, minmax(180px, 1fr));
+    gap: 20px;
+  }
+}
+@media (max-width: 900px) {
+  .footer-heading {
+    font-size: 0.8rem;
+  }
+  .footer-links a, .footer-social-links a, .footer-bottom-content, .footer-legal {
+    font-size: 0.82rem;
+  }
+}
+@media (max-width: 600px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    overflow-x: unset;
+  }
+  .footer-column {
+    min-width: 0;
+  }
+  .footer-column {
+    text-align: center;
+  }
+  .footer-bottom-content {
+    flex-direction: column;
     align-items: center;
     gap: 8px;
-}
-.privacy-icon {
-    display: none;
+    text-align: center;
+    padding: 0 2px;
+  }
+  .footer-legal {
+    justify-content: center;
+    gap: 10px;
+  }
+  .footer-links a, .footer-social-links a {
+    display: inline-block;
+    width: auto;
+    padding: 6px 0;
+    font-size: 1rem;
+  }
+  .footer-heading {
+    font-size: 0.78rem;
+  }
+  .footer-links a, .footer-social-links a, .footer-bottom-content, .footer-legal {
+    font-size: 0.8rem;
+  }
 }
 </style>
 

@@ -1,0 +1,66 @@
+{% section 'header' %}
+<link rel="stylesheet" href="{{ 'blog.css' | asset_url }}">
+
+<section class="blog-section">
+  <h2 class="blog-section__title">Latest Blog Posts</h2>
+  <!-- Filter Dropdowns -->
+  <form method="get" class="blog-section__filter-form">
+    <div class="blog-section__filter-group">
+      <label for="blog-category-filter">Filter by Category:</label>
+      <select id="blog-category-filter" name="tag" onchange="this.form.submit()">
+        <option value="">All Categories</option>
+        {% for tag in blog.all_tags %}
+          <option value="{{ tag }}" {% if current_tags contains tag %}selected{% endif %}>{{ tag }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    
+    <div class="blog-section__filter-group">
+      <label for="blog-sort-filter">Sort by:</label>
+      <select id="blog-sort-filter" name="sort" onchange="this.form.submit()">
+        <option value="newest" {% if request.query_string contains 'sort=newest' %}selected{% endif %}>Newest</option>
+        <option value="oldest" {% if request.query_string contains 'sort=oldest' %}selected{% endif %}>Oldest</option>
+        <option value="popular" {% if request.query_string contains 'sort=popular' %}selected{% endif %}>Most Popular</option>
+      </select>
+    </div>
+  </form>
+  <div class="blog-section__articles">
+    {% assign filtered_articles = blog.articles %}
+    {% if current_tags.size > 0 %}
+      {% assign filtered_articles = blog.articles | where: "tags", current_tags[0] %}
+    {% endif %}
+    
+    {% comment %} Sort articles based on filter {% endcomment %}
+    {% if request.query_string contains 'sort=newest' %}
+      {% assign filtered_articles = filtered_articles | sort: 'published_at' | reverse %}
+    {% elsif request.query_string contains 'sort=oldest' %}
+      {% assign filtered_articles = filtered_articles | sort: 'published_at' %}
+    {% elsif request.query_string contains 'sort=popular' %}
+      {% comment %} For popularity, we'll sort by published date as a proxy since Shopify doesn't have built-in popularity metrics {% endcomment %}
+      {% assign filtered_articles = filtered_articles | sort: 'published_at' | reverse %}
+    {% else %}
+      {% comment %} Default to newest {% endcomment %}
+      {% assign filtered_articles = filtered_articles | sort: 'published_at' | reverse %}
+    {% endif %}
+    
+    {% for article in filtered_articles limit: 6 %}
+      <article class="blog-section__article">
+        <a href="{{ article.url }}" class="blog-section__article-link">
+          {% if article.image %}
+            <img src="{{ article.image | img_url: '400x' }}" alt="{{ article.title | escape }}" class="blog-section__article-image" />
+          {% else %}
+            <img src="{{ 'logo.png' | asset_url }}" alt="No image" class="blog-section__article-image" />
+          {% endif %}
+          <h3 class="blog-section__article-title">{{ article.title }}</h3>
+        </a>
+        <div class="blog-section__article-meta">
+          <span class="blog-section__article-date">{{ article.published_at | date: '%B %d, %Y' }}</span>
+        </div>
+        <p class="blog-section__article-excerpt">{{ article.excerpt | strip_html | truncate: 100 }}</p>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+
+{% section 'footer' %}
+

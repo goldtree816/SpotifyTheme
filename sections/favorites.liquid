@@ -1,61 +1,463 @@
-<div id="favorites-container"></div>
+<div id="favorites-container">
+  <div class="favorites-header">
+    <h1>My Favorites</h1>
+    <p>Your saved products</p>
+  </div>
+</div>
+
 <script>
 async function fetchProduct(handle) {
+  try {
   const res = await fetch(`/products/${handle}.js`);
-  if (!res.ok) return null;
+    if (!res.ok) {
+      console.error(`Failed to fetch product ${handle}:`, res.status);
+      return null;
+    }
   return await res.json();
+  } catch (error) {
+    console.error(`Error fetching product ${handle}:`, error);
+    return null;
+  }
 }
+
 async function renderFavorites() {
   const favs = JSON.parse(localStorage.getItem('favorites') || '[]');
   const cart = JSON.parse(localStorage.getItem('cart') || '[]');
   const container = document.getElementById('favorites-container');
-  if (!container) return;
-  if (favs.length === 0) {
-    container.innerHTML = '<div class="favorites-empty">No favorites yet.</div>';
+  
+  if (!container) {
+    console.error('Favorites container not found');
     return;
   }
-  let html = '<div class="favorites-list">';
+  
+  console.log('Favorites from localStorage:', favs);
+  
+  if (favs.length === 0) {
+    container.innerHTML = `
+      <div class="favorites-header">
+        <h1>My Favorites</h1>
+        <p>Your saved products</p>
+      </div>
+      <div class="favorites-empty">
+        <div class="empty-icon">☆</div>
+        <h3>No favorites yet</h3>
+        <p>Start adding products to your favorites to see them here!</p>
+        <a href="/" class="browse-btn">Browse Products</a>
+      </div>
+    `;
+    return;
+  }
+  
+  let html = `
+    <div class="favorites-header">
+      <h1>My Favorites</h1>
+      <p>Your saved products (${favs.length} items)</p>
+    </div>
+    <div class="favorites-list">
+  `;
+  
+  let loadedCount = 0;
+  
   for (const handle of favs) {
+    console.log('Fetching product:', handle);
     const product = await fetchProduct(handle);
-    if (!product) continue;
+    
+    if (!product) {
+      console.log('Product not found, skipping:', handle);
+      continue;
+    }
+    
+    loadedCount++;
     const inCart = cart.includes(product.id);
-    html += `<div class="favorite-card">
-      <img src="${product.featured_image}" class="favorite-img" alt="${product.title}">
+    
+    html += `
+      <div class="favorite-card" data-handle="${handle}">
+        <div class="favorite-image-container">
+          <img src="${product.featured_image}" class="favorite-img" alt="${product.title}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+Cjx0ZXh0IHg9IjEwMCIgeT0iMTAwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZTwvdGV4dD4KPC9zdmc+'">
+        </div>
       <div class="favorite-info">
         <div class="favorite-title">${product.title}</div>
-        <div class="favorite-price">${Shopify.formatMoney(product.price)}</div>
-        <button class="favorite-btn starred" disabled>&#9733; Starred</button>
+          <div class="favorite-price">${Shopify.formatMoney ? Shopify.formatMoney(product.price) : `$${(product.price / 100).toFixed(2)}`}</div>
+          <div class="favorite-actions">
+            <button class="favorite-btn starred" disabled>★ Starred</button>
         <button class="add-to-cart-btn" onclick="addToCart(${product.variants[0].id}, this)" ${inCart ? 'disabled' : ''}>${inCart ? 'In Cart' : 'Add to Cart'}</button>
+            <button class="remove-favorite-btn" onclick="removeFavorite('${handle}', this)">Remove</button>
+          </div>
+        </div>
       </div>
-    </div>`;
+    `;
   }
+  
   html += '</div>';
+  
+  if (loadedCount === 0) {
+    html = `
+      <div class="favorites-header">
+        <h1>My Favorites</h1>
+        <p>Your saved products</p>
+      </div>
+      <div class="favorites-empty">
+        <div class="empty-icon">⚠️</div>
+        <h3>Unable to load favorites</h3>
+        <p>There was an issue loading your favorite products. Please try refreshing the page.</p>
+        <button onclick="location.reload()" class="refresh-btn">Refresh Page</button>
+      </div>
+    `;
+  }
+  
   container.innerHTML = html;
+  console.log(`Loaded ${loadedCount} favorites out of ${favs.length}`);
 }
 async function addToCart(variantId, btn) {
   btn.disabled = true;
   btn.textContent = 'In Cart';
+  try {
   await fetch('/cart/add.js', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ id: variantId, quantity: 1 })
   });
-  // Optionally update localStorage cart
+    // Update localStorage cart
   let cart = JSON.parse(localStorage.getItem('cart') || '[]');
   cart.push(variantId);
   localStorage.setItem('cart', JSON.stringify(cart));
+  } catch (error) {
+    console.error('Error adding to cart:', error);
+    btn.disabled = false;
+    btn.textContent = 'Add to Cart';
+  }
 }
+
+function removeFavorite(handle, btn) {
+  const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+  const index = favorites.indexOf(handle);
+  
+  if (index > -1) {
+    favorites.splice(index, 1);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    
+    // Remove the card from the DOM
+    const card = btn.closest('.favorite-card');
+    if (card) {
+      card.style.opacity = '0';
+      setTimeout(() => {
+        card.remove();
+        // Re-render if no favorites left
+        if (favorites.length === 0) {
+          renderFavorites();
+        }
+      }, 300);
+    }
+  }
+}
+
 document.addEventListener('DOMContentLoaded', renderFavorites);
 </script>
 <style>
-.favorites-list { display: flex; flex-wrap: wrap; gap: 32px; justify-content: center; margin: 32px 0; }
-.favorite-card { width: 260px; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); display: flex; flex-direction: column; align-items: center; padding: 20px; }
-.favorite-img { width: 180px; height: 180px; object-fit: contain; border-radius: 8px; background: #f7f7f7; margin-bottom: 12px; }
-.favorite-info { text-align: center; }
-.favorite-title { font-size: 1.1rem; font-weight: bold; margin-bottom: 6px; }
-.favorite-price { font-size: 1.1rem; font-weight: bold; color: #333; margin-bottom: 8px; }
-.favorite-btn.starred { background: #ffeaea; color: #e00; border: 1px solid #e00; border-radius: 4px; padding: 6px 12px; margin-bottom: 8px; cursor: default; }
-.add-to-cart-btn { background: #111; color: #fff; border: none; border-radius: 4px; padding: 8px 16px; font-size: 1rem; margin-bottom: 8px; cursor: pointer; transition: background 0.2s; }
-.add-to-cart-btn:disabled { background: #aaa; cursor: not-allowed; }
-.favorites-empty { text-align: center; font-size: 1.2rem; color: #888; margin: 48px 0; }
+/* Main Container */
+.favorites-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background: #F9F9F9;
+}
+
+/* Header Section */
+.favorites-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.favorites-header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #1D1D1F;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #1D1D1F 0%, #007bff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.favorites-header p {
+  font-size: 1.2rem;
+  color: #333333;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Products Grid */
+.favorites-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Product Cards */
+.favorite-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(29, 29, 31, 0.08);
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.favorite-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 40px rgba(29, 29, 31, 0.15);
+}
+
+/* Image Container */
+.favorite-image-container {
+  width: 100%;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  overflow: hidden;
+}
+
+.favorite-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.favorite-card:hover .favorite-img {
+  transform: scale(1.05);
+}
+
+/* Product Info */
+.favorite-info {
+  padding: 1.5rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.favorite-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1D1D1F;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.favorite-price {
+  font-size: 1rem;
+  color: #007bff;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  flex-grow: 1;
+}
+
+/* Action Buttons */
+.favorite-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.favorite-btn.starred {
+  background: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffc107;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  cursor: default;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.add-to-cart-btn {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: auto;
+}
+
+.add-to-cart-btn:hover:not(:disabled) {
+  background: #0056b3;
+  transform: translateY(-1px);
+}
+
+.add-to-cart-btn:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.remove-favorite-btn {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.remove-favorite-btn:hover {
+  background: #c82333;
+  transform: translateY(-1px);
+}
+
+/* Empty State */
+.favorites-empty {
+  text-align: center;
+  padding: 80px 40px;
+  background: linear-gradient(135deg, #f8f9fa, #ffffff);
+  border-radius: 20px;
+  margin: 60px 0;
+  border: 2px dashed #dee2e6;
+  position: relative;
+}
+
+.favorites-empty::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  border: 1px solid rgba(0,123,255,0.1);
+  border-radius: 16px;
+  pointer-events: none;
+}
+
+.empty-icon {
+  font-size: 5rem;
+  margin-bottom: 30px;
+  opacity: 0.6;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.favorites-empty h3 {
+  font-size: 2rem;
+  color: #1a1a1a;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.favorites-empty p {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.browse-btn, .refresh-btn {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: #fff;
+  text-decoration: none;
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  display: inline-block;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.browse-btn::before, .refresh-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.browse-btn:hover::before, .refresh-btn:hover::before {
+  left: 100%;
+}
+
+.browse-btn:hover, .refresh-btn:hover {
+  background: linear-gradient(135deg, #0056b3, #004085);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0,123,255,0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .favorites-container {
+    padding: 3rem 1rem;
+  }
+  
+  .favorites-header h1 {
+    font-size: 2rem;
+  }
+  
+  .favorites-header p {
+    font-size: 1.1rem;
+  }
+  
+  .favorites-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .favorite-image-container {
+    height: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .favorites-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .favorite-card {
+    max-width: 220px;
+    margin: 0 auto;
+  }
+  
+  .favorite-info {
+    padding: 1rem;
+  }
+  
+  .favorite-image-container {
+    height: 160px;
+  }
+}
+
+/* Loading Animation */
+@keyframes shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: calc(200px + 100%) 0; }
+}
+
+.favorite-card.loading {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200px 100%;
+}
 </style> 

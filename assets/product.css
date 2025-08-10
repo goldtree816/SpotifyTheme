@@ -823,3 +823,14 @@
   opacity: 0.6;
   cursor: not-allowed;
 } 
+
+@media (max-width: 900px) {
+  .product-section, .product-section__container, .product-section__gallery, .product-section__main-image, .product-section__image {
+    font-size: 0.98rem;
+  }
+}
+@media (max-width: 600px) {
+  .product-section, .product-section__container, .product-section__gallery, .product-section__main-image, .product-section__image {
+    font-size: 0.92rem;
+  }
+} 

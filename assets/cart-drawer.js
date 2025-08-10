@@ -225,10 +225,16 @@ document.addEventListener('DOMContentLoaded', function () {
           }, 200);
         } else {
           cartCountBadge.style.display = 'none';
+          cartCountBadge.textContent = '0';
         }
       }
     } catch (error) {
       console.error('Error updating cart count:', error);
+      // Hide badge on error to be safe
+      const cartCountBadge = document.getElementById('cart-count-badge');
+      if (cartCountBadge) {
+        cartCountBadge.style.display = 'none';
+      }
     }
   }
 

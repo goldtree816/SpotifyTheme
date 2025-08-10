@@ -1,11 +1,11 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Skeleton",
-    "theme_version": "0.1.0",
+    "theme_name": "Goldtree Shoe",
+    "theme_version": "1.0.0",
     "theme_author": "Shopify",
-    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
-    "theme_support_url": "https://support.shopify.com/"
+    "theme_documentation_url": "https://docs.google.com/document/d/175UJ_h7je6fOVC_fAy8Eory8rcRIiD7RiHpCgNl-jBc/edit?usp=sharing",
+    "theme_support_url": "https://goldtree-shoes.myshopify.com/pages/contact"
   },
   {
     "name": "t:general.typography",

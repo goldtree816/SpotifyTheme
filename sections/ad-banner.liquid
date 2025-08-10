@@ -1,20 +1,27 @@
-<div class="ad-banner-wrapper">
+<!-- AD BANNER START -->
+<div class="ad-banner-wrapper" style="background-color: #0276d9 !important; padding: 20px !important; display: flex !important; justify-content: center !important; align-items: center !important; width: 100% !important; position: relative !important; z-index: 5 !important; margin: 0 !important; box-sizing: border-box !important;">
   <div class="ad-banner-content">
-    <p class="ad-banner-text">{{ section.settings.text | default: "JOIN GOLDTREE & GET 15% OFF" }}</p>
-    <a href="{{ section.settings.button_link | default: '#' }}" class="ad-banner-button">
+    <p class="ad-banner-text" style="color: white !important; font-weight: bold !important; font-size: 1.5rem !important; margin: 0 !important; letter-spacing: .1rem !important;">{{ section.settings.text | default: "JOIN GOLDTREE & GET 15% OFF" }}</p>
+    <a href="/account/register" class="ad-banner-button" style="background-color: white !important; color: black !important; padding: 15px 25px !important; text-decoration: none !important; font-weight: bold !important;">
       {{- section.settings.button_text | default: "SIGN UP FOR FREE" -}}
       <span class="arrow">&rarr;</span>
     </a>
   </div>
 </div>
+<!-- AD BANNER END -->
 
 <style>
   .ad-banner-wrapper {
     background-color: #0276d9;
     padding: 20px;
-    display: flex;
+    display: flex !important;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    position: relative;
+    z-index: 5;
+    margin: 0;
+    box-sizing: border-box;
   }
   .ad-banner-content {
     display: flex;
@@ -38,6 +45,38 @@
   }
   .ad-banner-button .arrow {
     margin-left: 10px;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .ad-banner-content {
+      flex-direction: column;
+      gap: 15px;
+      text-align: center;
+    }
+    
+    .ad-banner-text {
+      font-size: 1.2rem;
+    }
+    
+    .ad-banner-button {
+      padding: 12px 20px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .ad-banner-wrapper {
+      padding: 15px;
+    }
+    
+    .ad-banner-text {
+      font-size: 1rem;
+    }
+    
+    .ad-banner-button {
+      padding: 10px 16px;
+      font-size: 0.9rem;
+    }
   }
 </style>
 

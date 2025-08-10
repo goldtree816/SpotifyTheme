@@ -1,0 +1,102 @@
+{
+  "sections": {
+    "header": {
+      "type": "header"
+    },
+    "main": {
+      "type": "about-us",
+      "settings": {
+        "show_hero": true,
+        "title": "About Us",
+        "subtitle": "Discover our passion for quality footwear and exceptional customer service",
+        "show_story": true,
+        "story_title": "Our Story",
+        "story_content": "<p>Founded with a passion for quality footwear, our journey began with a simple mission: to provide customers with the best shoes that combine style, comfort, and durability. What started as a small family business has grown into a trusted destination for footwear enthusiasts worldwide.</p><p>Over the years, we've built strong relationships with leading brands and manufacturers, ensuring that every product in our collection meets our high standards. Our commitment to quality and customer satisfaction remains at the heart of everything we do.</p>",
+        "show_mission": true,
+        "mission_title": "Our Mission",
+        "mission_content": "To provide our customers with premium footwear that enhances their lifestyle, backed by exceptional service and a commitment to quality that never compromises.",
+        "show_values": true,
+        "values_title": "Our Values",
+        "show_team": true,
+        "team_title": "Meet Our Team",
+        "show_contact": true,
+        "contact_title": "Get in Touch",
+        "contact_content": "Have questions about our products or services? We'd love to hear from you. Reach out to our team and we'll get back to you as soon as possible.",
+        "contact_button_text": "Contact Us",
+        "contact_button_url": "/pages/contact",
+        "background_color": "#ffffff"
+      },
+      "blocks": {
+        "value_1": {
+          "type": "value",
+          "settings": {
+            "value_title": "Quality",
+            "value_description": "We never compromise on quality. Every product in our collection is carefully selected to meet our high standards."
+          }
+        },
+        "value_2": {
+          "type": "value",
+          "settings": {
+            "value_title": "Customer First",
+            "value_description": "Our customers are at the heart of everything we do. We're committed to providing exceptional service and support."
+          }
+        },
+        "value_3": {
+          "type": "value",
+          "settings": {
+            "value_title": "Innovation",
+            "value_description": "We continuously seek out the latest trends and technologies to bring you the best footwear options available."
+          }
+        },
+        "value_4": {
+          "type": "value",
+          "settings": {
+            "value_title": "Integrity",
+            "value_description": "We conduct our business with honesty, transparency, and a commitment to doing what's right for our customers."
+          }
+        },
+        "team_member_1": {
+          "type": "team_member",
+          "settings": {
+            "member_name": "Sarah Johnson",
+            "member_position": "Founder & CEO",
+            "member_bio": "With over 15 years of experience in the footwear industry, Sarah leads our company with passion and dedication to customer satisfaction."
+          }
+        },
+        "team_member_2": {
+          "type": "team_member",
+          "settings": {
+            "member_name": "Michael Chen",
+            "member_position": "Head of Operations",
+            "member_bio": "Michael ensures that every aspect of our business runs smoothly, from inventory management to customer service excellence."
+          }
+        },
+        "team_member_3": {
+          "type": "team_member",
+          "settings": {
+            "member_name": "Emily Rodriguez",
+            "member_position": "Customer Experience Manager",
+            "member_bio": "Emily is dedicated to creating exceptional customer experiences and building lasting relationships with our valued customers."
+          }
+        }
+      },
+      "block_order": [
+        "value_1",
+        "value_2", 
+        "value_3",
+        "value_4",
+        "team_member_1",
+        "team_member_2",
+        "team_member_3"
+      ]
+    },
+    "footer": {
+      "type": "footer"
+    }
+  },
+  "order": [
+    "header",
+    "main",
+    "footer"
+  ]
+} 

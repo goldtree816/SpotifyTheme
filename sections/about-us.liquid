@@ -1,0 +1,570 @@
+{% comment %}
+  About Us Section
+  This section displays company information, mission, values, and team members
+{% endcomment %}
+
+<section class="about-us-section" style="background-color: {{ section.settings.background_color }};">
+  <div class="about-us-container">
+    
+    <!-- Hero Section -->
+    {% if section.settings.show_hero %}
+    <div class="about-us-hero">
+      <div class="about-us-hero-content">
+        <h1 class="about-us-title">{{ section.settings.title | default: 'About Us' }}</h1>
+        {% if section.settings.subtitle %}
+          <p class="about-us-subtitle">{{ section.settings.subtitle }}</p>
+        {% endif %}
+        {% if section.settings.hero_image %}
+          <img src="{{ section.settings.hero_image | img_url: '1200x' }}" alt="{{ section.settings.title }}" class="about-us-hero-image">
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Company Story -->
+    {% if section.settings.show_story %}
+    <div class="about-us-story">
+      <div class="about-us-story-content">
+        <h2 class="about-us-section-title">{{ section.settings.story_title | default: 'Our Story' }}</h2>
+        <div class="about-us-story-text">
+          {{ section.settings.story_content }}
+        </div>
+        {% if section.settings.story_image %}
+          <img src="{{ section.settings.story_image | img_url: '600x' }}" alt="Our Story" class="about-us-story-image">
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Mission & Values -->
+    {% if section.settings.show_mission %}
+    <div class="about-us-mission">
+      <div class="about-us-mission-content">
+        <h2 class="about-us-section-title">{{ section.settings.mission_title | default: 'Our Mission' }}</h2>
+        <p class="about-us-mission-text">{{ section.settings.mission_content }}</p>
+        
+        {% if section.settings.show_values %}
+        <div class="about-us-values">
+          <h3 class="about-us-values-title">{{ section.settings.values_title | default: 'Our Values' }}</h3>
+          <div class="about-us-values-grid">
+            {% for block in section.blocks %}
+              {% if block.type == 'value' %}
+                <div class="about-us-value-item">
+                  {% if block.settings.value_icon %}
+                    <img src="{{ block.settings.value_icon | img_url: '100x' }}" alt="{{ block.settings.value_title }}" class="value-icon">
+                  {% endif %}
+                  <h4 class="value-title">{{ block.settings.value_title }}</h4>
+                  <p class="value-description">{{ block.settings.value_description }}</p>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Team Section -->
+    {% if section.settings.show_team %}
+    <div class="about-us-team">
+      <div class="about-us-team-content">
+        <h2 class="about-us-section-title">{{ section.settings.team_title | default: 'Our Team' }}</h2>
+        <div class="about-us-team-grid">
+          {% for block in section.blocks %}
+            {% if block.type == 'team_member' %}
+              <div class="about-us-team-member">
+                {% if block.settings.member_image %}
+                  <img src="{{ block.settings.member_image | img_url: '300x' }}" alt="{{ block.settings.member_name }}" class="team-member-image">
+                {% endif %}
+                <h3 class="team-member-name">{{ block.settings.member_name }}</h3>
+                <p class="team-member-position">{{ block.settings.member_position }}</p>
+                <p class="team-member-bio">{{ block.settings.member_bio }}</p>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Contact CTA -->
+    {% if section.settings.show_contact %}
+    <div class="about-us-contact">
+      <div class="about-us-contact-content">
+        <h2 class="about-us-section-title">{{ section.settings.contact_title | default: 'Get in Touch' }}</h2>
+        <p class="about-us-contact-text">{{ section.settings.contact_content }}</p>
+        {% if section.settings.contact_button_text and section.settings.contact_button_url %}
+          <a href="{{ section.settings.contact_button_url }}" class="about-us-contact-button">
+            {{ section.settings.contact_button_text }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+</section>
+
+<style>
+.about-us-section {
+  padding: 60px 0;
+  color: #000000;
+}
+
+.about-us-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.about-us-hero {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.about-us-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #000000;
+}
+
+.about-us-subtitle {
+  font-size: 1.2rem;
+  color: #666666;
+  margin-bottom: 30px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about-us-hero-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+.about-us-story,
+.about-us-mission,
+.about-us-team,
+.about-us-contact {
+  margin-bottom: 80px;
+}
+
+.about-us-section-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #000000;
+}
+
+.about-us-story-content,
+.about-us-mission-content,
+.about-us-team-content,
+.about-us-contact-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-us-story-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #333333;
+  margin-bottom: 30px;
+}
+
+.about-us-story-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.about-us-mission-text {
+  font-size: 1.2rem;
+  line-height: 1.7;
+  color: #333333;
+  margin-bottom: 40px;
+}
+
+.about-us-values {
+  margin-top: 50px;
+}
+
+.about-us-values-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 30px;
+  color: #000000;
+}
+
+.about-us-values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.about-us-value-item {
+  text-align: center;
+  padding: 30px 20px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease;
+}
+
+.about-us-value-item:hover {
+  transform: translateY(-5px);
+}
+
+.value-icon {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 20px;
+  border-radius: 50%;
+}
+
+.value-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #000000;
+}
+
+.value-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #666666;
+}
+
+.about-us-team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+  margin-top: 40px;
+}
+
+.about-us-team-member {
+  text-align: center;
+  padding: 30px 20px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.team-member-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  object-fit: cover;
+}
+
+.team-member-name {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #000000;
+}
+
+.team-member-position {
+  font-size: 1rem;
+  color: #666666;
+  margin-bottom: 15px;
+  font-style: italic;
+}
+
+.team-member-bio {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #333333;
+}
+
+.about-us-contact-text {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #333333;
+  margin-bottom: 30px;
+}
+
+.about-us-contact-button {
+  display: inline-block;
+  background: #000000;
+  color: #ffffff;
+  padding: 15px 30px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: background 0.2s ease;
+}
+
+.about-us-contact-button:hover {
+  background: #333333;
+}
+
+@media (max-width: 768px) {
+  .about-us-title {
+    font-size: 2.2rem;
+  }
+  
+  .about-us-section-title {
+    font-size: 2rem;
+  }
+  
+  .about-us-values-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .about-us-team-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-us-container {
+    padding: 0 8px;
+  }
+  .about-us-title {
+    font-size: 1.5rem;
+  }
+  .about-us-section-title {
+    font-size: 1.2rem;
+  }
+  .about-us-hero-image,
+  .about-us-story-image {
+    max-width: 100%;
+    height: auto;
+  }
+  .about-us-values-grid,
+  .about-us-team-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .about-us-value-item,
+  .about-us-team-member {
+    padding: 16px 8px;
+  }
+  .about-us-story-text,
+  .about-us-mission-text,
+  .about-us-contact-text {
+    font-size: 1rem;
+    padding: 0 2px;
+  }
+  .about-us-contact-button {
+    width: 100%;
+    padding: 12px 0;
+    font-size: 1rem;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "About Us",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero Section"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_hero",
+      "label": "Show Hero Section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Page Title",
+      "default": "About Us"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Image"
+    },
+    {
+      "type": "header",
+      "content": "Company Story"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_story",
+      "label": "Show Company Story",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "story_title",
+      "label": "Story Title",
+      "default": "Our Story"
+    },
+    {
+      "type": "richtext",
+      "id": "story_content",
+      "label": "Story Content"
+    },
+    {
+      "type": "image_picker",
+      "id": "story_image",
+      "label": "Story Image"
+    },
+    {
+      "type": "header",
+      "content": "Mission & Values"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_mission",
+      "label": "Show Mission Section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "mission_title",
+      "label": "Mission Title",
+      "default": "Our Mission"
+    },
+    {
+      "type": "textarea",
+      "id": "mission_content",
+      "label": "Mission Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_values",
+      "label": "Show Values",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "values_title",
+      "label": "Values Title",
+      "default": "Our Values"
+    },
+    {
+      "type": "header",
+      "content": "Team Section"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_team",
+      "label": "Show Team Section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "team_title",
+      "label": "Team Title",
+      "default": "Our Team"
+    },
+    {
+      "type": "header",
+      "content": "Contact Section"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_contact",
+      "label": "Show Contact Section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "contact_title",
+      "label": "Contact Title",
+      "default": "Get in Touch"
+    },
+    {
+      "type": "textarea",
+      "id": "contact_content",
+      "label": "Contact Content"
+    },
+    {
+      "type": "text",
+      "id": "contact_button_text",
+      "label": "Contact Button Text"
+    },
+    {
+      "type": "url",
+      "id": "contact_button_url",
+      "label": "Contact Button URL"
+    },
+    {
+      "type": "header",
+      "content": "Styling"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "value_icon",
+          "label": "Value Icon"
+        },
+        {
+          "type": "text",
+          "id": "value_title",
+          "label": "Value Title"
+        },
+        {
+          "type": "textarea",
+          "id": "value_description",
+          "label": "Value Description"
+        }
+      ]
+    },
+    {
+      "type": "team_member",
+      "name": "Team Member",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "member_image",
+          "label": "Member Photo"
+        },
+        {
+          "type": "text",
+          "id": "member_name",
+          "label": "Member Name"
+        },
+        {
+          "type": "text",
+          "id": "member_position",
+          "label": "Member Position"
+        },
+        {
+          "type": "textarea",
+          "id": "member_bio",
+          "label": "Member Bio"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Us",
+      "category": "Content"
+    }
+  ]
+}
+{% endschema %} 

@@ -1,0 +1,335 @@
+{% section 'header' %}
+
+<div class="search-results-container">
+  <div class="search-header">
+    <h1 class="search-title">
+      {% if search.performed %}
+        Search Results for "{{ search.terms }}"
+        {% if collection %}
+          in {{ collection.title }}
+        {% endif %}
+      {% else %}
+        Search Products
+      {% endif %}
+    </h1>
+    
+    {% if search.performed and search.results_count > 0 %}
+      <p class="search-subtitle">
+        Found {{ search.results_count }} product{% if search.results_count != 1 %}s{% endif %}
+        {% if collection %}
+          in {{ collection.title }}
+        {% endif %}
+      </p>
+    {% endif %}
+  </div>
+
+  {% if search.performed %}
+    {% if search.results_count > 0 %}
+      <div class="search-results-grid">
+        {% for product in search.results %}
+          <div class="search-product-card">
+            <div class="search-product-image-container">
+              {% if product.featured_image %}
+                <img src="{{ product.featured_image | img_url: '400x400' }}" alt="{{ product.title | escape }}" class="search-product-image" loading="lazy" />
+              {% else %}
+                <div class="search-product-placeholder">
+                  <span>No Image</span>
+                </div>
+              {% endif %}
+            </div>
+            <div class="search-product-content">
+              <div class="search-product-title">{{ product.title }}</div>
+              <div class="search-product-price">{{ product.price | money }}</div>
+              <a href="{{ product.url }}" class="search-product-cta">View Product</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="search-no-results">
+        <div class="no-results-icon">🔍</div>
+        <h3>No products found</h3>
+        <p>Try adjusting your search terms or browse our categories below.</p>
+        <div class="search-categories">
+          <a href="/collections/male" class="category-link">Men's Collection</a>
+          <a href="/collections/female" class="category-link">Women's Collection</a>
+          <a href="/collections/kids" class="category-link">Kids' Collection</a>
+        </div>
+      </div>
+    {% endif %}
+  {% else %}
+    <div class="search-initial-state">
+      <div class="search-icon">🔍</div>
+      <h3>Search for products</h3>
+      <p>Use the search bar above to find what you're looking for.</p>
+    </div>
+  {% endif %}
+</div>
+
+{% section 'footer' %}
+
+<style>
+/* Main Container */
+.search-results-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background: #F9F9F9;
+}
+
+/* Header Section */
+.search-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.search-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #1D1D1F;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #1D1D1F 0%, #007bff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.search-subtitle {
+  font-size: 1.2rem;
+  color: #333333;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Products Grid */
+.search-results-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Product Cards */
+.search-product-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(29, 29, 31, 0.08);
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 40px rgba(29, 29, 31, 0.15);
+}
+
+/* Image Container */
+.search-product-image-container {
+  width: 100%;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  overflow: hidden;
+}
+
+.search-product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.search-product-card:hover .search-product-image {
+  transform: scale(1.05);
+}
+
+.search-product-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f9fa;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+/* Product Info */
+.search-product-content {
+  padding: 1.5rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-product-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1D1D1F;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.search-product-price {
+  font-size: 1rem;
+  color: #007bff;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  flex-grow: 1;
+}
+
+.search-product-cta {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  text-align: center;
+}
+
+.search-product-cta:hover {
+  background: #0056b3;
+  transform: translateY(-1px);
+}
+
+/* No Results State */
+.search-no-results {
+  text-align: center;
+  padding: 80px 40px;
+  background: linear-gradient(135deg, #f8f9fa, #ffffff);
+  border-radius: 20px;
+  margin: 60px 0;
+  border: 2px dashed #dee2e6;
+}
+
+.no-results-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  opacity: 0.6;
+}
+
+.search-no-results h3 {
+  font-size: 2rem;
+  color: #1a1a1a;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.search-no-results p {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.search-categories {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.category-link {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: #fff;
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.category-link:hover {
+  background: linear-gradient(135deg, #0056b3, #004085);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,123,255,0.3);
+}
+
+/* Initial State */
+.search-initial-state {
+  text-align: center;
+  padding: 80px 40px;
+  background: linear-gradient(135deg, #f8f9fa, #ffffff);
+  border-radius: 20px;
+  margin: 60px 0;
+}
+
+.search-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  opacity: 0.6;
+}
+
+.search-initial-state h3 {
+  font-size: 2rem;
+  color: #1a1a1a;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.search-initial-state p {
+  font-size: 1.1rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .search-results-container {
+    padding: 3rem 1rem;
+  }
+  
+  .search-title {
+    font-size: 2rem;
+  }
+  
+  .search-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .search-results-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .search-product-image-container {
+    height: 180px;
+  }
+  
+  .search-categories {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-results-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .search-product-card {
+    max-width: 220px;
+    margin: 0 auto;
+  }
+  
+  .search-product-content {
+    padding: 1rem;
+  }
+  
+  .search-product-image-container {
+    height: 160px;
+  }
+}
+</style> 
