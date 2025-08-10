@@ -209,13 +209,19 @@
   }
   
   .search-input {
-    border: none;
+    border: 1.5px solid #d0d7de;
     outline: none;
     padding: 6px 8px;
     font-size: 0.9rem;
-    background: transparent;
+    background: #fff;
     flex: 1;
     min-width: 120px;
+    border-radius: 6px;
+    transition: border-color 0.2s;
+  }
+  .search-input:focus {
+    border-color: #1976d2;
+    background: #f5faff;
   }
   
   .search-btn {
@@ -255,46 +261,138 @@
   
   /* Responsive Design for Search */
   @media (max-width: 768px) {
-    .search-form {
-      min-width: 200px;
+    .navbar {
       flex-direction: column;
-      gap: 4px;
-      padding: 8px;
+      align-items: stretch;
+      padding: 4px 4px;
+      min-height: unset;
+      max-width: 100vw;
     }
-    
-    .search-category-selector {
-      margin-right: 0;
+    .navbar-top-row, .navbar-bottom-row {
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+      margin: 0;
+      gap: 0;
+      justify-content: space-between;
+    }
+    .navbar-top-row {
       margin-bottom: 4px;
-      width: 100%;
     }
-    
-    .category-select {
-      width: 100%;
-      min-width: auto;
+    .navbar-bottom-row {
+      margin-top: 0;
+      gap: 0;
     }
-    
+    .navbar-left {
+      flex: 0 0 auto;
+    }
+    .header-logo {
+      height: 36px;
+      max-width: 90px;
+      margin: 0 0 0 2px;
+    }
+    .navbar-hamburger {
+      display: flex;
+      margin-right: 2px;
+    }
+    .navbar-actions {
+      gap: 8px;
+      flex: 0 0 auto;
+    }
+    .search-form {
+      min-width: 0;
+      width: 100%;
+      max-width: 320px;
+      margin: 8px auto 0 auto;
+      background: #fff;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 8px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 2px 8px;
+      gap: 0;
+      position: relative;
+    }
     .search-input {
-      width: 100%;
-      min-width: auto;
+      border: 1.5px solid #d0d7de;
+      outline: none;
+      background: #fff;
+      padding: 8px 4px 8px 0;
+      font-size: 1rem;
+      flex: 1;
+      min-width: 0;
+      color: #222;
+      border-radius: 6px;
+      transition: border-color 0.2s;
     }
-    
+    .search-input:focus {
+      border-color: #1976d2;
+      background: #f5faff;
+    }
     .search-btn {
+      background: none;
+      border: none;
+      padding: 4px 6px;
+      color: #666;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.18s, color 0.18s;
       margin-left: 0;
-      align-self: flex-end;
+      align-self: center;
+      display: flex;
+      align-items: center;
+    }
+    .search-btn:hover {
+      background: #e3f2fd;
+      color: #1976d2;
     }
   }
   
   @media (max-width: 480px) {
-    .navbar-actions {
-      gap: 8px;
-    }
-    
-    .search-form {
-      min-width: 160px;
-    }
-    
     .navbar {
-      padding: 4px 12px;
+      padding: 2px 2px;
+      min-height: 36px;
+      border-radius: 8px;
+      max-width: 100vw;
+    }
+    .navbar-top-row, .navbar-bottom-row {
+      padding: 0;
+      margin: 0;
+      gap: 0;
+    }
+    .header-logo {
+      height: 28px;
+      max-width: 70px;
+    }
+    .navbar-actions {
+      gap: 6px;
+    }
+    .search-form {
+      min-width: 0;
+      width: 100%;
+      max-width: 98vw;
+      font-size: 0.95rem;
+      padding: 2px 4px;
+      margin: 6px auto 0 auto;
+      border-radius: 6px;
+    }
+    .search-input {
+      border: 1.5px solid #d0d7de;
+      font-size: 0.95rem;
+      padding: 6px 2px 6px 0;
+      background: #fff;
+      border-radius: 6px;
+      transition: border-color 0.2s;
+    }
+    .search-input:focus {
+      border-color: #1976d2;
+      background: #f5faff;
+    }
+    .search-btn {
+      font-size: 0.95rem;
+      padding: 2px 4px;
     }
   }
   .navbar-hamburger {
@@ -699,46 +797,52 @@ const topBarMessages = [
 document.addEventListener('DOMContentLoaded', function() {
   const searchForm = document.querySelector('.search-form');
   const categorySelect = document.querySelector('.category-select');
-  
-  searchForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const searchQuery = document.querySelector('.search-input').value.trim();
-    const selectedOption = categorySelect.options[categorySelect.selectedIndex];
-    const collection = selectedOption.getAttribute('data-collection');
-    
-    let searchUrl = '/search?';
-    
-    // Add search query
-    if (searchQuery) {
-      searchUrl += `q=${encodeURIComponent(searchQuery)}`;
-    }
-    
-    // Add product type
-    searchUrl += '&type=product';
-    
-    // Add collection filter if selected
-    if (collection) {
-      searchUrl += `&collection=${collection}`;
-    }
-    
-    // Redirect to search results
-    window.location.href = searchUrl;
-  });
-  
+
+  if (searchForm) {
+    searchForm.addEventListener('submit', function(e) {
+      if (categorySelect) {
+        e.preventDefault();
+        const searchQuery = document.querySelector('.search-input').value.trim();
+        const selectedOption = categorySelect.options[categorySelect.selectedIndex];
+        const collection = selectedOption.getAttribute('data-collection');
+
+        let searchUrl = '/search?';
+
+        // Add search query
+        if (searchQuery) {
+          searchUrl += `q=${encodeURIComponent(searchQuery)}`;
+        }
+
+        // Add product type
+        searchUrl += '&type=product';
+
+        // Add collection filter if selected
+        if (collection) {
+          searchUrl += `&collection=${collection}`;
+        }
+
+        // Redirect to search results
+        window.location.href = searchUrl;
+      }
+      // If no categorySelect, let the form submit normally
+    });
+  }
+
   // Update placeholder based on category selection
-  categorySelect.addEventListener('change', function() {
-    const selectedOption = this.options[this.selectedIndex];
-    const collection = selectedOption.getAttribute('data-collection');
-    const searchInput = document.querySelector('.search-input');
-    
-    if (collection) {
-      const categoryName = selectedOption.textContent;
-      searchInput.placeholder = `Search ${categoryName.toLowerCase()} products...`;
-    } else {
-      searchInput.placeholder = 'Search products...';
-    }
-  });
+  if (categorySelect) {
+    categorySelect.addEventListener('change', function() {
+      const selectedOption = this.options[this.selectedIndex];
+      const collection = selectedOption.getAttribute('data-collection');
+      const searchInput = document.querySelector('.search-input');
+
+      if (collection) {
+        const categoryName = selectedOption.textContent;
+        searchInput.placeholder = `Search ${categoryName.toLowerCase()} products...`;
+      } else {
+        searchInput.placeholder = 'Search products...';
+      }
+    });
+  }
 
   // Hamburger menu logic
   const hamburger = document.getElementById('navbarHamburger');
