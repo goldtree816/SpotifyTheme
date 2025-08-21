@@ -1,0 +1,73 @@
+.browse-tshirt {
+	padding: 60px 20px;
+	background: #ffffff;
+}
+
+.browse-tshirt__grid {
+	display: grid;
+	grid-template-columns: 1.1fr 0.9fr;
+	gap: 40px;
+	align-items: center;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.browse-tshirt__media spline-viewer {
+	width: 100%;
+	height: 520px;
+	border-radius: 12px;
+	box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+	background: #f7f7f7;
+}
+
+.browse-tshirt__title {
+	font-size: 36px;
+	line-height: 1.2;
+	margin: 0 0 16px;
+	color: #222;
+}
+
+.browse-tshirt__subtitle {
+	font-size: 16px;
+	line-height: 1.7;
+	color: #555;
+	margin-bottom: 28px;
+}
+
+.browse-tshirt__cta {
+	display: inline-block;
+	padding: 12px 22px;
+	background: #CDAA7D;
+	color: #fff;
+	text-decoration: none;
+	border-radius: 8px;
+	transition: background-color 0.2s ease;
+}
+
+.browse-tshirt__cta:hover {
+	background: #DB2955;
+}
+
+@media (max-width: 992px) {
+	.browse-tshirt__grid {
+		grid-template-columns: 1fr;
+		gap: 24px;
+	}
+	.browse-tshirt__media spline-viewer {
+		height: 420px;
+	}
+}
+
+@media (max-width: 600px) {
+	.browse-tshirt {
+		padding: 40px 16px;
+	}
+	.browse-tshirt__title {
+		font-size: 28px;
+	}
+	.browse-tshirt__media spline-viewer {
+		height: 340px;
+	}
+}
+
+

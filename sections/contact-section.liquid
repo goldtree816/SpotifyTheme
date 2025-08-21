@@ -1,6 +1,6 @@
 <section class="contact-section">
   <h1 class="contact-title">{{ section.settings.title | default: 'Contact Us' }}</h1>
-  {% section 'contact-details' %}
+ 
   <div class="contact-form-wrapper">
     {% form 'contact', id: 'contact_form' %}
       {% if form.posted_successfully? %}

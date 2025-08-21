@@ -8,6 +8,10 @@
       "type": "hero-banner",
       "settings": {}
     },
+    "browse-tshirt": {
+      "type": "browse-tshirt",
+      "settings": {}
+    },
     "featured-collections": {
       "type": "featured-collections",
       "settings": {}
@@ -16,6 +20,7 @@
       "type": "offer",
       "settings": {}
     },
+    
     "footer": {
       "type": "footer",
       "settings": {}
@@ -24,6 +29,7 @@
   "order": [
     "header",
     "hero-banner",
+    "browse-tshirt",
     "featured-collections",
     "offer",
     "footer"

@@ -4,6 +4,10 @@
       "type": "header",
       "settings": {}
     },
+     "contact-details": {
+      "type": "contact-details",
+      "settings": {}
+    },
     "contact-section": {
       "type": "contact-section",
       "settings": {}
@@ -15,6 +19,7 @@
   },
   "order": [
     "header",
+    "contact-details",
     "contact-section",
     "footer"
   ]

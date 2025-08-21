@@ -1,7 +1,7 @@
 {{ 'hero-banner.css' | asset_url | stylesheet_tag }}
 
 <section class="hero-banner" style="--hero-bg: {{ section.settings.bg_color }}; --hero-text: {{ section.settings.text_color }}; --hero-cta-bg: {{ section.settings.cta_bg }}; --hero-cta-text: {{ section.settings.cta_text }}; --hero-cta-bg-hover: {{ section.settings.cta_bg_hover }};">
-  <div class="hero-banner__content">
+  <div class="hero-banner__content" style="background-image: url('{{ 'hero background.png' | asset_url }}'); background-size: cover; background-position: center center; background-repeat: no-repeat;">
     {% if section.settings.title != blank %}
       <h1 class="hero-banner__title">{{ section.settings.title }}</h1>
     {% else %}

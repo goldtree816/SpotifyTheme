@@ -1,14 +1,9 @@
 {
-  "current": "Skeleton",
+  "current": "GoldTree Fashion",
   "presets": {
-    "Skeleton": {
-      "name": "Skeleton",
-      "settings": {
-
-      },
-      "blocks": {
-        
-      }
+    "GoldTree Fashion": {
+      "name": "GoldTree Fashion",
+      "settings": {}
     }
   }
 }

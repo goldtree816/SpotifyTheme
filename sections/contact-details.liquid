@@ -1,6 +1,9 @@
 {% comment %}
   Contact Details Section: editable address, phone, email, and map for the contact page.
 {% endcomment %}
+{{ 'contact-details.css' | asset_url | stylesheet_tag }}
+
+
 <div class="contact-details">
   <div class="contact-detail-item">
     <strong>{{ 'contact.address_label' | t }}</strong><br>

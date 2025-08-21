@@ -1,0 +1,64 @@
+{{ 'browse-tshirt.css' | asset_url | stylesheet_tag }}
+
+<section class="browse-tshirt">
+  <div class="browse-tshirt__grid">
+    <div class="browse-tshirt__media">
+      <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.48/build/spline-viewer.js"></script>
+      <spline-viewer url="{{ section.settings.spline_url | default: 'undefined' }}"></spline-viewer>
+    </div>
+    <div class="browse-tshirt__content">
+      {% if section.settings.heading != blank %}
+        <h2 class="browse-tshirt__title">{{ section.settings.heading }}</h2>
+      {% else %}
+        <h2 class="browse-tshirt__title">Browse T‑Shirts</h2>
+      {% endif %}
+
+      {% if section.settings.subheading != blank %}
+        <div class="browse-tshirt__subtitle">{{ section.settings.subheading }}</div>
+      {% else %}
+        <p class="browse-tshirt__subtitle">Dive into our latest T‑shirt drops and explore details up close with an interactive 3D view.</p>
+      {% endif %}
+
+      <a class="browse-tshirt__cta" href="/search?q=tshirt">{{ section.settings.button_label | default: 'Explore' }}</a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Browse T‑shirt",
+  "settings": [
+    {
+      "type": "url",
+      "id": "spline_url",
+      "label": "Spline scene URL",
+      "info": "Paste the Spline share URL for your T‑shirt scene"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Browse T‑Shirts"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "<p>Dive into our latest T‑shirt drops and explore details up close with an interactive 3D view.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Explore"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Browse T‑shirt"
+    }
+  ]
+}
+{% endschema %}
+
+
