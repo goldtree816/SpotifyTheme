@@ -4,7 +4,7 @@
   <div class="browse-tshirt__grid">
     <div class="browse-tshirt__media">
       <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.48/build/spline-viewer.js"></script>
-      <spline-viewer url="{{ section.settings.spline_url | default: 'undefined' }}"></spline-viewer>
+      <spline-viewer  url="{{ section.settings.spline_url | default: 'undefined' }}"></spline-viewer>
     </div>
     <div class="browse-tshirt__content">
       {% if section.settings.heading != blank %}
