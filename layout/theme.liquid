@@ -29,7 +29,7 @@
         if (!window.gsap) return;
         if (window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
 
-        var sections = Array.prototype.slice.call(document.querySelectorAll('main .shopify-section'));
+        var sections = Array.prototype.slice.call(document.querySelectorAll('main .shopify-section:not(.shopify-section-header)'));
         sections.forEach(function(s) {
           gsap.set(s, { opacity: 0, y: 40 });
           gsap.to(s, {
