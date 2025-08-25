@@ -1,44 +1,29 @@
 {% section 'header' %}
 
-<div class="search-results-container">
-  <div class="search-header">
-    <h1 class="search-title">
-      {% if search.performed %}
-        Search Results for "{{ search.terms }}"
-        {% if collection %}
-          in {{ collection.title }}
-        {% endif %}
-      {% else %}
-        Search Products
-      {% endif %}
-    </h1>
-    
-    {% if search.performed and search.results_count > 0 %}
-      <p class="search-subtitle">
-        Found {{ search.results_count }} product{% if search.results_count != 1 %}s{% endif %}
-        {% if collection %}
-          in {{ collection.title }}
-        {% endif %}
-      </p>
-    {% endif %}
-  </div>
+{% comment %}
+  Search Results Template
+{% endcomment %}
 
+<div class="search-results-container">
   {% if search.performed %}
     {% if search.results_count > 0 %}
+      <div class="search-header">
+        <h1 class="search-title">Search Results</h1>
+        <p class="search-subtitle">Found {{ search.results_count }} results for "{{ search.terms }}"</p>
+      </div>
+      
       <div class="search-results-grid">
         {% for product in search.results %}
           <div class="search-product-card">
             <div class="search-product-image-container">
               {% if product.featured_image %}
-                <img src="{{ product.featured_image | img_url: '400x400' }}" alt="{{ product.title | escape }}" class="search-product-image" loading="lazy" />
+                <img src="{{ product.featured_image | img_url: '400x400' }}" alt="{{ product.title }}" class="search-product-image">
               {% else %}
-                <div class="search-product-placeholder">
-                  <span>No Image</span>
-                </div>
+                <div class="search-product-placeholder">No Image</div>
               {% endif %}
             </div>
             <div class="search-product-content">
-              <div class="search-product-title">{{ product.title }}</div>
+              <h3 class="search-product-title">{{ product.title }}</h3>
               <div class="search-product-price">{{ product.price | money }}</div>
               <a href="{{ product.url }}" class="search-product-cta">View Product</a>
             </div>
@@ -186,22 +171,22 @@
 }
 
 .search-product-cta {
-  background: #007bff;
   color: #fff;
+  background: #111;
   border: none;
-  border-radius: 6px;
-  padding: 10px 16px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  border-radius: 4px;
+  padding: 8px 16px;
   text-decoration: none;
+  font-size: 1rem;
+  margin-bottom: 12px;
+  display: inline-block;
   text-align: center;
+  transition: background 0.2s, color 0.2s;
 }
 
 .search-product-cta:hover {
-  background: #0056b3;
-  transform: translateY(-1px);
+  background: #0071e3;
+  color: #fff;
 }
 
 /* No Results State */
@@ -249,6 +234,23 @@
   border-radius: 8px;
   font-weight: 600;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.category-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.category-link:hover::before {
+  left: 100%;
 }
 
 .category-link:hover {

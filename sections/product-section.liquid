@@ -84,6 +84,47 @@
   </div>
 </section>
 
+<!-- Related Products Section -->
+<section class="similar-products">
+  <div class="similar-products__container">
+    <h2 class="similar-products__title">You Might Also Like</h2>
+    <div class="similar-products__grid">
+      {% assign current_product = product %}
+      {% assign current_collection = collections.all %}
+      {% assign related_products = current_collection.products | where: "available", true | limit: 4 %}
+      
+      {% for related_product in related_products %}
+        {% if related_product.handle != current_product.handle %}
+          <div class="similar-products__card">
+            <a href="{{ related_product.url }}" class="similar-products__link">
+              {% if related_product.featured_image %}
+                <img src="{{ related_product.featured_image | img_url: '400x400' }}" alt="{{ related_product.title }}" class="similar-products__img">
+              {% else %}
+                <div class="similar-products__placeholder">
+                  {{ 'product-1' | placeholder_svg_tag: 'similar-products__placeholder-svg' }}
+                </div>
+              {% endif %}
+              <div class="similar-products__info">
+                <h3 class="similar-products__name">
+                  <a href="{{ related_product.url }}" class="similar-products__product-link">{{ related_product.title }}</a>
+                </h3>
+                <div class="similar-products__prices">
+                  {% if related_product.compare_at_price > related_product.price %}
+                    <span class="similar-products__old">{{ related_product.compare_at_price | money }}</span>
+                    <span class="similar-products__new">{{ related_product.price | money }}</span>
+                  {% else %}
+                    <span class="similar-products__price">{{ related_product.price | money }}</span>
+                  {% endif %}
+                </div>
+              </div>
+            </a>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
 <!-- Product Data for JavaScript -->
 <script>
 window.productData = {
@@ -135,27 +176,102 @@ window.productData = {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Image gallery: change main image on thumbnail click
+  // Enhanced animations and interactions
+  
+  // Intersection Observer for reveal animations
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-in');
+      }
+    });
+  }, observerOptions);
+  
+  // Observe all elements that should animate
+  document.querySelectorAll('.product-section__container, .similar-products__card, .product-section__title, .product-section__price, .product-section__form, .product-section__description').forEach(el => {
+    observer.observe(el);
+  });
+  
+  // Image gallery: change main image on thumbnail click with enhanced animations
   document.querySelectorAll('.product-section__thumbnail').forEach(function(btn) {
     btn.addEventListener('click', function() {
-      document.getElementById('product-main-image').src = btn.getAttribute('data-image');
-      document.getElementById('product-main-image').alt = btn.getAttribute('data-alt');
-      document.querySelectorAll('.product-section__thumbnail').forEach(function(b) { b.classList.remove('product-section__thumbnail--active'); });
+      const mainImage = document.getElementById('product-main-image');
+      const newSrc = btn.getAttribute('data-image');
+      const newAlt = btn.getAttribute('data-alt');
+      
+      // Add fade out effect
+      mainImage.style.opacity = '0';
+      mainImage.style.transform = 'scale(0.95)';
+      
+      setTimeout(() => {
+        mainImage.src = newSrc;
+        mainImage.alt = newAlt;
+        
+        // Add fade in effect
+        mainImage.style.opacity = '1';
+        mainImage.style.transform = 'scale(1)';
+      }, 150);
+      
+      // Update active thumbnail
+      document.querySelectorAll('.product-section__thumbnail').forEach(function(b) { 
+        b.classList.remove('product-section__thumbnail--active'); 
+      });
       btn.classList.add('product-section__thumbnail--active');
     });
   });
   
-  // Option selection: clear previous and select new
+  // Option selection: clear previous and select new with animations
   document.querySelectorAll('.product-section__option-values').forEach(function(group) {
     group.addEventListener('click', function(e) {
       if (e.target.classList.contains('product-section__option-btn')) {
-        group.querySelectorAll('.product-section__option-btn').forEach(function(btn) { btn.classList.remove('product-section__option-btn--selected'); });
+        // Remove active class from all buttons in group
+        group.querySelectorAll('.product-section__option-btn').forEach(function(btn) { 
+          btn.classList.remove('product-section__option-btn--selected'); 
+        });
+        
+        // Add active class to clicked button with animation
         e.target.classList.add('product-section__option-btn--selected');
+        e.target.style.transform = 'scale(1.1)';
+        setTimeout(() => {
+          e.target.style.transform = 'scale(1)';
+        }, 200);
       }
     });
   });
   
-  // Favorite button functionality
+  // Quantity controls with enhanced animations
+  const quantityInput = document.getElementById('quantity-input');
+  const decreaseBtn = document.querySelector('[data-action="decrease"]');
+  const increaseBtn = document.querySelector('[data-action="increase"]');
+  
+  if (decreaseBtn && increaseBtn && quantityInput) {
+    decreaseBtn.addEventListener('click', function() {
+      const currentValue = parseInt(quantityInput.value);
+      if (currentValue > 1) {
+        quantityInput.value = currentValue - 1;
+        this.style.transform = 'scale(0.9)';
+        setTimeout(() => {
+          this.style.transform = 'scale(1)';
+        }, 150);
+      }
+    });
+    
+    increaseBtn.addEventListener('click', function() {
+      const currentValue = parseInt(quantityInput.value);
+      quantityInput.value = currentValue + 1;
+      this.style.transform = 'scale(0.9)';
+      setTimeout(() => {
+        this.style.transform = 'scale(1)';
+      }, 150);
+    });
+  }
+  
+  // Favorite button functionality with enhanced animations
   const favoriteBtn = document.getElementById('favorite-btn');
   if (favoriteBtn) {
     const productHandle = favoriteBtn.getAttribute('data-product-handle');
@@ -172,6 +288,12 @@ document.addEventListener('DOMContentLoaded', function() {
       const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
       const productHandle = this.getAttribute('data-product-handle');
       
+      // Add click animation
+      this.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        this.style.transform = 'scale(1)';
+      }, 150);
+      
       if (favorites.includes(productHandle)) {
         // Remove from favorites
         const index = favorites.indexOf(productHandle);
@@ -179,21 +301,114 @@ document.addEventListener('DOMContentLoaded', function() {
         this.classList.remove('favorited');
         this.querySelector('.favorite-icon').textContent = '☆';
         this.querySelector('.favorite-text').textContent = 'Add to Favorites';
+        
+        // Add removal animation
+        this.style.background = '#ff6b6b';
+        setTimeout(() => {
+          this.style.background = '';
+        }, 300);
       } else {
         // Add to favorites
         favorites.push(productHandle);
         this.classList.add('favorited');
         this.querySelector('.favorite-icon').textContent = '★';
         this.querySelector('.favorite-text').textContent = 'Remove from Favorites';
+        
+        // Add addition animation
+        this.style.background = '#51cf66';
+        setTimeout(() => {
+          this.style.background = '';
+        }, 300);
       }
       
       localStorage.setItem('favorites', JSON.stringify(favorites));
     });
   }
+  
+  // Add to cart button with enhanced animations
+  const addToCartBtn = document.getElementById('add-to-cart-btn');
+  if (addToCartBtn) {
+    addToCartBtn.addEventListener('click', function(e) {
+      // Add click animation
+      this.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        this.style.transform = 'scale(1)';
+      }, 150);
+    });
+  }
+  
+  // Parallax effect for main product image
+  let ticking = false;
+  function updateParallax() {
+    const scrolled = window.pageYOffset;
+    const mainImage = document.querySelector('.product-section__main-image');
+    if (mainImage) {
+      const rate = scrolled * -0.1;
+      mainImage.style.transform = `translateY(${rate}px)`;
+    }
+    ticking = false;
+  }
+  
+  function requestTick() {
+    if (!ticking) {
+      requestAnimationFrame(updateParallax);
+      ticking = true;
+    }
+  }
+  
+  window.addEventListener('scroll', requestTick);
+  
+  // Enhanced hover effects for related products
+  document.querySelectorAll('.similar-products__card').forEach(card => {
+    card.addEventListener('mouseenter', function() {
+      // Add a subtle bounce effect
+      this.style.transform = 'translateY(-12px) scale(1.03)';
+      
+      // Add a subtle glow effect
+      this.style.boxShadow = '0 25px 80px rgba(0, 123, 255, 0.15)';
+      
+      // Animate the image with a slight delay
+      const img = this.querySelector('.similar-products__img');
+      if (img) {
+        setTimeout(() => {
+          img.style.transform = 'scale(1.1) rotate(2deg)';
+          img.style.filter = 'brightness(1.05) contrast(1.1)';
+        }, 100);
+      }
+      
+      // Animate the info section
+      const info = this.querySelector('.similar-products__info');
+      if (info) {
+        setTimeout(() => {
+          info.style.transform = 'translateY(-5px)';
+        }, 150);
+      }
+    });
+    
+    card.addEventListener('mouseleave', function() {
+      // Smooth return to original state
+      this.style.transform = 'translateY(0) scale(1)';
+      this.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.08)';
+      
+      // Reset image
+      const img = this.querySelector('.similar-products__img');
+      if (img) {
+        img.style.transform = 'scale(1) rotate(0deg)';
+        img.style.filter = 'brightness(1) contrast(1)';
+      }
+      
+      // Reset info section
+      const info = this.querySelector('.similar-products__info');
+      if (info) {
+        info.style.transform = 'translateY(0)';
+      }
+    });
+  });
 });
 </script>
 
 <style>
+/* Enhanced animations and styling */
 .product-section__favorite-btn {
   background: #f8f9fa;
   border: 2px solid #e9ecef;
@@ -203,19 +418,41 @@ document.addEventListener('DOMContentLoaded', function() {
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
   gap: 8px;
   margin-bottom: 12px;
   width: 100%;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.product-section__favorite-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(0, 123, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.product-section__favorite-btn:active::before {
+  width: 300px;
+  height: 300px;
 }
 
 .product-section__favorite-btn:hover {
   background: #e9ecef;
   border-color: #007bff;
   color: #007bff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
 }
 
 .product-section__favorite-btn.favorited {
@@ -227,18 +464,224 @@ document.addEventListener('DOMContentLoaded', function() {
 .product-section__favorite-btn.favorited:hover {
   background: #ffeaa7;
   border-color: #f39c12;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
 }
 
 .favorite-icon {
   font-size: 1.2rem;
   line-height: 1;
+  transition: transform 0.3s ease;
+}
+
+.product-section__favorite-btn:hover .favorite-icon {
+  transform: scale(1.2);
 }
 
 .favorite-text {
   font-size: 0.95rem;
 }
 
+/* Enhanced reveal animations */
+.product-section__container,
+.product-section__title,
+.product-section__price,
+.product-section__form,
+.product-section__description {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-section__container.animate-in,
+.product-section__title.animate-in,
+.product-section__price.animate-in,
+.product-section__form.animate-in,
+.product-section__description.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Special reveal animation for related products */
+.similar-products__card {
+  opacity: 0;
+  transform: translateY(40px) scale(0.95);
+  transition: all 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.similar-products__card.animate-in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Staggered animation for related products */
+.similar-products__card:nth-child(1).animate-in { transition-delay: 0.1s; }
+.similar-products__card:nth-child(2).animate-in { transition-delay: 0.2s; }
+.similar-products__card:nth-child(3).animate-in { transition-delay: 0.3s; }
+.similar-products__card:nth-child(4).animate-in { transition-delay: 0.4s; }
+
+/* Staggered animations for form elements */
+.product-section__variants.animate-in {
+  transition-delay: 0.1s;
+}
+
+.product-section__actions-row.animate-in {
+  transition-delay: 0.2s;
+}
+
+.product-section__description.animate-in {
+  transition-delay: 0.3s;
+}
+
+/* Enhanced image transitions */
+.product-section__image {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced thumbnail interactions */
+.product-section__thumbnail {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-section__thumbnail:hover {
+  transform: translateY(-4px) scale(1.05);
+}
+
+.product-section__thumbnail--active {
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* Enhanced option buttons */
+.product-section__option-btn {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-section__option-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.product-section__option-btn--selected {
+  transform: scale(1.05);
+}
+
+/* Enhanced quantity controls */
+.product-section__quantity-btn {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-section__quantity-btn:hover {
+  background: #007bff;
+  color: white;
+  transform: scale(1.1);
+}
+
+/* Enhanced add to cart button */
+.product-section__add-to-cart {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.product-section__add-to-cart::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.product-section__add-to-cart:hover::before {
+  left: 100%;
+}
+
+.product-section__add-to-cart:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+}
+
+/* Enhanced related products */
+.similar-products__card {
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.similar-products__card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.8s ease;
+  z-index: 1;
+}
+
+.similar-products__card:hover::before {
+  left: 100%;
+}
+
+.similar-products__card:hover {
+  transform: translateY(-12px) scale(1.03);
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.12);
+  border-color: rgba(0, 123, 255, 0.2);
+}
+
+.similar-products__img {
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  z-index: 2;
+}
+
+.similar-products__card:hover .similar-products__img {
+  transform: scale(1.1) rotate(2deg);
+  filter: brightness(1.05) contrast(1.1);
+}
+
+.similar-products__info {
+  position: relative;
+  z-index: 2;
+  transition: all 0.4s ease;
+}
+
+.similar-products__card:hover .similar-products__info {
+  transform: translateY(-5px);
+}
+
+.similar-products__name {
+  transition: all 0.3s ease;
+}
+
+.similar-products__card:hover .similar-products__name {
+  color: #007bff;
+}
+
+.similar-products__prices {
+  transition: all 0.3s ease;
+}
+
+.similar-products__card:hover .similar-products__prices {
+  transform: scale(1.05);
+}
+
+/* Responsive animations */
 @media (max-width: 768px) {
+  .product-section__container,
+  .similar-products__card,
+  .product-section__title,
+  .product-section__price,
+  .product-section__form,
+  .product-section__description {
+    transform: translateY(20px);
+  }
+  
   .product-section__favorite-btn {
     padding: 10px 16px;
     font-size: 0.9rem;
@@ -251,6 +694,27 @@ document.addEventListener('DOMContentLoaded', function() {
   .favorite-text {
     font-size: 0.9rem;
   }
+}
+
+/* Loading states */
+.product-section__add-to-cart:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Focus states for accessibility */
+.product-section__option-btn:focus,
+.product-section__quantity-btn:focus,
+.product-section__favorite-btn:focus,
+.product-section__add-to-cart:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
 }
 </style>
 

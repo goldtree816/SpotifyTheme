@@ -89,7 +89,7 @@
   }
 }
 .article-title {
-  font-size: 2.4rem;
+  font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.4rem);
   font-weight: 700;
   margin-bottom: 16px;
   text-align: center;

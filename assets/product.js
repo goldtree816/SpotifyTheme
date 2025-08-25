@@ -17,6 +17,8 @@ class ProductPage {
     this.initVariantSelection();
     this.initQuantityControls();
     this.initAddToCart();
+    this.initScrollReveal();
+    this.initRipple();
   }
 
   initImageGallery() {
@@ -245,6 +247,39 @@ class ProductPage {
     }
   }
 
+  initScrollReveal() {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const revealEls = document.querySelectorAll('.collection-product-card, .similar-products__card, .hero-poster, .featured-collection');
+    const onIntersect = (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    };
+    const observer = new IntersectionObserver(onIntersect, { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.15 });
+    revealEls.forEach(el => { el.classList.add('reveal'); observer.observe(el); });
+  }
+
+  initRipple() {
+    const rippleTargets = document.querySelectorAll('.collection-add-to-cart-btn, .featured-collection__cta, .product-section__add-to-cart');
+    rippleTargets.forEach(target => {
+      target.classList.add('btn-ripple');
+      target.addEventListener('click', function(e) {
+        const rect = this.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        const size = Math.max(rect.width, rect.height);
+        ripple.className = 'ripple';
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+        ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+        this.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
+  }
+
   async addToCart() {
     if (!this.addToCartBtn) return;
     
@@ -275,8 +310,8 @@ class ProductPage {
       const result = await response.json();
       
       // Success animation
-      this.addToCartBtn.style.background = '#1976d2';
-      this.addToCartBtn.style.color = '#fff';
+      this.addToCartBtn.style.background = 'var(--color-primary, #1976d2)';
+      this.addToCartBtn.style.color = 'var(--color-on-primary, #fff)';
       this.addToCartBtn.style.transform = 'scale(1.05)';
       
       this.showMessage('Product added to cart successfully!', 'success');
@@ -294,8 +329,8 @@ class ProductPage {
       console.error('Add to cart error:', error);
       
       // Error animation
-      this.addToCartBtn.style.background = '#e74c3c';
-      this.addToCartBtn.style.color = '#fff';
+      this.addToCartBtn.style.background = 'var(--color-error, #e74c3c)';
+      this.addToCartBtn.style.color = 'var(--color-on-primary, #fff)';
       this.addToCartBtn.style.transform = 'scale(0.95)';
       
       this.showMessage(error.message || 'Failed to add product to cart', 'error');
@@ -362,9 +397,9 @@ class ProductPage {
       max-width: 300px;
       word-wrap: break-word;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      ${type === 'success' ? 'background: #1976d2;' : ''}
-      ${type === 'error' ? 'background: #e74c3c;' : ''}
-      ${type === 'info' ? 'background: #3498db;' : ''}
+      ${type === 'success' ? 'background: var(--color-primary, #1976d2);' : ''}
+      ${type === 'error' ? 'background: var(--color-error, #e74c3c);' : ''}
+      ${type === 'info' ? 'background: var(--color-info, #3498db);' : ''}
     `;
     
     document.body.appendChild(messageEl);

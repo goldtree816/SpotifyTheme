@@ -55,10 +55,11 @@
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   overflow: hidden;
-  transition: box-shadow 0.2s;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
 }
 .collection-product-card:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.16);
+  transform: translateY(-6px);
 }
 .collection-product-link {
   display: block;
@@ -70,7 +71,9 @@
   height: 220px;
   object-fit: contain;
   background: #f7f7f7;
+  transition: transform 0.35s ease;
 }
+.collection-product-card:hover .collection-product-img { transform: scale(1.04); }
 .collection-product-info {
   padding: 16px;
   text-align: center;
@@ -126,8 +129,8 @@ async function addCollectionToCart(variantId, btn) {
     
     // Success animation
     btn.textContent = 'Added!';
-    btn.style.background = '#1976d2';
-    btn.style.color = '#fff';
+    btn.style.background = 'var(--color-primary, #1976d2)';
+    btn.style.color = 'var(--color-on-primary, #fff)';
     btn.style.transform = 'scale(1.05)';
     
     // Update cart count with animation
@@ -152,8 +155,8 @@ async function addCollectionToCart(variantId, btn) {
     
     // Error animation
     btn.textContent = 'Error';
-    btn.style.background = '#e74c3c';
-    btn.style.color = '#fff';
+    btn.style.background = 'var(--color-error, #e74c3c)';
+    btn.style.color = 'var(--color-on-primary, #fff)';
     btn.style.transform = 'scale(0.95)';
     
     setTimeout(() => {

@@ -4,7 +4,7 @@
 }
 .blog-section__title {
   text-align: center;
-  font-size: 2.2rem;
+  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2.2rem);
   margin-bottom: 24px;
 }
 .blog-section__filter-form {

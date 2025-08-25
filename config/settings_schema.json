@@ -1,83 +1,103 @@
 [
   {
-    "name": "theme_info",
-    "theme_name": "Goldtree Shoe",
-    "theme_version": "1.0.0",
-    "theme_author": "Shopify",
-    "theme_documentation_url": "https://docs.google.com/document/d/175UJ_h7je6fOVC_fAy8Eory8rcRIiD7RiHpCgNl-jBc/edit?usp=sharing",
-    "theme_support_url": "https://goldtree-shoes.myshopify.com/pages/contact"
-  },
-  {
-    "name": "t:general.typography",
-    "settings": [
-      {
-        "type": "header",
-        "content": "t:general.fonts"
-      },
-      {
-        "type": "font_picker",
-        "id": "type_primary_font",
-        "default": "work_sans_n4",
-        "label": "t:general.primary"
-      },
-    ]
-  },
-  {
-    "name": "t:general.layout",
-    "settings": [
-      {
-        "type": "select",
-        "id": "max_page_width",
-        "label": "t:labels.page_width",
-        "options": [
-          {
-            "value": "90rem",
-            "label": "t:options.page_width.narrow"
-          },
-          {
-            "value": "110rem",
-            "label": "t:options.page_width.wide"
-          }
-        ],
-        "default": "90rem"
-      },
-      {
-        "type": "range",
-        "id": "min_page_margin",
-        "min": 10,
-        "max": 100,
-        "step": 1,
-        "unit": "px",
-        "label": "t:labels.page_margin",
-        "default": 20
-      }
-    ]
-  },
-  {
-    "name": "t:general.colors",
-    "settings": [
-      {
-        "type": "color",
-        "id": "background_color",
-        "default": "#FFFFFF",
-        "label": "t:labels.background"
-      },
-      {
-        "type": "color",
-        "id": "foreground_color",
-        "default": "#333333",
-        "label": "t:labels.foreground"
-      },
-      {
-        "type": "range",
-        "id": "input_corner_radius",
-        "min": 0,
-        "max": 10,
-        "step": 1,
-        "unit": "px",
-        "label": "t:labels.input_corner_radius",
-        "default": 4
-      }
-    ]
-  }
-]
+   "name": "theme_info",
+   "theme_name": "GoldTree Shoes",
+   "theme_version": "1.0.0",
+   "theme_author": "GoldTree Group",
+   "theme_documentation_url": "https://docs.google.com/document/d/175UJ_h7je6fOVC_fAy8Eory8rcRIiD7RiHpCgNl-jBc/edit?usp=sharing", 
+   "theme_support_url": "https://goldtreenp.myshopify.com/pages/contact"
+ },
+   {
+     "name": "t:general.typography",
+     "settings": [
+       {
+         "type": "header",
+         "content": "t:general.fonts"
+       },
+       {
+         "type": "font_picker",
+         "id": "type_primary_font",
+         "default": "work_sans_n4",
+         "label": "t:general.primary"
+       }
+     ]
+   },
+   {
+     "name": "t:general.layout",
+     "settings": [
+       {
+         "type": "select",
+         "id": "max_page_width",
+         "label": "t:labels.page_width",
+         "options": [
+           {
+             "value": "90rem",
+             "label": "t:options.page_width.narrow"
+           },
+           {
+             "value": "110rem",
+             "label": "t:options.page_width.wide"
+           }
+         ],
+         "default": "90rem"
+       },
+       {
+         "type": "range",
+         "id": "min_page_margin",
+         "min": 10,
+         "max": 100,
+         "step": 1,
+         "unit": "px",
+         "label": "t:labels.page_margin",
+         "default": 20
+       }
+     ]
+   },
+   {
+     "name": "t:general.colors",
+     "settings": [
+       {
+         "type": "color",
+         "id": "background_color",
+         "default": "#FFFFFF",
+         "label": "t:labels.background"
+       },
+       {
+         "type": "color",
+         "id": "foreground_color",
+         "default": "#333333",
+         "label": "t:labels.foreground"
+       },
+       {
+         "type": "range",
+         "id": "input_corner_radius",
+         "min": 0,
+         "max": 10,
+         "step": 1,
+         "unit": "px",
+         "label": "t:labels.input_corner_radius",
+         "default": 4
+       }
+     ]
+   },
+   {
+     "name": "t:general.motion",
+     "settings": [
+       {
+         "type": "checkbox",
+         "id": "enable_animations",
+         "label": "Enable animations and effects",
+         "default": true
+       },
+       {
+         "type": "range",
+         "id": "animation_intensity",
+         "label": "Animation intensity",
+         "min": 0,
+         "max": 100,
+         "step": 10,
+         "default": 60
+       }
+     ]
+   }
+ ]

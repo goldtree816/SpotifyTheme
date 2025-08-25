@@ -40,7 +40,7 @@
   transition: border 0.2s;
 }
 .field input:focus {
-  border-color: #1abc9c;
+  border-color: var(--color-primary, #1976d2);
   outline: none;
 }
 .login-actions-row {
@@ -50,7 +50,7 @@
   margin-top: 1.5rem;
 }
 .login-actions-row button {
-  background: #1abc9c;
+  background: var(--color-primary, #1976d2);
   color: #fff;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -61,11 +61,11 @@
   transition: background 0.2s;
 }
 .login-actions-row button:hover {
-  background: #16a085;
+  background: var(--color-primary-600, #1565c0);
 }
 .login-actions-row .btn-alt {
   background: none;
-  color: #1abc9c;
+  color: var(--color-primary, #1976d2);
   border: none;
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
@@ -75,7 +75,7 @@
 }
 .form__message {
   background: #ffeaea;
-  color: #e74c3c;
+  color: var(--color-error, #e74c3c);
   padding: 0.75rem 1rem;
   border-radius: 6px;
   margin-bottom: 1rem;
@@ -86,7 +86,7 @@
 }
 .form__message.success {
   background: #eafaf1;
-  color: #27ae60;
+  color: var(--color-success, #27ae60);
 }
 .login-links {
   margin-top: 1.5rem;
@@ -137,7 +137,7 @@
   margin-top: 1.5rem;
 }
 .btn-primary {
-  background: #1abc9c;
+  background: var(--color-primary, #1976d2);
   color: #fff;
   border: none;
   padding: 0.6rem 1.2rem;
@@ -146,7 +146,7 @@
   cursor: pointer;
 }
 .btn-primary:hover {
-  background: #16a085;
+  background: var(--color-primary-600, #1565c0);
 }
 .btn-secondary {
   background: #f7f9fb;
@@ -164,7 +164,7 @@
   display: inline-block;
   width: 1em;
   height: 1em;
-  border: 2px solid #1abc9c;
+  border: 2px solid var(--color-primary, #1976d2);
   border-top: 2px solid #fff;
   border-radius: 50%;
   animation: spin 0.7s linear infinite;

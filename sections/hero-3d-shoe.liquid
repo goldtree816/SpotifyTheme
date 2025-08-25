@@ -1,0 +1,82 @@
+<section class="hero-3d-shoe" id="hero-3d-shoe">
+  <div class="hero-3d-shoe__container">
+    <!-- 3D Canvas Container -->
+    <div class="hero-3d-shoe__canvas-container">
+      <canvas id="shoe-canvas" class="hero-3d-shoe__canvas"></canvas>
+      
+      <!-- Loading Screen -->
+      <div class="hero-3d-shoe__loading" id="loading-screen">
+        <div class="loading-spinner"></div>
+        <p>Assembling your perfect shoe...</p>
+        <small class="loading-timeout">This may take a few moments</small>
+      </div>
+      
+      <!-- Assembly Progress -->
+      <div class="hero-3d-shoe__progress">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="progress-text" id="progress-text">Step 1: Sole</div>
+      </div>
+    </div>
+    
+    <!-- Assembly Steps -->
+    <div class="hero-3d-shoe__steps">
+      <div class="step" data-step="sole">
+        <div class="step-number">01</div>
+        <div class="step-content">
+          <h3>Premium Sole</h3>
+          <p>Durable rubber outsole with superior grip</p>
+        </div>
+      </div>
+      
+      <div class="step" data-step="midsole">
+        <div class="step-number">02</div>
+        <div class="step-content">
+          <h3>Comfort Midsole</h3>
+          <p>Advanced cushioning technology</p>
+        </div>
+      </div>
+      
+      <div class="step" data-step="upper">
+        <div class="step-number">03</div>
+        <div class="step-content">
+          <h3>Premium Upper</h3>
+          <p>Breathable, durable materials</p>
+        </div>
+      </div>
+      
+      <div class="step" data-step="laces">
+        <div class="step-number">04</div>
+        <div class="step-content">
+          <h3>Secure Lacing</h3>
+          <p>Perfect fit and support</p>
+        </div>
+      </div>
+      
+      <div class="step" data-step="details">
+        <div class="step-number">05</div>
+        <div class="step-content">
+          <h3>Final Details</h3>
+          <p>Branding and finishing touches</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Call to Action -->
+    <div class="hero-3d-shoe__cta">
+      <h1 class="hero-3d-shoe__title">Craft Your Perfect Fit</h1>
+      <p class="hero-3d-shoe__subtitle">Watch as we assemble your dream shoes piece by piece</p>
+      <div class="hero-3d-shoe__buttons">
+        <a href="#featured-collections" class="btn btn-primary">Explore Collection</a>
+        <button class="btn btn-secondary" id="replay-btn">Replay Animation</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Scroll Indicator -->
+<div class="scroll-indicator">
+  <div class="scroll-arrow"></div>
+  <span>Scroll down to build the shoe</span>
+</div>

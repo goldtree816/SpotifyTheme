@@ -112,7 +112,7 @@
 }
 
 .cart-drawer__close-btn:focus {
-  outline: 2px solid #1976d2;
+  outline: 2px solid var(--color-primary, #1976d2);
   outline-offset: 2px;
 }
 
@@ -268,8 +268,8 @@
 }
 
 .quantity-control:hover {
-  border-color: #1976d2;
-  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.15);
+  border-color: var(--color-primary, #1976d2);
+  box-shadow: 0 2px 8px rgba(var(--color-primary-rgb, 25, 118, 210), 0.15);
 }
 
 .quantity-decrease,
@@ -302,7 +302,7 @@
 
 .quantity-decrease:focus,
 .quantity-increase:focus {
-  outline: 2px solid #1976d2;
+  outline: 2px solid var(--color-primary, #1976d2);
   outline-offset: 1px;
 }
 
@@ -326,7 +326,7 @@
 }
 
 .cart-drawer__item-qty input:focus {
-  outline: 2px solid #1976d2;
+  outline: 2px solid var(--color-primary, #1976d2);
   outline-offset: 1px;
   background: #f8f9fa;
 }
@@ -359,7 +359,7 @@
 }
 
 .cart-drawer__remove:focus {
-  outline: 2px solid #1976d2;
+  outline: 2px solid var(--color-primary, #1976d2);
   outline-offset: 1px;
 }
 
@@ -406,7 +406,7 @@
 }
 
 .cart-drawer__update:focus {
-  outline: 2px solid #1976d2;
+  outline: 2px solid var(--color-primary, #1976d2);
   outline-offset: 2px;
 }
 
@@ -423,7 +423,7 @@
 }
 
 .cart-drawer__checkout:focus {
-  outline: 2px solid #1976d2;
+  outline: 2px solid var(--color-primary, #1976d2);
   outline-offset: 2px;
 }
 
@@ -455,15 +455,15 @@
 }
 
 .cart-message--success {
-  background: #1976d2;
+  background: var(--color-primary, #1976d2);
 }
 
 .cart-message--error {
-  background: #e74c3c;
+  background: var(--color-error, #e74c3c);
 }
 
 .cart-message--info {
-  background: #3498db;
+  background: var(--color-info, #3498db);
 }
 
 /* Add to cart button animations */

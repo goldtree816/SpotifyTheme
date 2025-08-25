@@ -1,0 +1,77 @@
+<section class="value-props" aria-label="Why shop with us">
+  <div class="value-props__inner">
+    <div class="value-prop reveal">
+      <div class="value-prop__icon" aria-hidden="true">🚚</div>
+      <div class="value-prop__content">
+        <h3>Fast, Free Shipping</h3>
+        <p>Standard shipping on all orders with tracking and hassle-free delivery.</p>
+      </div>
+    </div>
+    <div class="value-prop reveal" style="transition-delay:.06s">
+      <div class="value-prop__icon" aria-hidden="true">↩️</div>
+      <div class="value-prop__content">
+        <h3>Easy Returns</h3>
+        <p>30-day returns on all products. No questions asked.</p>
+      </div>
+    </div>
+    <div class="value-prop reveal" style="transition-delay:.12s">
+      <div class="value-prop__icon" aria-hidden="true">💬</div>
+      <div class="value-prop__content">
+        <h3>24/7 Support</h3>
+        <p>Real humans to help you with sizing, orders, and more.</p>
+      </div>
+    </div>
+    <div class="value-prop reveal" style="transition-delay:.18s">
+      <div class="value-prop__icon" aria-hidden="true">✅</div>
+      <div class="value-prop__content">
+        <h3>Authentic Products</h3>
+        <p>We source directly from brands and trusted distributors.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.value-props {
+  padding: 28px 12px;
+}
+.value-props__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.value-prop {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.value-prop__icon { font-size: 28px; display: grid; place-items: center; }
+.value-prop__content h3 { margin: 0 0 6px 0; font-size: 1.05rem; }
+.value-prop__content p { margin: 0; color: #555; font-size: 0.95rem; line-height: 1.45; }
+
+@media (max-width: 900px) {
+  .value-props__inner { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+}
+@media (max-width: 520px) {
+  .value-props__inner { grid-template-columns: 1fr; }
+  .value-prop { grid-template-columns: 36px 1fr; }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Value props",
+  "settings": [],
+  "presets": [
+    { "name": "Value props" }
+  ]
+}
+{% endschema %}
+

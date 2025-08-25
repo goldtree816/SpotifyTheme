@@ -76,8 +76,8 @@ document.addEventListener('DOMContentLoaded', function () {
           
           // Show success feedback
           updateBtn.textContent = 'Updated!';
-          updateBtn.style.background = '#1976d2';
-          updateBtn.style.color = '#fff';
+          updateBtn.style.background = 'var(--color-primary, #1976d2)';
+          updateBtn.style.color = 'var(--color-on-primary, #fff)';
           
           setTimeout(async () => {
             await loadCartDrawerContent();
@@ -323,9 +323,9 @@ document.addEventListener('DOMContentLoaded', function () {
       max-width: 300px;
       word-wrap: break-word;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      ${type === 'success' ? 'background: #27ae60;' : ''}
-      ${type === 'error' ? 'background: #e74c3c;' : ''}
-      ${type === 'info' ? 'background: #3498db;' : ''}
+      ${type === 'success' ? 'background: var(--color-success, #27ae60);' : ''}
+      ${type === 'error' ? 'background: var(--color-error, #e74c3c);' : ''}
+      ${type === 'info' ? 'background: var(--color-info, #3498db);' : ''}
     `;
     
     document.body.appendChild(messageEl);

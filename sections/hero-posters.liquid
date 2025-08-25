@@ -1,110 +1,474 @@
-<div class="hero-posters">
-  <!-- Poster 1 -->
-  <div class="hero-poster" id="poster-1">
-    {% if section.settings.poster1_image != blank %}
-      <img src="{{ section.settings.poster1_image | image_url: width: 600 }}" alt="Poster 1">
-    {% else %}
-      <img src="{{ 'jordan.jpg' | asset_url }}" alt="Poster 1">
-    {% endif %}
-    <div class="hero-poster-content">
-      <h2>{% if section.settings.poster1_heading != blank %}{{ section.settings.poster1_heading }}{% else %}JORDAN{% endif %}</h2>
-      <p>{% if section.settings.poster1_subheading != blank %}{{ section.settings.poster1_subheading }}{% else %}Dream big and leave red bright steps with this jordan.{% endif %}</p>
+{% comment %}
+  Enhanced Hero Section with improved animations and effects
+{% endcomment %}
+
+<section class="hero-section">
+  <div class="hero-slider">
+    <div class="hero-slide active" data-slide="0">
+      <div class="hero-image-container">
+        <img src="{{ 'adidas-samba-sneakers-amy4.jpg' | asset_url }}" alt="Adidas Samba Sneakers" class="hero-image">
+        <div class="hero-image-overlay"></div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-text-container">
+          <h1 class="hero-title">Step into Style</h1>
+          <p class="hero-subtitle">Discover the latest trends in footwear</p>
+          <a href="/collections/all" class="hero-cta">
+            <span>Shop Now</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="hero-slide" data-slide="1">
+      <div class="hero-image-container">
+        <img src="{{ 'jordan.jpg' | asset_url }}" alt="Jordan Collection" class="hero-image">
+        <div class="hero-image-overlay"></div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-text-container">
+          <h1 class="hero-title">Legendary Performance</h1>
+          <p class="hero-subtitle">Experience the legacy of Jordan</p>
+          <a href="/collections/men" class="hero-cta">
+            <span>Explore Collection</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="hero-slide" data-slide="2">
+      <div class="hero-image-container">
+        <img src="{{ 'nb550.webp' | asset_url }}" alt="New Balance 550" class="hero-image">
+        <div class="hero-image-overlay"></div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-text-container">
+          <h1 class="hero-title">Classic Comfort</h1>
+          <p class="hero-subtitle">Timeless design meets modern comfort</p>
+          <a href="/collections/all" class="hero-cta">
+            <span>Discover More</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="hero-controls">
+      <button class="hero-nav prev" aria-label="Previous slide">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </button>
+      <div class="hero-dots">
+        <button class="hero-dot active" data-slide="0" aria-label="Go to slide 1"></button>
+        <button class="hero-dot" data-slide="1" aria-label="Go to slide 2"></button>
+        <button class="hero-dot" data-slide="2" aria-label="Go to slide 3"></button>
+      </div>
+      <button class="hero-nav next" aria-label="Next slide">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 18l6-6-6-6"/>
+        </svg>
+      </button>
     </div>
   </div>
-  <!-- Poster 2 -->
-  <div class="hero-poster" id="poster-2">
-    {% if section.settings.poster2_image != blank %}
-      <img src="{{ section.settings.poster2_image | image_url: width: 600 }}" alt="Poster 2">
-    {% else %}
-      <img src="{{ 'nb550.webp' | asset_url }}" alt="Poster 2">
-    {% endif %}
-    <div class="hero-poster-content">
-      <h2>{% if section.settings.poster2_heading != blank %}{{ section.settings.poster2_heading }}{% else %}NB 550{% endif %}</h2>
-      <p>{% if section.settings.poster2_subheading != blank %}{{ section.settings.poster2_subheading }}{% else %}Classic style, modern comfort. Step up your sneaker game.{% endif %}</p>
-    </div>
-  </div>
-  <!-- Poster 3 -->
-  <div class="hero-poster" id="poster-3">
-    {% if section.settings.poster3_image != blank %}
-      <img src="{{ section.settings.poster3_image | image_url: width: 600 }}" alt="Poster 3">
-    {% else %}
-      <img src="{{ 'adidas-samba-sneakers-amy4.jpg' | asset_url }}" alt="Poster 3">
-    {% endif %}
-    <div class="hero-poster-content">
-      <h2>{% if section.settings.poster3_heading != blank %}{{ section.settings.poster3_heading }}{% else %}SAMBA{% endif %}</h2>
-      <p>{% if section.settings.poster3_subheading != blank %}{{ section.settings.poster3_subheading }}{% else %}Perfection is samba.{% endif %}</p>
-    </div>
-  </div>
-</div>
+</section>
 
 <style>
-.hero-posters {
-  display: flex;
-  gap: 16px;
-  margin: 0 auto;
-  max-width: 1600px;
-  padding: 32px 0;
+.hero-section {
+  position: relative;
+  height: 80vh;
+  min-height: 500px;
+  max-height: 800px;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--color-primary-tint, #e3f2fd) 0%, #f8fafc 100%);
 }
-.hero-poster {
-  flex: 1 1 0;
+
+.hero-slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: scale(1.1);
+  transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  visibility: hidden;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  transform: scale(1);
+  visibility: visible;
+}
+
+.hero-image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.1);
+  transition: transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  filter: brightness(0.8) contrast(1.1);
+}
+
+.hero-slide.active .hero-image {
+  transform: scale(1);
+  filter: brightness(0.9) contrast(1.05);
+}
+
+.hero-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+}
+
+.hero-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  z-index: 2;
+}
+
+.hero-text-container {
+  max-width: 600px;
+  padding: 0 24px;
+  transform: translateY(40px);
+  opacity: 0;
+  transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s;
+}
+
+.hero-slide.active .hero-text-container {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-weight: 800;
+  margin: 0 0 20px 0;
+  line-height: 1.1;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  letter-spacing: -0.02em;
+  transform: translateX(-30px);
+  transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s;
+}
+
+.hero-slide.active .hero-title {
+  transform: translateX(0);
+}
+
+.hero-subtitle {
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  margin: 0 0 32px 0;
+  opacity: 0.9;
+  font-weight: 400;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  transform: translateX(30px);
+  transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.7s;
+}
+
+.hero-slide.active .hero-subtitle {
+  transform: translateX(0);
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 36px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: white;
+  background: linear-gradient(135deg, var(--color-primary, #1976d2) 0%, #1565c0 100%);
+  border-radius: 50px;
+  box-shadow: 0 8px 32px rgba(25, 118, 210, 0.3);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   position: relative;
   overflow: hidden;
-  border-radius: 8px;
-  min-width: 0;
-  background: #eee;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  transform: translateY(20px) scale(0.9);
+  transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.9s;
 }
-.hero-poster img {
-  width: 100%;
-  height: 400px;
-  object-fit: cover;
-  display: block;
+
+.hero-slide.active .hero-cta {
+  transform: translateY(0) scale(1);
 }
-.hero-poster-content {
+
+.hero-cta::before {
+  content: '';
   position: absolute;
-  left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.4);
-  color: #fff;
-  padding: 24px;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.8s ease;
 }
-.hero-poster-content h2 {
-  font-size: 2rem;
-  font-weight: bold;
-  margin: 0 0 8px 0;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+
+.hero-cta:hover::before {
+  left: 100%;
 }
-.hero-poster-content p {
-  margin: 0 0 16px 0;
-  font-size: 1.1rem;
+
+.hero-cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(25, 118, 210, 0.4);
 }
-.hero-poster-btn {
-  display: inline-block;
-  background: #fff;
-  color: #111;
-  font-weight: bold;
-  padding: 10px 24px;
-  border-radius: 2px;
-  text-decoration: none;
-  margin-top: 8px;
-  transition: background 0.2s, color 0.2s;
+
+.hero-cta svg {
+  transition: transform 0.3s ease;
 }
-.hero-poster-btn:hover {
-  background: #111;
-  color: #fff;
+
+.hero-cta:hover svg {
+  transform: translateX(4px);
 }
-@media (max-width: 900px) {
-  .hero-posters {
-    flex-direction: column;
-    gap: 24px;
+
+.hero-controls {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  z-index: 10;
+}
+
+.hero-nav {
+  background: rgba(255, 255, 255, 0.95);
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #333;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: scale(0.8);
+  animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.2s forwards;
+}
+
+.hero-nav:hover {
+  background: white;
+  transform: scale(1.1);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+}
+
+.hero-dots {
+  display: flex;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.4s forwards;
+}
+
+.hero-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.hero-dot.active {
+  background: white;
+  border-color: white;
+  transform: scale(1.2);
+}
+
+.hero-dot:hover {
+  border-color: white;
+  transform: scale(1.1);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  .hero-poster img {
-    height: 220px;
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    height: 70vh;
+    min-height: 400px;
+  }
+  
+  .hero-text-container {
+    padding: 0 16px;
+  }
+  
+  .hero-controls {
+    bottom: 20px;
+    gap: 16px;
+  }
+  
+  .hero-nav {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .hero-dot {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    height: 60vh;
+    min-height: 350px;
+  }
+  
+  .hero-title {
+    font-size: clamp(2rem, 10vw, 2.5rem);
+  }
+  
+  .hero-subtitle {
+    font-size: clamp(1rem, 4vw, 1.2rem);
+  }
+  
+  .hero-cta {
+    padding: 16px 28px;
+    font-size: 1rem;
   }
 }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const slides = document.querySelectorAll('.hero-slide');
+  const dots = document.querySelectorAll('.hero-dot');
+  const prevBtn = document.querySelector('.hero-nav.prev');
+  const nextBtn = document.querySelector('.hero-nav.next');
+  let currentSlide = 0;
+  let slideInterval;
+  let isTransitioning = false;
+
+  function showSlide(index) {
+    if (isTransitioning) return;
+    isTransitioning = true;
+    
+    // Remove active class from current slide
+    slides[currentSlide].classList.remove('active');
+    dots[currentSlide].classList.remove('active');
+    
+    // Update current slide index
+    currentSlide = index;
+    
+    // Add active class to new slide
+    slides[currentSlide].classList.add('active');
+    dots[currentSlide].classList.add('active');
+    
+    // Reset transition flag after animation completes
+    setTimeout(() => {
+      isTransitioning = false;
+    }, 1200);
+  }
+
+  function nextSlide() {
+    const next = (currentSlide + 1) % slides.length;
+    showSlide(next);
+  }
+
+  function prevSlide() {
+    const prev = (currentSlide - 1 + slides.length) % slides.length;
+    showSlide(prev);
+  }
+
+  function startAutoSlide() {
+    slideInterval = setInterval(nextSlide, 6000);
+  }
+
+  function stopAutoSlide() {
+    clearInterval(slideInterval);
+  }
+
+  // Event listeners
+  prevBtn?.addEventListener('click', () => {
+    if (!isTransitioning) {
+      prevSlide();
+      stopAutoSlide();
+      startAutoSlide();
+    }
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    if (!isTransitioning) {
+      nextSlide();
+      stopAutoSlide();
+      startAutoSlide();
+    }
+  });
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      if (!isTransitioning && index !== currentSlide) {
+        showSlide(index);
+        stopAutoSlide();
+        startAutoSlide();
+      }
+    });
+  });
+
+  // Pause auto-slide on hover
+  const heroSection = document.querySelector('.hero-section');
+  heroSection?.addEventListener('mouseenter', stopAutoSlide);
+  heroSection?.addEventListener('mouseleave', startAutoSlide);
+
+  // Start auto-slide
+  startAutoSlide();
+  
+  // Initialize first slide
+  showSlide(0);
+});
+</script>
 
 {% schema %}
 {

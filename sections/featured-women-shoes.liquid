@@ -70,44 +70,86 @@
 .featured-shoe.big { 
   width: 250px; 
   min-width: 250px; 
-  background: #f7f7f7; 
+  background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
   border-radius: 12px; 
   overflow: hidden; 
   display: flex; 
   flex-direction: column; 
   align-items: center; 
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04); 
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
+
+.featured-shoe.big::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.8s ease;
+  z-index: 1;
+}
+
+.featured-shoe.big:hover::before {
+  left: 100%;
+}
+
+.featured-shoe.big:hover {
+  transform: translateY(-12px) scale(1.03);
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.12);
+  border-color: rgba(0, 123, 255, 0.2);
+}
+
 .featured-shoe-img { 
   width: 100%; 
   height: 180px; 
   object-fit: contain; 
   background: #fff; 
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  z-index: 2;
 }
-.placeholder-image {
-  width: 100%;
-  height: 180px;
-  background: #f7f7f7;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+.featured-shoe.big:hover .featured-shoe-img {
+  transform: scale(1.1) rotate(2deg);
+  filter: brightness(1.05) contrast(1.1);
 }
+
 .featured-shoe-title.center, 
 .featured-shoe-price.center { 
   text-align: center; 
   width: 100%; 
   margin: 0 auto; 
   padding: 0 10px;
+  position: relative;
+  z-index: 2;
+  transition: all 0.4s ease;
 }
+
+.featured-shoe.big:hover .featured-shoe-title.center {
+  transform: translateY(-5px);
+  color: #007bff;
+}
+
+.featured-shoe.big:hover .featured-shoe-price.center {
+  transform: scale(1.05);
+}
+
 .featured-shoe-title { 
   font-size: 1.1rem; 
   margin: 12px 0 4px 0; 
   font-weight: bold; 
+  transition: all 0.3s ease;
 }
 .featured-shoe-price { 
   font-size: 1.1rem; 
   font-weight: bold; 
   margin-bottom: 8px; 
+  transition: all 0.3s ease;
 }
 .featured-shoe-link { 
   color: #fff; 
@@ -120,12 +162,34 @@
   margin-bottom: 12px; 
   display: inline-block; 
   text-align: center; 
-  transition: background 0.2s, color 0.2s; 
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
 }
+
+.featured-shoe-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.featured-shoe-link:hover::before {
+  left: 100%;
+}
+
 .featured-shoe-link:hover { 
   background: #0071e3; 
   color: #fff; 
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
 }
+
 .slider-arrow { 
   position: absolute; 
   top: 50%; 
@@ -138,7 +202,16 @@
   font-size: 1.5rem; 
   cursor: pointer; 
   z-index: 2; 
+  transition: all 0.3s ease;
 }
+
+.slider-arrow:hover {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+  transform: translateY(-50%) scale(1.1);
+}
+
 .slider-arrow.left { left: 10px; }
 .slider-arrow.right { right: 10px; }
 .featured-women-shoes > h2 { 
@@ -171,21 +244,69 @@
 
 <script>
 function slideTopPicks(id, dir) {
-  const slider = document.getElementById(id);
+  var slider = document.getElementById(id);
   if (!slider) return;
-  
-  const itemWidth = 250 + 40; // width + gap
-  const visibleItems = Math.floor(slider.parentElement.offsetWidth / itemWidth);
-  const totalItems = slider.children.length;
-  const maxSlides = Math.max(0, totalItems - visibleItems);
-  
-  let current = parseInt(slider.dataset.slide) || 0;
-  let next = current + dir;
-  
-  next = Math.max(0, Math.min(next, maxSlides));
-  slider.style.transform = `translateX(${-next * itemWidth}px)`;
-  slider.dataset.slide = next;
+  var cardWidth = 290; // 250px + 40px gap
+  var visible = 4;
+  var total = slider.children.length;
+  var maxSlide = Math.max(0, total - visible);
+  var current = parseInt(slider.getAttribute('data-slide')) || 0;
+  var next = current + dir;
+  next = Math.max(0, Math.min(next, maxSlide));
+  slider.style.transform = 'translateX(' + (-next * cardWidth) + 'px)';
+  slider.setAttribute('data-slide', next);
 }
+
+// Enhanced hover effects for shoe cards
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.featured-shoe.big').forEach(card => {
+    card.addEventListener('mouseenter', function() {
+      // Add a subtle bounce effect
+      this.style.transform = 'translateY(-12px) scale(1.03)';
+      
+      // Add a subtle glow effect
+      this.style.boxShadow = '0 25px 80px rgba(0, 123, 255, 0.15)';
+      
+      // Animate the image with a slight delay
+      const img = this.querySelector('.featured-shoe-img');
+      if (img) {
+        setTimeout(() => {
+          img.style.transform = 'scale(1.1) rotate(2deg)';
+          img.style.filter = 'brightness(1.05) contrast(1.1)';
+        }, 100);
+      }
+      
+      // Animate the title
+      const title = this.querySelector('.featured-shoe-title');
+      if (title) {
+        setTimeout(() => {
+          title.style.transform = 'translateY(-5px)';
+          title.style.color = '#007bff';
+        }, 150);
+      }
+    });
+    
+    card.addEventListener('mouseleave', function() {
+      // Smooth return to original state
+      this.style.transform = 'translateY(0) scale(1)';
+      this.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.08)';
+      
+      // Reset image
+      const img = this.querySelector('.featured-shoe-img');
+      if (img) {
+        img.style.transform = 'scale(1) rotate(0deg)';
+        img.style.filter = 'brightness(1) contrast(1)';
+      }
+      
+      // Reset title
+      const title = this.querySelector('.featured-shoe-title');
+      if (title) {
+        title.style.transform = 'translateY(0)';
+        title.style.color = '';
+      }
+    });
+  });
+});
 </script>
 
 {% schema %}

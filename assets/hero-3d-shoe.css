@@ -1,0 +1,986 @@
+/* Hero 3D Shoe Section */
+.hero-3d-shoe {
+  position: relative;
+  height: 600vh; /* 6x viewport height: 5 for assembly + 1 for completion */
+  background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 30%, #16213e 70%, #0f0f23 100%);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.hero-3d-shoe__container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Canvas Container */
+.hero-3d-shoe__canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 1;
+  transition: opacity 0.5s ease;
+}
+
+.hero-3d-shoe__canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Loading Screen */
+.hero-3d-shoe__loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  z-index: 10;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: loadingPulse 2s ease-in-out infinite;
+}
+
+@keyframes loadingPulse {
+  0%, 100% { 
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 20px rgba(79, 172, 254, 0.2);
+  }
+  50% { 
+    transform: translate(-50%, -50%) scale(1.02);
+    box-shadow: 0 0 30px rgba(79, 172, 254, 0.4);
+  }
+}
+
+.hero-3d-shoe__loading.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.9);
+  animation: none;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top: 2px solid #4facfe;
+  border-radius: 50%;
+  animation: spin 1.2s linear infinite;
+  margin: 0 auto 15px;
+  box-shadow: 0 0 20px rgba(79, 172, 254, 0.3);
+  position: relative;
+}
+
+.loading-spinner::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px solid transparent;
+  border-top: 2px solid rgba(79, 172, 254, 0.6);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite reverse;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.hero-3d-shoe__loading p {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
+  opacity: 0.9;
+  letter-spacing: 0.5px;
+  animation: textGlow 2s ease-in-out infinite;
+}
+
+@keyframes textGlow {
+  0%, 100% { 
+    text-shadow: 0 0 5px rgba(79, 172, 254, 0.3);
+  }
+  50% { 
+    text-shadow: 0 0 15px rgba(79, 172, 254, 0.6);
+  }
+}
+
+.loading-timeout {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.8rem;
+  opacity: 0.7;
+  font-weight: 400;
+  animation: fadeInOut 3s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 0.4; }
+}
+
+/* Progress Bar */
+.hero-3d-shoe__progress {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  text-align: center;
+  color: white;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(15px);
+  padding: 15px 25px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.progress-bar {
+  width: 250px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 8px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4facfe 0%, #00f2fe 50%, #667eea 100%);
+  width: 0%;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(79, 172, 254, 0.5);
+}
+
+.progress-text {
+  font-size: 0.85rem;
+  font-weight: 600;
+  opacity: 0.9;
+  letter-spacing: 0.3px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Assembly Steps */
+.hero-3d-shoe__steps {
+  position: fixed;
+  right: 50px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+  opacity: 0.4;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  padding: 12px 15px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  min-width: 180px;
+}
+
+.step:hover {
+  opacity: 0.8;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateX(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.step.active {
+  opacity: 1;
+  background: linear-gradient(135deg, rgba(79, 172, 254, 0.25), rgba(0, 242, 254, 0.15));
+  border-color: rgba(79, 172, 254, 0.4);
+  transform: scale(1.02) translateX(-3px);
+  box-shadow: 0 8px 30px rgba(79, 172, 254, 0.3);
+}
+
+.step.completed {
+  opacity: 0.8;
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(139, 195, 74, 0.1));
+  border-color: rgba(76, 175, 80, 0.4);
+}
+
+.step-number {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: white;
+  flex-shrink: 0;
+  box-shadow: 0 2px 10px rgba(79, 172, 254, 0.3);
+  transition: all 0.3s ease;
+}
+
+.step.active .step-number {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  transform: scale(1.1);
+}
+
+.step.completed .step-number {
+  background: linear-gradient(135deg, #4caf50 0%, #8bc34a 100%);
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+}
+
+.step-content h3 {
+  margin: 0 0 3px 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.step-content p {
+  margin: 0;
+  font-size: 0.75rem;
+  opacity: 0.85;
+  line-height: 1.2;
+  letter-spacing: 0.1px;
+}
+
+/* Call to Action */
+.hero-3d-shoe__cta {
+  position: fixed;
+  bottom: 100px;
+  left: 50px;
+  z-index: 10;
+  color: white;
+  max-width: 380px;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(15px);
+  padding: 25px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.hero-3d-shoe__title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0 0 12px 0;
+  background: linear-gradient(135deg, #ffffff 0%, #4facfe 50%, #667eea 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-3d-shoe__subtitle {
+  font-size: 1rem;
+  margin: 0 0 25px 0;
+  opacity: 0.9;
+  line-height: 1.4;
+  letter-spacing: 0.2px;
+  font-weight: 400;
+}
+
+.hero-3d-shoe__buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 12px 22px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 0.9rem;
+  letter-spacing: 0.3px;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  color: white;
+  text-align: center;
+  opacity: 0.8;
+  animation: bounce 2s infinite;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  padding: 12px 20px;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.scroll-arrow {
+  width: 18px;
+  height: 18px;
+  border-right: 2px solid rgba(255, 255, 255, 0.9);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.9);
+  transform: rotate(45deg);
+  margin: 0 auto 8px;
+  transition: all 0.3s ease;
+}
+
+.scroll-indicator:hover .scroll-arrow {
+  border-color: #4facfe;
+  transform: rotate(45deg) scale(1.1);
+}
+
+.scroll-indicator span {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  opacity: 0.9;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-8px);
+  }
+  60% {
+    transform: translateX(-50%) translateY(-4px);
+  }
+}
+
+/* Particle Effects */
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: linear-gradient(45deg, #4facfe, #00f2fe);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: particleFloat 3s ease-out forwards;
+  box-shadow: 0 0 8px rgba(79, 172, 254, 0.6);
+}
+
+@keyframes particleFloat {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateY(-50px) scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100px) scale(0);
+  }
+}
+
+/* Celebration Particles */
+.celebration-particle {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #667eea);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: celebrationFloat 4s ease-out forwards;
+  box-shadow: 0 0 12px currentColor;
+}
+
+@keyframes celebrationFloat {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+  30% {
+    opacity: 0.9;
+    transform: translateY(-30px) scale(1.3) rotate(120deg);
+  }
+  70% {
+    opacity: 0.6;
+    transform: translateY(-80px) scale(1.1) rotate(240deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-150px) scale(0) rotate(360deg);
+  }
+}
+
+/* Section Backgrounds for Post-Shoe Content */
+.hero-posters {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+  z-index: 2;
+}
+
+.featured-collections {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  position: relative;
+  z-index: 2;
+}
+
+.value-props {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  position: relative;
+  z-index: 2;
+}
+
+.features-showcase {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  position: relative;
+  z-index: 2;
+}
+
+.testimonials {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  position: relative;
+  z-index: 2;
+}
+
+/* Ensure smooth transition from 3D section */
+.hero-posters {
+  margin-top: -1px; /* Remove gap */
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .hero-3d-shoe__steps {
+    right: 25px;
+    gap: 12px;
+  }
+  
+  .step {
+    padding: 10px 12px;
+    min-width: 160px;
+  }
+  
+  .step-number {
+    width: 32px;
+    height: 32px;
+    font-size: 0.75rem;
+  }
+  
+  .step-content h3 {
+    font-size: 0.85rem;
+  }
+  
+  .step-content p {
+    font-size: 0.7rem;
+  }
+  
+  .hero-3d-shoe__cta {
+    left: 30px;
+    bottom: 80px;
+    max-width: 350px;
+    padding: 20px;
+  }
+  
+  .hero-3d-shoe__title {
+    font-size: 2.2rem;
+  }
+  
+  .hero-3d-shoe__subtitle {
+    font-size: 0.95rem;
+  }
+  
+  .btn {
+    padding: 11px 20px;
+    font-size: 0.85rem;
+  }
+  
+  .progress-bar {
+    width: 220px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-3d-shoe {
+    height: 500vh; /* Reduce height for mobile */
+  }
+  
+  .hero-3d-shoe__steps {
+    position: fixed;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    gap: 10px;
+    z-index: 15;
+  }
+  
+  .step {
+    padding: 8px 10px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    min-width: 110px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .step:hover {
+    transform: translateX(-3px);
+  }
+  
+  .step.active {
+    transform: scale(1.01) translateX(-2px);
+  }
+  
+  .step-number {
+    width: 26px;
+    height: 26px;
+    font-size: 0.65rem;
+  }
+  
+  .step-content h3 {
+    font-size: 0.75rem;
+    margin-bottom: 2px;
+  }
+  
+  .step-content p {
+    font-size: 0.6rem;
+    line-height: 1.2;
+  }
+  
+  .hero-3d-shoe__cta {
+    position: fixed;
+    bottom: 70px;
+    left: 15px;
+    right: 15px;
+    max-width: none;
+    text-align: center;
+    z-index: 15;
+    padding: 20px;
+    border-radius: 15px;
+  }
+  
+  .hero-3d-shoe__title {
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+  }
+  
+  .hero-3d-shoe__subtitle {
+    font-size: 0.85rem;
+    margin-bottom: 18px;
+  }
+  
+  .hero-3d-shoe__buttons {
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .btn {
+    padding: 10px 18px;
+    font-size: 0.8rem;
+    border-radius: 8px;
+  }
+  
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+  
+  .progress-bar {
+    width: 180px;
+    height: 2px;
+  }
+  
+  .progress-text {
+    font-size: 0.75rem;
+  }
+  
+  .scroll-indicator {
+    bottom: 12px;
+    padding: 8px 15px;
+    border-radius: 20px;
+  }
+  
+  .scroll-arrow {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .scroll-indicator span {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-3d-shoe {
+    height: 450vh; /* Further reduce for small mobile */
+  }
+  
+  .hero-3d-shoe__steps {
+    right: 8px;
+    gap: 6px;
+  }
+  
+  .step {
+    padding: 6px 8px;
+    min-width: 90px;
+    border-radius: 8px;
+  }
+  
+  .step-number {
+    width: 22px;
+    height: 22px;
+    font-size: 0.55rem;
+  }
+  
+  .step-content h3 {
+    font-size: 0.65rem;
+  }
+  
+  .step-content p {
+    font-size: 0.55rem;
+  }
+  
+  .hero-3d-shoe__cta {
+    bottom: 60px;
+    left: 12px;
+    right: 12px;
+    padding: 15px;
+    border-radius: 12px;
+  }
+  
+  .hero-3d-shoe__title {
+    font-size: 1.4rem;
+    margin-bottom: 6px;
+  }
+  
+  .hero-3d-shoe__subtitle {
+    font-size: 0.75rem;
+    margin-bottom: 15px;
+  }
+  
+  .hero-3d-shoe__buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .btn {
+    width: 100%;
+    max-width: 160px;
+    padding: 10px 14px;
+    font-size: 0.75rem;
+    border-radius: 6px;
+  }
+  
+  .progress-bar {
+    width: 150px;
+    height: 2px;
+  }
+  
+  .progress-text {
+    font-size: 0.7rem;
+  }
+  
+  .scroll-indicator {
+    bottom: 8px;
+    padding: 6px 12px;
+    border-radius: 15px;
+  }
+  
+  .scroll-arrow {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .scroll-indicator span {
+    font-size: 0.65rem;
+  }
+  
+  /* Optimize particle effects for small mobile */
+  .particle {
+    width: 2px;
+    height: 2px;
+  }
+  
+  .celebration-particle {
+    width: 3px;
+    height: 3px;
+  }
+}
+
+/* Mobile-specific optimizations for 412x915 */
+@media (max-width: 412px) and (max-height: 915px) {
+  .hero-3d-shoe {
+    height: 400vh; /* Optimize for mobile height */
+  }
+  
+  .hero-3d-shoe__canvas-container {
+    height: 100vh;
+  }
+  
+  .hero-3d-shoe__steps {
+    right: 6px;
+    gap: 5px;
+    top: 45%;
+  }
+  
+  .step {
+    padding: 5px 6px;
+    min-width: 85px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  
+  .step:hover {
+    transform: translateX(-2px);
+  }
+  
+  .step.active {
+    transform: scale(1.005) translateX(-1px);
+  }
+  
+  .step-number {
+    width: 20px;
+    height: 20px;
+    font-size: 0.5rem;
+  }
+  
+  .step-content h3 {
+    font-size: 0.6rem;
+    margin-bottom: 1px;
+  }
+  
+  .step-content p {
+    font-size: 0.5rem;
+    line-height: 1.1;
+  }
+  
+  .hero-3d-shoe__cta {
+    bottom: 55px;
+    left: 10px;
+    right: 10px;
+    padding: 12px;
+    border-radius: 10px;
+  }
+  
+  .hero-3d-shoe__title {
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+  }
+  
+  .hero-3d-shoe__subtitle {
+    font-size: 0.7rem;
+    margin-bottom: 12px;
+  }
+  
+  .hero-3d-shoe__buttons {
+    gap: 5px;
+  }
+  
+  .btn {
+    max-width: 140px;
+    padding: 8px 12px;
+    font-size: 0.7rem;
+    border-radius: 5px;
+  }
+  
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+  
+  .progress-bar {
+    width: 140px;
+    height: 2px;
+  }
+  
+  .progress-text {
+    font-size: 0.65rem;
+  }
+  
+  .scroll-indicator {
+    bottom: 6px;
+    padding: 5px 10px;
+    border-radius: 12px;
+  }
+  
+  .scroll-arrow {
+    width: 10px;
+    height: 10px;
+  }
+  
+  .scroll-indicator span {
+    font-size: 0.6rem;
+  }
+  
+  /* Optimize particle effects for mobile */
+  .particle {
+    width: 2px;
+    height: 2px;
+  }
+  
+  .celebration-particle {
+    width: 3px;
+    height: 3px;
+  }
+  
+  /* Loading screen mobile optimization */
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border-width: 2px;
+  }
+  
+  .hero-3d-shoe__loading p {
+    font-size: 0.9rem;
+  }
+  
+  .hero-3d-shoe__loading {
+    padding: 20px;
+    border-radius: 15px;
+  }
+}
+
+/* Landscape mobile optimization */
+@media (max-width: 915px) and (orientation: landscape) {
+  .hero-3d-shoe {
+    height: 350vh;
+  }
+  
+  .hero-3d-shoe__steps {
+    right: 15px;
+    gap: 8px;
+  }
+  
+  .step {
+    padding: 6px;
+    min-width: 110px;
+  }
+  
+  .hero-3d-shoe__cta {
+    bottom: 50px;
+    left: 20px;
+    right: 20px;
+  }
+  
+  .hero-3d-shoe__title {
+    font-size: 1.5rem;
+  }
+  
+  .hero-3d-shoe__subtitle {
+    font-size: 0.8rem;
+  }
+  
+  .hero-3d-shoe__buttons {
+    flex-direction: row;
+    justify-content: center;
+  }
+  
+  .btn {
+    max-width: 140px;
+  }
+}
+
+/* High DPI mobile screens */
+@media (-webkit-min-device-pixel-ratio: 2) and (max-width: 412px) {
+  .hero-3d-shoe__canvas {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+  
+  .step {
+    border-width: 0.5px;
+  }
+  
+  .progress-bar {
+    border-radius: 1px;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .step {
+    min-height: 44px; /* Minimum touch target size */
+  }
+  
+  .btn {
+    min-height: 44px;
+  }
+  
+  .step-number {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
