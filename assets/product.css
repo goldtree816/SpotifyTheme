@@ -85,6 +85,62 @@
   margin-bottom: 0.5rem;
 }
 
+/* Product Rating Summary */
+.product-rating-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e5e5;
+}
+
+.rating-display {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.rating-display .stars {
+  display: flex;
+  gap: 2px;
+}
+
+.rating-display .star {
+  font-size: 1.1rem;
+  color: #ddd;
+}
+
+.rating-display .star.filled {
+  color: #FFD700;
+}
+
+.rating-display .star.half-filled {
+  color: #FFD700;
+  opacity: 0.7;
+}
+
+.rating-text {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.view-reviews-link {
+  color: #CDAA7D;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.view-reviews-link:hover {
+  color: #DB2955;
+  text-decoration: underline;
+}
+
 .product-price {
   font-size: 1.5rem;
   color: #CDAA7D;

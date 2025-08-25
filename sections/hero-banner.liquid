@@ -1,87 +1,91 @@
-{{ 'hero-banner.css' | asset_url | stylesheet_tag }}
+{{ 'hero.css' | asset_url | stylesheet_tag }}
 
-<section class="hero-banner" style="--hero-bg: {{ section.settings.bg_color }}; --hero-text: {{ section.settings.text_color }}; --hero-cta-bg: {{ section.settings.cta_bg }}; --hero-cta-text: {{ section.settings.cta_text }}; --hero-cta-bg-hover: {{ section.settings.cta_bg_hover }};">
-  <div class="hero-banner__content" style="background-image: url('{{ 'hero background.png' | asset_url }}'); background-size: cover; background-position: center center; background-repeat: no-repeat;">
-    {% if section.settings.title != blank %}
-      <h1 class="hero-banner__title">{{ section.settings.title }}</h1>
+<section class="hero">
+  <div class="hero-background"></div>
+
+  <div class="fashion-images">
+    {% if section.settings.image1 != blank %}
+      <img class="fashion-img" src="{{ section.settings.image1 | image_url: width: 800 }}" alt="{{ section.settings.image1_alt | escape }}" loading="lazy">
     {% else %}
-      <h1 class="hero-banner__title">Let Your Aura Flow Freely</h1>
+      <img class="fashion-img" src="https://picsum.photos/id/1027/600/800" alt="Look 1" loading="lazy">
     {% endif %}
-    {% if section.settings.subtitle != blank %}
-      <p class="hero-banner__subtitle">{{ section.settings.subtitle }}</p>
+
+    {% if section.settings.image2 != blank %}
+      <img class="fashion-img" src="{{ section.settings.image2 | image_url: width: 800 }}" alt="{{ section.settings.image2_alt | escape }}" loading="lazy">
     {% else %}
-      <p class="hero-banner__subtitle">Designed for movement, made with intention. GoldTree Fashion brings harmony between comfort and confidence, so you don't just wear style — you live it.</p>
+      <img class="fashion-img" src="https://images.unsplash.com/photo-1495385794356-15371f348c31?q=80&w=670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Look 2" loading="lazy">
     {% endif %}
-    {% if section.settings.cta_label != blank and section.settings.cta_link != blank %}
-      <a href="{{ section.settings.cta_link }}" class="hero-banner__cta">{{ section.settings.cta_label }}</a>
+
+    {% if section.settings.image3 != blank %}
+      <img class="fashion-img" src="{{ section.settings.image3 | image_url: width: 800 }}" alt="{{ section.settings.image3_alt | escape }}" loading="lazy">
     {% else %}
-      <a href="/collections/all" class="hero-banner__cta">Shop Collection</a>
+      <img class="fashion-img" src="https://plus.unsplash.com/premium_photo-1695844418754-75d7350de991?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fG1vZGVsJTIwJTIwZmFzfGVufDB8fDB8fHww" alt="Look 3" loading="lazy">
+    {% endif %}
+
+    {% if section.settings.image4 != blank %}
+      <img class="fashion-img" src="{{ section.settings.image4 | image_url: width: 800 }}" alt="{{ section.settings.image4_alt | escape }}" loading="lazy">
+    {% else %}
+      <img class="fashion-img" src="https://plus.unsplash.com/premium_photo-1687186953637-78a495aec485?q=80&w=686&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Look 4" loading="lazy">
     {% endif %}
   </div>
-  
-  <div class="hero-banner__media-container">
-    <img class="hero-banner__fallback-img" src="{{ 'image.png' | asset_url }}" alt="AuraWear fallback image" loading="lazy" />
-    {% if section.settings.video != blank %}
-      <video class="hero-banner__media" preload="metadata" poster="{{ section.settings.image | image_url: width: 1200 }}">
-        <source src="{{ section.settings.video }}" type="video/mp4">
-      </video>
-    {% elsif section.settings.image != blank %}
-      <img class="hero-banner__media" src="{{ section.settings.image | image_url: width: 1600 }}" alt="" loading="lazy" />
+
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    {% if section.settings.subtitle != blank %}
+      <p class="hero-subtitle">{{ section.settings.subtitle }}</p>
     {% else %}
-      <video class="hero-banner__media" preload="metadata">
-        <source src="{{ 'hero.mp4' | asset_url }}" type="video/mp4">
-      </video>
+      <p class="hero-subtitle">Luxury Fashion</p>
     {% endif %}
+
+    {% if section.settings.title != blank %}
+      <h1 class="hero-title">{{ section.settings.title }}</h1>
+    {% else %}
+      <h1 class="hero-title">Elegance<br>Redefined</h1>
+    {% endif %}
+
+    {% if section.settings.description != blank %}
+      <p class="hero-description">{{ section.settings.description }}</p>
+    {% else %}
+      <p class="hero-description">Discover our exclusive collection where timeless sophistication meets contemporary design. Crafted for those who appreciate the finer details in fashion.</p>
+    {% endif %}
+
+    <div class="cta-container">
+      {% if section.settings.cta_label != blank and section.settings.cta_link != blank %}
+        <a href="{{ section.settings.cta_link }}" class="cta-button">{{ section.settings.cta_label }}</a>
+      {% else %}
+        <a href="/collections/all" class="cta-button">Shop Collection</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <p style="font-size: 0.9rem; margin-bottom: 10px;">Discover More</p>
+    <div class="scroll-arrow"></div>
   </div>
 </section>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const heroBanner = document.querySelector('.hero-banner');
-  const video = heroBanner?.querySelector('.hero-banner__media');
-  const fallbackImg = heroBanner?.querySelector('.hero-banner__fallback-img');
-  if (video && video.tagName === 'VIDEO') {
-    video.pause();
-    video.currentTime = 0;
-    heroBanner.addEventListener('mouseenter', () => {
-      heroBanner.classList.add('hero-banner--playing');
-      video.play();
-    });
-    heroBanner.addEventListener('mouseleave', () => {
-      heroBanner.classList.remove('hero-banner--playing');
-      video.pause();
-      video.currentTime = 0;
-    });
-  }
-});
-</script>
 
 {% schema %}
 {
   "name": "Hero banner",
   "settings": [
     {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Background image"
-    },
-    {
-      "type": "url",
-      "id": "video",
-      "label": "Background video (mp4 URL)",
-      "info": "Overrides image if set."
-    },
-    {
       "type": "text",
       "id": "title",
       "label": "Heading",
-      "default": "Let Your Aura Flow Freely"
+      "default": "Elegance<br>Redefined"
     },
     {
       "type": "text",
       "id": "subtitle",
       "label": "Subheading",
-      "default": "Designed for movement, made with intention. GoldTree Fashion brings harmony between comfort and confidence, so you don't just wear style — you live it."
+      "default": "Luxury Fashion"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "Discover our exclusive collection where timeless sophistication meets contemporary design. Crafted for those who appreciate the finer details in fashion."
     },
     {
       "type": "text",
@@ -96,34 +100,48 @@ document.addEventListener('DOMContentLoaded', function() {
       "default": "/collections/all"
     },
     {
-      "type": "color",
-      "id": "bg_color",
-      "label": "Background color",
-      "default": "#ffffff"
+      "type": "image_picker",
+      "id": "image1",
+      "label": "Floating image 1"
     },
     {
-      "type": "color",
-      "id": "text_color",
-      "label": "Text color",
-      "default": "#333333"
+      "type": "text",
+      "id": "image1_alt",
+      "label": "Alt text image 1",
+      "default": "Look 1"
     },
     {
-      "type": "color",
-      "id": "cta_bg",
-      "label": "Button background",
-      "default": "#CDAA7D"
+      "type": "image_picker",
+      "id": "image2",
+      "label": "Floating image 2"
     },
     {
-      "type": "color",
-      "id": "cta_bg_hover",
-      "label": "Button background (hover)",
-      "default": "#DB2955"
+      "type": "text",
+      "id": "image2_alt",
+      "label": "Alt text image 2",
+      "default": "Look 2"
     },
     {
-      "type": "color",
-      "id": "cta_text",
-      "label": "Button text color",
-      "default": "#ffffff"
+      "type": "image_picker",
+      "id": "image3",
+      "label": "Floating image 3"
+    },
+    {
+      "type": "text",
+      "id": "image3_alt",
+      "label": "Alt text image 3",
+      "default": "Look 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "image4",
+      "label": "Floating image 4"
+    },
+    {
+      "type": "text",
+      "id": "image4_alt",
+      "label": "Alt text image 4",
+      "default": "Look 4"
     }
   ],
   "presets": [

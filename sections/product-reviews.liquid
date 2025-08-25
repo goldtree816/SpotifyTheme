@@ -1,0 +1,162 @@
+{{ 'product-reviews.css' | asset_url | stylesheet_tag }}
+
+<section class="product-reviews" id="product-reviews">
+  <div class="reviews-container">
+    <div class="reviews-header">
+      <h2 class="reviews-title">Customer Reviews</h2>
+      <div class="reviews-summary">
+                 <div class="rating-overview">
+           <div class="average-rating">
+             <span class="rating-number">{{ product.metafields.reviews.rating.value | default: 0 }}</span>
+             <div class="stars">
+               {% assign rating = product.metafields.reviews.rating.value | default: 0 %}
+               {% assign rating_int = rating | round %}
+               {% for i in (1..5) %}
+                 {% if i <= rating_int %}
+                   <i class="fas fa-star star filled"></i>
+                 {% else %}
+                   <i class="far fa-star star"></i>
+                 {% endif %}
+               {% endfor %}
+             </div>
+           </div>
+           <p class="total-reviews">{{ product.metafields.reviews.count.value | default: 0 }} reviews</p>
+         </div>
+        <button class="write-review-btn" onclick="openReviewModal()">
+          <i class="fas fa-pen"></i>
+          Write a Review
+        </button>
+      </div>
+    </div>
+
+    <div class="reviews-filters">
+      <div class="filter-group">
+        <label>Filter by:</label>
+        <select class="rating-filter" onchange="filterReviews(this.value)">
+          <option value="all">All Ratings</option>
+          <option value="5">5 Stars</option>
+          <option value="4">4 Stars</option>
+          <option value="3">3 Stars</option>
+          <option value="2">2 Stars</option>
+          <option value="1">1 Star</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Sort by:</label>
+        <select class="sort-filter" onchange="sortReviews(this.value)">
+          <option value="newest">Newest First</option>
+          <option value="oldest">Oldest First</option>
+          <option value="highest">Highest Rated</option>
+          <option value="lowest">Lowest Rated</option>
+        </select>
+      </div>
+    </div>
+
+         <div class="reviews-list" id="reviews-list">
+       <!-- Customer reviews will be dynamically added here -->
+       <div class="no-reviews-message" id="no-reviews-message">
+         <div class="no-reviews-content">
+           <i class="fas fa-comments"></i>
+           <h3>No reviews yet</h3>
+           <p>Be the first to review this product and help other customers make informed decisions.</p>
+           <button class="write-first-review-btn" onclick="openReviewModal()">
+             <i class="fas fa-pen"></i>
+             Write the First Review
+           </button>
+         </div>
+       </div>
+     </div>
+
+         <div class="reviews-pagination" id="reviews-pagination" style="display: none;">
+       <button class="pagination-btn" onclick="loadMoreReviews()">
+         Load More Reviews
+       </button>
+     </div>
+  </div>
+</section>
+
+<!-- Review Modal -->
+<div class="review-modal" id="reviewModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Write a Review</h3>
+      <button class="close-modal" onclick="closeReviewModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <form class="review-form" id="reviewForm">
+      <div class="form-group">
+        <label>Your Rating</label>
+                 <div class="rating-input">
+           <i class="far fa-star star-input" data-rating="1"></i>
+           <i class="far fa-star star-input" data-rating="2"></i>
+           <i class="far fa-star star-input" data-rating="3"></i>
+           <i class="far fa-star star-input" data-rating="4"></i>
+           <i class="far fa-star star-input" data-rating="5"></i>
+         </div>
+      </div>
+      <div class="form-group">
+        <label for="reviewTitle">Review Title</label>
+        <input type="text" id="reviewTitle" name="title" placeholder="Summarize your experience" required>
+      </div>
+      <div class="form-group">
+        <label for="reviewContent">Your Review</label>
+        <textarea id="reviewContent" name="content" rows="5" placeholder="Share your experience with this product..." required></textarea>
+      </div>
+      <div class="form-group">
+        <label>Upload Photos (Optional)</label>
+        <div class="image-upload">
+          <input type="file" id="reviewImages" name="images" multiple accept="image/*">
+          <label for="reviewImages" class="upload-btn">
+            <i class="fas fa-camera"></i>
+            Choose Photos
+          </label>
+        </div>
+        <div class="image-preview" id="imagePreview"></div>
+      </div>
+      <div class="form-actions">
+        <button type="button" class="cancel-btn" onclick="closeReviewModal()">Cancel</button>
+        <button type="submit" class="submit-btn">Submit Review</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="{{ 'product-reviews.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Product Reviews",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Customer Reviews"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating_summary",
+      "label": "Show Rating Summary",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "allow_image_uploads",
+      "label": "Allow Image Uploads",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "reviews_per_page",
+      "label": "Reviews per page",
+      "default": 10
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Reviews"
+    }
+  ]
+}
+{% endschema %}

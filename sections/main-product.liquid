@@ -29,6 +29,26 @@
         </button>
       </div>
       <div class="product-category">Category: {{ product.type }}</div>
+      
+      <!-- Product Rating Summary -->
+      <div class="product-rating-summary">
+        <div class="rating-display">
+          <div class="stars">
+            {% assign rating = product.metafields.reviews.rating.value | default: 0 %}
+            {% assign rating_int = rating | round %}
+            {% for i in (1..5) %}
+              {% if i <= rating_int %}
+                <i class="fas fa-star star filled"></i>
+              {% else %}
+                <i class="far fa-star star"></i>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <span class="rating-text">{{ rating }} ({{ product.metafields.reviews.count.value | default: 0 }} reviews)</span>
+        </div>
+        <a href="#product-reviews" class="view-reviews-link">View all reviews</a>
+      </div>
+      
       <div class="product-price">
         {% if product.compare_at_price > product.price %}
           <span class="compare-at-price" style="text-decoration:line-through;color:#b0b0b0;margin-right:0.5em;">{{ product.compare_at_price | money }}</span>

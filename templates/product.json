@@ -2,11 +2,13 @@
   "sections": {
     "header": { "type": "header" },
     "main-product": { "type": "main-product" },
+    "product-reviews": { "type": "product-reviews" },
     "footer": { "type": "footer" }
   },
   "order": [
     "header",
     "main-product",
+    "product-reviews",
     "footer"
   ]
 }
